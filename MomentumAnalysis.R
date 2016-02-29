@@ -12,7 +12,8 @@ importdata <-function(fileslist){
     data <- c()
     for (i in list){
         dataAlone <-read.csv(i)
-         data <- rbind(data, dataAlone)}
+        print(i)
+        data <- rbind(data, dataAlone)}
     return (data)
 }
 
@@ -34,10 +35,12 @@ colOrderList <- c("blue","red", "green","orange")
 data <- importdata(list)
 
 ParticipantsList <- names(data[,2:5])
+print(ParticipantsList)
 
 # Dim of data data.frame
-dim(data)
 summary(data)
+str(data)
+
 # Set the variables after modifyinfg in excel
 #data$father <- as.numeric.factor(data$father)
 #data$mother <- as.numeric.factor(data$mother)
@@ -91,7 +94,7 @@ barplot(tab, cex.axis = 0.7, las=2, cex.main= 1, names=ParticipantsList,
   beside=TRUE, las=1, col=terrain.colors(2), ylim=c(0,600000))
 legend("topright", c("T", "F"), fill=terrain.colors(2))
 
-#La mère et la thérpeute sont les personnes les plus souvent présentes
+#Mother and therapist are more often present
 
 ------------------------------------------------
 # Description of the data
@@ -137,68 +140,97 @@ boxplot(data$father, data$mother, data$therapist, data$patient,
         names=ParticipantsList, 
         main= "Momentum by frame box plots ", las=1)
 par(mar=c(1,0.5,0.5,1))
-legend("topleft", ParticipantsList, 
-       fill=colOrderList, cex=0.7)
-
-30*25
+legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 
 summary(data$father)
 
 # Simplifing this vector, with mean in each interval
 ## subject_momentum = vector of momentum
-## ceiling pour avoir le nombre entier supérieur
+
 ## interval = number of frames by interval 25 for one second, 1500 for one minute
-
-### en cours
-
-getwd()
-setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/csvF104422022016/")
-
 MeanMomentumByTime <- function(subject, interval, data){
   x <- c()
   for (file in indexlist[1]){
         print(file)
     #  print(data[which(data$file==file), subject])
-        datastring <- data[which(data$file==file), subject]
-        IntervalNumbersVideo <- ceiling(length(datastring/interval))
-        print(IntervalNumbersVideo)
+        dataVector <- data[which(data$file==file), subject]
+        ## with ceiling : superior limit of the round
+        IntervalNumbersVideo <- ceiling(length(dataVector)/interval)
         for (i in 1:IntervalNumbersVideo){
                 borneinf<- 1+(i-1)*interval
+                print (borneinf)
                 bornesup <-i*interval
-               # print(bornesup)
-                #vector of subject in each video
-                dataStringInterval <- datastring[borneinf:bornesup]
-             #   print (tail(dataStringInterval))
-              #  print(datastring)
-                mean <- mean(dataStringInterval, na.rm=TRUE)
+                print (bornesup)
+                dataVectorInterval <- dataVector[borneinf:bornesup]
+                mean <- mean(dataVectorInterval, na.rm=TRUE)
                 x <- c(x, mean)
          }
-        #print (summary(x))
         print (tail(x))}
   return (x)
 }
 
 # Example by second
 fatherMinute <- MeanMomentumByTime("father", 1500, data)
-head(fatherMinute)
+motherMinute <- MeanMomentumByTime("mother", 1500, data)
+therapistMinute <- MeanMomentumByTime("therapist", 1500, data)
+patientMinute <- MeanMomentumByTime("patient", 1500, data)
 
-dim(fatherMinute)
-length(fatherMinute)
-summary(fatherMinute)
-table(fatherMinute)
-length(fatherMinute)
-table(is.na(fatherMinute))
-fatherMinute[2000:3000]
+#Plot the Mean Momentum by time each minute to detect abberant moves
+par(mar=c(3,3,2,2))
+plot(1:325,fatherMinute, type="l", main="Mean Momentum by minute, all F1044 videos", col="blue")
+lines(motherMinute, col="red")  
+lines(therapistMinute, col="orange")
+lines(patientMinute, col="green")
+legend("topleft", ParticipantsList , fill=colOrderList, cex=0.7)
+
+# To do :
+#Export graphs for each video wit h appropriate title, appropriate, length
+
+SlidingInterval <- function(subject, interval, data){
+  x <- c()
+  for (file in indexlist[1]){
+    print(file)
+    dataVector <- data[which(data$file==file), subject]
+    print (length(dataVector))
+    NBofAnalysedframes <- length(dataVector)-interval+1
+    for (i in 1:NBofAnalysedframes){
+      borneinf<- (i)
+      print (borneinf)
+      bornesup <-(interval-1+i)
+      print (bornesup)
+      dataVectorInterval <- dataVector[borneinf:bornesup]
+      mean <- mean(dataVectorInterval, na.rm=TRUE)
+      x <- c(x, mean)
+    }
+    print (tail(x))}
+  return (x)
+}
+
+slidedfather <- SlidingInterval("father",11, data)
+str(slidedfather)
+plot(slidedfather)
+
+par(mar=c(3,3,4,2))
+plot(6:31425, datafatherF1044C[6:31425], main="Mean Momentum (Sliding 11 frames 
+     interval) father F1044C", 
+     col="red", type="l")
+lines(slidedfather,  col="blue")
+legend("topleft", c("Raw data", "Mean on sliding Interval") , fill=c("red", "blue"), cex=0.7)
+
+fatherTen<- MeanMomentumByTime("father", 11, data)
+plot (1:2858, fatherTen, type="l", col="orange", main="Mean Momentum (non overlapping 11 frames
+      intervals) father F1044C")
+legend("topleft", c("Mean on 11 frame interval") , fill=c("orange"), cex=0.7)
+
+length(fatherTen)
+
+datafatherF1044C <- data[which(data$file=="F1044C.VOB"), "father"]
+str(datafatherF1044C)
+summary(datafatherF1044C)
 
 par(mar=c(3,3,2,2))
-plot(fatherMinute,x)
-fatherMinute[1:23]
-dim(table(fatherMinute))
-summary(fatherMinute)
 
-motherSecond <- MeanMomentumByTime(data$mother, 25)
-therapistSecond <- MeanMomentumByTime(data$therapist, 25)
-patientSecond <- MeanMomentumByTime(data$patient, 25)
+str(datafatherF1044C)
 
 # Momentum box plots by second
 par(mar=c(3,3,2,2))
@@ -207,8 +239,7 @@ boxplot(fatherSecond, motherSecond, therapistSecond, patientSecond,
         cex.axis=0.7, cex.names=0.6,
         main= "Mean Momentum by second box plots ", las=1)
 par(mar=c(1,0.5,0.5,1))
-legend("topleft", ParticipantsList , 
-       fill=colOrderList, cex=0.7)
+
 
 # Momentum plot by second
 par(mar=c(4,4,2,2))

@@ -247,7 +247,7 @@ PatientMinuteC<- MeanMomentumByTime("patient", indexOfvideos=1, interval=1500, d
 par(mar=c(4,4,4,2))
 plot (1:length(fatherMinuteC), fatherMinuteC, type="l", col="blue", 
 main=paste("Mean Momentum (non overlaping minute intervals) 
-for ", "father", " on F1044", "C", " video" , sep=""), 
+on F1044", "C", " video" , sep=""), , 
 ylab="Momentum", xlab="Time by Minute" )
 lines(MotherMinuteC, col="red")
 lines(TherapistMinuteC, col="orange")
@@ -268,7 +268,7 @@ PatientMinuteD1<- MeanMomentumByTime("patient", indexOfvideos=2, interval=1500, 
 par(mar=c(4,4,4,2))
 plot (1:length(fatherMinuteD1), fatherMinuteD1, type="l", col="blue", 
 main=paste("Mean Momentum (non overlaping minute intervals) 
-for ", "father", " on F1044", "D1", " video" , sep=""), 
+on F1044", "D1", " video" , sep=""), 
 ylab="Momentum", xlab="Time by Minute" )
 lines(MotherMinuteD1, col="red")
 lines(TherapistMinuteD1, col="orange")

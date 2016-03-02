@@ -1,0 +1,237 @@
+---
+title: "Synchrony in Psychotherapy, example with F1044 patient data"
+author: "Thomas Gargot"
+date: "2 mars 2016"
+output: 
+  pdf_document: 
+    toc: yes
+---
+
+```{r, echo=FALSE, eval=TRUE}
+list <- list.files("CSV/csvF104422022016", full.names=TRUE)
+
+importdata <-function(fileslist){
+    data <- c()
+    for (i in list){
+        dataAlone <-read.csv(paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/", i, sep=""))
+        data <- rbind(data, dataAlone)}
+    return (data)
+}
+```
+
+# Lists
+## Functions list
+```{r, echo=TRUE, eval=TRUE}
+
+MeanMomentumByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
+  x <- c()
+  for (file in indexlist[indexOfvideos]){
+        dataVector <- data[which(data$file==file), subject]
+        ## with ceiling : superior limit of the round
+        IntervalNumbersVideo <- ceiling(length(dataVector)/interval)
+        for (i in 1:IntervalNumbersVideo){
+                borneinf<- 1+(i-1)*interval
+                bornesup <-i*interval
+                dataVectorInterval <- dataVector[borneinf:bornesup]
+                mean <- mean(dataVectorInterval, na.rm=TRUE)
+                x <- c(x, mean)
+        }
+  }
+  return (x)
+}
+
+SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
+  x <- c()
+  for (file in indexlist[indexOfvideos]){
+      print(file)
+      dataVector <- data[which(data$file==file), subject]
+      print (length(dataVector))
+      NBofAnalysedframes <- length(dataVector)-interval+1
+          for (i in 1:NBofAnalysedframes){
+              borneinf<- (i)
+              bornesup <-(interval-1+i)
+              dataVectorInterval <- dataVector[borneinf:bornesup]
+              mean <- mean(dataVectorInterval, na.rm=TRUE)
+              x <- c(x, mean)
+          }
+  }
+  return (x)
+}
+```
+
+## File lists
+```{r, echo=TRUE, eval=TRUE}
+indexlist <- c("F1044C.VOB","F1044D1.VOB","F1044D2.VOB","F1044E.VOB","F1044F.VOB",
+               "F1044G.VOB","F1044H.VOB","F1044I.VOB","F1044L.VOB","F1044M1.VOB",
+               "F1044M2.VOB","F1044N.VOB", "F1044O.VOB", "F1044P.VOB", "F1044Q.VOB",
+               "F1044R1.VOB","F1044R2.VOB")
+
+labelvideolist<- c("C","D1","D2","E","F", "G","H","I","L","M1", "M2","N", "O", "P", "Q",
+                   "R1","R2")
+
+NumberOfvideos <- length(indexlist)
+
+colOrderList <- c("blue","red", "green","orange")
+```
+
+## Participants list
+```{r, echo=FALSE, eval=TRUE}
+data <- importdata(list)
+ParticipantsList <- names(data[,2:5])
+print(ParticipantsList)
+data$timeMin <- data$frame/(25*60)
+```
+
+# Presentation of the data
+The timeMin is corresponding to a frame rate 25/sec.
+```{r}
+str(data)
+summary(data)
+```
+
+# Length of the videos in minutes
+```{r, echo=FALSE}
+videoLengthList <-c()
+for (i in indexlist){
+  index<-which(data$file==i)
+  videolength <- max (data$timeMin[index])
+  videoLengthList <-c(videoLengthList,videolength)
+}
+
+print(videoLengthList)
+
+par(mar=c(4,4,3,1))
+barplot(videoLengthList, col="cornflowerblue", cex.axis=0.6, cex.names=0.6,
+        ylab="Minutes", xlab="Video Name", las=1, names=labelvideolist, 
+        main="Length in each F1044 video (min)")
+        abline(h = mean(videoLengthList), lwd=2, lty=2)
+        text(20,20, "Mean")
+```
+
+## Length of the videos in number of frames
+```{r, echo=FALSE}
+barplot(table(data$file), col="cornflowerblue", cex.axis=0.6, cex.names=0.5, cex.lab=0.8,
+        main="Number of frames in each F1044 video", cex.main=0.8, ylab="Frame number", 
+        names = labelvideolist, xlab="Video Name", las=1)
+```
+
+## Number of Available (True) and Not Available (False) data for each participant
+```{r, echo=FALSE}
+tab <- cbind(table(is.na(data[,2])),table(is.na(data[,3])),table(is.na(data[,4])), 
+                                                          table(is.na(data[,5])))
+
+par(mar=c(3,3,2,1))
+barplot(tab, cex.axis = 0.7, las=2, cex.main= 1, names=ParticipantsList, 
+  main="Number of available data by participant", 
+  beside=TRUE, las=1, col=terrain.colors(2), ylim=c(0,600000))
+legend("topright", c("T", "F"), fill=terrain.colors(2))
+```
+
+Mother and therapist are the more often present participants.
+
+# Raw Motion history
+## Mean Motion history by video by participant
+```{r, echo=FALSE}
+meanMomentumList <-c()
+meanMomentum <- function(subject){
+    for (i in indexlist){
+              index <- which(data$file==i)
+              momentumsubject<- mean(data[index,subject], na.rm=TRUE)
+              meanMomentumList <-c(meanMomentumList, momentumsubject)
+    }
+  return (meanMomentumList)
+}
+
+momentumfatherlist <- meanMomentum("father")
+momentumMotherList <- meanMomentum("mother")
+momentumTherapistList <- meanMomentum("therapist")
+momentumPatientList <- meanMomentum("patient")
+
+momentumMeanList <- rbind(momentumfatherlist, momentumMotherList, momentumPatientList, momentumTherapistList)
+
+par(mar=c(3,3,2,1))
+barplot(momentumMeanList, names=labelvideolist, las=1, cex.axis = 0.4, cex.names=0.6, 
+        main="Mean Motion history in each video", beside=TRUE, 
+        col=colOrderList)
+par(mar=c(1,0.5,0.5,1))
+legend("top", inset=.05, ParticipantsList, 
+       fill=colOrderList, cex=0.7)
+```
+
+## Motion history box plots by frame (raw data)
+```{r, echo=FALSE}
+par(mar=c(3,3,2,2))
+boxplot(data$father, data$mother, data$therapist, data$patient, 
+        col=colOrderList, 
+        names=ParticipantsList, 
+        main= "Motion history by frame box plots ", las=1)
+par(mar=c(1,0.5,0.5,1))
+legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
+```
+
+## Motion history box plots by frame(sliding interval mean)
+Too long to display
+```{r, echo=FALSE, eval=FALSE}
+MeanmomentumfatherlistSI <- SlidingInterval("father",
+                indexOfvideos=1:NumberOfvideos, interval=11, data)
+
+MeanmomentumMotherListSI <- SlidingInterval("mother",
+                indexOfvideos=1:NumberOfvideos, interval=11, data)
+
+MeanmomentumTherapistListSI <- SlidingInterval("therapist",
+                indexOfvideos=1:NumberOfvideos, interval=11, data)
+
+MeanmomentumPatientListSI <- SlidingInterval("patient",
+                indexOfvideos=1:NumberOfvideos, interval=11, data)
+
+par(mar=c(3,3,2,2))
+boxplot(MeanmomentumfatherlistSI, MeanmomentumMotherListSI, MeanmomentumTherapistListSI, MeanmomentumPatientListSI, 
+        col=colOrderList, 
+        names=ParticipantsList, 
+        main= "Motion history box plots by frame(sliding interval mean)", las=1)
+par(mar=c(1,0.5,0.5,1))
+legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
+```
+
+# Motion History on sliding and non verlapping intervals
+## Motion history of the father during the 10 first seconds of the first video(C) 
+### Sliding interval function on a 11 frames interval
+```{r}
+slidedfather <- SlidingInterval("father", 1 , 11, data)
+str(slidedfather)
+
+par(mar=c(4,4,4,2))
+plot(1:250, data$father[6:255], main="Mean motion history (Sliding 11 frames interval) 
+     for father on F1044C video, 10 seconds ", xlab="Frame index (25/s)", ylab="Momentum",
+     col="red", type="l")
+lines(slidedfather[1:250],  col="blue")
+legend("topleft", c("Raw data", "Mean on sliding Interval") , fill=c("red", "blue"), cex=0.7)
+```
+
+### Non overlapping interval function on a 11 frames interval
+```{r}
+fatherEleven<- MeanMomentumByTime("father", indexOfvideos=1, interval=11, data)
+plot (1:24, fatherEleven[1:24], type="l", col="orange", main="Mean Momentum (non overlapping 11 frames
+      intervals) for father on F1044C video, between 10-20 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)" )
+legend("topleft", c("Mean on 11 frames interval") , fill=c("orange"), cex=0.7)
+```
+
+## Motion history of the father during the 10 first seconds of the first video(C) 
+### Non overlapping interval function on a 11 frames interval
+```{r}
+par(mar=c(4,4,4,2))
+plot(1:250, data$father[256:505], main="Mean motion history (Sliding 11 frames interval) 
+     for father on F1044C video, 10-20 seconds ", xlab="Frame index (25/s)", ylab="Momentum",
+     col="red", type="l")
+lines(slidedfather[251:500],  col="blue")
+legend("topleft", c("Raw data", "Mean on sliding Interval") , fill=c("red", "blue"), cex=0.7)
+```
+
+### Contiguous interval function on a 11 frames interval
+```{r}
+fatherEleven<- MeanMomentumByTime("father", indexOfvideos=1, interval=11, data)
+plot (1:24, fatherEleven[23:46], type="l", col="orange", main="Mean Momentum (non overlapping 11 frames
+      intervals) for father on F1044C video, between 10-20 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)" )
+legend("topleft", c("Mean on 11 frames interval") , fill=c("orange"), cex=0.7)
+```
+

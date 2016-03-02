@@ -17,6 +17,16 @@ importdata <-function(fileslist){
     return (data)
 }
 
+getwd()
+importDataSeparated <- function(fileslist){
+  for (i in list){
+    print(i)
+    importDataSeparated <-read.csv(i)
+    return (importDataSeparated)
+  }}
+  
+a <- importDataSeparated(list)
+
 ## Files list
 list <- list.files("csvF104422022016", full.names=TRUE)
 list
@@ -111,11 +121,6 @@ meanMomentum <- function(subject){
 }
 
 momentumfatherlist <- meanMomentum("father")
-
-par(mar=c(3,3,2,1))
-barplot(momentumfatherlist, names=labelvideolist, las=1, cex.axis = 0.4, cex.names=0.5, 
-        main="Mean Momentum (father) in each video", beside=TRUE, col="blue") 
-
 momentumMotherList <- meanMomentum("mother")
 momentumTherapistList <- meanMomentum("therapist")
 momentumPatientList <- meanMomentum("patient")
@@ -150,30 +155,33 @@ summary(data$father)
 ## interval = number of frames by interval 25 for one second, 1500 for one minute
 MeanMomentumByTime <- function(subject, interval, data){
   x <- c()
-  for (file in indexlist[1]){
-        print(file)
+  for (file in indexlist){
+       # print(file)
     #  print(data[which(data$file==file), subject])
         dataVector <- data[which(data$file==file), subject]
         ## with ceiling : superior limit of the round
         IntervalNumbersVideo <- ceiling(length(dataVector)/interval)
         for (i in 1:IntervalNumbersVideo){
                 borneinf<- 1+(i-1)*interval
-                print (borneinf)
+               # print (borneinf)
                 bornesup <-i*interval
-                print (bornesup)
+               # print (bornesup)
                 dataVectorInterval <- dataVector[borneinf:bornesup]
                 mean <- mean(dataVectorInterval, na.rm=TRUE)
                 x <- c(x, mean)
          }
-        print (tail(x))}
+    #    print (tail(x))
+        }
   return (x)
 }
 
-# Example by second
+# Example by Minute
 fatherMinute <- MeanMomentumByTime("father", 1500, data)
 motherMinute <- MeanMomentumByTime("mother", 1500, data)
 therapistMinute <- MeanMomentumByTime("therapist", 1500, data)
 patientMinute <- MeanMomentumByTime("patient", 1500, data)
+
+str(fatherMinute)
 
 #Plot the Mean Momentum by time each minute to detect abberant moves
 par(mar=c(3,3,2,2))
@@ -184,7 +192,23 @@ lines(patientMinute, col="green")
 legend("topleft", ParticipantsList , fill=colOrderList, cex=0.7)
 
 # To do :
-#Export graphs for each video wit h appropriate title, appropriate, length
+# Export graphs for each video wit h appropriate title, appropriate, length
+
+##Functions that takes data and return the plots by minutes of each video
+data <- 
+par(mar=c(4,4,4,2))
+for (i in 1:length(labelvideolist)){
+  videoindex <- labelvideolist[i]
+  videoFullname <- indexlist[i]
+  filename <- paste("MeanMomentumMinute", videoindex, ".pdf", sep = "")
+  # pdf(filename)
+  fatherMinute <- MeanMomentumByTime("father", 1500, data)
+  motherMinute <- MeanMomentumByTime("mother", 1500, data)
+  therapistMinute <- MeanMomentumByTime("therapist", 1500, data)
+  patientMinute <- MeanMomentumByTime("patient", 1500, data)
+  
+  # dev.off()
+}
 
 SlidingInterval <- function(subject, interval, data){
   x <- c()
@@ -208,21 +232,22 @@ SlidingInterval <- function(subject, interval, data){
 
 slidedfather <- SlidingInterval("father",11, data)
 str(slidedfather)
-plot(slidedfather)
 
-par(mar=c(3,3,4,2))
-plot(6:31425, datafatherF1044C[6:31425], main="Mean Momentum (Sliding 11 frames 
-     interval) father F1044C", 
+par(mar=c(4,4,4,2))
+plot(1:250, data$father[251:500], main="Mean Momentum (Sliding 11 frames interval) 
+     for father on F1044C video, 10 seconds ", xlab="Frame index (25/s)", ylab="Momentum",
      col="red", type="l")
-lines(slidedfather,  col="blue")
+lines(slidedfather[251:500],  col="blue")
 legend("topleft", c("Raw data", "Mean on sliding Interval") , fill=c("red", "blue"), cex=0.7)
 
-fatherTen<- MeanMomentumByTime("father", 11, data)
-plot (1:2858, fatherTen, type="l", col="orange", main="Mean Momentum (non overlapping 11 frames
-      intervals) father F1044C")
+fatherEleven<- MeanMomentumByTime("father", 11, data)
+
+plot (23:46, fatherEleven[23:46], type="l", col="orange", main="Mean Momentum (non overlapping 11 frames
+      intervals) for father on F1044C video, between 10-20 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)" )
 legend("topleft", c("Mean on 11 frame interval") , fill=c("orange"), cex=0.7)
 
-length(fatherTen)
+
+length(fatherEleven)
 
 datafatherF1044C <- data[which(data$file=="F1044C.VOB"), "father"]
 str(datafatherF1044C)
@@ -239,7 +264,6 @@ boxplot(fatherSecond, motherSecond, therapistSecond, patientSecond,
         cex.axis=0.7, cex.names=0.6,
         main= "Mean Momentum by second box plots ", las=1)
 par(mar=c(1,0.5,0.5,1))
-
 
 # Momentum plot by second
 par(mar=c(4,4,2,2))

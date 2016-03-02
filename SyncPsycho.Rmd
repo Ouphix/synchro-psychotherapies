@@ -22,7 +22,6 @@ importdata <-function(fileslist){
 # Lists
 ## Functions list
 ```{r, echo=TRUE, eval=TRUE}
-
 MeanMomentumByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
   x <- c()
   for (file in indexlist[indexOfvideos]){
@@ -235,3 +234,45 @@ plot (1:24, fatherEleven[23:46], type="l", col="orange", main="Mean Momentum (no
 legend("topleft", c("Mean on 11 frames interval") , fill=c("orange"), cex=0.7)
 ```
 
+# Mean Momentum by minute plots
+```{r}
+fatherMinuteC<- MeanMomentumByTime("father", indexOfvideos=1, interval=1500, data)
+
+MotherMinuteC<- MeanMomentumByTime("mother", indexOfvideos=1, interval=1500, data)
+
+TherapistMinuteC<- MeanMomentumByTime("therapist", indexOfvideos=1, interval=1500, data)
+
+PatientMinuteC<- MeanMomentumByTime("patient", indexOfvideos=1, interval=1500, data)
+
+par(mar=c(4,4,4,2))
+plot (1:length(fatherMinuteC), fatherMinuteC, type="l", col="blue", 
+main=paste("Mean Momentum (non overlaping minute intervals) 
+for ", "father", " on F1044", "C", " video" , sep=""), 
+ylab="Momentum", xlab="Time by Minute" )
+lines(MotherMinuteC, col="red")
+lines(TherapistMinuteC, col="orange")
+lines(PatientMinuteC, col="green")
+legend("top", inset=.05, ParticipantsList, 
+       fill=colOrderList, cex=0.7)
+```
+
+```{r}
+fatherMinuteD1<- MeanMomentumByTime("father", indexOfvideos=2, interval=1500, data)
+
+MotherMinuteD1<- MeanMomentumByTime("mother", indexOfvideos=2, interval=1500, data)
+
+TherapistMinuteD1<- MeanMomentumByTime("therapist", indexOfvideos=2, interval=1500, data)
+
+PatientMinuteD1<- MeanMomentumByTime("patient", indexOfvideos=2, interval=1500, data)
+
+par(mar=c(4,4,4,2))
+plot (1:length(fatherMinuteD1), fatherMinuteD1, type="l", col="blue", 
+main=paste("Mean Momentum (non overlaping minute intervals) 
+for ", "father", " on F1044", "D1", " video" , sep=""), 
+ylab="Momentum", xlab="Time by Minute" )
+lines(MotherMinuteD1, col="red")
+lines(TherapistMinuteD1, col="orange")
+lines(PatientMinuteD1, col="green")
+legend("top", inset=.05, ParticipantsList, 
+       fill=colOrderList, cex=0.7)
+```

@@ -7,7 +7,7 @@ output:
     toc: yes
 ---
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE, cache=TRUE}
 list <- list.files("CSV/csvF104422022016", full.names=TRUE)
 
 importdata <-function(fileslist){
@@ -21,7 +21,7 @@ importdata <-function(fileslist){
 
 # Lists
 ## Functions list
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=TRUE, cache=TRUE}
 MeanMomentumByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
   x <- c()
   for (file in indexlist[indexOfvideos]){
@@ -57,7 +57,7 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
 ```
 
 ## File lists
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=TRUE, cache=TRUE}
 indexlist <- c("F1044C.VOB","F1044D1.VOB","F1044D2.VOB","F1044E.VOB","F1044F.VOB",
                "F1044G.VOB","F1044H.VOB","F1044I.VOB","F1044L.VOB","F1044M1.VOB",
                "F1044M2.VOB","F1044N.VOB", "F1044O.VOB", "F1044P.VOB", "F1044Q.VOB",
@@ -72,7 +72,7 @@ colOrderList <- c("blue","red", "green","orange")
 ```
 
 ## Participants list
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE, cache=TRUE}
 data <- importdata(list)
 ParticipantsList <- names(data[,2:5])
 print(ParticipantsList)
@@ -87,7 +87,7 @@ summary(data)
 ```
 
 # Length of the videos in minutes
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=TRUE}
 videoLengthList <-c()
 for (i in indexlist){
   index<-which(data$file==i)
@@ -106,14 +106,14 @@ barplot(videoLengthList, col="cornflowerblue", cex.axis=0.6, cex.names=0.6,
 ```
 
 ## Length of the videos in number of frames
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=TRUE}
 barplot(table(data$file), col="cornflowerblue", cex.axis=0.6, cex.names=0.5, cex.lab=0.8,
         main="Number of frames in each F1044 video", cex.main=0.8, ylab="Frame number", 
         names = labelvideolist, xlab="Video Name", las=1)
 ```
 
 ## Number of Available (True) and Not Available (False) data for each participant
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.height=3}
 tab <- cbind(table(is.na(data[,2])),table(is.na(data[,3])),table(is.na(data[,4])), 
                                                           table(is.na(data[,5])))
 
@@ -128,7 +128,7 @@ Mother and therapist are the more often present participants.
 
 # Global Motion history
 ## Mean Motion history by video by participant
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.height=4}
 meanMomentumList <-c()
 meanMomentum <- function(subject){
     for (i in indexlist){
@@ -156,7 +156,7 @@ legend("top", inset=.05, ParticipantsList,
 ```
 
 ## Motion history box plots by frame (raw data), all videos
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=TRUE}
 par(mar=c(3,3,2,2))
 boxplot(data$father, data$mother, data$therapist, data$patient, 
         col=colOrderList, 
@@ -171,7 +171,7 @@ legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 It is the first video of F10044C. The father, mother and therapist are present. The patient is absent.
 
 ## Raw data
-```{r}
+```{r, cache=TRUE}
 rawdatafather <- data[which(data$file=="F1044C.VOB"),]$father
 rawdataMother <- data[which(data$file=="F1044C.VOB"),]$mother
 rawdataTherapist <- data[which(data$file=="F1044C.VOB"),]$therapist
@@ -191,7 +191,7 @@ summary(rawdataTherapist)
 ```
 
 ## Sliding interval
-```{r}
+```{r, cache=TRUE}
 slidedfather <- SlidingInterval("father", 1 , 11, data)
 slidedmother <- SlidingInterval("mother", 1 , 11, data)
 slidedtherapist <- SlidingInterval("therapist", 1 , 11, data)
@@ -211,7 +211,7 @@ summary(slidedtherapist)
 ```
 
 ## Non overlapping interval
-```{r}
+```{r, cache=TRUE}
 fatherEleven<- MeanMomentumByTime("father", indexOfvideos=1, interval=11, data)
 
 motherEleven <- MeanMomentumByTime("mother", indexOfvideos=1, interval=11, data)
@@ -234,7 +234,7 @@ summary(therapistEleven)
 
 # Focus on the motion history of the first 20 seconds of the first video(C) 
 ## Sliding interval function on a 11 frames interval
-```{r}
+```{r, cache=TRUE}
 par(mar=c(4,4,4,2))
 plot(1:250, data$father[6:255], main="Mean motion history (Sliding 11 frames interval) 
      for father on F1044C video, 10 seconds ", xlab="Frame index (25/s)", ylab="Momentum",
@@ -249,7 +249,7 @@ legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=
 ```
 
 ### Non overlapping interval function on a 11 frames interval
-```{r}
+```{r, cache=TRUE}
 plot (1:24, fatherEleven[1:24], type="l", col="blue", main="Mean Momentum (non overlapping 11 frames
       intervals) for father on F1044C video, first 10 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)" )
 lines(motherEleven[1:24], col="red", lty=1)
@@ -260,7 +260,7 @@ legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 
 ## Motion history of the father during 10-20 seconds of the first video(C) 
 ### Non overlapping interval function on a 11 frames interval
-```{r}
+```{r, cache=TRUE}
 par(mar=c(4,4,4,2))
 plot(1:250, data$father[256:505], main="Mean motion history (Sliding 11 frames
      interval) for father on F1044C video, 10-20 seconds", xlab="Frame index (25/s)", ylab="Momentum", col="blue", type="l", lty=2, lwd=0.5)
@@ -274,7 +274,7 @@ legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=
 ```
 
 ### Non overlapping interval function on a 11 frames interval
-```{r}
+```{r, cache=TRUE}
 plot (1:24, fatherEleven[23:46], type="l", col="blue", main="Mean Momentum (non overlapping 11 frames intervals) for 
 father on F1044C video, between 10-20 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)", ylim=c(0, 0.009))
 lines(motherEleven[23:46], col="red", lty=1)
@@ -284,47 +284,27 @@ legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
 
 # Mean Momentum by minute plots
-## First video F1044C
-```{r}
-fatherMinuteC<- MeanMomentumByTime("father", indexOfvideos=1, interval=1500, data)
+```{r, fig.height=4}
+for (i in 1:NumberOfvideos){
+  fatherMinute<- MeanMomentumByTime("father", indexOfvideos=i, interval=1500, data)
+  
+  MotherMinute<- MeanMomentumByTime("mother", indexOfvideos=i, interval=1500, data)
 
-MotherMinuteC<- MeanMomentumByTime("mother", indexOfvideos=1, interval=1500, data)
+  TherapistMinute<- MeanMomentumByTime("therapist", indexOfvideos=i, interval=1500, data)
 
-TherapistMinuteC<- MeanMomentumByTime("therapist", indexOfvideos=1, interval=1500, data)
+  PatientMinute<- MeanMomentumByTime("patient", indexOfvideos=i, interval=1500, data)
 
-PatientMinuteC<- MeanMomentumByTime("patient", indexOfvideos=1, interval=1500, data)
-
-par(mar=c(4,4,4,2))
-plot (1:length(fatherMinuteC), fatherMinuteC, type="l", col="blue", 
-main=paste("Mean Momentum (non overlaping minute intervals) 
-on F1044", "C", " video" , sep=""),
-ylab="Momentum", xlab="Time by Minute" )
-lines(MotherMinuteC, col="red")
-lines(TherapistMinuteC, col="orange")
-lines(PatientMinuteC, col="green")
-legend("top", inset=.05, ParticipantsList, 
-       fill=colOrderList, cex=0.7)
+length(fatherMinute)
+  
+  par(mar=c(4,4,4,2))
+      plot (1:length(fatherMinute), fatherMinute, type="l", col="blue", 
+      main=paste("Mean Momentum (non overlaping minute intervals) 
+      on F1044", labelvideolist[i], " video" , sep=""), 
+      ylab="Momentum", xlab="Time by Minute", ylim=c(0, 12E-03) )
+      lines(MotherMinute, col="red")
+      lines(TherapistMinute, col="orange")
+      lines(PatientMinute, col="green")
+      legend("top", inset=.05, ParticipantsList, 
+             fill=colOrderList, cex=0.7)
+}
 ```
-
-## Second video F1044D1
-```{r}
-fatherMinuteD1<- MeanMomentumByTime("father", indexOfvideos=2, interval=1500, data)
-
-MotherMinuteD1<- MeanMomentumByTime("mother", indexOfvideos=2, interval=1500, data)
-
-TherapistMinuteD1<- MeanMomentumByTime("therapist", indexOfvideos=2, interval=1500, data)
-
-PatientMinuteD1<- MeanMomentumByTime("patient", indexOfvideos=2, interval=1500, data)
-
-par(mar=c(4,4,4,2))
-plot (1:length(fatherMinuteD1), fatherMinuteD1, type="l", col="blue", 
-main=paste("Mean Momentum (non overlaping minute intervals) 
-on F1044", "D1", " video" , sep=""), 
-ylab="Momentum", xlab="Time by Minute" )
-lines(MotherMinuteD1, col="red")
-lines(TherapistMinuteD1, col="orange")
-lines(PatientMinuteD1, col="green")
-legend("top", inset=.05, ParticipantsList, 
-       fill=colOrderList, cex=0.7)
-```
-To do : plot motion history by minute for each video (see with Nicolas) to check videos.

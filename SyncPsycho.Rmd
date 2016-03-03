@@ -181,7 +181,7 @@ boxplot(rawdatafather, rawdataMother, rawdataTherapist,
         col=colOrderList[c(1,2,4)], 
         names=ParticipantsList[c(1,2,4)], 
         main= "Box plots of motion history mean 
-on 11 frames non overlapping interval on F1044C video", las=1)
+on 11 frames rawdata on F1044C video", las=1)
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 

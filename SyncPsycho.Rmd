@@ -42,9 +42,7 @@ MeanMomentumByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval
 SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
   x <- c()
   for (file in indexlist[indexOfvideos]){
-      print(file)
       dataVector <- data[which(data$file==file), subject]
-      print (length(dataVector))
       NBofAnalysedframes <- length(dataVector)-interval+1
           for (i in 1:NBofAnalysedframes){
               borneinf<- (i)
@@ -128,7 +126,7 @@ legend("topright", c("T", "F"), fill=terrain.colors(2))
 
 Mother and therapist are the more often present participants.
 
-# Raw Motion history
+# Global Motion history
 ## Mean Motion history by video by participant
 ```{r, echo=FALSE}
 meanMomentumList <-c()
@@ -157,84 +155,136 @@ legend("top", inset=.05, ParticipantsList,
        fill=colOrderList, cex=0.7)
 ```
 
-## Motion history box plots by frame (raw data)
+## Motion history box plots by frame (raw data), all videos
 ```{r, echo=FALSE}
 par(mar=c(3,3,2,2))
 boxplot(data$father, data$mother, data$therapist, data$patient, 
         col=colOrderList, 
         names=ParticipantsList, 
-        main= "Motion history by frame box plots ", las=1)
+        main= "Motion history by frame box plots (raw data), all videos", las=1)
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 ```
 
-## Motion history box plots by frame(sliding interval mean)
-Too long to display
-```{r, echo=FALSE, eval=FALSE}
-MeanmomentumfatherlistSI <- SlidingInterval("father",
-                indexOfvideos=1:NumberOfvideos, interval=11, data)
+# Raw data and mean of Motion History on sliding and non overlapping intervals on F1044C video
+## F1044C video
+It is the first video of F10044C. The father, mother and therapist are present. The patient is absent.
 
-MeanmomentumMotherListSI <- SlidingInterval("mother",
-                indexOfvideos=1:NumberOfvideos, interval=11, data)
+## Raw data
+```{r}
+rawdatafather <- data[which(data$file=="F1044C.VOB"),]$father
+rawdataMother <- data[which(data$file=="F1044C.VOB"),]$mother
+rawdataTherapist <- data[which(data$file=="F1044C.VOB"),]$therapist
 
-MeanmomentumTherapistListSI <- SlidingInterval("therapist",
-                indexOfvideos=1:NumberOfvideos, interval=11, data)
-
-MeanmomentumPatientListSI <- SlidingInterval("patient",
-                indexOfvideos=1:NumberOfvideos, interval=11, data)
-
-par(mar=c(3,3,2,2))
-boxplot(MeanmomentumfatherlistSI, MeanmomentumMotherListSI, MeanmomentumTherapistListSI, MeanmomentumPatientListSI, 
-        col=colOrderList, 
-        names=ParticipantsList, 
-        main= "Motion history box plots by frame(sliding interval mean)", las=1)
+par(mar=c(3,3,3,2))
+boxplot(rawdatafather, rawdataMother, rawdataTherapist,
+        col=colOrderList[c(1,2,4)], 
+        names=ParticipantsList[c(1,2,4)], 
+        main= "Box plots of motion history mean 
+on 11 frames non overlapping interval on F1044C video", las=1)
 par(mar=c(1,0.5,0.5,1))
-legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
+legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
+
+summary(rawdatafather)
+summary(rawdataMother)
+summary(rawdataTherapist)
 ```
 
-# Motion History on sliding and non verlapping intervals
-## Motion history of the father during the 10 first seconds of the first video(C) 
-### Sliding interval function on a 11 frames interval
+## Sliding interval
 ```{r}
 slidedfather <- SlidingInterval("father", 1 , 11, data)
-str(slidedfather)
+slidedmother <- SlidingInterval("mother", 1 , 11, data)
+slidedtherapist <- SlidingInterval("therapist", 1 , 11, data)
+slidedpatient <- SlidingInterval("patient", 1 , 11, data)
 
+par(mar=c(3,3,2,2))
+boxplot(slidedfather, slidedmother, slidedtherapist,
+        col=colOrderList[c(1,2,4)], 
+        names=ParticipantsList[c(1,2,4)], 
+        main= "Box plot of motion history sliding interval on F1044C video", las=1)
+par(mar=c(1,0.5,0.5,1))
+legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
+
+summary(slidedfather)
+summary(slidedmother)
+summary(slidedtherapist)
+```
+
+## Non overlapping interval
+```{r}
+fatherEleven<- MeanMomentumByTime("father", indexOfvideos=1, interval=11, data)
+
+motherEleven <- MeanMomentumByTime("mother", indexOfvideos=1, interval=11, data)
+
+therapistEleven <- MeanMomentumByTime("therapist", indexOfvideos=1, interval=11, data)
+
+par(mar=c(3,3,3,2))
+boxplot(fatherEleven, motherEleven, therapistEleven,
+        col=colOrderList[c(1,2,4)], 
+        names=ParticipantsList[c(1,2,4)], 
+        main= "Box plots of motion history mean 
+on 11 frames non overlapping interval for F1044C video", las=1)
+par(mar=c(1,0.5,0.5,1))
+legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
+
+summary(fatherEleven)
+summary(motherEleven)
+summary(therapistEleven)
+```
+
+# Focus on the motion history of the first 20 seconds of the first video(C) 
+## Sliding interval function on a 11 frames interval
+```{r}
 par(mar=c(4,4,4,2))
 plot(1:250, data$father[6:255], main="Mean motion history (Sliding 11 frames interval) 
      for father on F1044C video, 10 seconds ", xlab="Frame index (25/s)", ylab="Momentum",
-     col="red", type="l")
-lines(slidedfather[1:250],  col="blue")
-legend("topleft", c("Raw data", "Mean on sliding Interval") , fill=c("red", "blue"), cex=0.7)
+     col="blue", type="l", lty=2, lwd=0.5)
+lines(slidedfather[1:250],  col="blue", lty=1)
+lines(data$mother[6:255],  col="red", lty=2, lwd=0.5)
+lines(slidedmother[1:250],  col="red", lty=1)
+lines(data$therapist[6:255],  col="orange", lty=2, lwd=0.5)
+lines(slidedtherapist[1:250],  col="orange", lty=1)
+legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
 ### Non overlapping interval function on a 11 frames interval
 ```{r}
-fatherEleven<- MeanMomentumByTime("father", indexOfvideos=1, interval=11, data)
-plot (1:24, fatherEleven[1:24], type="l", col="orange", main="Mean Momentum (non overlapping 11 frames
-      intervals) for father on F1044C video, between 10-20 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)" )
-legend("topleft", c("Mean on 11 frames interval") , fill=c("orange"), cex=0.7)
+plot (1:24, fatherEleven[1:24], type="l", col="blue", main="Mean Momentum (non overlapping 11 frames
+      intervals) for father on F1044C video, first 10 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)" )
+lines(motherEleven[1:24], col="red", lty=1)
+lines(therapistEleven[1:24], col="green", lty=1)
+legend("topleft", "Mean on non overlapping Interval" , lty=1, cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
 
-## Motion history of the father during the 10 first seconds of the first video(C) 
+## Motion history of the father during 10-20 seconds of the first video(C) 
 ### Non overlapping interval function on a 11 frames interval
 ```{r}
 par(mar=c(4,4,4,2))
-plot(1:250, data$father[256:505], main="Mean motion history (Sliding 11 frames interval) 
-     for father on F1044C video, 10-20 seconds ", xlab="Frame index (25/s)", ylab="Momentum",
-     col="red", type="l")
-lines(slidedfather[251:500],  col="blue")
-legend("topleft", c("Raw data", "Mean on sliding Interval") , fill=c("red", "blue"), cex=0.7)
+plot(1:250, data$father[256:505], main="Mean motion history (Sliding 11 frames
+     interval) for father on F1044C video, 10-20 seconds", xlab="Frame index (25/s)", ylab="Momentum", col="blue", type="l", lty=2, lwd=0.5)
+lines(slidedfather[251:500],  col="blue", lty=1)
+lines(data$mother[256:505],  col="red", lty=2, lwd=0.5)
+lines(slidedmother[251:500],  col="red", lty=1)
+lines(data$therapist[256:505],  col="orange", lty=2, lwd=0.5)
+lines(slidedtherapist[251:500],  col="orange", lty=1)
+legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
-### Contiguous interval function on a 11 frames interval
+### Non overlapping interval function on a 11 frames interval
 ```{r}
-fatherEleven<- MeanMomentumByTime("father", indexOfvideos=1, interval=11, data)
-plot (1:24, fatherEleven[23:46], type="l", col="orange", main="Mean Momentum (non overlapping 11 frames
-      intervals) for father on F1044C video, between 10-20 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)" )
-legend("topleft", c("Mean on 11 frames interval") , fill=c("orange"), cex=0.7)
+plot (1:24, fatherEleven[23:46], type="l", col="blue", main="Mean Momentum (non overlapping 11 frames intervals) for 
+father on F1044C video, between 10-20 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)", ylim=c(0, 0.009))
+lines(motherEleven[23:46], col="red", lty=1)
+lines(therapistEleven[23:46], col="green", lty=1)
+legend("top", "Mean on non overlapping Interval" , lty=1, cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
 
 # Mean Momentum by minute plots
+## First video F1044C
 ```{r}
 fatherMinuteC<- MeanMomentumByTime("father", indexOfvideos=1, interval=1500, data)
 
@@ -247,7 +297,7 @@ PatientMinuteC<- MeanMomentumByTime("patient", indexOfvideos=1, interval=1500, d
 par(mar=c(4,4,4,2))
 plot (1:length(fatherMinuteC), fatherMinuteC, type="l", col="blue", 
 main=paste("Mean Momentum (non overlaping minute intervals) 
-on F1044", "C", " video" , sep=""), , 
+on F1044", "C", " video" , sep=""),
 ylab="Momentum", xlab="Time by Minute" )
 lines(MotherMinuteC, col="red")
 lines(TherapistMinuteC, col="orange")
@@ -256,6 +306,7 @@ legend("top", inset=.05, ParticipantsList,
        fill=colOrderList, cex=0.7)
 ```
 
+## Second video F1044D1
 ```{r}
 fatherMinuteD1<- MeanMomentumByTime("father", indexOfvideos=2, interval=1500, data)
 
@@ -276,3 +327,4 @@ lines(PatientMinuteD1, col="green")
 legend("top", inset=.05, ParticipantsList, 
        fill=colOrderList, cex=0.7)
 ```
+To do : plot motion history by minute for each video (see with Nicolas) to check videos.

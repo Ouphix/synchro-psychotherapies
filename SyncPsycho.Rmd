@@ -300,7 +300,8 @@ length(fatherMinute)
       plot (1:length(fatherMinute), fatherMinute, type="l", col="blue", 
       main=paste("Mean Momentum (non overlaping minute intervals) 
       on F1044", labelvideolist[i], " video" , sep=""), 
-      ylab="Momentum", xlab="Time by Minute", ylim=c(0, 12E-03) )
+      ylab="Momentum", xlab="Time by Minute", ylim=c(0, 12E-03), 
+      xaxp=c(0, length(fatherMinute), length(fatherMinute)))
       lines(MotherMinute, col="red")
       lines(TherapistMinute, col="orange")
       lines(PatientMinute, col="green")

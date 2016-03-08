@@ -21,6 +21,15 @@ importdata <-function(fileslist){
 
 # Lists
 ## Functions list
+###MeanMomentumByTime
+Function that takes raw motion history data and make mean on a given interval. Intervals don't overlap, so the frequency of the data change (from 25 frames by seconde to 25 frames/interval by second).
+
+#####Arguments:
+- subject : Subject studied (patient, mother, father or therapist)
+- indexOfvideos : List of videos studied (element eg 3 or list eg 1:3 or c(1,2,4))
+- interval : number of frames in the studied interval
+- data : data frame where there is data
+
 ```{r, echo=TRUE, eval=TRUE, cache=TRUE}
 MeanMomentumByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
   x <- c()
@@ -38,7 +47,18 @@ MeanMomentumByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval
   }
   return (x)
 }
+```
 
+###Slidinginterval
+Function that takes raw motion history data and make mean on a given interval. The interval overlap, so the frequency of the data don't change. It stays at 25 frames/s.
+
+####Arguments:
+- subject : subject studied (patient, mother, father or therapist)
+- indexOfvideos : list of videos studied (element eg. 3 or list eg 1:3 or c(1,2,4))
+- interval : number of frames in the studied interval
+- data : data frame where there is data
+
+```{r}
 SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
   x <- c()
   for (file in indexlist[indexOfvideos]){
@@ -234,7 +254,7 @@ summary(therapistEleven)
 
 # Focus on the motion history of the first 20 seconds of the first video(C) 
 ## Sliding interval function on a 11 frames interval
-```{r, cache=TRUE}
+```{r, cache=FALSE}
 par(mar=c(4,4,4,2))
 plot(1:250, data$father[6:255], main="Mean motion history (Sliding 11 frames interval) 
      for father on F1044C video, 10 seconds ", xlab="Frame index (25/s)", ylab="Momentum",
@@ -248,8 +268,23 @@ legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
+## Sliding interval function on a 11 frames interval with shifting of therapist (substraction of min value of therapist)
+```{r, cache=FALSE}
+par(mar=c(4,4,4,2))
+plot(1:250, data$father[6:255], main="Mean motion history (Sliding 11 frames interval) 
+     for father on F1044C video, 10 seconds, data therapist shifted", xlab="Frame index (25/s)", ylab="Momentum",
+     col="blue", type="l", lty=2, lwd=0.5)
+lines(slidedfather[1:250],  col="blue", lty=1)
+lines(data$mother[6:255],  col="red", lty=2, lwd=0.5)
+lines(slidedmother[1:250],  col="red", lty=1)
+lines(data$therapist[6:255],  col="orange", lty=2, lwd=0.5)
+lines(slidedtherapist[1:250]-min(slidedtherapist),  col="orange", lty=1)
+legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
+```
+
 ### Non overlapping interval function on a 11 frames interval
-```{r, cache=TRUE}
+```{r, cache=FALSE}
 plot (1:24, fatherEleven[1:24], type="l", col="blue", main="Mean Momentum (non overlapping 11 frames
       intervals) for father on F1044C video, first 10 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)" )
 lines(motherEleven[1:24], col="red", lty=1)
@@ -258,9 +293,19 @@ legend("topleft", "Mean on non overlapping Interval" , lty=1, cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
 
+### Non overlapping interval function on a 11 frames interval with shifting of therapist (substraction of min value of therapist)
+```{r, cache=FALSE}
+plot (1:24, fatherEleven[1:24], type="l", col="blue", main="Mean Momentum (non overlapping 11 frames
+      intervals) for father on F1044C video, first 10 seconds, data therapist shifted", ylab="Momentum", xlab="Frame index (each 11 frames)" )
+lines(motherEleven[1:24], col="red", lty=1)
+lines(therapistEleven[1:24]-min(slidedtherapist), col="green", lty=1)
+legend("topleft", "Mean on non overlapping Interval" , lty=1, cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
+```
+
 ## Motion history of the father during 10-20 seconds of the first video(C) 
 ### Non overlapping interval function on a 11 frames interval
-```{r, cache=TRUE}
+```{r, cache=FALSE}
 par(mar=c(4,4,4,2))
 plot(1:250, data$father[256:505], main="Mean motion history (Sliding 11 frames
      interval) for father on F1044C video, 10-20 seconds", xlab="Frame index (25/s)", ylab="Momentum", col="blue", type="l", lty=2, lwd=0.5)
@@ -273,12 +318,38 @@ legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
+### Non overlapping interval function on a 11 frames interval with shifting of therapist (substraction of min value of therapist)
+```{r, cache=FALSE}
+par(mar=c(4,4,4,2))
+plot(1:250, data$father[256:505], main="Mean motion history (Sliding 11 frames
+     interval) for father on F1044C video, 10-20 seconds, 
+     data therapist shifted", xlab="Frame index (25/s)", ylab="Momentum", col="blue", type="l", lty=2, lwd=0.5)
+lines(slidedfather[251:500],  col="blue", lty=1)
+lines(data$mother[256:505],  col="red", lty=2, lwd=0.5)
+lines(slidedmother[251:500],  col="red", lty=1)
+lines(data$therapist[256:505],  col="orange", lty=2, lwd=0.5)
+lines(slidedtherapist[251:500]-min(slidedtherapist),  col="orange", lty=1)
+legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
+```
+
 ### Non overlapping interval function on a 11 frames interval
-```{r, cache=TRUE}
+```{r, cache=FALSE}
 plot (1:24, fatherEleven[23:46], type="l", col="blue", main="Mean Momentum (non overlapping 11 frames intervals) for 
 father on F1044C video, between 10-20 seconds", ylab="Momentum", xlab="Frame index (each 11 frames)", ylim=c(0, 0.009))
 lines(motherEleven[23:46], col="red", lty=1)
 lines(therapistEleven[23:46], col="green", lty=1)
+legend("top", "Mean on non overlapping Interval" , lty=1, cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
+```
+
+### Non overlapping interval function on a 11 frames interval with shifting of therapist (substraction of min value of therapist)
+```{r, cache=FALSE}
+plot (1:24, fatherEleven[23:46], type="l", col="blue", main="Mean Momentum (non overlapping 11 frames intervals) for 
+father on F1044C video, between 10-20 seconds, 
+data therapist shifted", ylab="Momentum", xlab="Frame index (each 11 frames)", ylim=c(0, 0.009))
+lines(motherEleven[23:46], col="red", lty=1)
+lines(therapistEleven[23:46]-min(slidedtherapist), col="green", lty=1)
 legend("top", "Mean on non overlapping Interval" , lty=1, cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```

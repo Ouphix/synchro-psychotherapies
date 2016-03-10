@@ -210,6 +210,7 @@ summary(rawdataMother)
 summary(rawdataTherapist)
 ```
 
+
 ## Sliding interval
 ```{r, cache=TRUE}
 slidedfather <- SlidingInterval("father", 1 , 11, data)
@@ -229,6 +230,15 @@ summary(slidedfather)
 summary(slidedmother)
 summary(slidedtherapist)
 ```
+
+## Export data in text files
+```{r}
+write.table(slidedfather, "/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/slidedfather.txt", sep=",") 
+write.table(slidedmother, "/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/slidedmother.txt", sep=",") 
+write.table(slidedtherapist, "/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/slidedtherapist.txt", sep=",") 
+write.table(slidedpatient, "/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/slidedpatient.txt", sep=",") 
+```
+
 
 ## Non overlapping interval
 ```{r, cache=TRUE}

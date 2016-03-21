@@ -29,20 +29,25 @@ VideoList = ["F1044C.VOB","F1044D1.VOB","F1044D2.VOB","F1044E.VOB","F1044F.VOB",
                "F1044G.VOB","F1044H.VOB","F1044I.VOB","F1044L.VOB","F1044M1.VOB",
                "F1044M2.VOB","F1044N.VOB", "F1044O.VOB", "F1044P.VOB", "F1044Q.VOB",
                "F1044R1.VOB","F1044R2.VOB"]
-for i in VideoList:
-    print i
-    filename = """/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/"""+ i + ".slideddata.csv"
-    print filename
 
-father = ExtractSignalFromCSV(filename, columns = ['slidedfather'])
-mother = ExtractSignalFromCSV(filename, columns = ['slidedmother'])
-therapist = ExtractSignalFromCSV (filename, columns = ['slidedtherapist'])
-patient = ExtractSignalFromCSV(filename, columns = ['slidedpatient'])
+
+#for i in VideoList:
+#    print i
+#    filename = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/'+ i + '.slideddata.csv'
+#    print filename
+filename = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/F1044R2.VOB.slideddata.csv'
+
+
+father = ExtractSignalFromCSV(filename, columns = ['slidedFather'])
+mother = ExtractSignalFromCSV(filename, columns = ['slidedMother'])
+therapist = ExtractSignalFromCSV (filename, columns = ['slidedTherapist'])
+#patient = ExtractSignalFromCSV(filename, columns = ['slidedpatient'])
 frame_index = ExtractSignalFromCSV(filename, columns = ['frame_index'])
 video = ExtractSignalFromCSV(filename, columns = ['video'])
 
 #signals = [father,mother,patient, therapist]
-signals = [patient,mother,therapist]
+#signals = [patient,mother,therapist]
+signals = [father, mother, therapist]
 
 N = signals[0].shape[0]
 n = np.arange(0,N)
@@ -106,58 +111,58 @@ try :
 
 #Dyads
     SSIList_fa_mo = []
-#    SSIList_fa_th = []
+    SSIList_fa_th = []
 #    SSIList_fa_pa = []
     SSIList_mo_pa = []
     SSIList_mo_th = []
     SSIList_pa_th = []
 
 #Triples
-#    SSIList_fa_mo_th = []
+    SSIList_fa_mo_th = []
 #    SSIList_fa_pa__mo = []
 #    SSIList_fa_pa__th = []
-    SSIList_mo_pa_th = []
+#    SSIList_mo_pa_th = []
 
 #Quadruples
 #   SSIList_fa_mo_pa__th = []
 
     for i in intervalList:
 # We divide each data string in a shorter string of the length of numberOfFramesByInterval
-#        fatherInterval = father[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
+        fatherInterval = father[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
         motherInterval = mother[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
-        patientInterval=patient[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
+#        patientInterval=patient[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
         therapistInterval=therapist[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
 
 # -------------------- CREATION OF COMBINAISONS --------------------------
-#Dyad
-#        signals_fa_mo = [fatherInterval,motherInterval]
-#        signals_fa_th = [fatherInterval,therapistInterval]
+#   Dyad
+        signals_fa_mo = [fatherInterval,motherInterval]
+        signals_fa_th = [fatherInterval,therapistInterval]
 #        signals_fa_pa = [fatherInterval,patientInterval]
 
         signals_mo_th = [motherInterval, therapistInterval]
-        signals_mo_pa = [motherInterval, patientInterval]
+#        signals_mo_pa = [motherInterval, patientInterval]
 
-        signals_pa_th = [patientInterval, therapistInterval]
+#        signals_pa_th = [patientInterval, therapistInterval]
 
-#Triples
-#        signals_fa_mo_th = [fatherInterval, motherInterval,therapistInterval]
+#   Triples
+        signals_fa_mo_th = [fatherInterval, motherInterval,therapistInterval]
 #        signals_fa_mo_pa = [fatherInterval, motherInterval,patientInterval]
 #        signals_fa_pa_th = [fatherInterval, patientInterval,therapistInterval]
-        signals_mo_pa_th = [motherInterval, patientInterval, therapistInterval]
+#        signals_mo_pa_th = [motherInterval, patientInterval, therapistInterval]
 
-#Quadruples
-        signals_fa_mo_pa_th = [fatherInterval , motherInterval, patientInterval, therapistInterval]
+#   Quadruples
+#        signals_fa_mo_pa_th = [fatherInterval , motherInterval, patientInterval, therapistInterval]
 
 # -------------------------COMPUTATION CALL ---------------------------
 
 #Dyad
-#        estimators_fa_mo = s_estimator.compute(*signals_fa_mo)
-#        SSIList_fa_mo.append(estimators_fa_mo["SSI"])
-#        print(estimators_fa_mo["SSI"])
+        estimators_fa_mo = s_estimator.compute(*signals_fa_mo)
+        SSIList_fa_mo.append(estimators_fa_mo["SSI"])
+        print(estimators_fa_mo["SSI"])
 
-#        estimators_fa_th = s_estimator.compute(*signals_fa_th)
-#        SSIList_fa_th.append(estimators_fa_th["SSI"])
-#        print(estimators_fa_th["SSI"])
+        estimators_fa_th = s_estimator.compute(*signals_fa_th)
+        SSIList_fa_th.append(estimators_fa_th["SSI"])
+        print(estimators_fa_th["SSI"])
 
 #        estimators_fa_pa = s_estimator.compute(*signals_fa_pa)
 #        SSIList_fa_pa.append(estimators_fa_pa["SSI"])
@@ -167,8 +172,8 @@ try :
         SSIList_mo_th.append(estimators_mo_th["SSI"])
 #        print(estimators_mo_th["SSI"])
 
-        estimators_mo_pa  = s_estimator.compute(*signals_mo_pa)
-        SSIList_mo_pa.append(estimators_mo_pa["SSI"])
+#        estimators_mo_pa  = s_estimator.compute(*signals_mo_pa)
+#        SSIList_mo_pa.append(estimators_mo_pa["SSI"])
 #        print(estimators_mo_pa["SSI"])
 
 #        estimators_pa_th  = s_estimator.compute(*signals_pa_th)
@@ -176,9 +181,9 @@ try :
 #        print(estimators_pa_th["SSI"])
 
 #Triple
-#        estimators_fa_mo_th  = s_estimator.compute(*signals_fa_mo_th)
-#        SSIList_fa_mo_th.append(estimators_fa_mo_th["SSI"])
-#        print(estimators_fa_mo_th["SSI"])
+        estimators_fa_mo_th  = s_estimator.compute(*signals_fa_mo_th)
+        SSIList_fa_mo_th.append(estimators_fa_mo_th["SSI"])
+        print(estimators_fa_mo_th["SSI"])
 
 #        estimators_fa_mo_pa  = s_estimator.compute(*signals_fa_mo_pa)
 #        SSIList_fa_mo_pa.append(estimators_fa_mo_pa["SSI"])
@@ -188,9 +193,9 @@ try :
 #        SSIList_fa_pa_th.append(estimators_fa_pa_th["SSI"])
 #        print(estimators_fa_pa_th["SSI"])
 
-        estimators_mo_pa_th  = s_estimator.compute(*signals_mo_pa_th)
-        SSIList_mo_pa_th.append(estimators_mo_pa_th["SSI"])
-        print(estimators_mo_pa_th["SSI"])
+#        estimators_mo_pa_th  = s_estimator.compute(*signals_mo_pa_th)
+#        SSIList_mo_pa_th.append(estimators_mo_pa_th["SSI"])
+#        print(estimators_mo_pa_th["SSI"])
 
 #Quadruples
 #        estimators_fa__mo_pa_th  = s_estimator.compute(*signals_fa_mo_pa_th)
@@ -198,42 +203,43 @@ try :
 #        print(estimators_fa_mo_pa_th["SSI"])
 
 #-----------------------CONSOLE FEEDBACK---------------------------
-#    print(SSIList_fa_mo)
-#    print(SSIList_fa_th)
+    print(SSIList_fa_mo)
+    print(SSIList_fa_th)
     print(SSIList_mo_th)
-#    print(SSIList_fa_mo_th)
-    print(SSIList_mo_pa)
-    print(SSIList_pa_th)
-    print(SSIList_mo_pa_th)
+    print(SSIList_fa_mo_th)
+#    print(SSIList_mo_pa)
+#    print(SSIList_pa_th)
+#    print(SSIList_mo_pa_th)
 
 #-----------------------DATA FRAME EXPORT ---------------------------
     SSIdf = pd.DataFrame({
                         "Time_min" : intervalList,
                         "Interval" : np.arange(1,len(intervalList)+1),
-                        "Video" : videoName,
+                        "Video" : video,
 #Dyads
                         "SSI_fa_mo" : SSIList_fa_mo,
-#                        "SSI_fa_th" : SSIList_fa_th,
-                        "SSI_fa_pa" : SSIList_fa_pa,
+                        "SSI_fa_th" : SSIList_fa_th,
+#                        "SSI_fa_pa" : SSIList_fa_pa,
 
                         "SSI_mo_th" : SSIList_mo_th,
-                        "SSI_mo_pa" : SSIList_mo_pa,
-                        "SSI_pa_th" : SSIList_pa_th,
+#                        "SSI_mo_pa" : SSIList_mo_pa,
+#                        "SSI_pa_th" : SSIList_pa_th,
+
 #Triples
-#                        "SSI_fa_mo_th" : SSIList_fa_mo_th,
-                        "SSI_fa_pa_mo" : SSIList_fa_pa_mo,
-                        "SSI_fa_pa_th" : SSIList_fa_pa_th,
-                        "SSI_mo_pa_th" : SSIList_mo_pa_th,
+                        "SSI_fa_mo_th" : SSIList_fa_mo_th,
+#                        "SSI_fa_pa_mo" : SSIList_fa_pa_mo,
+#                        "SSI_fa_pa_th" : SSIList_fa_pa_th,
+#                        "SSI_mo_pa_th" : SSIList_mo_pa_th,
 
 #Quadruples
-                       "SSI_fa_mo_pa_th" : SSIList_fa_mo_pa__th
+#                       "SSI_fa_mo_pa_th" : SSIList_fa_mo_pa__th
                         })
 
 # add file list
 # fusionner des data frames avec panda
 
     print (SSIdf)
-    SSIdf.to_csv("SSI.csv")
+    SSIdf.to_csv("SSI" + "video" + ".csv")
 
 except TypeError, err :
     print("TypeError in S_Estimator computation : \n" + str(err))

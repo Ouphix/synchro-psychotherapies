@@ -30,234 +30,286 @@ VideoList = ["F1044C.VOB","F1044D1.VOB","F1044D2.VOB","F1044E.VOB","F1044F.VOB",
                "F1044M2.VOB","F1044N.VOB", "F1044O.VOB", "F1044P.VOB", "F1044Q.VOB",
                "F1044R1.VOB","F1044R2.VOB"]
 
+for i in VideoList:
+    videoName = (i[0:len(i)-4])
+    print videoName
+    filename = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/'+ i + '.slideddata.csv'
 
-#for i in VideoList:
-#    print i
-#    filename = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/'+ i + '.slideddata.csv'
-#    print filename
-filename = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/F1044R2.VOB.slideddata.csv'
+    father = ExtractSignalFromCSV(filename, columns = ['slidedFather'])
+    mother = ExtractSignalFromCSV(filename, columns = ['slidedMother'])
+    therapist = ExtractSignalFromCSV (filename, columns = ['slidedTherapist'])
+    patient = ExtractSignalFromCSV(filename, columns = ['slidedPatient'])
+    frame_index = ExtractSignalFromCSV(filename, columns = ['frame_index'])
+    video = ExtractSignalFromCSV(filename, columns = ['video'])
 
+    fatherBOOL = True
+    motherBOOL = True
+    therapistBOOL = True
+    patientBOOL = True
+    participantsList = [father, mother, therapist, patient]
 
-father = ExtractSignalFromCSV(filename, columns = ['slidedFather'])
-mother = ExtractSignalFromCSV(filename, columns = ['slidedMother'])
-therapist = ExtractSignalFromCSV (filename, columns = ['slidedTherapist'])
-#patient = ExtractSignalFromCSV(filename, columns = ['slidedpatient'])
-frame_index = ExtractSignalFromCSV(filename, columns = ['frame_index'])
-video = ExtractSignalFromCSV(filename, columns = ['video'])
+    if (father['slidedFather'].isnull()).all():
+# IF Only NA becomes False
+        fatherBOOL = False
 
-#signals = [father,mother,patient, therapist]
-#signals = [patient,mother,therapist]
-signals = [father, mother, therapist]
+    if (mother['slidedMother'].isnull()).all():
+# IF Only NA becomes False
+        motherBOOL = False
 
-N = signals[0].shape[0]
-n = np.arange(0,N)
+    if (patient['slidedPatient'].isnull()).all():
+        patientBOOL = False
 
-""" Plot standardized input signals """
-Signals = signals
-plt.ion()
+    if (therapist['slidedTherapist'].isnull()).all():
+        therapistBOOL = False
 
-nrows = len(Signals)
-figure, ax = plt.subplots(nrows, sharex=True)
+    participantsBOOLList = [fatherBOOL, motherBOOL, therapistBOOL, patientBOOL]
 
-idx = 0
-for col in  range(len(Signals)) :
-    ax[idx].grid(True) # Display a grid
-    ax[idx].set_title('Standardized signal for : ' + Signals[col].columns[0] + ' variable')
-    ax[idx].plot(n, Signals[col].iloc[:,0])
-    idx += 1
+    signals = []
+    for i in range(4):
+# if participant present, TRUE and add it to the list
+        if participantsBOOLList[i]:
+            signals.append(participantsList[i])
 
-ax[idx-1].set_xlabel('Samples')
+    N = signals[0].shape[0]
+    n = np.arange(0,N)
 
-""" Define class attributes of the wanted method """
-surr_nb_iter = 100
-plot_surrogate = False
+    """ Plot standardized input signals """
+    Signals = signals
+    plt.ion()
 
-""" Instanciate the class with its attributes """
-print("\n")
-try :
+    nrows = len(Signals)
+    figure, ax = plt.subplots(nrows, sharex=True)
+
+    idx = 0
+    for col in  range(len(Signals)) :
+        ax[idx].grid(True) # Display a grid
+        ax[idx].set_title('Standardized signal for : ' + Signals[col].columns[0] + ' variable')
+        ax[idx].plot(n, Signals[col].iloc[:,0])
+        idx += 1
+
+    ax[idx-1].set_xlabel('Samples')
+
+    """ Define class attributes of the wanted method """
+    surr_nb_iter = 100
+    plot_surrogate = False
+
+    """ Instanciate the class with its attributes """
+    print("\n")
+    try :
 ## Number of frames by interval used to compute SSI
-    numberOfFramesByInterval = 25*10
-    #attention ceci est un test pour 30 seconde, a remmettre a 60
-    NbOfInterval = len(father)/numberOfFramesByInterval
-    #    print(NbOfInterval)
-    intervalList = range(NbOfInterval)
-    s_estimator = S_Estimator.S_Estimator(surr_nb_iter, plot_surrogate)
+        numberOfFramesByInterval = 25*10
+        #attention ceci est un test pour 30 seconde, a remmettre a 60
+        NbOfInterval = len(father)/numberOfFramesByInterval
+        intervalList = range(NbOfInterval)
+        s_estimator = S_Estimator.S_Estimator(surr_nb_iter, plot_surrogate)
 
-except TypeError, err :
-    print("TypeError in S_Estimator constructor : \n" + str(err))
-    sys.exit(-1)
-except ValueError, err :
-    print("ValueError in S_Estimator constructor : \n" + str(err))
-    sys.exit(-1)
-except Exception, e :
-    print("Exception in S_Estimator constructor : \n" + str(e))
-    sys.exit(-1)
+    except TypeError, err :
+        print("TypeError in S_Estimator constructor : \n" + str(err))
+        sys.exit(-1)
+    except ValueError, err :
+        print("ValueError in S_Estimator constructor : \n" + str(err))
+        sys.exit(-1)
+    except Exception, e :
+        print("Exception in S_Estimator constructor : \n" + str(e))
+        sys.exit(-1)
 
-print("An instance the class is now created with the following parameters:\n" +
-      "surr_nb_iter = " + str(surr_nb_iter) + "\n"
-      )
+    print("An instance the class is now created with the following parameters:\n" +
+          "surr_nb_iter = " + str(surr_nb_iter) + "\n"
+          )
 
-""" Compute the method and get the result """
-print("\n")
-print("Computing...")
+    """ Compute the method and get the result """
+    print("\n")
+    print("Computing...")
 
-try :
-    """ List of SSI index for each dyad and the whole group"""
-    """ Name of the participants in 2 letters, ordered in alphatebical order"""
-    """In this example, there is 4 participants father, mother, patient, therapist,
-     sometimes only one some participants are filmed """
+    try :
+        """ List of SSI index for each dyad and the whole group"""
+        """ Name of the participants in 2 letters, ordered in alphatebical order"""
+        """In this example, there is 4 participants father, mother, patient, therapist,
+         sometimes only one some participants are filmed """
 
 # ---------------------- CREATION OF LISTS --------------------------"""
+        SSIList_fa_mo = []
+        SSIList_fa_mo_pa = []
+        SSIList_fa_mo_pa_th = []
+        SSIList_fa_mo_th = []
+        SSIList_fa_pa = []
+        SSIList_fa_pa_th = []
+        SSIList_fa_th = []
+        SSIList_mo_pa = []
+        SSIList_mo_pa_th = []
+        SSIList_mo_th = []
+        SSIList_pa_th = []
 
-#Dyads
-    SSIList_fa_mo = []
-    SSIList_fa_th = []
-#    SSIList_fa_pa = []
-    SSIList_mo_pa = []
-    SSIList_mo_th = []
-    SSIList_pa_th = []
-
-#Triples
-    SSIList_fa_mo_th = []
-#    SSIList_fa_pa__mo = []
-#    SSIList_fa_pa__th = []
-#    SSIList_mo_pa_th = []
-
-#Quadruples
-#   SSIList_fa_mo_pa__th = []
-
-    for i in intervalList:
+        for i in intervalList:
 # We divide each data string in a shorter string of the length of numberOfFramesByInterval
-        fatherInterval = father[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
-        motherInterval = mother[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
-#        patientInterval=patient[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
-        therapistInterval=therapist[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
+            fatherInterval = father[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
+            motherInterval = mother[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
+            patientInterval = patient[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
+            therapistInterval = therapist[numberOfFramesByInterval*i:numberOfFramesByInterval*(i+1)]
 
 # -------------------- CREATION OF COMBINAISONS --------------------------
-#   Dyad
-        signals_fa_mo = [fatherInterval,motherInterval]
-        signals_fa_th = [fatherInterval,therapistInterval]
-#        signals_fa_pa = [fatherInterval,patientInterval]
-
-        signals_mo_th = [motherInterval, therapistInterval]
-#        signals_mo_pa = [motherInterval, patientInterval]
-
-#        signals_pa_th = [patientInterval, therapistInterval]
-
-#   Triples
-        signals_fa_mo_th = [fatherInterval, motherInterval,therapistInterval]
-#        signals_fa_mo_pa = [fatherInterval, motherInterval,patientInterval]
-#        signals_fa_pa_th = [fatherInterval, patientInterval,therapistInterval]
-#        signals_mo_pa_th = [motherInterval, patientInterval, therapistInterval]
-
-#   Quadruples
-#        signals_fa_mo_pa_th = [fatherInterval , motherInterval, patientInterval, therapistInterval]
+            signals_fa_mo = [fatherInterval,motherInterval]
+            signals_fa_th = [fatherInterval,therapistInterval]
+            signals_fa_pa = [fatherInterval,patientInterval]
+            signals_mo_th = [motherInterval, therapistInterval]
+            signals_mo_pa = [motherInterval, patientInterval]
+            signals_pa_th = [patientInterval, therapistInterval]
+            signals_fa_mo_th = [fatherInterval, motherInterval, therapistInterval]
+            signals_fa_mo_pa = [fatherInterval, motherInterval, patientInterval]
+            signals_fa_pa_th = [fatherInterval, patientInterval, therapistInterval]
+            signals_mo_pa_th = [motherInterval, patientInterval, therapistInterval]
+            signals_fa_mo_pa_th = [fatherInterval , motherInterval, patientInterval, therapistInterval]
 
 # -------------------------COMPUTATION CALL ---------------------------
+#        print(video[0:NbOfInterval].reset_index())
+            if fatherBOOL:
+                if motherBOOL:
+                    estimators_fa_mo = s_estimator.compute(*signals_fa_mo)
+                    SSIList_fa_mo.append(estimators_fa_mo["SSI"])
+                    if patientBOOL:
+                        estimators_fa_mo_pa  = s_estimator.compute(*signals_fa_mo_pa)
+                        SSIList_fa_mo_pa.append(estimators_fa_mo_pa["SSI"])
+                        if therapistBOOL:
+                            estimators_fa_mo_pa_th  = s_estimator.compute(*signals_fa_mo_pa_th)
+                            SSIList_fa_mo_pa_th.append(estimators_fa_mo_pa_th["SSI"])
+                    if therapistBOOL:
+                        estimators_fa_mo_th  = s_estimator.compute(*signals_fa_mo_th)
+                        SSIList_fa_mo_th.append(estimators_fa_mo_th["SSI"])
+                if patientBOOL:
+                    estimators_fa_pa = s_estimator.compute(*signals_fa_pa)
+                    SSIList_fa_pa.append(estimators_fa_pa["SSI"])
+                    if therapistBOOL:
+                        estimators_fa_pa_th  = s_estimator.compute(*signals_fa_pa_th)
+                        SSIList_fa_pa_th.append(estimators_fa_pa_th["SSI"])
+                if therapistBOOL:
+                    estimators_fa_th = s_estimator.compute(*signals_fa_th)
+                    SSIList_fa_th.append(estimators_fa_th["SSI"])
 
-#Dyad
-        estimators_fa_mo = s_estimator.compute(*signals_fa_mo)
-        SSIList_fa_mo.append(estimators_fa_mo["SSI"])
-        print(estimators_fa_mo["SSI"])
+            if motherBOOL:
+                if patientBOOL:
+                    estimators_mo_pa  = s_estimator.compute(*signals_mo_pa)
+                    SSIList_mo_pa.append(estimators_mo_pa["SSI"])
+                    if therapistBOOL:
+                        estimators_mo_pa_th  = s_estimator.compute(*signals_mo_pa_th)
+                        SSIList_mo_pa_th.append(estimators_mo_pa_th["SSI"])
+                if therapistBOOL:
+                    estimators_mo_th  = s_estimator.compute(*signals_mo_th)
+                    SSIList_mo_th.append(estimators_mo_th["SSI"])
 
-        estimators_fa_th = s_estimator.compute(*signals_fa_th)
-        SSIList_fa_th.append(estimators_fa_th["SSI"])
-        print(estimators_fa_th["SSI"])
+            if patientBOOL:
+                if therapistBOOL:
+                    estimators_pa_th  = s_estimator.compute(*signals_pa_th)
+                    SSIList_pa_th.append(estimators_pa_th["SSI"])
 
-#        estimators_fa_pa = s_estimator.compute(*signals_fa_pa)
-#        SSIList_fa_pa.append(estimators_fa_pa["SSI"])
-#        print(estimators_fa_pa["SSI"])
+    #-----------------------CONSOLE FEEDBACK---------------------------
+    #    print(SSIList_fa_th)
+    #    print(SSIList_mo_th)
+    #    print(SSIList_fa_mo_th)
+    #    print(SSIList_mo_pa)
+    #    print(SSIList_pa_th)
+    #    print(SSIList_mo_pa_th)
 
-        estimators_mo_th  = s_estimator.compute(*signals_mo_th)
-        SSIList_mo_th.append(estimators_mo_th["SSI"])
-#        print(estimators_mo_th["SSI"])
+    #-----------------------DATA FRAME EXPORT ---------------------------
+        video = video[0:NbOfInterval].reset_index()
+        video = (video.iloc[:,1])
 
-#        estimators_mo_pa  = s_estimator.compute(*signals_mo_pa)
-#        SSIList_mo_pa.append(estimators_mo_pa["SSI"])
-#        print(estimators_mo_pa["SSI"])
+        time_min=[]
+        for i in intervalList:
+            time_min.append(float(i)/6)
 
-#        estimators_pa_th  = s_estimator.compute(*signals_pa_th)
-#        SSIList_pa_th.append(estimators_pa_th["SSI"])
-#        print(estimators_pa_th["SSI"])
+        SSIdf = pd.DataFrame({"Time_min" : time_min,
+                            "Interval" : np.arange(1,len(intervalList)+1),
+                            "video" : video})
+        if len(SSIList_fa_pa) > 0:
+            SSIdf_fa_pa = pd.DataFrame({"SSI_fa_pa" : SSIList_fa_pa})
+            SSIdf = pd.concat([SSIdf, SSIdf_fa_pa], axis=1)
 
-#Triple
-        estimators_fa_mo_th  = s_estimator.compute(*signals_fa_mo_th)
-        SSIList_fa_mo_th.append(estimators_fa_mo_th["SSI"])
-        print(estimators_fa_mo_th["SSI"])
+        if len(SSIList_fa_mo) > 0:
+            SSIdf_fa_mo = pd.DataFrame({"SSI_fa_mo" : SSIList_fa_mo})
+            SSIdf = pd.concat([SSIdf, SSIdf_fa_mo], axis=1)
 
-#        estimators_fa_mo_pa  = s_estimator.compute(*signals_fa_mo_pa)
-#        SSIList_fa_mo_pa.append(estimators_fa_mo_pa["SSI"])
-#        print(estimators_fa_mo_pa["SSI"])
+        if len(SSIList_fa_mo_pa) > 0:
+            SSIdf_fa_mo_pa = pd.DataFrame({"SSI_fa_mo_pa" : SSIList_fa_mo_pa})
+            SSIdf = pd.concat([SSIdf, SSIdf_fa_mo_pa], axis=1)
 
-#        estimators_fa_pa_th  = s_estimator.compute(*signals_fa_pa_th)
-#        SSIList_fa_pa_th.append(estimators_fa_pa_th["SSI"])
-#        print(estimators_fa_pa_th["SSI"])
+        if len(SSIList_fa_mo_pa_th) > 0:
+            SSIdf_fa_mo_pa_th = pd.DataFrame({"SSI_fa_mo_pa_th" : SSIList_fa_mo_pa_th})
+            SSIdf = pd.concat([SSIdf, SSIdf_fa_mo_pa_th], axis=1)
 
-#        estimators_mo_pa_th  = s_estimator.compute(*signals_mo_pa_th)
-#        SSIList_mo_pa_th.append(estimators_mo_pa_th["SSI"])
-#        print(estimators_mo_pa_th["SSI"])
+        if len(SSIList_fa_mo_th) > 0:
+            SSIdf_fa_mo_th = pd.DataFrame({"SSI_fa_mo_th" : SSIList_fa_mo_th})
+            SSIdf = pd.concat([SSIdf, SSIdf_fa_mo_th], axis=1)
 
-#Quadruples
-#        estimators_fa__mo_pa_th  = s_estimator.compute(*signals_fa_mo_pa_th)
-#        SSIList_fa_mo_pa_th.append(estimators_fa_mo_pa_th["SSI"])
-#        print(estimators_fa_mo_pa_th["SSI"])
+        if len(SSIList_fa_pa_th) > 0:
+            SSIdf_fa_pa_th = pd.DataFrame({"SSI_fa_pa_th" : SSIList_fa_pa_th})
+            SSIdf = pd.concat([SSIdf, SSIdf_fa_pa_th], axis=1)
 
-#-----------------------CONSOLE FEEDBACK---------------------------
-    print(SSIList_fa_mo)
-    print(SSIList_fa_th)
-    print(SSIList_mo_th)
-    print(SSIList_fa_mo_th)
-#    print(SSIList_mo_pa)
-#    print(SSIList_pa_th)
-#    print(SSIList_mo_pa_th)
+        if len(SSIList_fa_th) > 0:
+            SSIdf_fa_th = pd.DataFrame({"SSI_fa_th" : SSIList_fa_th})
+            SSIdf = pd.concat([SSIdf, SSIdf_fa_th], axis=1)
 
-#-----------------------DATA FRAME EXPORT ---------------------------
-    SSIdf = pd.DataFrame({
-                        "Time_min" : intervalList,
-                        "Interval" : np.arange(1,len(intervalList)+1),
-                        "Video" : video,
-#Dyads
-                        "SSI_fa_mo" : SSIList_fa_mo,
-                        "SSI_fa_th" : SSIList_fa_th,
-#                        "SSI_fa_pa" : SSIList_fa_pa,
+        if len(SSIList_mo_pa) > 0:
+            SSIdf_mo_pa = pd.DataFrame({"SSI_mo_pa" : SSIList_mo_pa})
+            SSIdf = pd.concat([SSIdf, SSIdf_mo_pa], axis=1)
 
-                        "SSI_mo_th" : SSIList_mo_th,
-#                        "SSI_mo_pa" : SSIList_mo_pa,
-#                        "SSI_pa_th" : SSIList_pa_th,
+        if len(SSIList_mo_pa_th) > 0:
+            SSIdf_mo_pa_th = pd.DataFrame({"SSI_mo_pa_th" : SSIList_mo_pa_th})
+            SSIdf = pd.concat([SSIdf, SSIdf_mo_pa_th], axis=1)
 
-#Triples
-                        "SSI_fa_mo_th" : SSIList_fa_mo_th,
-#                        "SSI_fa_pa_mo" : SSIList_fa_pa_mo,
-#                        "SSI_fa_pa_th" : SSIList_fa_pa_th,
-#                        "SSI_mo_pa_th" : SSIList_mo_pa_th,
+        if len(SSIList_mo_th) > 0:
+            SSIdf_mo_th = pd.DataFrame({"SSI_mo_th" : SSIList_mo_th})
+            SSIdf = pd.concat([SSIdf, SSIdf_mo_th], axis=1)
 
-#Quadruples
-#                       "SSI_fa_mo_pa_th" : SSIList_fa_mo_pa__th
-                        })
+        if len(SSIList_pa_th) > 0:
+            SSIdf_pa_th = pd.DataFrame({"SSI_pa_th" : SSIList_pa_th})
+            SSIdf = pd.concat([SSIdf, SSIdf_pa_th], axis=1)
 
-# add file list
-# fusionner des data frames avec panda
+        if SSIdf.empty:
+            print("Empty Data Frame")
+        else:
+            print("SSIdf")
+            print(i)
+            print(SSIdf)
+#            print(SSIdf.shape)
+    #        print("SSIdf_fa_mo")
+    #        print (SSIdf_fa_mo)
+    #        print (SSIdf_fa_mo.shape)
+    #        print("SSIdf_fa_pa")
+    #        print (SSIdf_fa_pa)
+    #        print (SSIdf_fa_pa.shape)
+    #        print(video)
+    #        print(video.shape)
+    #        c = pd.concat([SSIdf, video], axis=1)
+#            del SSIdf['Time_min']
+#            del SSIdf['Time (ms)']
+    #        print(c.shape)
+    #        print (c.columns)
+    #        print(c)
 
-    print (SSIdf)
-    SSIdf.to_csv("SSI" + "video" + ".csv")
+    # add file list
+    # fusionner des data frames avec panda
 
-except TypeError, err :
-    print("TypeError in S_Estimator computation : \n" + str(err))
-    sys.exit(-1)
-except ValueError, err :
-    print("ValueError in S_Estimator computation : \n" + str(err))
-    sys.exit(-1)
-except Exception, e :
-    print("Exception in S_Estimator computation : \n" + str(e))
-    sys.exit(-1)
+#        SSIdf.to_csv("SSI" + video + ".csv")
+#        print(video)
+        SSIdf.to_csv("/SyncPy/examples/SynchronyCSV/SSI"+videoName+".csv")
 
-#""" Display result """
-#print("\n")
-#print('S_Estimator result :')
-#print("\n")
+    except TypeError, err :
+        print("TypeError in S_Estimator computation : \n" + str(err))
+        sys.exit(-1)
+    except ValueError, err :
+        print("ValueError in S_Estimator computation : \n" + str(err))
+        sys.exit(-1)
+    except Exception, e :
+        print("Exception in S_Estimator computation : \n" + str(e))
+        sys.exit(-1)
 
-#for i in estimators.keys():
-#    print(i + " : " + str(estimators[i]))
-#print("\n")
+    #""" Display result """
+    #print("\n")
+    #print('S_Estimator result :')
+    #print("\n")
+
+    #for i in estimators.keys():
+    #    print(i + " : " + str(estimators[i]))
+    #print("\n")
 
 raw_input("Push ENTER key to exit.")

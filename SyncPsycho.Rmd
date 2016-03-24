@@ -1,36 +1,40 @@
 ---
 title: "Synchrony in Psychotherapy, example with F1044 patient data"
 author: "Thomas Gargot"
-date: "2 mars 2016"
+date: "Mars, 24th 2016"
 output: 
   pdf_document: 
     toc: yes
 ---
 
+# Aim and Hypothesis
+The aim of this project is to evaluate if it is possible to detect automatic signals that could predict the outcomes of a familial psychotherapy. Here are the analysis of the F1044 subject and his familly (2 parents). Is there synchrony signals between him self, his parents and the therapist ? His there synchrony signal between his parents and the therapist ?
+
 ```{r, echo=FALSE, eval=TRUE, cache=TRUE}
+setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/SynchroData")
 list <- list.files("CSV/csvF104422022016", full.names=TRUE)
 
 importdata <-function(fileslist){
     data <- c()
     for (i in list){
-        dataAlone <-read.csv(paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/", i, sep=""))
+        dataAlone <-read.csv(paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/", i, sep=""))
         data <- rbind(data, dataAlone)}
     return (data)}
 ```
 
 # Lists
 ## Functions list
-###MeanMomentumByTime
+### MeanMotionByTime
 Function that takes raw motion history data and make mean on a given interval. Intervals don't overlap, so the frequency of the data change (from 25 frames by seconde to 25 frames/interval by second).
 
-#####Arguments:
+##### Arguments:
 - subject : Subject studied (patient, mother, father or therapist)
 - indexOfvideos : List of videos studied (element eg 3 or list eg 1:3 or c(1,2,4))
 - interval : number of frames in the studied interval
 - data : data frame where there is data
 
 ```{r, echo=TRUE, eval=TRUE, cache=TRUE}
-MeanMomentumByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
+MeanMotionByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
   x <- c()
   for (file in indexlist[indexOfvideos]){
         dataVector <- data[which(data$file==file), subject]
@@ -45,10 +49,10 @@ MeanMomentumByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval
   return (x)}
 ```
 
-###Slidinginterval
+### Slidinginterval
 Function that takes raw motion history data and make mean on a given interval. The interval overlap, so the frequency of the data don't change. It stays at 25 frames/s.
 
-####Arguments:
+#### Arguments:
 - subject : subject studied (patient, mother, father or therapist)
 - indexOfvideos : list of videos studied (element eg. 3 or list eg 1:3 or c(1,2,4))
 - interval : number of frames in the studied interval
@@ -59,8 +63,8 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
   {x <- c()
   for (file in indexlist[indexOfvideos]){
       dataVector <- data[which(data$file==file), subject]
-      NBofAnalysedframes <- length(dataVector)-interval+1
-          for (i in 1:NBofAnalysedframes){
+      NBofAnalysedFrames <- length(dataVector)-interval+1
+          for (i in 1:NBofAnalysedFrames){
               borneinf<- (i)
               bornesup <-(interval-1+i)
               dataVectorInterval <- dataVector[borneinf:bornesup]
@@ -76,8 +80,8 @@ indexlist <- c("F1044C.VOB","F1044D1.VOB","F1044D2.VOB","F1044E.VOB","F1044F.VOB
                "F1044M2.VOB","F1044N.VOB", "F1044O.VOB", "F1044P.VOB", "F1044Q.VOB",
                "F1044R1.VOB","F1044R2.VOB")
 
-labelvideolist<- c("C","D1","D2","E","F", "G","H","I","L","M1", "M2","N", "O", "P", "Q",
-                   "R1","R2")
+labelvideolist<- c("C","D1","D2","E","F", "G","H","I","L","M1", 
+                   "M2","N", "O", "P", "Q","R1","R2")
 
 NumberOfvideos <- length(indexlist)
 
@@ -86,6 +90,7 @@ colOrderList <- c("blue","red", "green","orange")
 
 ## Participants list
 ```{r, echo=FALSE, eval=TRUE, cache=TRUE}
+getwd()
 data <- importdata(list)
 ParticipantsList <- names(data[,2:5])
 print(ParticipantsList)
@@ -93,11 +98,12 @@ data$timeMin <- data$frame/(25*60)
 ```
 
 # Presentation of the data
-The timeMin is corresponding to a frame rate 25/sec.
+This data comes from the INCANT study. The F1044 subject which as dependence with cannabis, had a familial therapy (TAU and MDFT). The goal of this pilot study is to extract meaningfull motion history from 17 videos called F1044C, F1044D1... to F1044R2 (see listsindexlist) 
 ```{r}
 str(data)
 summary(data)
 ```
+The timeMin is calculated with a frame rate of 25/sec.
 
 # Length of the videos in minutes
 ```{r, echo=FALSE, cache=TRUE}
@@ -107,14 +113,12 @@ for (i in indexlist){
   videolength <- max (data$timeMin[index])
   videoLengthList <-c(videoLengthList,videolength)}
 
-#print(videoLengthList)
-
 par(mar=c(4,4,3,1))
 barplot(videoLengthList, col="cornflowerblue", cex.axis=0.6, cex.names=0.6,
         ylab="Minutes", xlab="Video Name", las=1, names=labelvideolist, 
         main="Length in each F1044 video (min)")
         abline(h = mean(videoLengthList), lwd=2, lty=2)
-        text(20,20, "Mean")
+        text(20,20, "Mean", cex=0.8)
 ```
 
 ## Length of the videos in number of frames
@@ -125,7 +129,7 @@ barplot(table(data$file), col="cornflowerblue", cex.axis=0.6, cex.names=0.5, cex
 ```
 
 ## Number of Available (True) and Not Available (False) data for each participant
-```{r, echo=FALSE, fig.height=3}
+```{r, echo=FALSE, fig.height=5}
 tab <- cbind(table(is.na(data[,2])),table(is.na(data[,3])),table(is.na(data[,4])), 
                                                           table(is.na(data[,5])))
 
@@ -135,29 +139,29 @@ barplot(tab, cex.axis = 0.7, las=2, cex.main= 1, names=ParticipantsList,
   beside=TRUE, las=1, col=terrain.colors(2), ylim=c(0,600000))
 legend("topright", c("T", "F"), fill=terrain.colors(2))
 ```
-
+Some participants are not filmed (eg therapist) or don't come in the sessions.
 Mother and therapist are the more often present participants.
 
 # Global Motion history
 ## Mean Motion history by video by participant
 ```{r, echo=FALSE, fig.height=4}
-meanMomentumList <-c()
-meanMomentum <- function(subject){
+meanMotionList <-c()
+meanMotion <- function(subject){
     for (i in indexlist){
               index <- which(data$file==i)
-              momentumsubject<- mean(data[index,subject], na.rm=TRUE)
-              meanMomentumList <-c(meanMomentumList, momentumsubject)}
-  return (meanMomentumList)}
+              Motionsubject<- mean(data[index,subject], na.rm=TRUE)
+              meanMotionList <-c(meanMotionList, Motionsubject)}
+  return (meanMotionList)}
 
-momentumfatherlist <- meanMomentum("father")
-momentumMotherList <- meanMomentum("mother")
-momentumTherapistList <- meanMomentum("therapist")
-momentumPatientList <- meanMomentum("patient")
+Motionfatherlist <- meanMotion("father")
+MotionMotherList <- meanMotion("mother")
+MotionTherapistList <- meanMotion("therapist")
+MotionPatientList <- meanMotion("patient")
 
-momentumMeanList <- rbind(momentumfatherlist, momentumMotherList, momentumPatientList, momentumTherapistList)
+MotionMeanList <- rbind(Motionfatherlist, MotionMotherList, MotionPatientList, MotionTherapistList)
 
 par(mar=c(3,3,2,1))
-barplot(momentumMeanList, names=labelvideolist, las=1, cex.axis = 0.4, cex.names=0.6, 
+barplot(MotionMeanList, names=labelvideolist, las=1, cex.axis = 0.4, cex.names=0.6, 
         main="Mean Motion history in each video", beside=TRUE, 
         col=colOrderList)
 par(mar=c(1,0.5,0.5,1))
@@ -165,8 +169,8 @@ legend("top", inset=.05, ParticipantsList,
        fill=colOrderList, cex=0.7)
 ```
 
+```{r, echo=FALSE, cache=TRUE, eval =FALSE}
 ## Motion history box plots by frame (raw data), all videos
-```{r, echo=FALSE, cache=TRUE}
 par(mar=c(3,3,2,2))
 boxplot(data$father, data$mother, data$therapist, data$patient, 
         col=colOrderList, 
@@ -179,43 +183,48 @@ legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 # Raw data and mean of Motion History on sliding and non overlapping intervals on F1044C video
 ## F1044C video
 It is the first video of F10044C. The father, mother and therapist are present. The patient is absent.
-
 ## Raw data
-```{r, cache=TRUE}
+```{r}
 rawdatafather <- data[which(data$file=="F1044C.VOB"),]$father
 rawdataMother <- data[which(data$file=="F1044C.VOB"),]$mother
 rawdataTherapist <- data[which(data$file=="F1044C.VOB"),]$therapist
-
-par(mar=c(3,3,3,2))
-boxplot(rawdatafather, rawdataMother, rawdataTherapist,
-        col=colOrderList[c(1,2,4)], 
-        names=ParticipantsList[c(1,2,4)], 
-        main= "Box plots of motion history mean 
-on 11 frames rawdata on F1044C video", las=1)
-par(mar=c(1,0.5,0.5,1))
-legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 
 summary(rawdatafather)
 summary(rawdataMother)
 summary(rawdataTherapist)
 ```
 
+```{r, cache=TRUE, eval=FALSE, echo=FALSE}
+par(mar=c(3,3,3,2))
+boxplot(rawdatafather, rawdataMother, rawdataTherapist,
+        col=colOrderList[c(1,2,4)], 
+        names=ParticipantsList[c(1,2,4)], 
+        main= "Box plots of motion history rawdata on F1044C video", las=1)
+par(mar=c(1,0.5,0.5,1))
+legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
+```
+
 ## Sliding interval
-```{r, cache=TRUE}
+```{r}
 ## REMINDER:
-#SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data) with :
+# SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data) with :
 # subject : subject studied (patient, mother, father or therapist)
 # indexOfvideos : list of videos studied (element eg. 3 or list eg 1:3 or c(1,2,4)) 
 # interval : number of frames in the studied interval
 # data : data frame where there is data
 
-# avant 1ere video
-# avant 11 intervalles
-slidedfather <- SlidingInterval("father", 7 , 5, data)
-slidedmother <- SlidingInterval("mother", 7 , 5, data)
-slidedtherapist <- SlidingInterval("therapist", 7 , 5, data)
-slidedpatient <- SlidingInterval("patient", 7 , 5, data)
+slidedfather <- SlidingInterval("father", 1 , 5, data)
+slidedmother <- SlidingInterval("mother", 1 , 5, data)
+slidedtherapist <- SlidingInterval("therapist", 1 , 5, data)
+slidedpatient <- SlidingInterval("patient", 1 , 5, data)
 
+summary(slidedfather)
+summary(slidedmother)
+summary(slidedpatient)
+summary(slidedtherapist)
+```
+
+```{r, cache=TRUE, eval=FALSE}
 par(mar=c(3,3,2,2))
 boxplot(slidedfather, slidedmother, slidedtherapist,
         col=colOrderList[c(1,2,4)], 
@@ -223,56 +232,53 @@ boxplot(slidedfather, slidedmother, slidedtherapist,
         main= "Box plot of motion history sliding interval on F1044C video", las=1)
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
-
-summary(slidedfather)
-summary(slidedmother)
-summary(slidedtherapist)
 ```
 
 ## Non overlapping interval
 ```{r, cache=TRUE}
-fatherEleven<- MeanMomentumByTime("father", indexOfvideos=1, interval=11, data)
+fatherFive<- MeanMotionByTime("father", indexOfvideos=1, interval=5, data)
 
-motherEleven <- MeanMomentumByTime("mother", indexOfvideos=1, interval=11, data)
+motherFive <- MeanMotionByTime("mother", indexOfvideos=1, interval=5, data)
 
-therapistEleven <- MeanMomentumByTime("therapist", indexOfvideos=1, interval=11, data)
+therapistFive <- MeanMotionByTime("therapist", indexOfvideos=1, interval=5, data)
 
+summary(fatherFive)
+summary(motherFive)
+summary(therapistFive)
+```
+
+```{r, eval=FALSE, echo=FALSE}
 par(mar=c(3,3,3,2))
-boxplot(fatherEleven, motherEleven, therapistEleven,
+boxplot(fatherFive, motherFive, therapistFive,
         col=colOrderList[c(1,2,4)], 
         names=ParticipantsList[c(1,2,4)], 
         main= "Box plots of motion history mean 
-on 11 frames non overlapping interval for F1044C video", las=1)
+on 5 frames non overlapping interval for F1044C video", las=1)
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
-
-summary(fatherEleven)
-summary(motherEleven)
-summary(therapistEleven)
 ```
 
 # Focus on the motion history of the first 20 seconds of the first video(C) 
-## Sliding interval function on a 11 frames interval
-```{r, cache=FALSE}
+## Sliding interval function on a 5 frames interval
+```{r, cache=FALSE, echo=TRUE}
 par(mar=c(4,4,4,2))
-plot(1:250, data$father[6:255], main="Mean motion history (Sliding 11 frames interval) 
+plot(1:250, data$father[3:252], main="Mean motion history (Sliding 5 frames interval) 
      for father on F1044C video, 10 seconds ", xlab="Frame index (25/s)",
      ylab="Motion history",
      col="blue", type="l", lty=2, lwd=0.5)
 lines(slidedfather[1:250],  col="blue", lty=1)
-lines(data$mother[6:255],  col="red", lty=2, lwd=0.5)
+lines(data$mother[3:252],  col="red", lty=2, lwd=0.5)
 lines(slidedmother[1:250],  col="red", lty=1)
-lines(data$therapist[6:255],  col="orange", lty=2, lwd=0.5)
+lines(data$therapist[3:252],  col="orange", lty=2, lwd=0.5)
 lines(slidedtherapist[1:250],  col="orange", lty=1)
 legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
-## Sliding interval function on a 11 frames interval with shifting of therapist (substraction of min value of therapist)
-```{r, cache=FALSE}
+```{r, cache=FALSE, eval=FALSE, echo=FALSE}
+## Sliding interval function on a 5 frames interval with shifting of therapist (substraction of min value of therapist)
 par(mar=c(4,4,4,2))
-plot(1:250, data$father[6:255], main="Mean motion history (Sliding 11 frames interval) 
-     for father on F1044C video, 10 seconds, data therapist shifted", xlab="Frame index (25/s)", ylab="Motion history",
+plot(1:250, data$father[6:255], main="Mean motion history (Sliding 5 frames interval) for father on F1044C video, 10 seconds, data therapist shifted", xlab="Frame index (25/s)", ylab="Motion history",
      col="blue", type="l", lty=2, lwd=0.5)
 lines(slidedfather[1:250],  col="blue", lty=1)
 lines(data$mother[6:255],  col="red", lty=2, lwd=0.5)
@@ -283,50 +289,51 @@ legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
-### Non overlapping interval function on a 11 frames interval
+### Non overlapping interval function on a 5 frames interval
 ```{r, cache=FALSE}
-plot (1:24, fatherEleven[1:24], type="l", col="blue", 
-main="Mean Motion history (non overlapping 11 frames
+plot (1:12, fatherFive[1:12], type="l", col="blue", 
+main="Mean Motion history (non overlapping 5 frames
       intervals) for father on F1044C video, first 10 seconds", 
-ylab="Motion history", xlab="Frame index (each 11 frames)" )
-lines(motherEleven[1:24], col="red", lty=1)
-lines(therapistEleven[1:24], col="green", lty=1)
+ylab="Motion history", xlab="Frame index (each 5 frames)" )
+lines(motherFive[1:12], col="red", lty=1)
+lines(therapistFive[1:12], col="green", lty=1)
 legend("topleft", "Mean on non overlapping Interval" , lty=1, cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
 
-### Non overlapping interval function on a 11 frames interval with shifting of therapist (substraction of min value of therapist)
-```{r, cache=FALSE}
-plot (1:24, fatherEleven[1:24], type="l", col="blue", 
-main="Mean motion history (non overlapping 11 frames
+### Non overlapping interval function on a 5 frames interval with shifting of therapist (substraction of min value of therapist)
+```{r, cache=FALSE, eval=FALSE}
+plot (1:24, fatherFive[1:12], type="l", col="blue", 
+main="Mean motion history (non overlapping 5 frames
       intervals) for father on F1044C video, first 10 seconds, data therapist shifted", 
-ylab="Motion history", xlab="Frame index (each 11 frames)" )
-lines(motherEleven[1:24], col="red", lty=1)
-lines(therapistEleven[1:24]-min(slidedtherapist), col="green", lty=1)
+ylab="Motion history", xlab="Frame index (each 5 frames)" )
+lines(motherFive[1:12], col="red", lty=1)
+lines(therapistFive[1:12]-min(slidedtherapist), col="green", lty=1)
 legend("topleft", "Mean on non overlapping Interval" , lty=1, cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
 
 ## Motion history of the father during 10-20 seconds of the first video(C) 
-### Non overlapping interval function on a 11 frames interval
+### Non overlapping interval function on a 5 frames interval
 ```{r, cache=FALSE}
 par(mar=c(4,4,4,2))
-plot(1:250, data$father[256:505], main="Mean motion history (Sliding 11 frames
+plot(1:250, data$father[253:502], main="Mean motion history (Sliding 5 frames
      interval) for father on F1044C video, 10-20 seconds", xlab="Frame index (25/s)", 
      ylab="Motion history", col="blue", type="l", lty=2, lwd=0.5)
 lines(slidedfather[251:500],  col="blue", lty=1)
-lines(data$mother[256:505],  col="red", lty=2, lwd=0.5)
+lines(data$mother[253:502],  col="red", lty=2, lwd=0.5)
 lines(slidedmother[251:500],  col="red", lty=1)
-lines(data$therapist[256:505],  col="orange", lty=2, lwd=0.5)
+lines(data$therapist[253:502],  col="orange", lty=2, lwd=0.5)
 lines(slidedtherapist[251:500],  col="orange", lty=1)
 legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
-### Non overlapping interval function on a 11 frames interval with shifting of therapist (substraction of min value of therapist)
-```{r, cache=FALSE}
+```{r, cache=FALSE, eval=FALSE}
+### Non overlapping interval function on a 5 frames interval with shifting 
+### of therapist (substraction of min value of therapist)
 par(mar=c(4,4,4,2))
-plot(1:250, data$father[256:505], main="Mean motion history (Sliding 11 frames
+plot(1:250, data$father[256:505], main="Mean motion history (Sliding 5 frames
      interval) for father on F1044C video, 10-20 seconds, 
      data therapist shifted", xlab="Frame index (25/s)", ylab="Motion history", col="blue", 
      type="l", lty=2, lwd=0.5)
@@ -339,27 +346,27 @@ legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
-### Non overlapping interval function on a 11 frames interval
+### Non overlapping interval function on a 5 frames interval
 ```{r, cache=FALSE}
-plot (1:24, fatherEleven[23:46], type="l", col="blue", 
-main="Mean motion history (non overlapping 11 frames intervals) for 
+plot (1:24, fatherFive[23:46], type="l", col="blue", 
+main="Mean motion history (non overlapping 5 frames intervals) for 
 father on F1044C video, between 10-20 seconds", 
-ylab="Motion history", xlab="Frame index (each 11 frames)", ylim=c(0, 0.009))
-lines(motherEleven[23:46], col="red", lty=1)
-lines(therapistEleven[23:46], col="green", lty=1)
+ylab="Motion history", xlab="Frame index (each 5 frames)", ylim=c(0, 0.009))
+lines(motherFive[23:46], col="red", lty=1)
+lines(therapistFive[23:46], col="green", lty=1)
 legend("top", "Mean on non overlapping Interval" , lty=1, cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
 
-### Non overlapping interval function on a 11 frames interval with shifting of therapist (substraction of min value of therapist)
-```{r, cache=FALSE}
-plot (1:24, fatherEleven[23:46], type="l", col="blue", 
-main="Mean motion history (non overlapping 11 frames intervals) for 
+```{r, cache=FALSE, eval=FALSE}
+### Non overlapping interval function on a 5 frames interval with shifting of therapist (substraction of min value of therapist)
+plot (1:24, fatherFive[23:46], type="l", col="blue", 
+main="Mean motion history (non overlapping 5 frames intervals) for 
 father on F1044C video, between 10-20 seconds, 
 data therapist shifted", 
-ylab="Motion history", xlab="Frame index (each 11 frames)", ylim=c(0, 0.009))
-lines(motherEleven[23:46], col="red", lty=1)
-lines(therapistEleven[23:46]-min(slidedtherapist), col="green", lty=1)
+ylab="Motion history", xlab="Frame index (each 5 frames)", ylim=c(0, 0.009))
+lines(motherFive[23:46], col="red", lty=1)
+lines(therapistFive[23:46]-min(slidedtherapist), col="green", lty=1)
 legend("top", "Mean on non overlapping Interval" , lty=1, cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
@@ -367,16 +374,14 @@ legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 # Mean motion history by minute plots
 ```{r, fig.height=4}
 for (i in 1:NumberOfvideos){
-  fatherMinute<- MeanMomentumByTime("father", indexOfvideos=i, interval=1500, data)
+  fatherMinute<- MeanMotionByTime("father", indexOfvideos=i, interval=1500, data)
   
-  MotherMinute<- MeanMomentumByTime("mother", indexOfvideos=i, interval=1500, data)
+  MotherMinute<- MeanMotionByTime("mother", indexOfvideos=i, interval=1500, data)
 
-  TherapistMinute<- MeanMomentumByTime("therapist", indexOfvideos=i, interval=1500, data)
+  TherapistMinute<- MeanMotionByTime("therapist", indexOfvideos=i, interval=1500, data)
 
-  PatientMinute<- MeanMomentumByTime("patient", indexOfvideos=i, interval=1500, data)
+  PatientMinute<- MeanMotionByTime("patient", indexOfvideos=i, interval=1500, data)
 
-length(fatherMinute)
-  
   par(mar=c(4,4,4,2))
       plot (1:length(fatherMinute), fatherMinute, type="l", col="blue", 
       main=paste("Mean motion history (non overlaping minute intervals) 
@@ -390,16 +395,15 @@ length(fatherMinute)
              fill=colOrderList, cex=0.7)}
 ```
 
-labelvideolist
-
-# Export data in text files
 ```{r, eval=FALSE}
 # slidedfatherwoNA <- slidedfather[which(is.na(slidedfather)==FALSE)]
 # slidedmotherwoNA <- slidedmother[which(is.na(slidedmother)==FALSE)]
 # slidedtherapistwoNA <- slidedtherapist[which(is.na(slidedtherapist)==FALSE)]
 # slidedpatientwoNA <- slidedpatient[which(is.na(slidedpatient)==FALSE)]
+```
 
-#__________________________________________
+# Export data in text files
+```{r, eval=FALSE}
 
 ## REMINDER:
 #SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data) with :
@@ -408,101 +412,143 @@ labelvideolist
 # interval : number of frames in the studied interval
 # data : data frame where there is data
 
-dfExport <- data.frame()
-for (i in indexlist){
-  datFile <- data[which(data$file==i),]
-  print(datFile)
-  numberOfFilesList <- 1:length(indexlist)
-  print(numberOfFilesList)
-  slidedfather <- SlidingInterval("father", 1:3, 5, datFile)
-  print(3)
-  slidedmother <- SlidingInterval("mother", numberOfFilesList, 5, datFile)
-  slidedtherapist <- SlidingInterval("therapist", numberOfFilesList, 5, datFile)
-  slidedpatient <- SlidingInterval("patient", numberOfFilesList, 5, datFile)
-    dfNew <- data.frame(slidedfather, slidedmother, slidedtherapist, slidedpatient, 1:length(slidedfather), rep(i,length(slidedfather)))
-  dfExport <- rbind(dfExport, dfNew)
-}
-
-length(slidedmother)
-1:length(slidedmother)
-rep("F1044C.VOB",length(slidedmother))
-
-dfexport <- data.frame(slidedfather, slidedmother, slidedtherapist, slidedpatient)
-#dfexport <- data.frame(slidedpatient, slidedmother, slidedtherapist)
-write.csv(dfexport, "/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/slideddata.csv") 
+#index de la vid?eo de 1ere a la length de indexvideo
+videoIndex <- 1
+# videoName est le nom de la video actuelle
+for (videoName in indexlist){
+# Compute slinding interval for each participant
+      print(paste("Computing slidedFather", videoName))
+      slidedFather <- SlidingInterval("father", videoIndex, 5, data)
+      
+      print(paste("Computing slidedMother", videoName))
+      slidedMother <- SlidingInterval("mother", videoIndex, 5, data)
+      
+      print(paste("Computing slidedTherapist", videoName))
+      slidedTherapist <- SlidingInterval("therapist", videoIndex, 5, data)
+      
+      print(paste("Computing slidedPatient", videoName))
+      slidedPatient <- SlidingInterval("patient", videoIndex, 5, data)
+      
+# create a data frame to store temporarily this data with NA
+      slidedVideo <- data.frame(slidedFather, slidedMother, slidedTherapist, slidedPatient)
+      
+###### Creating  a data frame if the information is available ############
+      dataFrame <- FALSE
+      dfSliding <- data.frame()
+      for (participant in 1:4){
+# If the colum is not empty, takes its length and begin a data frame with it
+            if (dataFrame==FALSE){
+#if (length(slidedVideo[participant][!is.na(slidedVideo[participant])]) > 0 & dataFrame==FALSE){
+              dfSliding <- data.frame("video"=rep(indexlist[videoIndex],length(slidedVideo[participant])), frame_index = (1:dim(slidedVideo[1])[1]))
+                      dataFrame <- TRUE}
+        
+# if (length(slidedVideo[participant][!is.na(slidedVideo[participant])]) > 0 & dataFrame==TRUE){ 
+            if (dataFrame==TRUE){ 
+                      dfSliding <- cbind(dfSliding, slidedVideo[participant])}}
+      
+      print(str(dfSliding))
+################## Removing lines with only NA ####################
+#      CCdfSliding <- complete.cases(dfSliding)
+      emptyLine <- c()
+      for (i in 1:nrow(dfSliding)){
+          dfLine <- dfSliding[i,3:6]
+          NaLine <- is.na(dfLine)
+          if (all(NaLine)){
+              emptyLine <- c(emptyLine, i)}}
+      print (emptyLine)
+          if (length(emptyLine)>0){
+      dfSliding <- dfSliding[-emptyLine,]}
+      
+      write.csv(dfSliding, paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/",videoName, ".slideddata.csv", sep=""))
+      videoIndex <-(videoIndex+1)}
 ```
 
 # SyncPy utilisation for creating synchrony dataframe
-### After extracting filtered motion motion history with mean on non overlapping interval of 11 frames
-### And after puting this data on a CSV file
+### After extracting filtered motion motion history with mean on sliding interval (overlapping interval) of 5 frames
+### And after puting this data on a CSV file [slideddata.csv]( /Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/slideddata.csv)
 ### We import this data on python Script with panda module [Call_S_Estimator.py](/SyncPy/examples/Call_S_Estimator.py)
-### This script will calculate the synchrony between each dyad of the interaction and of the whole group
-### It will return a csv file [SSI.csv](/SyncPy/examples/SSI.csv) that we can import with R with
+### This script will compute the synchrony between each dyad of the interaction and of the whole group
+### It will return a csv file for each video [SSIXXXX.csv](/SyncPy/examples/SynchronyCSV/SSIXXXX.csv) with XXXX the name of the video (F10044C, F1044D1, etc) that we can import with R with
 ### this following function
 
 ```{r, echo=FALSE}
+library("plyr")
 getwd()
-setwd("/SyncPy/examples/")
-SSI <- read.csv("SSI.csv")
+print("SSI Files Directory")
+setwd("/SyncPy/examples/SynchronyCSV")
+print("SS Files List")
+SSIFilesList <- list.files("/SyncPy/examples/SynchronyCSV/")
+SSIFilesList
+SSI <- data.frame()
+SSIDataFrames <- c()
+for (file in SSIFilesList){
+  SSI <- read.csv(file)
+  SSIDataFrames<- rbind.fill(SSIDataFrames, SSI)}
+#str(SSIDataFramesList)
 ```
 
 ## Description of SSI data frame
 ```{r}
-str(SSI)
+str(SSIDataFrames)
 ```
 
 ## Synchrony scores for each dyad and for the whole group
-```{r}
-par(mar=c(4,4,4,3))
-plot(SSI$Time_min, SSI$SSI_fa_mo, type="l", col=rainbow(4)[1], main=paste("Synchrony scores for each dyad and for \n the whole group in", SSI$filename[1], "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, xaxp=c(0, length(SSI$SSI_fa_mo), length(SSI$SSI_fa_mo)))
-abline(h=mean(SSI$SSI_fa_mo), col=rainbow(4)[1], lwd=2, lty=2)
+```{r, eval=TRUE,  fig.width=8}
+for (i in unique(SSIDataFrames$video))
+      {par(mar=c(4,4,4,3), mfrow=c(1,1))
+      plot(SSIDataFrames[which(SSIDataFrames$video==i),]$Time_min,
+           SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_mo, 
+           type="l", col=rainbow(4)[1], 
+           main=paste("Synchrony scores for each dyad and for \n the whole group in", i, "video"), 
+           xlab = "Time (minute)", ylab="Synchrony score", lwd=2,
+xaxp=c(0,length(SSIDataFrames$Time_min), length(SSIDataFrames$Time_min)), ylim=c(0,0.5))
+      abline(h=mean(SSIDataFrames$SSI_fa_mo, na.rm=TRUE), col=rainbow(11)[1], lwd=2, lty=2)
+      
+      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_mo_pa, col=rainbow(11)[2], lwd=2)
+      abline(h= mean(SSIDataFrames$SSI_fa_mo_pa, na.rm=TRUE), col=rainbow(11)[2], lwd=2, lty=2)
+      
+#      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_mo_pa_th, col=rainbow(11)[3], lwd=2)
+#      abline(h= mean(SSIDataFrames$SSI_fa_mo_pa_th, na.rm=TRUE), col=rainbow(11)[3], lwd=2, lty=2)
+      
+      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_mo_th, col=rainbow(11)[4], lwd=2)
+      abline(h= mean(SSIDataFrames$SSI_fa_mo_th, na.rm=TRUE), col=rainbow(11)[4], lwd=2, lty=2)
 
-lines(SSI$SSI_fa_th, col=rainbow(4)[2], lwd=2)
-abline(h= mean(SSI$SSI_fa_th), col=rainbow(4)[2], lwd=2, lty=2 )
-
-lines(SSI$SSI_mo_th, col=rainbow(4)[3], lwd=2)
-abline(h= mean(SSI$SSI_mo_th), col=rainbow(4)[3], lwd=2, lty=2)
-
-lines(SSI$SSI_fa_mo_th, col=rainbow(4)[4], lwd=2)
-abline(h= mean(SSI$SSI_fa_mo_th), col=rainbow(4)[4], lwd=2, lty=2)
-
-legend("topleft", inset=.05, c("fa_mo", "fa_th", "mo_th", "fa_mo_th"), 
-             col=rainbow(4), cex=0.6, lwd=2)
-legend("topright", inset=.05, c(
-paste ("Mean fa_mo :", round(mean(SSI$SSI_fa_mo),3)), 
-paste ("Mean fa_th :", round(mean(SSI$SSI_fa_th),3)),
-paste ("Mean mo_th :", round(mean(SSI$SSI_mo_th),3)),
-paste ("Mean fa_mo_th :", round(mean(SSI$SSI_fa_mo_th),3))
-), col=rainbow(4), cex=0.5, lty=2, lwd=1)   
+      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_pa, col=rainbow(11)[5], lwd=2)
+      abline(h= mean(SSIDataFrames$SSI_fa_pa, na.rm=TRUE), col=rainbow(11)[5], lwd=2, lty=2)
+      
+#      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_pa_th, col=rainbow(11)[6], lwd=2)
+#      abline(h= mean(SSIDataFrames$SSI_fa_pa_th, na.rm=TRUE), col=rainbow(11)[6], lwd=2, lty=2)
+      
+      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_th, col=rainbow(11)[7], lwd=2)
+      abline(h= mean(SSIDataFrames$SSI_fa_th, na.rm=TRUE), col=rainbow(11)[7], lwd=2, lty=2)
+      
+      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_mo_pa, col=rainbow(11)[8], lwd=2)
+      abline(h= mean(SSIDataFrames$SSI_mo_pa, na.rm=TRUE), col=rainbow(11)[8], lwd=2, lty=2)
+      
+      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_mo_pa_th, col=rainbow(11)[9], lwd=2)
+      abline(h= mean(SSIDataFrames$SSI_mo_pa_th, na.rm=TRUE), col=rainbow(11)[9], lwd=2, lty=2)      
+      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_mo_th, col=rainbow(11)[10], lwd=2)
+      abline(h= mean(SSIDataFrames$SSI_mo_th, na.rm=TRUE), col=rainbow(11)[10], lwd=2, lty=2)
+    
+      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_pa_th, col=rainbow(11)[11], lwd=2)
+      abline(h= mean(SSIDataFrames$SSI_pa_th, na.rm=TRUE), col=rainbow(11)[11], lwd=2, lty=2)
+      
+legend("topleft", inset=.05, c("fa_mo", "fa_mo_pa", "fa_mo_pa_th", 
+                               "fa_mo_th", "fa_pa", "fa_pa_th", "fa_th",
+                               "mo_pa", "mo_pa_th", "mo_th", "pa_th"), col=rainbow(11), cex=0.6, lwd=2)
+      
+legend("topright", inset=.05, c(paste ("Mean fa_mo :",
+                                       round(mean(SSIDataFrames$SSI_fa_mo, na.rm=TRUE),3)),
+      paste ("Mean fa_mo_pa :", round(mean(SSIDataFrames$SSI_fa_mo_pa,na.rm=TRUE),3)),
+#      paste ("Mean fa_mo_pa_th :", #round(mean(SSIDataFrames$SSI_fa_mo_pa_th),3)),
+      paste ("Mean fa_mo_th :", round(mean(SSIDataFrames$SSI_fa_mo_th,na.rm=TRUE),3)),
+      paste ("Mean fa_pa :", round(mean(SSIDataFrames$SSI_fa_pa, na.rm=TRUE),3)),
+#      paste ("Mean fa_pa_th :", round(mean(SSIDataFrames$SSI_fa_pa_th,na.rm=TRUE),3)),
+      paste ("Mean fa_th :", round(mean(SSIDataFrames$SSI_fa_th,na.rm=TRUE),3)),
+      paste ("Mean mo_pa :", round(mean(SSIDataFrames$SSI_mo_pa,na.rm=TRUE),3)),
+      paste ("Mean mo_pa_th :", round(mean(SSIDataFrames$SSI_mo_pa_th,na.rm=TRUE),3)),
+      paste ("Mean mo_th :", round(mean(SSIDataFrames$SSI_mo_th,na.rm=TRUE),3)),
+      paste ("Mean pa_th :", round(mean(SSIDataFrames$SSI_pa_th,na.rm=TRUE),3))), 
+col=rainbow(11), cex=0.5, lty=2, lwd=1)}
 ```
 
-time <- (as.double(SSI$Time_min)/6)
-length(time)
-length(SSI$SSI_mo_pa)
-```{r}
-plot(time, SSI$SSI_mo_pa, type="l", col=rainbow(4)[1], main=paste("Synchrony scores for each dyad and for \n the whole group in", SSI$filename[1], "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, xaxp=c(0, length(SSI$SSI_mo_pa), length(SSI$SSI_mo_pa)))
-abline(h=mean(SSI$SSI_mo_pa), col=rainbow(4)[1], lwd=2, lty=2,
-       
-lines(SSI$SSI_pa_th, col=rainbow(4)[2], lwd=2)
-abline(h= mean(SSI$SSI_pa_th), col=rainbow(4)[2], lwd=2, lty=2 )
-
-lines(SSI$SSI_mo_th, col=rainbow(4)[3], lwd=2)
-abline(h= mean(SSI$SSI_mo_th), col=rainbow(4)[3], lwd=2, lty=2)
-
-lines(SSI$SSI_mo_pa_th, col=rainbow(4)[4], lwd=2)
-abline(h= mean(SSI$SSI_mo_pa_th), col=rainbow(4)[4], lwd=2, lty=2)
-
-legend("topleft", inset=.05, c("mo_pa", "pa_th", "mo_th", "mo_pa_th"), 
-             col=rainbow(4), cex=0.6, lwd=2)
-legend("topright", inset=.05, c(
-paste ("Mean mo_pa :", round(mean(SSI$SSI_mo_pa),3)), 
-paste ("Mean pa_th :", round(mean(SSI$SSI_pa_th),3)),
-paste ("Mean mo_th :", round(mean(SSI$SSI_mo_th),3)),
-paste ("Mean mo_pa_th :", round(mean(SSI$SSI_mo_pa_th),3))
-), col=rainbow(4), cex=0.5, lty=2, lwd=1) 
-```
-
-length(slidedmother)
-1:length(slidedmother)
-
-plot(1:length(slidedmother), slidedmother, type="l")

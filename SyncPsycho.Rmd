@@ -73,6 +73,13 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
   return (x)}
 ```
 
+## Nomenclature
+F1044 is the name of the subject studied (called pa for patient)
+He has a mother (mo) a father (fa) helped by a therapist (th)
+When a variable is referring to several participants, it is organised in alphabetical order separated by underscores, eg. SSI_fa_mo refers to the synchrony index between the father and the mother. SSI_mo_fa doesn't exist.
+This familly had several consultations with the psychotherapist. Some of them were video recorded.
+These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg F1044C).
+
 ## File lists
 ```{r, echo=TRUE, eval=TRUE, cache=TRUE}
 indexlist <- c("F1044C.VOB","F1044D1.VOB","F1044D2.VOB","F1044E.VOB","F1044F.VOB",
@@ -552,3 +559,29 @@ legend("topright", inset=.05, c(paste ("Mean fa_mo :",
 col=rainbow(11), cex=0.5, lty=2, lwd=1)}
 ```
 
+## Evolution of synchrony through time, raw each second
+```{r, fig.width=8}
+par(mar=c(4,4,4,4))
+    col= 1
+for (i in 5:13){
+    plot(1:length(SSIDataFrames[,i]), SSIDataFrames[,i], type="l", col=rainbow(11)[col], main = names(SSIDataFrames)[i])
+    col <- col+1}
+```
+
+## Evolution of synchrony through time, mean by minute
+```{r, fig.width=8}
+par(mar=c(4,4,4,4))
+    col = 1
+for (indexSSI in 5:13){
+    IntervalNumbersVideo <- ceiling(length(SSIDataFrames[,indexSSI])/6)
+    SSIColumn <- SSIDataFrames[,indexSSI]
+    SSIDataFramesMinute <- c()
+    for (i in 1:IntervalNumbersVideo){
+          borneInf <- 1+(i-1)*6
+          borneSup <- i * 6
+          SSIVectorInterval <- SSIColumn[borneInf:borneSup]
+          mean <- mean(SSIVectorInterval, na.rm=TRUE)
+          SSIDataFramesMinute <- c(SSIDataFramesMinute, mean)}
+    plot(1:length(SSIDataFramesMinute), SSIDataFramesMinute, type="l", col=rainbow(11)[col], main = names(SSIDataFrames)[indexSSI])
+    col <- col+1}
+```

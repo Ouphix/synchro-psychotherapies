@@ -8,7 +8,20 @@ output:
 ---
 
 # Aim and Hypothesis
-The aim of this project is to evaluate if it is possible to detect automatic signals that could predict the outcomes of a familial psychotherapy. Here are the analysis of the F1044 subject and his familly (2 parents). Is there synchrony signals between him self, his parents and the therapist ? His there synchrony signal between his parents and the therapist ?
+The aim of this project is to evaluate if it is possible to detect automatic signals that could predict the outcomes of a familial psychotherapy. 
+
+Here is the analysis of the F1044 subject, his familly (2 parents) and the therapist. Is there synchrony signals between himself, his parents and the therapist ? Is there synchrony signal between his parents and the therapist ?
+
+Could this synchrony signal predict outcomes of the psychotherapy ?
+
+We used this data since they come from a large european psychotherapy study and they come from almost real life practice of psychotherapy. This INCANT study aimed to evaluate the efficacy of the MultiDimensioinal Family Therapy for cannabis use disorders in adolescents. 
+
+# Nomenclature
+F1044 is the name of the subject studied (called pa for patient).
+He has a mother (mo) a father (fa) helped by a therapist (th).
+When a variable is referring to several participants, it is organised in alphabetical order separated by underscores, eg. SSI_fa_mo refers to the synchrony index (SSI) between the father and the mother. SSI_mo_fa doesn't exist.
+This familly had several consultations with the psychotherapist. Some of them were video recorded.
+These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg F1044C).
 
 ```{r, echo=FALSE, eval=TRUE, cache=TRUE}
 setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/SynchroData")
@@ -25,7 +38,7 @@ importdata <-function(fileslist){
 # Lists
 ## Functions list
 ### MeanMotionByTime
-Function that takes raw motion history data and make mean on a given interval. Intervals don't overlap, so the frequency of the data change (from 25 frames by seconde to 25 frames/interval by second).
+Function that takes raw motion history data and compute the mean on a given interval. Intervals don't overlap, so the frequency of the data change (from 25 frames by seconde to 25 frames/interval by second).
 
 ##### Arguments:
 - subject : Subject studied (patient, mother, father or therapist)
@@ -50,7 +63,7 @@ MeanMotionByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, 
 ```
 
 ### Slidinginterval
-Function that takes raw motion history data and make mean on a given interval. The interval overlap, so the frequency of the data don't change. It stays at 25 frames/s.
+Function that takes raw motion history data and compute the mean on a given interval. The interval overlap, so the frequency of the data don't change. It stays at 25 frames/s.
 
 #### Arguments:
 - subject : subject studied (patient, mother, father or therapist)
@@ -73,12 +86,7 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
   return (x)}
 ```
 
-## Nomenclature
-F1044 is the name of the subject studied (called pa for patient)
-He has a mother (mo) a father (fa) helped by a therapist (th)
-When a variable is referring to several participants, it is organised in alphabetical order separated by underscores, eg. SSI_fa_mo refers to the synchrony index between the father and the mother. SSI_mo_fa doesn't exist.
-This familly had several consultations with the psychotherapist. Some of them were video recorded.
-These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg F1044C).
+### MeanSynchronyByTime (TODO)
 
 ## File lists
 ```{r, echo=TRUE, eval=TRUE, cache=TRUE}
@@ -97,7 +105,6 @@ colOrderList <- c("blue","red", "green","orange")
 
 ## Participants list
 ```{r, echo=FALSE, eval=TRUE, cache=TRUE}
-getwd()
 data <- importdata(list)
 ParticipantsList <- names(data[,2:5])
 print(ParticipantsList)
@@ -105,7 +112,6 @@ data$timeMin <- data$frame/(25*60)
 ```
 
 # Presentation of the data
-This data comes from the INCANT study. The F1044 subject which as dependence with cannabis, had a familial therapy (TAU and MDFT). The goal of this pilot study is to extract meaningfull motion history from 17 videos called F1044C, F1044D1... to F1044R2 (see listsindexlist) 
 ```{r}
 str(data)
 summary(data)
@@ -141,7 +147,7 @@ tab <- cbind(table(is.na(data[,2])),table(is.na(data[,3])),table(is.na(data[,4])
                                                           table(is.na(data[,5])))
 
 par(mar=c(3,3,2,1))
-barplot(tab, cex.axis = 0.7, las=2, cex.main= 1, names=ParticipantsList, 
+barplot(tab, cex.axis = 0.7, las=2, names=ParticipantsList, 
   main="Number of available data by participant", 
   beside=TRUE, las=1, col=terrain.colors(2), ylim=c(0,600000))
 legend("topright", c("T", "F"), fill=terrain.colors(2))
@@ -480,82 +486,85 @@ for (videoName in indexlist){
 
 ```{r, echo=FALSE}
 library("plyr")
-getwd()
 print("SSI Files Directory")
+getwd()
 setwd("/SyncPy/examples/SynchronyCSV")
 print("SS Files List")
 SSIFilesList <- list.files("/SyncPy/examples/SynchronyCSV/")
 SSIFilesList
 SSI <- data.frame()
-SSIDataFrames <- c()
+SSIdataFrame <- c()
 for (file in SSIFilesList){
   SSI <- read.csv(file)
-  SSIDataFrames<- rbind.fill(SSIDataFrames, SSI)}
-#str(SSIDataFramesList)
+  SSIdataFrame<- rbind.fill(SSIdataFrame, SSI)}
+#str(SSIdataFrameList)
+print("This csv files are imported and merge in a unique data frame SSIDataFrame")
 ```
 
 ## Description of SSI data frame
 ```{r}
-str(SSIDataFrames)
+str(SSIdataFrame)
 ```
 
-## Synchrony scores for each dyad and for the whole group
-```{r, eval=TRUE,  fig.width=8}
-for (i in unique(SSIDataFrames$video))
+# Synchrony scores for each dyad and for the whole group
+```{r, eval=FALSE,  fig.width=8}
+for (i in unique(SSIdataFrame$video))
       {par(mar=c(4,4,4,3), mfrow=c(1,1))
-      plot(SSIDataFrames[which(SSIDataFrames$video==i),]$Time_min,
-           SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_mo, 
+      plot(SSIdataFrame[which(SSIdataFrame$video==i),]$Time_min,
+           SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_fa_mo, 
            type="l", col=rainbow(4)[1], 
            main=paste("Synchrony scores for each dyad and for \n the whole group in", i, "video"), 
            xlab = "Time (minute)", ylab="Synchrony score", lwd=2,
-xaxp=c(0,length(SSIDataFrames$Time_min), length(SSIDataFrames$Time_min)), ylim=c(0,0.5))
-      abline(h=mean(SSIDataFrames$SSI_fa_mo, na.rm=TRUE), col=rainbow(11)[1], lwd=2, lty=2)
+xaxp=c(0,length(SSIdataFrame$Time_min), length(SSIdataFrame$Time_min)))
+#, ylim=c(0,0.5))
+      abline(h=mean(SSIdataFrame$SSI_fa_mo, na.rm=TRUE), col=rainbow(11)[1], lwd=2, lty=2)
       
-      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_mo_pa, col=rainbow(11)[2], lwd=2)
-      abline(h= mean(SSIDataFrames$SSI_fa_mo_pa, na.rm=TRUE), col=rainbow(11)[2], lwd=2, lty=2)
+      lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_fa_mo_pa, col=rainbow(11)[2], lwd=2)
+      abline(h= mean(SSIdataFrame$SSI_fa_mo_pa, na.rm=TRUE), col=rainbow(11)[2], lwd=2, lty=2)
       
-#      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_mo_pa_th, col=rainbow(11)[3], lwd=2)
-#      abline(h= mean(SSIDataFrames$SSI_fa_mo_pa_th, na.rm=TRUE), col=rainbow(11)[3], lwd=2, lty=2)
+#      lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_fa_mo_pa_th, col=rainbow(11)[3], lwd=2)
+#      abline(h= mean(SSIdataFrame$SSI_fa_mo_pa_th, na.rm=TRUE), col=rainbow(11)[3], lwd=2, lty=2)
       
-      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_mo_th, col=rainbow(11)[4], lwd=2)
-      abline(h= mean(SSIDataFrames$SSI_fa_mo_th, na.rm=TRUE), col=rainbow(11)[4], lwd=2, lty=2)
+      lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_fa_mo_th, col=rainbow(11)[4], lwd=2)
+      abline(h= mean(SSIdataFrame$SSI_fa_mo_th, na.rm=TRUE), col=rainbow(11)[4], lwd=2, lty=2)
 
-      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_pa, col=rainbow(11)[5], lwd=2)
-      abline(h= mean(SSIDataFrames$SSI_fa_pa, na.rm=TRUE), col=rainbow(11)[5], lwd=2, lty=2)
+      lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_fa_pa, col=rainbow(11)[5], lwd=2)
+      abline(h= mean(SSIdataFrame$SSI_fa_pa, na.rm=TRUE), col=rainbow(11)[5], lwd=2, lty=2)
       
-#      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_pa_th, col=rainbow(11)[6], lwd=2)
-#      abline(h= mean(SSIDataFrames$SSI_fa_pa_th, na.rm=TRUE), col=rainbow(11)[6], lwd=2, lty=2)
+#      lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_fa_pa_th, col=rainbow(11)[6], lwd=2)
+#      abline(h= mean(SSIdataFrame$SSI_fa_pa_th, na.rm=TRUE), col=rainbow(11)[6], lwd=2, lty=2)
       
-      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_fa_th, col=rainbow(11)[7], lwd=2)
-      abline(h= mean(SSIDataFrames$SSI_fa_th, na.rm=TRUE), col=rainbow(11)[7], lwd=2, lty=2)
+lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_fa_th, col=rainbow(11)[7], lwd=2)
+abline(h= mean(SSIdataFrame$SSI_fa_th, na.rm=TRUE), col=rainbow(11)[7], lwd=2, lty=2)
       
-      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_mo_pa, col=rainbow(11)[8], lwd=2)
-      abline(h= mean(SSIDataFrames$SSI_mo_pa, na.rm=TRUE), col=rainbow(11)[8], lwd=2, lty=2)
+lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_mo_pa, col=rainbow(11)[8], lwd=2)
+abline(h= mean(SSIdataFrame$SSI_mo_pa, na.rm=TRUE), col=rainbow(11)[8], lwd=2, lty=2)
       
-      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_mo_pa_th, col=rainbow(11)[9], lwd=2)
-      abline(h= mean(SSIDataFrames$SSI_mo_pa_th, na.rm=TRUE), col=rainbow(11)[9], lwd=2, lty=2)      
-      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_mo_th, col=rainbow(11)[10], lwd=2)
-      abline(h= mean(SSIDataFrames$SSI_mo_th, na.rm=TRUE), col=rainbow(11)[10], lwd=2, lty=2)
+lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_mo_pa_th, col=rainbow(11)[9], lwd=2)
+abline(h= mean(SSIdataFrame$SSI_mo_pa_th, na.rm=TRUE), col=rainbow(11)[9], lwd=2, lty=2)      
+lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_mo_th, col=rainbow(11)[10], lwd=2)
+abline(h= mean(SSIdataFrame$SSI_mo_th, na.rm=TRUE), col=rainbow(11)[10], lwd=2, lty=2)
     
-      lines(SSIDataFrames[which(SSIDataFrames$video==i),]$SSI_pa_th, col=rainbow(11)[11], lwd=2)
-      abline(h= mean(SSIDataFrames$SSI_pa_th, na.rm=TRUE), col=rainbow(11)[11], lwd=2, lty=2)
+      lines(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_pa_th, col=rainbow(11)[11], lwd=2)
+      abline(h= mean(SSIdataFrame$SSI_pa_th, na.rm=TRUE), col=rainbow(11)[11], lwd=2, lty=2)
       
 legend("topleft", inset=.05, c("fa_mo", "fa_mo_pa", "fa_mo_pa_th", 
-                               "fa_mo_th", "fa_pa", "fa_pa_th", "fa_th",
-                               "mo_pa", "mo_pa_th", "mo_th", "pa_th"), col=rainbow(11), cex=0.6, lwd=2)
+"fa_mo_th", "fa_pa", "fa_pa_th", "fa_th",
+"mo_pa", "mo_pa_th", "mo_th", "pa_th"), 
+col=rainbow(11), cex=0.6, lwd=2)
       
 legend("topright", inset=.05, c(paste ("Mean fa_mo :",
-                                       round(mean(SSIDataFrames$SSI_fa_mo, na.rm=TRUE),3)),
-      paste ("Mean fa_mo_pa :", round(mean(SSIDataFrames$SSI_fa_mo_pa,na.rm=TRUE),3)),
-#      paste ("Mean fa_mo_pa_th :", #round(mean(SSIDataFrames$SSI_fa_mo_pa_th),3)),
-      paste ("Mean fa_mo_th :", round(mean(SSIDataFrames$SSI_fa_mo_th,na.rm=TRUE),3)),
-      paste ("Mean fa_pa :", round(mean(SSIDataFrames$SSI_fa_pa, na.rm=TRUE),3)),
-#      paste ("Mean fa_pa_th :", round(mean(SSIDataFrames$SSI_fa_pa_th,na.rm=TRUE),3)),
-      paste ("Mean fa_th :", round(mean(SSIDataFrames$SSI_fa_th,na.rm=TRUE),3)),
-      paste ("Mean mo_pa :", round(mean(SSIDataFrames$SSI_mo_pa,na.rm=TRUE),3)),
-      paste ("Mean mo_pa_th :", round(mean(SSIDataFrames$SSI_mo_pa_th,na.rm=TRUE),3)),
-      paste ("Mean mo_th :", round(mean(SSIDataFrames$SSI_mo_th,na.rm=TRUE),3)),
-      paste ("Mean pa_th :", round(mean(SSIDataFrames$SSI_pa_th,na.rm=TRUE),3))), 
+                                       round(mean(SSIdataFrame$SSI_fa_mo, na.rm=TRUE),3)),
+      paste ("Mean fa_mo_pa :", round(mean(SSIdataFrame$SSI_fa_mo_pa,na.rm=TRUE),3)),
+#      paste ("Mean fa_mo_pa_th :", #round(mean(SSIdataFrame$SSI_fa_mo_pa_th),3)),
+      paste ("Mean fa_mo_th :", round(mean(SSIdataFrame$SSI_fa_mo_th,na.rm=TRUE),3)),
+      paste ("Mean fa_pa :", round(mean(SSIdataFrame$SSI_fa_pa, na.rm=TRUE),3)),
+#      paste ("Mean fa_pa_th :", round(mean(SSIdataFrame$SSI_fa_pa_th,na.rm=TRUE),3)),
+      paste ("Mean fa_th :", round(mean(SSIdataFrame$SSI_fa_th,na.rm=TRUE),3)),
+      paste ("Mean mo_pa :", round(mean(SSIdataFrame$SSI_mo_pa,na.rm=TRUE),3)),
+      paste ("Mean mo_pa_th :", round(mean(SSIdataFrame$SSI_mo_pa_th,na.rm=TRUE),3)),
+      paste ("Mean mo_th :", round(mean(SSIdataFrame$SSI_mo_th,na.rm=TRUE),3)),
+      paste ("Mean pa_th :", round(mean(SSIdataFrame$SSI_pa_th,na.rm=TRUE),3))), 
 col=rainbow(11), cex=0.5, lty=2, lwd=1)}
 ```
 
@@ -564,7 +573,8 @@ col=rainbow(11), cex=0.5, lty=2, lwd=1)}
 par(mar=c(4,4,4,4))
     col= 1
 for (i in 5:13){
-    plot(1:length(SSIDataFrames[,i]), SSIDataFrames[,i], type="l", col=rainbow(11)[col], main = names(SSIDataFrames)[i])
+    plot(1:length(SSIdataFrame[,i]), SSIdataFrame[,i], type="l",
+    col=rainbow(11)[col], main = names(SSIdataFrame)[i])
     col <- col+1}
 ```
 
@@ -573,15 +583,33 @@ for (i in 5:13){
 par(mar=c(4,4,4,4))
     col = 1
 for (indexSSI in 5:13){
-    IntervalNumbersVideo <- ceiling(length(SSIDataFrames[,indexSSI])/6)
-    SSIColumn <- SSIDataFrames[,indexSSI]
-    SSIDataFramesMinute <- c()
+    IntervalNumbersVideo <- ceiling(length(SSIdataFrame[,indexSSI])/6)
+    SSIColumn <- SSIdataFrame[,indexSSI]
+    SSIdataFrameMinute <- c()
     for (i in 1:IntervalNumbersVideo){
           borneInf <- 1+(i-1)*6
           borneSup <- i * 6
           SSIVectorInterval <- SSIColumn[borneInf:borneSup]
           mean <- mean(SSIVectorInterval, na.rm=TRUE)
-          SSIDataFramesMinute <- c(SSIDataFramesMinute, mean)}
-    plot(1:length(SSIDataFramesMinute), SSIDataFramesMinute, type="l", col=rainbow(11)[col], main = names(SSIDataFrames)[indexSSI])
+          SSIdataFrameMinute <- c(SSIdataFrameMinute, mean)}
+    plot(1:length(SSIdataFrameMinute), SSIdataFrameMinute, type="l", col=rainbow(11)[col], main = names(SSIdataFrame)[indexSSI])
+    col <- col+1}
+```
+
+## Evolution of synchrony through time, mean by 10 minutes
+```{r, fig.width=8}
+par(mar=c(4,4,4,4))
+    col = 1
+for (indexSSI in 5:13){
+    IntervalNumbersVideo <- ceiling(length(SSIdataFrame[,indexSSI])/60)
+    SSIColumn <- SSIdataFrame[,indexSSI]
+    SSIdataFrameTenMinute <- c()
+    for (i in 1:IntervalNumbersVideo){
+          borneInf <- 1+(i-1)*60
+          borneSup <- i * 60
+          SSIVectorInterval <- SSIColumn[borneInf:borneSup]
+          mean <- mean(SSIVectorInterval, na.rm=TRUE)
+          SSIdataFrameTenMinute <- c(SSIdataFrameTenMinute, mean)}
+    plot(1:length(SSIdataFrameTenMinute), SSIdataFrameTenMinute, type="l", col=rainbow(11)[col], main = names(SSIdataFrame)[indexSSI])
     col <- col+1}
 ```

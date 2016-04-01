@@ -23,6 +23,12 @@ When a variable is referring to several participants, it is organised in alphabe
 This familly had several consultations with the psychotherapist. Some of them were video recorded.
 These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg F1044C).
 
+```{r, echo=FALSE}
+#Loading libraries
+library("lme4")
+library("plyr")
+```
+
 ```{r, echo=FALSE, eval=TRUE, cache=TRUE}
 setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/SynchroData")
 list <- list.files("CSV/csvF104422022016", full.names=TRUE)
@@ -195,7 +201,7 @@ legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 
 # Raw data and mean of Motion History on sliding and non overlapping intervals on F1044C video
 ## F1044C video
-It is the first video of F10044C. The father, mother and therapist are present. The patient is absent.
+It is the first video of F1044C. The father, mother and therapist are present. The patient is absent.
 ## Raw data
 ```{r}
 rawdatafather <- data[which(data$file=="F1044C.VOB"),]$father
@@ -481,24 +487,36 @@ for (videoName in indexlist){
 ### And after puting this data on a CSV file [slideddata.csv]( /Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/slideddata.csv)
 ### We import this data on python Script with panda module [Call_S_Estimator.py](/SyncPy/examples/Call_S_Estimator.py)
 ### This script will compute the synchrony between each dyad of the interaction and of the whole group
-### It will return a csv file for each video [SSIXXXX.csv](/SyncPy/examples/SynchronyCSV/SSIXXXX.csv) with XXXX the name of the video (F10044C, F1044D1, etc) that we can import with R with
+### It will return a csv file for each video [SSIXXXX.csv](/SyncPy/examples/SynchronyCSV/SSIXXXX.csv) with XXXX the name of the video (F1044C, F1044D1, etc) that we can import with R with
 ### this following function
 
 ```{r, echo=FALSE}
-library("plyr")
+write.csv(indexlist, paste("/Users/Ofix/Desktop/","indexlist.slideddata.csv", sep=""))
+
+videoDate <- read.csv2("/Users/Ofix/Desktop/videodate.csv")
+videoDate[which(videoDate$video==i),1]
+
 print("SSI Files Directory")
 getwd()
 setwd("/SyncPy/examples/SynchronyCSV")
 print("SS Files List")
 SSIFilesList <- list.files("/SyncPy/examples/SynchronyCSV/")
+
+SSIdataFrame <- data.frame()
 SSIFilesList
 SSI <- data.frame()
-SSIdataFrame <- c()
 for (file in SSIFilesList){
   SSI <- read.csv(file)
-  SSIdataFrame<- rbind.fill(SSIdataFrame, SSI)}
-#str(SSIdataFrameList)
-print("This csv files are imported and merge in a unique data frame SSIDataFrame")
+  for (a in 1:length(videoDate$video)){
+      if (as.character(SSI[1,]$video) == as.character(videoDate[a,]$video)){
+        date <- as.character(videoDate[a,]$date)
+        dates <- as.Date(date, "%m/%d/%Y")
+        SSI$date <- date
+  }}
+SSIdataFrame<- rbind.fill(SSIdataFrame, SSI)}
+
+# change the order of the data frame to have date and video name beside
+SSIdataFrame <- SSIdataFrame[c("X","Interval", "Time_min", "video", "date", "SSI_fa_mo", "SSI_fa_mo_th", "SSI_fa_th", "SSI_mo_th", "SSI_fa_pa", "SSI_fa_mo_pa", "SSI_mo_pa", "SSI_pa_th", "SSI_mo_pa_th")]
 ```
 
 ## Description of SSI data frame
@@ -571,8 +589,8 @@ col=rainbow(11), cex=0.5, lty=2, lwd=1)}
 ## Evolution of synchrony through time, raw each second
 ```{r, fig.width=8}
 par(mar=c(4,4,4,4))
-    col= 1
-for (i in 5:13){
+    col <- 1
+for (i in 6:length(SSIdataFrame)){
     plot(1:length(SSIdataFrame[,i]), SSIdataFrame[,i], type="l",
     col=rainbow(11)[col], main = names(SSIdataFrame)[i])
     col <- col+1}
@@ -582,7 +600,7 @@ for (i in 5:13){
 ```{r, fig.width=8}
 par(mar=c(4,4,4,4))
     col = 1
-for (indexSSI in 5:13){
+for (indexSSI in 6:length(SSIdataFrame)){
     IntervalNumbersVideo <- ceiling(length(SSIdataFrame[,indexSSI])/6)
     SSIColumn <- SSIdataFrame[,indexSSI]
     SSIdataFrameMinute <- c()
@@ -600,7 +618,7 @@ for (indexSSI in 5:13){
 ```{r, fig.width=8}
 par(mar=c(4,4,4,4))
     col = 1
-for (indexSSI in 5:13){
+for (indexSSI in 6:length(SSIdataFrame)){
     IntervalNumbersVideo <- ceiling(length(SSIdataFrame[,indexSSI])/60)
     SSIColumn <- SSIdataFrame[,indexSSI]
     SSIdataFrameTenMinute <- c()
@@ -612,4 +630,37 @@ for (indexSSI in 5:13){
           SSIdataFrameTenMinute <- c(SSIdataFrameTenMinute, mean)}
     plot(1:length(SSIdataFrameTenMinute), SSIdataFrameTenMinute, type="l", col=rainbow(11)[col], main = names(SSIdataFrame)[indexSSI])
     col <- col+1}
+```
+
+```{r}
+SSI_fa_th_lme <- lmer(SSI_fa_th ~ Time_min + (1|video), data=SSIdataFrame)
+summary(SSI_fa_th_lme)
+plot(SSI_fa_th_lme)
+res <- residuals(SSI_fa_th_lme)
+hist(SSIdataFrame$SSI_fa_th)
+qqnorm(res)
+SSI_fa_th_List <- c()
+for (i in indexlist){
+  SSI_fa_th_List <- c(SSI_fa_th_List, mean(SSIdataFrame[which(SSIdataFrame$video==i),]$SSI_fa_th, na.rm=TRUE))
+}
+print(SSI_fa_th_List)
+plot(SSI_fa_th_List, type="b")
+```
+
+```{r}
+# log of the data
+log_SSI_fa_th <- hist(log(SSIdataFrame$SSI_fa_th))
+SSI_fa_th_log_lme <- lmer(log(SSI_fa_th) ~ Time_min + (1|video), data=SSIdataFrame)
+res_log <- residuals(SSI_fa_th_log_lme)
+qqnorm(res_log)
+summary(SSI_fa_th_log_lme)
+```
+
+```{r}
+# root square of the data
+sq_SSI_fa_th <- hist(sqrt(SSIdataFrame$SSI_fa_th))
+SSI_fa_th_sq_lme <- lmer(sqrt(SSI_fa_th) ~ Time_min + (1|video), data=SSIdataFrame)
+res_sq <- residuals(SSI_fa_th_sq_lme)
+qqnorm(res_sq)
+summary(SSI_fa_th_sq_lme)
 ```

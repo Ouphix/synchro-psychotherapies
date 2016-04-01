@@ -7,5 +7,5 @@ print videos
 for video in videos :
     if not video.endswith(".mov") :
         continue
-#Create amnually a folder with images where to put frames
+#Create manually a folder with images where to put frames
     os.system("./ffmpeg -i \"%s\" -vcodec png -ss 10 -vframes 1 -an -f rawvideo ./images/%s.png" % (dirPath + video, video))

@@ -1,5 +1,5 @@
 ---
-title: "Synchrony in Psychotherapy, example with F1044 patient data"
+title: "Synchrony in Psychotherapy, Analysis example with F1044 patient data"
 author: "Thomas Gargot"
 date: "Mars, 24th 2016"
 output: 
@@ -7,36 +7,21 @@ output:
     toc: yes
 ---
 
-# Aim and Hypothesis
-The aim of this project is to evaluate if it is possible to detect automatic signals that could predict the outcomes of a familial psychotherapy. 
-
-Here is the analysis of the F1044 subject, his familly (2 parents) and the therapist. Is there synchrony signals between himself, his parents and the therapist ? Is there synchrony signal between his parents and the therapist ?
-
-Could this synchrony signal predict outcomes of the psychotherapy ?
-
-We used this data since they come from a large european psychotherapy study and they come from almost real life practice of psychotherapy. This INCANT study aimed to evaluate the efficacy of the MultiDimensioinal Family Therapy for cannabis use disorders in adolescents. 
-
-# Nomenclature
-F1044 is the name of the subject studied (called pa for patient).
-He has a mother (mo) a father (fa) helped by a therapist (th).
-When a variable is referring to several participants, it is organised in alphabetical order separated by underscores, eg. SSI_fa_mo refers to the synchrony index (SSI) between the father and the mother. SSI_mo_fa doesn't exist.
-This familly had several consultations with the psychotherapist. Some of them were video recorded.
-These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg F1044C).
-
-```{r, echo=FALSE}
+## Description of the differents steps of data management
+```{r, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
 #Loading libraries
 library("lme4")
 library("plyr")
 ```
 
 ```{r, echo=FALSE, eval=TRUE, cache=TRUE}
-setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/SynchroData")
-list <- list.files("CSV/csvF104422022016", full.names=TRUE)
+setwd("./")
+list <- list.files("CSV/rawData", full.names=TRUE)
 
 importdata <-function(fileslist){
     data <- c()
     for (i in list){
-        dataAlone <-read.csv(paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/", i, sep=""))
+        dataAlone <-read.csv(paste("./", i, sep=""))
         data <- rbind(data, dataAlone)}
     return (data)}
 ```
@@ -431,7 +416,7 @@ for (i in 1:NumberOfvideos){
 # interval : number of frames in the studied interval
 # data : data frame where there is data
 
-#index de la vid?eo de 1ere a la length de indexvideo
+#index de la video de 1ere a la length de indexvideo
 videoIndex <- 1
 # videoName est le nom de la video actuelle
 for (videoName in indexlist){
@@ -478,7 +463,7 @@ for (videoName in indexlist){
           if (length(emptyLine)>0){
       dfSliding <- dfSliding[-emptyLine,]}
       
-      write.csv(dfSliding, paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/",videoName, ".slideddata.csv", sep=""))
+      write.csv(dfSliding, paste("./CSV/filtered/",videoName, ".slideddata.csv", sep=""))
       videoIndex <-(videoIndex+1)}
 ```
 
@@ -491,17 +476,19 @@ for (videoName in indexlist){
 ### this following function
 
 ```{r, echo=FALSE}
-write.csv(indexlist, paste("/Users/Ofix/Desktop/","indexlist.slideddata.csv", sep=""))
+# export the list of videos
+write.csv(indexlist, paste("./CSV/studyInfoData/","indexlist.slideddata.csv", sep=""))
 
-videoDate <- read.csv2("/Users/Ofix/Desktop/videodate.csv")
+# get the date of each video and match it in videoDate.csv file
+videoDate <- read.csv2("./CSV/studyInfoData/videoDate.csv")
 videoDate[which(videoDate$video==i),1]
 
 print("SSI Files Directory")
 getwd()
-setwd("/SyncPy/examples/SynchronyCSV")
+setwd("./CSV/SynchronyCSV/")
 print("SS Files List")
-SSIFilesList <- list.files("/SyncPy/examples/SynchronyCSV/")
-
+SSIFilesList <- list.files()
+SSIFilesList
 SSIdataFrame <- data.frame()
 SSIFilesList
 SSI <- data.frame()

@@ -3,12 +3,29 @@ S_Estimator example :
 Compute Synchronization Indexes for multiple monovariate signals (organized as a list).
 """
 
+""" Editable content """
+## Place of your data folder (filtered data)
+dataFolder = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/'
+
+## Number of frames by interval used to compute SSI. Nota bene, there are 25 frames by second.
+numberOfFramesByInterval = 25*10
+
+## Name of the videos to import
+VideoList = ["F1044C.VOB","F1044D1.VOB","F1044D2.VOB","F1044E.VOB","F1044F.VOB",
+               "F1044G.VOB","F1044H.VOB","F1044I.VOB","F1044L.VOB","F1044M1.VOB",
+               "F1044M2.VOB","F1044N.VOB", "F1044O.VOB", "F1044P.VOB", "F1044Q.VOB",
+               "F1044R1.VOB","F1044R2.VOB"]
+
 """ Import common python packages """
 import sys
 import os
 import numpy as np              # Mathematical package
-import pandas as pd             # Time serie package
-import matplotlib.pyplot as plt # Plotting package
+import pandas as pd             # data frame package
+import matplotlib
+matplotlib.use('agg')
+matplotlib.use('Qt4Agg')
+import matplotlib.pyplot as plt
+ # Plotting package
 import csv
 sys.path.insert(0, '../src/')       # To be able to import from parent directory
 
@@ -25,15 +42,12 @@ from utils.ExtractSignal import ExtractSignalFromMAT
 from utils.Standardize import Standardize
 
 """ -------------Import signals from a .csv file -----------------------"""
-VideoList = ["F1044C.VOB","F1044D1.VOB","F1044D2.VOB","F1044E.VOB","F1044F.VOB",
-               "F1044G.VOB","F1044H.VOB","F1044I.VOB","F1044L.VOB","F1044M1.VOB",
-               "F1044M2.VOB","F1044N.VOB", "F1044O.VOB", "F1044P.VOB", "F1044Q.VOB",
-               "F1044R1.VOB","F1044R2.VOB"]
 
 for i in VideoList:
     videoName = (i[0:len(i)-4])
     print videoName
-    filename = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/'+ i + '.slideddata.csv'
+
+    filename = dataFolder + i + '.slideddata.csv'
 
     father = ExtractSignalFromCSV(filename, columns = ['slidedFather'])
     mother = ExtractSignalFromCSV(filename, columns = ['slidedMother'])
@@ -96,9 +110,6 @@ for i in VideoList:
     """ Instanciate the class with its attributes """
     print("\n")
     try :
-## Number of frames by interval used to compute SSI
-        numberOfFramesByInterval = 25*10
-        #attention ceci est un test pour 30 seconde, a remmettre a 60
         NbOfInterval = len(father)/numberOfFramesByInterval
         intervalList = range(NbOfInterval)
         s_estimator = S_Estimator.S_Estimator(surr_nb_iter, plot_surrogate)

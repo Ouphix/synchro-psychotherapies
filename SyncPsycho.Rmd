@@ -262,8 +262,8 @@ par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
 
-# Focus on the motion history of the first 20 seconds of the first video(C) 
-## Sliding interval function on a 5 frames interval
+# Focus on the motion history of the first 20 seconds of the first video (F1044C) 
+## Sliding interval function on a 5 frames intervalon the first 10 seconds of the first video (F1044C)
 ```{r, cache=FALSE, echo=TRUE}
 par(mar=c(4,4,4,2))
 plot(1:250, data$father[3:252], main="Mean motion history (Sliding 5 frames interval) 
@@ -275,20 +275,6 @@ lines(data$mother[3:252],  col="red", lty=2, lwd=0.5)
 lines(slidedmother[1:250],  col="red", lty=1)
 lines(data$therapist[3:252],  col="orange", lty=2, lwd=0.5)
 lines(slidedtherapist[1:250],  col="orange", lty=1)
-legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
-legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
-```
-
-```{r, cache=FALSE, eval=FALSE, echo=FALSE}
-## Sliding interval function on a 5 frames interval with shifting of therapist (substraction of min value of therapist)
-par(mar=c(4,4,4,2))
-plot(1:250, data$father[6:255], main="Mean motion history (Sliding 5 frames interval) for father on F1044C video, 10 seconds, data therapist shifted", xlab="Frame index (25/s)", ylab="Motion history",
-     col="blue", type="l", lty=2, lwd=0.5)
-lines(slidedfather[1:250],  col="blue", lty=1)
-lines(data$mother[6:255],  col="red", lty=2, lwd=0.5)
-lines(slidedmother[1:250],  col="red", lty=1)
-lines(data$therapist[6:255],  col="orange", lty=2, lwd=0.5)
-lines(slidedtherapist[1:250]-min(slidedtherapist),  col="orange", lty=1)
 legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```
@@ -358,19 +344,6 @@ father on F1044C video, between 10-20 seconds",
 ylab="Motion history", xlab="Frame index (each 5 frames)", ylim=c(0, 0.009))
 lines(motherFive[23:46], col="red", lty=1)
 lines(therapistFive[23:46], col="green", lty=1)
-legend("top", "Mean on non overlapping Interval" , lty=1, cex=0.7)
-legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
-```
-
-```{r, cache=FALSE, eval=FALSE}
-### Non overlapping interval function on a 5 frames interval with shifting of therapist (substraction of min value of therapist)
-plot (1:24, fatherFive[23:46], type="l", col="blue", 
-main="Mean motion history (non overlapping 5 frames intervals) for 
-father on F1044C video, between 10-20 seconds, 
-data therapist shifted", 
-ylab="Motion history", xlab="Frame index (each 5 frames)", ylim=c(0, 0.009))
-lines(motherFive[23:46], col="red", lty=1)
-lines(therapistFive[23:46]-min(slidedtherapist), col="green", lty=1)
 legend("top", "Mean on non overlapping Interval" , lty=1, cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```

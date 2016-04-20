@@ -30,7 +30,7 @@ The access of this data was sometime difficult, moreover it wasn't collected for
 
 Idea  |  |
 ------ | ------
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =70x) | In a lot of other domains of fundamental algorithm development, computer labs compete on public databases to improve the detection rates of some features for instance. This work are presented during [challenge sessions](http://sspnet.eu/avec2011/) in congresses. 
+![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png) | In a lot of other domains of fundamental algorithm development, computer labs compete on public databases to improve the detection rates of some features for instance. This work are presented during [challenge sessions](http://sspnet.eu/avec2011/) in congresses. 
   | It would be better to make a specific database for this kind of automatic analyses to avoid changes of configuration of the room, the luminosity, the place of the different subjects, the number of subjects, the movement of the camera during recording. |
 
 
@@ -47,7 +47,7 @@ Here is an example of the father (eyes blurred to keep anonymity).
 
 Idea  |  |
 ------ | ------
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =70x) | It was suggested to take a mean image of the video to be more precise instead of taking a video from the beginning.|
+![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =130x) | It was suggested to take a mean image of the video to be more precise instead of taking a video from the beginning.|
 **Beware** |  |
 ![image](http://www.foxsymes.com.au/images/articles/_full/Beware.jpg =70x) | Notice the date that was always masked after during the step 2.
 | A [median filter](https://en.wikipedia.org/wiki/Median_filter) could help to improve the quality of images.
@@ -68,7 +68,7 @@ Beware  |  |
 | Participants can move during the video (change their seats, leave the room). It would be preferable to anticipate it. Camera is moving sometimes too. Mean Motion history by minute can help us to detect big changes or disappearance of a participant.|
 | Participants are labelled in the mask name (eg *F1044C1.avi.father.jpg*)
 **Idea** |  |
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =70x) | [Deep learning software](http://image-net.org/challenges/LSVRC/2014/) used for categorization/detection of people could make this process completely automatic. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/deeplearningsegmentation.jpg =250x)
+![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =300x) | [Deep learning software](http://image-net.org/challenges/LSVRC/2014/) used for categorization/detection of people could make this process completely automatic. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/deeplearningsegmentation.jpg =250x)
 
 #### 3. Motion history extracted
 It is extracted with the video and the mask with a [C++](https://en.wikipedia.org/wiki/C%2B%2B) script. It returns
@@ -85,7 +85,7 @@ It is extracted with the video and the mask with a [C++](https://en.wikipedia.or
 
 Idea |  |
 ---- | ----
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =70x) | - It could be possible to extract [background](https://en.wikipedia.org/wiki/Background_subtraction) to improve the quality of the motion history. See for instance [BGS library](https://github.com/andrewssobral/bgslibrary/blob/master/README.md). 
+![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =300x) | - It could be possible to extract [background](https://en.wikipedia.org/wiki/Background_subtraction) to improve the quality of the motion history. See for instance [BGS library](https://github.com/andrewssobral/bgslibrary/blob/master/README.md). 
  | - It could be interesting to evaluate the trajectories of the people. If they are going toward the same direction or not. For that, the [Dense Trajectories Video Description](http://lear.inrialpes.fr/people/wang/dense_trajectories) could help. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/trajectories.png =250x)
 | Tiny changes can't be always obvious. [Some softwares](https://lambda.qrilab.com/site/) can amplify a lot very tiny changes in specific frequencies that can't be seen normally with naked eyes. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/magnifyingMotion.png =250x)
 
@@ -105,12 +105,14 @@ Motion history raw data is filters with a [R](https://www.cran.r-project.org/) f
 
 Idea |  |
 ----- | -----
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =70x) | It is possible to change the size of interval to change the ration signal/noise|
+![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =150x) | It is possible to change the size of interval to change the ration signal/noise|
 **Beware** |  |
 ![image](http://www.foxsymes.com.au/images/articles/_full/Beware.jpg =70x) | Bad quality of first frames at the beginning or end of the videos with NA were deleted to prepare the next script analysis.
 | The number of frames is changed since it is necessary to get frames before and after the index.
 
 ##### 4. Computing synchrony score with this filtered motion data
+Amplitude (difference between min and max) and baseline levels (min) are not relevant to compute synchrony.
+
 The script in [Python](https://www.python.org/), [Call_S_Estimator.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Call_S_Estimator.py) takes this filtered motion data and compute a synchrony score for each association possible of two or more subjects.
 
 Download and install [SyncPy](https://github.com/syncpy/SyncPy).
@@ -153,7 +155,7 @@ Then you can annotate when someone is speaking. This process is very fastidious 
 
 Idea |  |
 ------ | ------
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =70x) | Some softwares could be used to make this process easier. The [FASST software](http://bass-db.gforge.inria.fr/fasst/) get very good results to segment a music sample in very different instruments. However, different voices are too close to distinguish them easily automatically. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/fasst.jpg =250x)
+![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =400x) | Some softwares could be used to make this process easier. The [FASST software](http://bass-db.gforge.inria.fr/fasst/) get very good results to segment a music sample in very different instruments. However, different voices are too close to distinguish them easily automatically. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/fasst.jpg =250x)
 
 
 

@@ -1,0 +1,20 @@
+---
+title: "Cannabis consumption dynamics of INCANT Study"
+author: "Thomas Gargot"
+date: "18 avril 2016"
+output: pdf_document
+---
+```{r}
+TLFB <- read.csv2("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/psychometry/TLFB_INCANT.csv")
+```
+
+With the graphs below, I chose : F1002+++, F1073+++, F1069++ and F1101++
+
+I excluded F2010, F2013 since the configuration was too poor (overlapping subjects).
+```{r}
+plot <- FALSE
+for (i in 1:length(TLFB$Case)){
+  v <- as.numeric(as.vector(TLFB[i,c(25:29)]))
+    print(paste (TLFB$Case[i], "below"))
+    plot(v, type="l", col=rainbow(length(TLFB$Case))[i])}
+```

@@ -3,11 +3,32 @@
 ## Aim and Hypothesis
 The aim of this project is to evaluate if it is possible to detect automatic signals of synchrony that could predict the outcomes of a familial psychotherapy. 
 
-Here is the analysis of the F1044 subject, his familly (2 parents) and the therapist. Is there synchrony signals between himself, his parents and the therapist ? 
+Here is the analysis of the F1044 subject, his familly (father and mother) and the therapist. 
 
-Is there synchrony signal between his parents and the therapist ? Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/projet%20presoutenance%20TG.pdf).
+**Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between himself, his parents and the therapist ? ** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
 
-We used this data from a large european psychotherapy study since they come from almost real life practice of psychotherapy. This [INCANT](http://www.incant.eu/) study. study aimed to evaluate the efficacy of the MultiDimensioinal Family Therapy for cannabis use disorders in adolescents. The main outcome will be cannabis consumption.
+We used this data from a large european psychotherapy study. This [INCANT](http://www.incant.eu/) study. study aimed to evaluate the efficacy of the [MultiDimensioinal Family Therapy](http://www.mdft.org/) for cannabis use disorders in adolescents. 
+
+The main outcome was be cannabis consumption evaluated with the [TFLB questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
+
+## Data structure
+Data consist of videos and psychometric data.
+### Videos
+* A 252.44GB database of 277 Videos.
+* They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format
+* There are only accessible to registered persons on [ISIR NAS](https://imi2s.isir.upmc.fr/databases/).
+
+### Psychometric data
+* It consist of 3 excel files with :
+	* the Timeline Follow-Back [(TLFB)](http://link.springer.com/chapter/10.1007/978-1-4612-0357-5_3)
+	* the Youth Self-Report syndrome structure [(YSR)](http://psycnet.apa.org/?&fa=main.doiLanding&doi=10.1037/0022-006X.75.5.729) 
+	* the Child Behavior Checklist syndrome constructs [(CBCL)](http://www.ncbi.nlm.nih.gov/pubmed/10200736)
+
+TODO
+
+* NA is -99 ? to check
+* Define all the variables
+* get the questionnaire 
 
 ## Nomenclature
 *F1044* is the name of the subject studied (called *patient*).
@@ -20,8 +41,16 @@ This familly had several consultations with the psychotherapist (*therapist*). S
 These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg *F1044C*).
 
 ## Steps
+### Psychometric data
+Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
+They were imported via the 
+
 ### Raw data
-It is the videos in [AVI](https://en.wikipedia.org/wiki/Audio_Video_Interleave) format in the form *F1044C1.avi*, with a rate of 25 frames by second, from the 2 French centers of the [INCANT](http://www.incant.eu/) study.
+We collected videos and psychometric data (not published) from the INCANT study.
+
+The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/tree/master/INCANT/Scripts/Frames_extractor)
+
+ in [AVI](https://en.wikipedia.org/wiki/Audio_Video_Interleave) format in the form *F1044C1.avi*, with a rate of 25 frames by second, from the 2 French centers of the [INCANT](http://www.incant.eu/) study.
 
 This raw data is compared with [psychometric data](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/psychometry).
 
@@ -39,6 +68,9 @@ Idea  |  |
 #### 1. Extracting frame from the beginning of the video
 Extract a frame with [*Frames_extractor.py*
 ](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Frames_extractor/Frames_extractor.py) with a [python](https://www.python.org/) script from the beginning of the video to make a mask.
+
+This script was developed by Jonathan Aigrain with [Open CV](http://opencv.org/).
+
 
 Here is an example of the father (eyes blurred to keep anonymity).
 

@@ -7,14 +7,14 @@ Here is the analysis of the F1044 subject, his familly (father and mother) and t
 
 **Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between himself, his parents and the therapist ? ** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
 
-We used this data from a large european psychotherapy study. This [INCANT](http://www.incant.eu/) study. study aimed to evaluate the efficacy of the [MultiDimensioinal Family Therapy](http://www.mdft.org/) for cannabis use disorders in adolescents. 
+We used this data from a large european psychotherapy study. This [INCANT](http://www.incant.eu/) study. study aimed to evaluate the efficacy of the [Multi Dimensioinal Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. 
 
 The main outcome was be cannabis consumption evaluated with the [TFLB questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
 
 ## Data structure
 Data consist of videos and psychometric data.
 ### Videos
-* A 252.44GB database of 277 Videos.
+* A 252.44GB database of 277 Videos, with a rate of 25 frames by second.
 * They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format
 * There are only accessible to registered persons on [ISIR NAS](https://imi2s.isir.upmc.fr/databases/).
 
@@ -40,26 +40,39 @@ When a variable is referring to several participants, it is organised in alphabe
 This familly had several consultations with the psychotherapist (*therapist*). Some of them were video recorded.
 These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg *F1044C*).
 
+## Softwares used
+* Git
+	* GitHub website
+* Excel
+* R
+	* xlsx package
+* Python
+	* opencv
+	* cv
+	* panda
+	* matplotlib
+	* syncpy
+	* [FFMPEG](https://ffmpeg.org/)
+* C ++
+* Paintbrush 2
+* Quicktime
+* VLC
+* Elan
+
 ## Steps
 ### Psychometric data
 Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
-They were imported via the 
+They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
+It returns a dataINCANT.csv cvs file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file.
 
 ### Raw data
-We collected videos and psychometric data (not published) from the INCANT study.
+The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/Frames_extractor) python script made by Jonathan with [FFMPEG](https://ffmpeg.org/).
 
-The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/tree/master/INCANT/Scripts/Frames_extractor)
-
- in [AVI](https://en.wikipedia.org/wiki/Audio_Video_Interleave) format in the form *F1044C1.avi*, with a rate of 25 frames by second, from the 2 French centers of the [INCANT](http://www.incant.eu/) study.
-
-This raw data is compared with [psychometric data](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/psychometry).
-
-The access of this data was sometime difficult, moreover it wasn't collected for this goal.
-
+The VOB videos were converted in [AVI](https://en.wikipedia.org/wiki/Audio_Video_Interleave) format in the form *F1044C1.avi*.
 
 Idea  |  |
 ------ | ------
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png) | In a lot of other domains of fundamental algorithm development, computer labs compete on public databases to improve the detection rates of some features for instance. This work are presented during [challenge sessions](http://sspnet.eu/avec2011/) in congresses. 
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png) | In a lot of other domains of fundamental algorithm development, computer labs compete on public databases to improve the detection rates of some features for instance. This work are presented during [challenge sessions](http://sspnet.eu/avec2011/) in congresses. However, there is a problem with confidentiality when we deal with psychotherapy videos.
   | It would be better to make a specific database for this kind of automatic analyses to avoid changes of configuration of the room, the luminosity, the place of the different subjects, the number of subjects, the movement of the camera during recording. |
 
 
@@ -67,22 +80,20 @@ Idea  |  |
 
 #### 1. Extracting frame from the beginning of the video
 Extract a frame with [*Frames_extractor.py*
-](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Frames_extractor/Frames_extractor.py) with a [python](https://www.python.org/) script from the beginning of the video to make a mask.
-
-This script was developed by Jonathan Aigrain with [Open CV](http://opencv.org/).
+](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Frames_extractor/Frames_extractor.py) with a [python](https://www.python.org/) script from the beginning of the video to make a mask. This script was developed by Jonathan Aigrain with [Open CV](http://opencv.org/).
 
 
 Here is an example of the father (eyes blurred to keep anonymity).
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Frames/SampleSimpleFrame.png =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png =250x)
 
 
 Idea  |  |
 ------ | ------
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =130x) | It was suggested to take a mean image of the video to be more precise instead of taking a video from the beginning.|
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =130x) | It was suggested to take a mean image of the video to be more precise instead of taking a video from the beginning.|
 **Beware** |  |
-![image](http://www.foxsymes.com.au/images/articles/_full/Beware.jpg =70x) | Notice the date that was always masked after during the step 2.
-| A [median filter](https://en.wikipedia.org/wiki/Median_filter) could help to improve the quality of images.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg =70x) | Notice the date that was always masked after during the step 2.
+| We can change the value of the [median filter](https://en.wikipedia.org/wiki/Median_filter).
 
 #### 2. Make a mask for each relevant part of each video with Paintbrush
 Select a part of the video with each participant (father, mother, patient, therapist) with [*Paintbrush*](http://paintbrush.sourceforge.net/). Take only the upper part of the body to compare them since you can see only the upper part of the therapist.
@@ -90,17 +101,17 @@ Select a part of the video with each participant (father, mother, patient, thera
 
 Paint masking | Result |
 ------------ | -------------
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Frames/F1044C1paint.mov.avi.father.jpg =250x) | ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Frames/F1044C1.mov.avi.father.jpg =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/F1044C1paint.mov.avi.father.jpg =250x) | ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/F1044C1.mov.avi.father.jpg =250x)
 
 This operation is repeated for each participant on each video.
 
 Beware  |  |
 :------: | ------
-![image](http://www.foxsymes.com.au/images/articles/_full/Beware.jpg =70x) | It is necessary to always use the same background color |
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg =70x) | It is necessary to always use the same background color, for instance [RGB green](http://rapidtables.com/web/color/RGB_Color.htm).  |
 | Participants can move during the video (change their seats, leave the room). It would be preferable to anticipate it. Camera is moving sometimes too. Mean Motion history by minute can help us to detect big changes or disappearance of a participant.|
 | Participants are labelled in the mask name (eg *F1044C1.avi.father.jpg*)
 **Idea** |  |
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =300x) | [Deep learning software](http://image-net.org/challenges/LSVRC/2014/) used for categorization/detection of people could make this process completely automatic. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/deeplearningsegmentation.jpg =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =300x) | [Deep learning software](http://image-net.org/challenges/LSVRC/2014/) or machine learning used for categorization/detection of people could make this process completely automatic. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/deeplearningsegmentation.jpg =250x)
 
 #### 3. Motion history extracted
 It is extracted with the video and the mask with a [C++](https://en.wikipedia.org/wiki/C%2B%2B) script. It returns
@@ -117,9 +128,9 @@ It is extracted with the video and the mask with a [C++](https://en.wikipedia.or
 
 Idea |  |
 ---- | ----
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =300x) | - It could be possible to extract [background](https://en.wikipedia.org/wiki/Background_subtraction) to improve the quality of the motion history. See for instance [BGS library](https://github.com/andrewssobral/bgslibrary/blob/master/README.md). 
- | - It could be interesting to evaluate the trajectories of the people. If they are going toward the same direction or not. For that, the [Dense Trajectories Video Description](http://lear.inrialpes.fr/people/wang/dense_trajectories) could help. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/trajectories.png =250x)
-| Tiny changes can't be always obvious. [Some softwares](https://lambda.qrilab.com/site/) can amplify a lot very tiny changes in specific frequencies that can't be seen normally with naked eyes. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/magnifyingMotion.png =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =300x) | - It could be possible to extract [background](https://en.wikipedia.org/wiki/Background_subtraction) to improve the quality of the motion history. See for instance [BGS library](https://github.com/andrewssobral/bgslibrary/blob/master/README.md). 
+ | - It could be interesting to evaluate the trajectories of the people. If they are going toward the same direction or not. For that, the [Dense Trajectories Video Description](http://lear.inrialpes.fr/people/wang/dense_trajectories) could help. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/trajectories.png =250x)
+| Tiny changes can't be always obvious. [Some softwares](https://lambda.qrilab.com/site/) can amplify a lot very tiny changes in specific frequencies that can't be seen normally with naked eyes. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/magnifyingMotion.png =250x)
 
 
 #### 4. Motion history filtered with slindingInterval function
@@ -137,9 +148,9 @@ Motion history raw data is filters with a [R](https://www.cran.r-project.org/) f
 
 Idea |  |
 ----- | -----
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =150x) | It is possible to change the size of interval to change the ration signal/noise|
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =150x) | It is possible to change the size of interval to change the ration signal/noise|
 **Beware** |  |
-![image](http://www.foxsymes.com.au/images/articles/_full/Beware.jpg =70x) | Bad quality of first frames at the beginning or end of the videos with NA were deleted to prepare the next script analysis.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg =70x) | Bad quality of first frames at the beginning or end of the videos with NA were deleted to prepare the next script analysis.
 | The number of frames is changed since it is necessary to get frames before and after the index.
 
 ##### 4. Computing synchrony score with this filtered motion data
@@ -179,7 +190,7 @@ There is not any NA in this file. Only the possible combinations are computed (e
 #### 1. Manually
 It is possible to use the software Elan to annotate a video. You need to extract first the sound (with [Free Video Converter](http://www.freemake.com/free_video_converter/) for instance) to get a waveform and import the video and the waveform. 
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/elan_anot.jpg =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/elan_anot.jpg =250x)
 
 Then you can annotate when someone is speaking. This process is very fastidious (1 week work for one hour video at the beginning and so was gave up).
 
@@ -187,7 +198,7 @@ Then you can annotate when someone is speaking. This process is very fastidious 
 
 Idea |  |
 ------ | ------
-![image](http://javierfreyria.com/blog/wp-content/uploads/2011/10/man-with-bulb-01-300x300.png =400x) | Some softwares could be used to make this process easier. The [FASST software](http://bass-db.gforge.inria.fr/fasst/) get very good results to segment a music sample in very different instruments. However, different voices are too close to distinguish them easily automatically. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/images/fasst.jpg =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =400x) | Some softwares could be used to make this process easier. The [FASST software](http://bass-db.gforge.inria.fr/fasst/) get very good results to segment a music sample in very different instruments. However, different voices are too close to distinguish them easily automatically. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/fasst.jpg =250x)
 
 
 

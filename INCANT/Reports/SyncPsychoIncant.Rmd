@@ -179,7 +179,7 @@ for (i in indexList){
 par(mar=c(4,4,3,1))
 barplot(videoLengthList, col="cornflowerblue", cex.axis=0.6, cex.names=0.4,
         ylab="Minutes", xlab="Video Name", las=2, names=labelvideolist, 
-        main="Length in each F1044 video (min)")
+        main="Length of each F1044 video (min)")
         abline(h = mean(videoLengthList), lwd=2, lty=2)
         text(1,27, "Mean")
 ```
@@ -406,7 +406,7 @@ summary(therapistLogFiveF1044C1)
 ## Sliding interval function on a raw data, 5 frames interval
 ```{r, cache=FALSE, echo=TRUE}
 par(mar=c(4,4,4,2))
-plot(1:250, data$father[3:252], main="Mean motion history (Sliding 5 frames interval) 
+plot(1:250, data$father[3:252], main="Mean motion history, (Sliding 5 frames interval raw data) 
     on F1044C1 video, first 10 seconds ", xlab="Frame index (25/s)",
      ylab="Motion history",
      col="blue", type="l", lty=2, lwd=0.5)
@@ -422,8 +422,8 @@ legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=
 ## Sliding interval function on log data, 5 frames interval
 ```{r, cache=FALSE, echo=TRUE}
 par(mar=c(4,4,4,2))
-plot(1:250, data$norm.logFather[3:252], main="Mean motion history (Sliding 5 frames interval) 
-     for father on F1044C1 video, first 10 seconds ", xlab="Frame index (25/s)",
+plot(1:250, data$norm.logFather[3:252], main="Mean motion history, (Sliding 5 frames interval log data) 
+    on F1044C1 video, first 10 seconds", xlab="Frame index (25/s)",
      ylab="Motion history",
      col="blue", type="l", lty=2, lwd=0.5)
 lines(slidedLogFatherF1044C1[1:250],  col="blue", lty=1)

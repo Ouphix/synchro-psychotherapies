@@ -18,6 +18,12 @@ Data consist of videos and psychometric data.
 * They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format
 * There are only accessible on ISIR local network and to registered persons on [ISIR NAS](https://imi2s.isir.upmc.fr/databases/).
 
+**Example with F1044 subject**
+
+F1044 subject had a lot of videos so we decided to make a pilot study with him. 
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
+
+
 ### Psychometric data
 * It consist of 3 excel files with :
 	* the Timeline Follow-Back [(TLFB)](http://link.springer.com/chapter/10.1007/978-1-4612-0357-5_3)

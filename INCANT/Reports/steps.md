@@ -28,7 +28,7 @@ F1044 subject had a lot of videos so we decided to make a pilot study with him.
 * It consist of 3 excel files with :
 	* the Timeline Follow-Back [(TLFB)](http://link.springer.com/chapter/10.1007/978-1-4612-0357-5_3)
 	* the Youth Self-Report syndrome structure [(YSR)](http://psycnet.apa.org/?&fa=main.doiLanding&doi=10.1037/0022-006X.75.5.729) 
-	* the Child Behavior Checklist syndrome constructs [(CBCL)](http://www.ncbi.nlm.nih.gov/pubmed/10200736). The 
+	* the Child Behavior Checklist syndrome constructs [(CBCL)](http://www.ncbi.nlm.nih.gov/pubmed/10200736).
 
 TODO
 
@@ -67,15 +67,38 @@ These videos are names with the name of the subject + an index letter. They can 
 * Markdown
 
 ## Steps
-### Psychometric data
+### Description of the database
+#### Psychometric data
 Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
 They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
-It returns a dataINCANT.csv cvs file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file.
+It returns a dataINCANT.csv cvs file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. The evolution of this scores are plotted [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf).
+
+#### Video Configurations
+##### Spatial organisation
+In the first center, psychotherapy sessions consisted of filmed familial psychotherapies with 2 to 5 peoples organized in a circle.
+Two participants of the psychotherapy were filmed from the front. Another subject is filmed from the other side and is embedded in a window. We can notice the date displayed on the video. Sometimes, there is an overlap of different subject in the same place.
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png =350x)
+
+We can see that the configurations for the F1044 subject can be very different. The patient is not very present in the therapy (compliance problem). Sometimes, we don't have any information from the therapist because she isn't filmed.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/DifferentConfigurations.jpeg)
+
+When we sum up the data we get, we can see that the mother and the therapist are the most present participants.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/AvailableData.jpeg)
+
+##### Time organization
+Video length could were very different because it was necessary to reorganize them. 
+
+The configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy, a phone was used to communicate between the main psychotherapist and the supervisor. The participants made some pauses or the same video was used for different patient.
+
+Hence, it was necessary to cut the videos with [Quicktime](https://en.wikipedia.org/wiki/QuickTime) software.
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
+
 
 ### Raw data
 The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/Frames_extractor) python script made by Jonathan with [FFMPEG](https://ffmpeg.org/).
 
-The VOB videos were converted in [AVI](https://en.wikipedia.org/wiki/Audio_Video_Interleave) format in the form *F1044C1.avi*.
 
 Idea  |  |
 ------ | ------
@@ -121,6 +144,8 @@ Beware  |  |
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =300x) | [Deep learning software](http://image-net.org/challenges/LSVRC/2014/) or machine learning used for categorization/detection of people could make this process completely automatic. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/deeplearningsegmentation.jpg =250x)
 
 #### 3. Motion history extracted
+The VOB videos were converted in [AVI](https://en.wikipedia.org/wiki/Audio_Video_Interleave) format in the form *F1044C1.avi*.
+
 It is extracted with the video and the mask with a [C++](https://en.wikipedia.org/wiki/C%2B%2B) script. It returns
 [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) file of the form "*F1044C.VOB_res2.csv*". See files [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/rawData).
 
@@ -135,7 +160,7 @@ It is extracted with the video and the mask with a [C++](https://en.wikipedia.or
 
 Raw Motion history | Natural Log Motion history 
 ------------ | -------
-TO DO | 
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/MotionHistoryBoxPlots.jpeg) | 
 
 
 Idea |  |

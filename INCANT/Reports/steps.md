@@ -7,16 +7,16 @@ Here is the analysis of the F1044 subject, his familly (father and mother) and t
 
 **Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between himself, his parents and the therapist ? ** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
 
-We used this data from a large european psychotherapy study. This [INCANT](http://www.incant.eu/) study. study aimed to evaluate the efficacy of the [Multi Dimensioinal Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. 
+We used this data from a large european psychotherapy study. This [INCANT](http://www.incant.eu/) study. study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. 
 
-The main outcome was be cannabis consumption evaluated with the [TFLB questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
+The main outcome was be cannabis consumption evaluated with the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
 
 ## Data structure
 Data consist of videos and psychometric data.
 ### Videos
 * A 252.44GB database of 277 Videos, with a rate of 25 frames by second.
 * They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format
-* There are only accessible to registered persons on [ISIR NAS](https://imi2s.isir.upmc.fr/databases/).
+* There are only accessible on ISIR local network and to registered persons on [ISIR NAS](https://imi2s.isir.upmc.fr/databases/).
 
 ### Psychometric data
 * It consist of 3 excel files with :
@@ -58,6 +58,7 @@ These videos are names with the name of the subject + an index letter. They can 
 * Quicktime
 * VLC
 * Elan
+* Markdown
 
 ## Steps
 ### Psychometric data
@@ -107,7 +108,7 @@ This operation is repeated for each participant on each video.
 
 Beware  |  |
 :------: | ------
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg =70x) | It is necessary to always use the same background color, for instance [RGB green](http://rapidtables.com/web/color/RGB_Color.htm).  |
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg =70x) | It is necessary to always use the same background color, for instance [RGB green](http://rapidtables.com/web/color/RGB_Color.htm). (0,255,0) |
 | Participants can move during the video (change their seats, leave the room). It would be preferable to anticipate it. Camera is moving sometimes too. Mean Motion history by minute can help us to detect big changes or disappearance of a participant.|
 | Participants are labelled in the mask name (eg *F1044C1.avi.father.jpg*)
 **Idea** |  |

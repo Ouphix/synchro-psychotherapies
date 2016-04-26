@@ -1,7 +1,7 @@
 ---
 title: "Synchrony in Psychotherapy, example with F1044 patient data"
 author: "Thomas Gargot"
-date: "April, 12th 2016"
+date: "April, 26th 2016"
 output: 
   pdf_document: 
     toc: yes
@@ -23,7 +23,7 @@ library("stringr")
 
 ```{r, echo=FALSE, eval=TRUE, cache=FALSE}
 ## Create a csv files list with the directories
-FullnameList <- list.files("Data/CSV/MotionHistory/raw", full.names=TRUE)
+fullNameList <- list.files("Data/CSV/MotionHistory/raw", full.names=TRUE)
 
 ## Create a csv files list without the directories
 filesList <- list.files("Data/CSV/MotionHistory/raw", full.names=FALSE)
@@ -36,9 +36,9 @@ for (i in filesList){
   indexList <- c(indexList, name)
 }
 
-importdata <-function(FullnameList){
+importdata <-function(fullNameList){
     data <- c()
-    for (i in FullnameList){
+    for (i in fullNameList){
         dataAlone <- read.csv(i)
         mydata.nas <- apply(dataAlone, 1, function(x){all(is.na(x))})
         dataAlone <- dataAlone[!mydata.nas,]
@@ -50,7 +50,7 @@ importdata <-function(FullnameList){
 
 ## Import data
 ```{r}
-data <- importdata(FullnameList)
+data <- importdata(fullNameList)
 ```
 
 # Lists
@@ -108,7 +108,7 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
 
 ### MeanSynchronyByTime (TODO)
 ## Constants generated from data and defining it (data list, )
-```{r, echo=TRUE, eval=TRUE, cache=FALSE}
+```{r list generator, echo=TRUE, eval=TRUE, cache=FALSE}
 labelvideolist  <-c()
 for (i in indexList){
     a <- str_count(i)
@@ -124,50 +124,43 @@ NumberOfvideos <- length(indexList)
 # green to patient
 # orange to therapist
 
-colOrderList <- c("blue","red", "green","orange")
+colOrderList  <- c("blue","red", "green","orange")
 ParticipantsList <- c("father", "mother", "patient", "therapist")
 ```
 
 ## Merge data frame, compute Time in minutes, compute log of motion history dataframe
-```{r}
+```{r compute minutes and log on data frame}
 data <- merge(data, FilesName, by.x="file", by.y="unique.data.file.", all=TRUE)
 data$timeMin <- data$frame/(25*60)
 
 data$logFather <- log(data$father)
-
 data$norm.logFather <- data$logFather+20
-data$norm.logFather[which(data$norm.logFather==-Inf)] <- 0
-str(data$norm.logFather)
-sort(data$norm.logFather)
+data$norm.logFather[which(data$norm.logFather==-Inf)] <- NA
 
 data$logMother <- log(data$mother)
-hist(data$logMother)
 data$norm.logMother <- data$logMother+20
-data$norm.logMother[which(data$norm.logMother==-Inf)] <- 0
-hist(data$norm.logMother)
-str(data$norm.logFather)
-sort(data$norm.logFather)
+data$norm.logMother[which(data$norm.logMother==-Inf)] <- NA
 
 data$logPatient <- log(data$patient)
-hist(data$logPatient)
 data$norm.logPatient <- data$logPatient+20
-data$norm.logPatient[which(data$norm.logPatient==-Inf)] <- 0
-hist(data$norm.logPatient)
-str(data$norm.logPatient)
-sort(data$norm.logPatient)
+data$norm.logPatient[which(data$norm.logPatient==-Inf)] <- NA
 
 data$logTherapist <- log(data$therapist)
-hist(data$logTherapist)
 data$norm.logTherapist <- data$logTherapist+20
-data$norm.logTherapist[which(data$norm.logTherapist==-Inf)] <- 0
-hist(data$norm.logTherapist)
-str(data$norm.logTherapist)
-sort(data$norm.logTherapist)
+data$norm.logTherapist[which(data$norm.logTherapist==-Inf)] <- NA
 
 data$file <- NULL
 data$filesList <- NULL
 ```
+* Time in minutes
 The timeMin is calculated with a frame rate of 25/sec.
+
+* Motion history distribution
+The data is not normal at all but with very small movement very frequent and bigger movement much rare with a long tail.
+
+To normalize the distribution to compute synchrony scores on it, we made the Napierian logarithm. It produces negative numbers. SyncPy can't compute negatives scores, they are so shifted to positives values with an arbitrary value of 20 to avoid to keep extreme negative values.
+
+Values equal to 0 can't be loged. They generate a -Inf value. These values are set to NA. We lose the information of no movement at all. If we give a arbitrary value to this data (eg, the minimum value, they are over represented)
 
 # Presentation of the data
 ```{r, cache=FALSE}
@@ -188,7 +181,7 @@ barplot(videoLengthList, col="cornflowerblue", cex.axis=0.6, cex.names=0.4,
         ylab="Minutes", xlab="Video Name", las=2, names=labelvideolist, 
         main="Length in each F1044 video (min)")
         abline(h = mean(videoLengthList), lwd=2, lty=2)
-        text(15,25, "Mean")
+        text(1,27, "Mean")
 ```
 
 ## Length of the videos in number of frames
@@ -197,7 +190,7 @@ barplot(table(data$labelvideolist), col="cornflowerblue", cex.axis=0.6, cex.name
         main="Number of frames in each F1044 video", cex.main=0.8, ylab="Frame number", 
         names = labelvideolist, xlab="Video Name", las=1)
         abline(h = mean(table(data$labelvideolist)), lwd=2, lty=2)
-        text(15,38000, "Mean")
+        text(1,39000, "Mean")
 ```
 
 ## Number of Available (True) and Not Available (False) data for each participant
@@ -244,6 +237,8 @@ legend("top", inset=.05, ParticipantsList,
 
 We can see that configurations of subjects are very different. Consequently, it makes the comparaisons of the videos quite complicated. It is not really relevant to compare the synchrony of two persons if the context is different (other people around them).
 
+## Raw Motion history by video by participant
+### Boxplots
 ```{r  Motion history box plots by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =FALSE}
 par(mar=c(4,4,2,2))
 boxplot(data$father, data$mother, data$therapist, data$patient, 
@@ -254,7 +249,16 @@ par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 ```
 
-```{r  Motion history histograms by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =FALSE}
+### Histograms
+```{r Motion history histograms by frame (raw data), all videos}
+par(mar=c(4,4,2,2))
+hist(data$father, col=colOrderList[1])
+hist(data$mother, col=colOrderList[2])
+hist(data$patient, col=colOrderList[3])
+hist(data$therapist, col=colOrderList[4])
+```
+
+```{r  Kernel density plot by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =FALSE}
 dFather <- density(data$father, na.rm=TRUE)
 dMother <- density(data$mother, na.rm=TRUE)
 dPatient <- density(data$patient, na.rm=TRUE)
@@ -269,37 +273,78 @@ par(mar=c(1,0.5,0.5,1))
 legend("topright", ParticipantsList, fill=colOrderList, cex=0.7)
 ```
 
-```{r  Log of motion history box plots by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =FALSE}
-str(data)
-
-par(mar=c(3,3,2,2))
-boxplot(data$logFather, data$logMother, data$logTherapist, data$logPatient, 
+## Normalized log Motion history by video by participant
+### Boxplots
+```{r  Normalized log of motion history box plots by frame, all videos, echo=FALSE, cache=FALSE, eval =FALSE}
+par(mar=c(4,4,2,2))
+boxplot(data$norm.logFather, data$norm.logMother, data$norm.logPatient, data$norm.logTherapist,
         col=colOrderList, 
         names=ParticipantsList, 
-        main= "Box plots of the log of the motion history by frame (raw data), all videos", las=1)
+        main= "Box plots of the Motion history by frame (raw data), all videos", las=1, ylab="Motion history", xlab="Participant")
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 ```
-# Raw data and mean of Motion History on sliding and non overlapping intervals on F1044C video
+
+### Histograms
+```{r}
+par(mar=c(4,4,2,2))
+hist(data$norm.logFather, col=colOrderList[1])
+hist(data$norm.logMother, col=colOrderList[2])
+hist(data$norm.logPatient, col=colOrderList[3])
+hist(data$norm.logTherapist, col=colOrderList[4])
+```
+
+```{r  Motion history histograms by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =FALSE}
+dlogFather <- density(data$norm.logFather, na.rm=TRUE)
+dlogMother <- density(data$norm.logMother, na.rm=TRUE)
+dlogPatient <- density(data$norm.logPatient, na.rm=TRUE)
+dlogTherapist <- density(data$norm.logTherapist, na.rm=TRUE)
+
+par(mar=c(4,4,2,2))
+plot(dlogFather, main="Kernel density plot", col=colOrderList[1])
+lines(dlogMother,col=colOrderList[2])
+lines(dlogPatient,col=colOrderList[3])
+lines(dlogTherapist,col=colOrderList[4])
+par(mar=c(1,0.5,0.5,1))
+legend("topright", ParticipantsList, fill=colOrderList, cex=0.7)
+```
+
+We can see that the father and the mother motion history is very similar. However. The therapist, which is always in a small window of the video, as a very different distribution. We have less signal on it. In some videos the patient is in this window, it explains, it intermediates position.
+
+# Raw data and mean of Motion History on sliding and non overlapping intervals on 1st video F1044C1 video
 It is the first video of F1044C. The father, mother and therapist are present. The patient is absent.
 
 ## Raw data
 ```{r, cache=FALSE}
-rawdatafather <- data[which(data$indexList=="F1044C1"),]$father
-rawdataMother <- data[which(data$indexList=="F1044C1"),]$mother
-rawdataTherapist <- data[which(data$indexList=="F1044C1"),]$therapist
+rawFatherF1044C1 <- data[which(data$indexList=="F1044C1"),]$father
+rawMotherF1044C1 <- data[which(data$indexList=="F1044C1"),]$mother
+rawTherapistF1044C1 <- data[which(data$indexList=="F1044C1"),]$therapist
+
+logFatherF1044C1 <- data[which(data$indexList=="F1044C1"),]$norm.logFather
+logMotherF1044C1 <- data[which(data$indexList=="F1044C1"),]$norm.logMother
+logTherapistF1044C1 <- data[which(data$indexList=="F1044C1"),]$norm.logTherapist
 
 summary(rawdatafather)
 summary(rawdataMother)
 summary(rawdataTherapist)
 ```
 
-```{r, cache=FALSE, eval=FALSE, echo=FALSE}
-par(mar=c(3,3,3,2))
-boxplot(rawdatafather, rawdataMother, rawdataTherapist,
+```{r}
+par(mar=c(4,4,3,2))
+boxplot(rawFatherF1044C1, rawMotherF1044C1, rawTherapistF1044C1,
         col=colOrderList[c(1,2,4)], 
         names=ParticipantsList[c(1,2,4)], 
-        main= "Box plots of motion history rawdata on F1044C video", las=1)
+        main= "Box plots of motion history raw data on F1044C1 video", las=1, ylab ="Motion history", xlab="Participants")
+par(mar=c(1,0.5,0.5,1))
+legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
+```
+
+```{r, cache=FALSE, eval=FALSE, echo=FALSE}
+par(mar=c(4,4,3,2))
+boxplot(logFatherF1044C1, logMotherF1044C1, logTherapistF1044C1,
+        col=colOrderList[c(1,2,4)], 
+        names=ParticipantsList[c(1,2,4)], 
+        main= "Box plots of motion history on F1044C1 video", las=1, xlab ="Motion history", ylab="Participants")
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 ```
@@ -313,43 +358,79 @@ legend("topleft", ParticipantsList[c(1,2,4)], fill=colOrderList, cex=0.7)
 # interval : number of frames in the studied interval
 # data : data frame where there is data
 
-slidedfather <- SlidingInterval("father", 1 , 5, data)
-slidedmother <- SlidingInterval("mother", 1 , 5, data)
-slidedtherapist <- SlidingInterval("therapist", 1 , 5, data)
-slidedpatient <- SlidingInterval("patient", 1 , 5, data)
+slidedFatherF1044C1 <- SlidingInterval("father", 1 , 5, data)
+slidedMotherF1044C1 <- SlidingInterval("mother", 1 , 5, data)
+slidedPatientF1044C1 <- SlidingInterval("patient", 1 , 5, data)
+slidedTherapistF1044C1 <- SlidingInterval("therapist", 1 , 5, data)
 
-summary(slidedfather)
-summary(slidedmother)
-summary(slidedpatient)
-summary(slidedtherapist)
+slidedLogFatherF1044C1 <- SlidingInterval("norm.logFather", 1 , 5, data)
+slidedLogMotherF1044C1 <- SlidingInterval("norm.logMother", 1 , 5, data)
+slidedLogPatientF1044C1 <- SlidingInterval("norm.logPatient", 1 , 5, data)
+slidedLogTherapistF1044C1 <- SlidingInterval("norm.logTherapist", 1 , 5, data)
+
+summary(slidedFatherF1044C1)
+summary(slidedMotherF1044C1)
+summary(slidedPatientF1044C1)
+summary(slidedTherapistF1044C1)
+
+summary(slidedLogFatherF1044C1)
+summary(slidedLogMotherF1044C1)
+summary(slidedLogPatientF1044C1)
+summary(slidedLogTherapistF1044C1)
 ```
 
 ## Non overlapping interval
 ```{r, cache=FALSE}
-fatherFive<- MeanMotionByTime("father", indexOfvideos=1, interval=5, data)
+fatherFiveF1044C1<- MeanMotionByTime("father", indexOfvideos=1, interval=5, data)
 
-motherFive <- MeanMotionByTime("mother", indexOfvideos=1, interval=5, data)
+motherFiveF1044C1 <- MeanMotionByTime("mother", indexOfvideos=1, interval=5, data)
 
-therapistFive <- MeanMotionByTime("therapist", indexOfvideos=1, interval=5, data)
+therapistFiveF1044C1 <- MeanMotionByTime("therapist", indexOfvideos=1, interval=5, data)
 
-summary(fatherFive)
-summary(motherFive)
-summary(therapistFive)
+fatherLogFiveF1044C1<- MeanMotionByTime("norm.logFather", indexOfvideos=1, interval=5, data)
+
+motherLogFiveF1044C1 <- MeanMotionByTime("norm.logMother", indexOfvideos=1, interval=5, data)
+
+therapistLogFiveF1044C1 <- MeanMotionByTime("norm.logTherapist", indexOfvideos=1, interval=5, data)
+
+summary(fatherFiveF1044C1)
+summary(motherFiveF1044C1)
+summary(therapistFiveF1044C1)
+
+summary(fatherLogFiveF1044C1)
+summary(motherLogFiveF1044C1)
+summary(therapistLogFiveF1044C1)
 ```
 
 # Focus on the motion history of the first 10 seconds of the first video(C) 
-## Sliding interval function on a 5 frames interval
+## Sliding interval function on a raw data, 5 frames interval
 ```{r, cache=FALSE, echo=TRUE}
 par(mar=c(4,4,4,2))
 plot(1:250, data$father[3:252], main="Mean motion history (Sliding 5 frames interval) 
-     for father on F1044C video, 10 seconds ", xlab="Frame index (25/s)",
+    on F1044C1 video, first 10 seconds ", xlab="Frame index (25/s)",
      ylab="Motion history",
      col="blue", type="l", lty=2, lwd=0.5)
-lines(slidedfather[1:250],  col="blue", lty=1)
+lines(slidedFatherF1044C1[1:250],  col="blue", lty=1)
 lines(data$mother[3:252],  col="red", lty=2, lwd=0.5)
-lines(slidedmother[1:250],  col="red", lty=1)
+lines(slidedMotherF1044C1[1:250],  col="red", lty=1)
 lines(data$therapist[3:252],  col="orange", lty=2, lwd=0.5)
-lines(slidedtherapist[1:250],  col="orange", lty=1)
+lines(slidedTherapistF1044C1[1:250],  col="orange", lty=1)
+legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
+legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
+```
+
+## Sliding interval function on log data, 5 frames interval
+```{r, cache=FALSE, echo=TRUE}
+par(mar=c(4,4,4,2))
+plot(1:250, data$norm.logFather[3:252], main="Mean motion history (Sliding 5 frames interval) 
+     for father on F1044C1 video, first 10 seconds ", xlab="Frame index (25/s)",
+     ylab="Motion history",
+     col="blue", type="l", lty=2, lwd=0.5)
+lines(slidedLogFatherF1044C1[1:250],  col="blue", lty=1)
+lines(data$norm.logMother[3:252],  col="red", lty=2, lwd=0.5)
+lines(slidedLogMotherF1044C1[1:250],  col="red", lty=1)
+lines(data$norm.logTherapist[3:252],  col="orange", lty=2, lwd=0.5)
+lines(slidedLogTherapistF1044C1[1:250],  col="orange", lty=1)
 legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
 ```

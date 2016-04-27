@@ -575,7 +575,7 @@ for (i in 1:(F1044C_Minutes-1)){
              fill=colOrderList, cex=0.7)}
 ```
 
-# Export data in text files
+# Export no log filtered data in text files
 ```{r, eval=TRUE, cache=FALSE}
 ## REMINDER:
 #SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data) with :
@@ -608,12 +608,52 @@ for (videoName in indexList){
       
 # create a data frame to store temporarily this data with NA
       slidedVideo <- data.frame(
-        slidedFather, slidedMother, slidedPatient, slidedTherapist, 
-        logSlidedFather, logSlidedMother, logSlidedPatient,logSlidedTherapist)
+        slidedFather, slidedMother, slidedPatient, slidedTherapist)
       
       dataFrame <- FALSE
       dfSliding <- data.frame()
-      for (participant in 1:8){
+      for (participant in 1:4){
+# If the colum is not empty, takes its length and begin a data frame with it
+          if (dataFrame == FALSE & (length(slidedVideo[participant][!is.na(slidedVideo[participant])]) > 0)){
+                dfSliding <- data.frame(
+                  "video"=rep(indexList[videoIndex], length(slidedVideo[participant])), 
+                  frame_index = (1:dim(slidedVideo[1])[1]),
+                  slidedVideo[participant])
+                  dataFrame <- TRUE}
+          else if (dataFrame == FALSE){} 
+          else{
+            dfSliding <- cbind(dfSliding, slidedVideo[participant])}
+      }
+      write.csv(dfSliding, paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/INCANT/Data/CSV/MotionHistory/filtered/",videoName, ".slideddata.csv", sep=""))
+      videoIndex <-(videoIndex+1)
+}
+```
+
+# Export log filtere data in text files
+```{r, eval=TRUE, cache=FALSE}
+videoIndex <- 1
+# videoName est le nom de la video actuelle
+for (videoName in indexList){
+# Compute slinding interval for each participant
+      print(paste("Computing slidedFather", videoName))
+      slidedFather <- SlidingInterval("norm.logFather", videoIndex, 5, data)
+      
+      print(paste("Computing slidedMother", videoName))
+      slidedMother <- SlidingInterval("norm.logMother", videoIndex, 5, data)
+      
+      print(paste("Computing slidedPatient", videoName))
+      slidedPatient <- SlidingInterval("norm.logPatient", videoIndex, 5, data)
+      
+      print(paste("Computing slidedTherapist", videoName))
+      slidedTherapist <- SlidingInterval("norm.logTherapist", videoIndex, 5, data)
+      
+# create a data frame to store temporarily this data with NA
+      slidedVideo <- data.frame(
+        slidedFather, slidedMother, slidedPatient, slidedTherapist)
+      
+      dataFrame <- FALSE
+      dfSliding <- data.frame()
+      for (participant in 1:4){
 # If the colum is not empty, takes its length and begin a data frame with it
           if (dataFrame == FALSE & (length(slidedVideo[participant][!is.na(slidedVideo[participant])]) > 0)){
                 dfSliding <- data.frame(
@@ -626,21 +666,7 @@ for (videoName in indexList){
             dfSliding <- cbind(dfSliding, slidedVideo[participant])}
       }
           
-      
-#      print(str(dfSliding))
-################## Removing lines with only NA ####################
-#      CCdfSliding <- complete.cases(dfSliding)
-#      emptyLine <- c()
-#      for (i in 1:nrow(dfSliding)){
-#          dfLine <- dfSliding[i,3:6]
-#          NaLine <- is.na(dfLine)
-#          if (all(NaLine)){
-#              emptyLine <- c(emptyLine, i)}}
-#      print (emptyLine)
-#         if (length(emptyLine)>0){
-#      dfSliding <- dfSliding[-emptyLine,]}
-
-      write.csv(dfSliding, paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/INCANT/Data/CSV/MotionHistory/filtered/",videoName, ".slideddata.csv", sep=""))
+      write.csv(dfSliding, paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/INCANT/Data/CSV/MotionHistory/filtered/log/",videoName, ".log.slideddata.csv", sep=""))
       videoIndex <-(videoIndex+1)
 }
 ```

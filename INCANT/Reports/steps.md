@@ -11,6 +11,9 @@ We used this data from a large european psychotherapy study. This [INCANT](http:
 
 The main outcome was be cannabis consumption evaluated with the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
 
+## Summary
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
+
 ## Data structure
 Data consist of videos and psychometric data.
 ### Videos

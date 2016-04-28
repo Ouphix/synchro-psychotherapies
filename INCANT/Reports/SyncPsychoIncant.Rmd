@@ -11,7 +11,7 @@ rm(list = ls(all.names = TRUE))
 ```
 
 ```{r set the working directory}
-setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/INCANT/")
+setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/INCANT/Reports/")
 ```
 
 ```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
@@ -137,21 +137,17 @@ colOrderList  <- c("blue","red", "green","orange")
 data <- merge(data, FilesName, by.x="file", by.y="unique.data.file.", all=TRUE)
 data$timeMin <- data$frame/(25*60)
 
+data$father[which (data$father == 0)] <- min(data$father[which (data$father >0)])/2
 data$logFather <- log(data$father)
-data$norm.logFather <- data$logFather+20
-data$norm.logFather[which(data$norm.logFather==-Inf)] <- NA
 
+data$mother[which (data$mother == 0)] <- min(data$mother[which (data$mother >0)])/2
 data$logMother <- log(data$mother)
-data$norm.logMother <- data$logMother+20
-data$norm.logMother[which(data$norm.logMother==-Inf)] <- NA
 
+data$patient[which (data$patient == 0)] <- min(data$patient[which (data$patient >0)])/2
 data$logPatient <- log(data$patient)
-data$norm.logPatient <- data$logPatient+20
-data$norm.logPatient[which(data$norm.logPatient==-Inf)] <- NA
 
+data$therapist[which (data$therapist == 0)] <- min(data$therapist[which (data$therapist >0)])/2
 data$logTherapist <- log(data$therapist)
-data$norm.logTherapist <- data$logTherapist+20
-data$norm.logTherapist[which(data$norm.logTherapist==-Inf)] <- NA
 
 data$file <- NULL
 data$filesList <- NULL
@@ -280,11 +276,12 @@ legend("topright", ParticipantsList, fill=colOrderList, cex=0.7)
 ## Normalized log Motion history by video by participant
 ### Boxplots
 ```{r  Normalized log of motion history box plots by frame, all videos, echo=FALSE, cache=FALSE, eval =FALSE}
-par(mar=c(4,4,2,2))
-boxplot(data$norm.logFather, data$norm.logMother, data$norm.logPatient, data$norm.logTherapist,
+par(mar=c(4,4,3,2))
+boxplot(data$logFather, data$logMother, data$logPatient, data$logTherapist,
         col=colOrderList, 
         names=ParticipantsList, 
-        main= "Box plots of the Motion history by frame (raw data), all videos", las=1, ylab="Motion history", xlab="Participant")
+        main= "Normalized log of motion history box plots of the Motion history by frame 
+        (raw data), all videos", las=1, ylab="Motion history", xlab="Participant")
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 ```
@@ -292,17 +289,17 @@ legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 ### Histograms
 ```{r}
 par(mar=c(4,4,2,2))
-hist(data$norm.logFather, col=colOrderList[1])
-hist(data$norm.logMother, col=colOrderList[2])
-hist(data$norm.logPatient, col=colOrderList[3])
-hist(data$norm.logTherapist, col=colOrderList[4])
+hist(data$logFather, col=colOrderList[1])
+hist(data$logMother, col=colOrderList[2])
+hist(data$logPatient, col=colOrderList[3])
+hist(data$logTherapist, col=colOrderList[4])
 ```
 
 ```{r  Kernel density plot by frame (log data), all videos, echo=FALSE, cache=FALSE, eval =FALSE}
-dlogFather <- density(data$norm.logFather, na.rm=TRUE)
-dlogMother <- density(data$norm.logMother, na.rm=TRUE)
-dlogPatient <- density(data$norm.logPatient, na.rm=TRUE)
-dlogTherapist <- density(data$norm.logTherapist, na.rm=TRUE)
+dlogFather <- density(data$logFather, na.rm=TRUE)
+dlogMother <- density(data$logMother, na.rm=TRUE)
+dlogPatient <- density(data$logPatient, na.rm=TRUE)
+dlogTherapist <- density(data$logTherapist, na.rm=TRUE)
 
 par(mar=c(4,4,2,2))
 plot(dlogFather, main="Kernel density plot", col=colOrderList[1])
@@ -324,9 +321,9 @@ rawFatherF1044C1 <- data[which(data$indexList=="F1044C1"),]$father
 rawMotherF1044C1 <- data[which(data$indexList=="F1044C1"),]$mother
 rawTherapistF1044C1 <- data[which(data$indexList=="F1044C1"),]$therapist
 
-logFatherF1044C1 <- data[which(data$indexList=="F1044C1"),]$norm.logFather
-logMotherF1044C1 <- data[which(data$indexList=="F1044C1"),]$norm.logMother
-logTherapistF1044C1 <- data[which(data$indexList=="F1044C1"),]$norm.logTherapist
+logFatherF1044C1 <- data[which(data$indexList=="F1044C1"),]$logFather
+logMotherF1044C1 <- data[which(data$indexList=="F1044C1"),]$logMother
+logTherapistF1044C1 <- data[which(data$indexList=="F1044C1"),]$logTherapist
 
 summary(rawFatherF1044C1)
 summary(rawMotherF1044C1)
@@ -371,10 +368,10 @@ slidedMotherF1044C1 <- SlidingInterval("mother", 1 , 5, data)
 slidedPatientF1044C1 <- SlidingInterval("patient", 1 , 5, data)
 slidedTherapistF1044C1 <- SlidingInterval("therapist", 1 , 5, data)
 
-slidedLogFatherF1044C1 <- SlidingInterval("norm.logFather", 1 , 5, data)
-slidedLogMotherF1044C1 <- SlidingInterval("norm.logMother", 1 , 5, data)
-slidedLogPatientF1044C1 <- SlidingInterval("norm.logPatient", 1 , 5, data)
-slidedLogTherapistF1044C1 <- SlidingInterval("norm.logTherapist", 1 , 5, data)
+slidedLogFatherF1044C1 <- SlidingInterval("logFather", 1 , 5, data)
+slidedLogMotherF1044C1 <- SlidingInterval("logMother", 1 , 5, data)
+slidedLogPatientF1044C1 <- SlidingInterval("logPatient", 1 , 5, data)
+slidedLogTherapistF1044C1 <- SlidingInterval("logTherapist", 1 , 5, data)
 
 summary(slidedFatherF1044C1)
 summary(slidedMotherF1044C1)
@@ -395,11 +392,11 @@ motherFiveF1044C1 <- MeanMotionByTime("mother", indexOfvideos=1, interval=5, dat
 
 therapistFiveF1044C1 <- MeanMotionByTime("therapist", indexOfvideos=1, interval=5, data)
 
-fatherLogFiveF1044C1<- MeanMotionByTime("norm.logFather", indexOfvideos=1, interval=5, data)
+fatherLogFiveF1044C1<- MeanMotionByTime("logFather", indexOfvideos=1, interval=5, data)
 
-motherLogFiveF1044C1 <- MeanMotionByTime("norm.logMother", indexOfvideos=1, interval=5, data)
+motherLogFiveF1044C1 <- MeanMotionByTime("logMother", indexOfvideos=1, interval=5, data)
 
-therapistLogFiveF1044C1 <- MeanMotionByTime("norm.logTherapist", indexOfvideos=1, interval=5, data)
+therapistLogFiveF1044C1 <- MeanMotionByTime("logTherapist", indexOfvideos=1, interval=5, data)
 
 summary(fatherFiveF1044C1)
 summary(motherFiveF1044C1)
@@ -441,14 +438,14 @@ legend("topright", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=
 ## Sliding interval function on log data, 5 frames interval
 ```{r, cache=FALSE, echo=TRUE}
 par(mar=c(4,4,4,2))
-plot(1:250, data$norm.logFather[3:252], main="Mean motion history, (Sliding 5 frames interval log data) 
+plot(1:250, data$logFather[3:252], main="Mean motion history, (Sliding 5 frames interval log data) 
     on F1044C1 video, first 10 seconds", xlab="Frame index (25/s)",
      ylab="Motion history",
      col="blue", type="l", lty=2, lwd=0.5)
 lines(slidedLogFatherF1044C1[1:250],  col="blue", lty=1)
-lines(data$norm.logMother[3:252],  col="red", lty=2, lwd=0.5)
+lines(data$logMother[3:252],  col="red", lty=2, lwd=0.5)
 lines(slidedLogMotherF1044C1[1:250],  col="red", lty=1)
-lines(data$norm.logTherapist[3:252],  col="orange", lty=2, lwd=0.5)
+lines(data$logTherapist[3:252],  col="orange", lty=2, lwd=0.5)
 lines(slidedLogTherapistF1044C1[1:250],  col="orange", lty=1)
 legend("topleft", c("Raw data", "Mean on sliding Interval") , lty=c(2, 1), cex=0.7)
 legend("topright", ParticipantsList[c(1,2,4)], fill=colOrderList[c(1,2,4)], cex=0.7)
@@ -521,13 +518,13 @@ for (i in 1:NumberOfvideos){
 # Mean log motion history by minute plots
 ```{r, fig.height=4, cache=FALSE}
 for (i in 1:NumberOfvideos){
-  fatherMinute<- MeanMotionByTime("norm.logFather", indexOfvideos=i, interval=1500, data)
+  fatherMinute<- MeanMotionByTime("logFather", indexOfvideos=i, interval=1500, data)
 
-  MotherMinute<- MeanMotionByTime("norm.logMother", indexOfvideos=i, interval=1500, data)
+  MotherMinute<- MeanMotionByTime("logMother", indexOfvideos=i, interval=1500, data)
 
-  TherapistMinute<- MeanMotionByTime("norm.logTherapist", indexOfvideos=i, interval=1500, data)
+  TherapistMinute<- MeanMotionByTime("logTherapist", indexOfvideos=i, interval=1500, data)
 
-  PatientMinute<- MeanMotionByTime("norm.logPatient", indexOfvideos=i, interval=1500, data)
+  PatientMinute<- MeanMotionByTime("logPatient", indexOfvideos=i, interval=1500, data)
 
   par(mar=c(4,4,4,2))
       plot (1:length(fatherMinute), fatherMinute, type="l", col="blue", 
@@ -592,19 +589,19 @@ for (videoName in indexList){
 # Compute slinding interval for each participant
       print(paste("Computing slidedFather", videoName))
       slidedFather <- SlidingInterval("father", videoIndex, 5, data)
-      logSlidedFather <- SlidingInterval("norm.logFather", videoIndex, 5, data)
+      logSlidedFather <- SlidingInterval("logFather", videoIndex, 5, data)
       
       print(paste("Computing slidedMother", videoName))
       slidedMother <- SlidingInterval("mother", videoIndex, 5, data)
-      logSlidedMother <- SlidingInterval("norm.logMother", videoIndex, 5, data)
+      logSlidedMother <- SlidingInterval("logMother", videoIndex, 5, data)
       
       print(paste("Computing slidedPatient", videoName))
       slidedPatient <- SlidingInterval("patient", videoIndex, 5, data)
-      logSlidedPatient <- SlidingInterval("norm.logPatient", videoIndex, 5, data)
+      logSlidedPatient <- SlidingInterval("logPatient", videoIndex, 5, data)
       
       print(paste("Computing slidedTherapist", videoName))
       slidedTherapist <- SlidingInterval("therapist", videoIndex, 5, data)
-      logSlidedTherapist <- SlidingInterval("norm.logTherapist", videoIndex, 5, data)
+      logSlidedTherapist <- SlidingInterval("logTherapist", videoIndex, 5, data)
       
 # create a data frame to store temporarily this data with NA
       slidedVideo <- data.frame(
@@ -636,16 +633,16 @@ videoIndex <- 1
 for (videoName in indexList){
 # Compute slinding interval for each participant
       print(paste("Computing slidedFather", videoName))
-      slidedFather <- SlidingInterval("norm.logFather", videoIndex, 5, data)
+      slidedFather <- SlidingInterval("logFather", videoIndex, 5, data)
       
       print(paste("Computing slidedMother", videoName))
-      slidedMother <- SlidingInterval("norm.logMother", videoIndex, 5, data)
+      slidedMother <- SlidingInterval("logMother", videoIndex, 5, data)
       
       print(paste("Computing slidedPatient", videoName))
-      slidedPatient <- SlidingInterval("norm.logPatient", videoIndex, 5, data)
+      slidedPatient <- SlidingInterval("logPatient", videoIndex, 5, data)
       
       print(paste("Computing slidedTherapist", videoName))
-      slidedTherapist <- SlidingInterval("norm.logTherapist", videoIndex, 5, data)
+      slidedTherapist <- SlidingInterval("logTherapist", videoIndex, 5, data)
       
 # create a data frame to store temporarily this data with NA
       slidedVideo <- data.frame(

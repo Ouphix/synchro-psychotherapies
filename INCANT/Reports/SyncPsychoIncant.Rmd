@@ -137,16 +137,17 @@ colOrderList  <- c("blue","red", "green","orange")
 data <- merge(data, FilesName, by.x="file", by.y="unique.data.file.", all=TRUE)
 data$timeMin <- data$frame/(25*60)
 
-data$father[which (data$father == 0)] <- min(data$father[which (data$father >0)])/2
+data$father <- data$father + min(data$father[which (data$father >0)])/2
 data$logFather <- log(data$father)
 
-data$mother[which (data$mother == 0)] <- min(data$mother[which (data$mother >0)])/2
+#log(x -min(x)+1)
+data$mother <- data$mother + min(data$mother[which (data$mother >0)])/2
 data$logMother <- log(data$mother)
 
-data$patient[which (data$patient == 0)] <- min(data$patient[which (data$patient >0)])/2
+data$patient <- data$patient + min(data$patient[which (data$patient >0)])/2
 data$logPatient <- log(data$patient)
 
-data$therapist[which (data$therapist == 0)] <- min(data$therapist[which (data$therapist >0)])/2
+data$therapist <- data$therapist + min(data$therapist[which (data$therapist >0)])/2
 data$logTherapist <- log(data$therapist)
 
 data$file <- NULL
@@ -530,7 +531,7 @@ for (i in 1:NumberOfvideos){
       plot (1:length(fatherMinute), fatherMinute, type="l", col="blue", 
       main=paste("Mean motion history (non overlaping minute intervals) 
       on F1044", labelvideolist[i], " video" , sep=""), 
-      ylab="Motion history", xlab="Time by Minute", ylim=c(9, 15), 
+      ylab="Motion history", xlab="Time by Minute", ylim=c(-11, -3), 
       xaxp=c(0, length(fatherMinute), length(fatherMinute)))
       lines(MotherMinute, col="red")
       lines(TherapistMinute, col="orange")
@@ -621,12 +622,12 @@ for (videoName in indexList){
           else{
             dfSliding <- cbind(dfSliding, slidedVideo[participant])}
       }
-      write.csv(dfSliding, paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/INCANT/Data/CSV/MotionHistory/filtered/",videoName, ".slideddata.csv", sep=""))
+      write.csv(dfSliding, paste("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/INCANT/Data/CSV/MotionHistory/filtered/noLog/",videoName, ".slideddata.csv", sep=""))
       videoIndex <-(videoIndex+1)
 }
 ```
 
-# Export log filtere data in text files
+# Export log filtered data in text files
 ```{r, eval=TRUE, cache=FALSE}
 videoIndex <- 1
 # videoName est le nom de la video actuelle

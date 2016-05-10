@@ -1,7 +1,7 @@
 ---
 title: "Synchrony in relationship, example with MONRADO Data"
 author: "Thomas Gargot"
-date: "May, 4th 2016"
+date: "May, 10th 2016"
 output: 
   pdf_document: 
     toc: yes
@@ -74,8 +74,10 @@ Function that takes raw motion history data and compute the mean on a given inte
 - interval : number of frames in the studied interval
 - data : data frame where there is data
 
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/slidinginterval.jpg)
+
 ```{r compute mean motion by time, echo=TRUE, eval=TRUE, cache=FALSE}
-## Revoir nom des variables : pas clair, faire un schéma
+## Revoir nom des variables : pas clair
 MeanMotionByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
   x <- c()
   for (fam in families[indexOfvideos]){
@@ -101,8 +103,8 @@ Function that takes raw motion history data and compute the mean on a given inte
 - interval : number of frames in the studied interval
 - data : data frame where there is data
 
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/nonOverlapping.jpg)
 ```{r compute Slidinginterval, cache=TRUE}
-## faire un schéma
 SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data)
   {x <- c()
   for (file in families[indexOfvideos]){
@@ -260,7 +262,7 @@ The subjects data distribution are very similar.
 
 ```{r Motion history histogram by frame (raw data) }
 par(mar=c(4,4,2,2))
-hist(data$logFather , col="blue", las=1, xlab="Log of father motion history")
+hist(data$logFather, col="blue", las=1, xlab="Log of father motion history")
 hist(data$logMother, col="red", las=1, xlab="Log of mother motion history", cex.axis=0.7)
 hist(data$logChild, col="green", las=1, xlab="Log of child motion history", cex.axis=0.7)
 ```
@@ -423,16 +425,22 @@ for (videoName in unique(data$family)){
 # Compute slinding interval for each participant
       print(paste("Computing slidedFather", videoName))
       slidedFather <- SlidingInterval("father", videoIndex, 5, data)
+      print(table(is.na(slidedFather)))
+      print(table(is.na(data[which(data$family==videoName),]$father)))
       print(paste("Computing slidedMother", videoName))
       slidedMother <- SlidingInterval("mother", videoIndex, 5, data)
+      print(table(is.na(slidedMother)))
+      print(table(is.na(data[which(data$family==videoName),]$mother)))
       print(paste("Computing slidedChild", videoName))
       slidedChild <- SlidingInterval("child", videoIndex, 5, data)
-      
+      print(table(is.na(slidedChild)))
       slidedVideo <- data.frame(
-        slidedFather, slidedMother, slidedChild, 
-        "video"=rep(families[videoIndex], length(slidedFather)), 
+        slidedFather, slidedMother, slidedChild)
+      slidedVideo.nas <- apply(slidedVideo, 1, function(x){all(is.na(x))})
+      slidedVideo <- slidedVideo[!slidedVideo.nas,]
+      print(table(is.na(slidedVideo)))
+#      indexes <-  data.frame ("video"=rep(families[videoIndex], length(slidedFather)), 
         frame_index = 1:length(slidedFather))
-      
             write.csv(slidedVideo, paste("../Data/CSV/filtered/noLog/",videoName, ".slideddata.csv", sep=""))
       videoIndex <-(videoIndex+1)
       }

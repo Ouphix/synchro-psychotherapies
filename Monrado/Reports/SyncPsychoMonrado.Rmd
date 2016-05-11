@@ -399,14 +399,14 @@ legend("top", "Mean on non overlapping Interval" , lty=1, cex=0.7)
 legend("topright", ParticipantsList[c(2,3)], fill=colOrderList[c(2,3)], cex=0.7)
 ```
 
-# Mean motion history by minute plots
+# Mean motion history by 10 sec plots
 ```{r, fig.height=4, cache=FALSE}
 for (i in 1:NumberOfvideos){
-  fatherMinute<- MeanMotionByTime("father", indexOfvideos=i, interval=1500, data)
+  fatherMinute<- MeanMotionByTime("father", indexOfvideos=i, interval=250, data)
   
-  motherMinute<- MeanMotionByTime("mother", indexOfvideos=i, interval=1500, data)
+  motherMinute<- MeanMotionByTime("mother", indexOfvideos=i, interval=250, data)
 
-  childMinute<- MeanMotionByTime("child", indexOfvideos=i, interval=1500, data)
+  childMinute<- MeanMotionByTime("child", indexOfvideos=i, interval=250, data)
 
   par(mar=c(4,4,4,2))
       plot (1:length(fatherMinute), fatherMinute, type="l", col="blue", 

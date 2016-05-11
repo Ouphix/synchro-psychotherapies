@@ -77,7 +77,6 @@ Function that takes raw motion history data and compute the mean on a given inte
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/slidinginterval.jpg)
 
 ```{r compute mean motion by time, echo=TRUE, eval=TRUE, cache=FALSE}
-## Revoir nom des variables : pas clair
 MeanMotionByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data){
   x <- c()
   for (fam in families[indexOfvideos]){
@@ -87,7 +86,6 @@ MeanMotionByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, 
         for (i in 1:IntervalNumbersVideo){
                 borneinf<- 1+(i-1)*interval
                 bornesup <-i*interval
-                
                 dataVectorInterval <- dataVector[borneinf:bornesup]
                 mean <- mean(dataVectorInterval, na.rm=TRUE)
                 x <- c(x, mean)}}
@@ -109,7 +107,8 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
   {x <- c()
   for (file in families[indexOfvideos]){
       dataVector <- data[which(data$family==file), subject]
-      NBofAnalysedFrames <- length(dataVector)-interval+1
+      NBofAnalysedFrames <- length(dataVector)-interval
+      print(NBofAnalysedFrames)
           for (i in 1:NBofAnalysedFrames){
               borneinf<- (i)
               bornesup <-(interval-1+i)
@@ -312,7 +311,6 @@ legend("topleft", ParticipantsList[c(2,3)], fill=colOrderList[2:3], cex=0.7)
 # indexOfvideos : list of videos studied (element eg. 3 or list eg 1:3 or c(1,2,4)) 
 # interval : number of frames in the studied interval
 # data : data frame where there is data
-
 # repalce by 5 after
 slidedMother <- SlidingInterval("mother", 1 , 5, data)
 slidedChild <- SlidingInterval("child", 1 , 5, data)

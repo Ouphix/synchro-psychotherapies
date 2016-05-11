@@ -1,31 +1,25 @@
 # Synchrony in Psychotherapy, Data management, example with F1044 patient data
 
 ## Aim and Hypothesis
-The aim of this project is to evaluate if it is possible to detect automatic signals of synchrony that could predict the outcomes of a familial psychotherapy. 
+The aim of this project is to evaluate if it is possible to extract automatic signals of synchrony that could predict the outcomes of a familial psychotherapy. 
 
-Here is the analysis of the F1044 subject, his familly (father and mother) and the therapist. 
+We began with a first database. We focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. 
 
 **Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between himself, his parents and the therapist ? ** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
 
-We used this data from a large european psychotherapy study. This [INCANT](http://www.incant.eu/) study. study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. 
+This database come from a large european psychotherapy study. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. Some patients received traitment as usual and the others MDFT.
 
 The main outcome was be cannabis consumption evaluated with the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
 
-## Summary
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
+## Summary figure
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
 ## Data structure
 Data consist of videos and psychometric data.
 ### Videos
-* A 252.44GB database of 277 Videos, with a rate of 25 frames by second.
+* We collected a 252.44GB database of 277 Videos, with a rate of 25 frames by second.
 * They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format
 * There are only accessible on ISIR local network and to registered persons on [ISIR NAS](https://imi2s.isir.upmc.fr/databases/).
-
-**Example with F1044 subject**
-
-F1044 subject had a lot of videos so we decided to make a pilot study with him. 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
-
 
 ### Psychometric data
 * It consist of 3 excel files with :
@@ -33,11 +27,12 @@ F1044 subject had a lot of videos so we decided to make a pilot study with him.
 	* the Youth Self-Report syndrome structure [(YSR)](http://psycnet.apa.org/?&fa=main.doiLanding&doi=10.1037/0022-006X.75.5.729) 
 	* the Child Behavior Checklist syndrome constructs [(CBCL)](http://www.ncbi.nlm.nih.gov/pubmed/10200736).
 
-TODO
+However, we didn't have any data dictionary with the definition of all variables and the precise questionnaires used to collect this information, the coding of Non Available data -99. We planned to meet the team that wasn't unfortunately available at the moment.
 
-* NA is -99 ? to check
-* Define all the variables
-* get the questionnaire 
+
+**Example with F1044 subject**
+F1044 subject had a lot of videos so we decided to make a pilot study with him. 
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
 
 ## Nomenclature
 *F1044* is the name of the subject studied (called *patient*).
@@ -51,16 +46,15 @@ These videos are names with the name of the subject + an index letter. They can 
 
 ## Softwares used
 * Git
-	* GitHub website
+	* [GitHub website](https://github.com/Ouphix/synchro-psychotherapies)
 * Excel
-* R
-	* xlsx package
-* Python
-	* opencv
-	* cv
+* [R](https://www.cran.r-project.org/)
+	* [xlsx package](https://cran.r-project.org/web/packages/xlsx/index.html)
+* [Python](https://www.python.org/)
+	* [opencv](http://opencv.org/)
 	* panda
 	* matplotlib
-	* syncpy
+	* [syncpy](https://github.com/syncpy/SyncPy)
 	* [FFMPEG](https://ffmpeg.org/)
 * C ++
 * Paintbrush 2
@@ -71,23 +65,33 @@ These videos are names with the name of the subject + an index letter. They can 
 
 ## Steps
 ### Description of the database
-#### Psychometric data
-Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
-They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
-It returns a dataINCANT.csv cvs file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. The evolution of this scores are plotted [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf).
-
 #### Video Configurations
 ##### Spatial organisation
 In the first center, psychotherapy sessions consisted of filmed familial psychotherapies with 2 to 5 peoples organized in a circle.
-Two participants of the psychotherapy were filmed from the front. Another subject is filmed from the other side and is embedded in a window. We can notice the date displayed on the video. Sometimes, there is an overlap of different subject in the same place.
+Two participants of the psychotherapy were filmed from the front. Another subject is filmed from the other side. Its video is embedded in a window. We can notice the date displayed on the video. Sometimes, there is an overlap of different subject in the same place.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png =350x)
 
-We can see that the configurations for the F1044 subject can be very different. The patient is not very present in the therapy (compliance problem). Sometimes, we don't have any information from the therapist because she isn't filmed.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/DifferentConfigurations.jpeg)
+
+In this barplot of the mean motion history for each subject for each video, we can see that the configurations of the participants involved for the F1044 subject can be very different between videos. There is between 2 and 3 participants. There is never the 4 participants involved. Sometimes, we don't have any information from the therapist because she isn't filmed. The patient is not very present in the therapy (compliance problem).
 
 When we sum up the data we get, we can see that the mother and the therapist are the most present participants.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/AvailableData.jpeg)
+
+#### Psychometric data
+Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
+They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
+It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. The evolutions of this scores are plotted [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf). 
+
+We can see that the evolution is very rarely clear and straightforward. We decided to select 4 subjects
+
+* F1002, patient, 3 videos
+* F1073, patient, 2 videos
+* F1069, patiente, 4 videos
+* F1101, patient, 3 videos
+
+All of them with the same therapist Mrs Bastard
 
 ##### Time organization
 Video length could were very different because it was necessary to reorganize them. 

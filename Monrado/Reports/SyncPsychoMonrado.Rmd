@@ -328,11 +328,11 @@ summary(slidedChild)
 ## Sliding interval function on a 5 frames interval
 ```{r, cache=FALSE, echo=TRUE}
 par(mar=c(4,4,4,2))
-plot(1:25, data$mother[43:47], main="Mean motion history (Sliding 5 frames interval) 
+plot(1:25, data$mother[3:27], main="Mean motion history (Sliding 5 frames interval) 
      on 00034 video, first 10 seconds ", xlab="Frame index (25/s)",
      ylab="Motion history",
      col="red", type="l", lty=2, lwd=0.5, ylim=c(0, 0.075))
-lines(slidedMother[21:45],  col="red", lty=1)
+lines(slidedMother[1:25],  col="red", lty=1)
 legend("topleft", c("Raw data", "Mean on sliding Interval"), lty=c(2, 1), cex=0.7)
 legend("topright", ParticipantsList[c(3)], fill=colOrderList[c(3)], cex=0.7)
 ```
@@ -492,34 +492,38 @@ for (videoName in unique(data$family)){
 
 ```{r, echo=FALSE, cache=FALSE, results="hide"}
 print("SSI Files Directory")
-SSIFilesList <- list.files("../Data/CSV/Synchrony/log", full.name=TRUE)
+SSIFilesList <- list.files("../Data/CSV/Synchrony/log/S_estimator", full.name=TRUE)
 SSIFilesList
 ```
 
 ```{r, echo=FALSE, cache=FALSE, results="hide"}
 print("SSI Files Directory")
-SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog", full.name=TRUE)
+SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_Estimator", full.name=TRUE)
 SSInoLogFilesList
 ```
 
 ```{r}
 SSI <- data.frame()
 for (file in SSIFilesList){
-    SSIalone <- read.csv(file, )
+    SSIalone <- read.csv(file)
     SSI<- rbind.fill(SSI, SSIalone)}
+str(SSI)
 ```
 
 ```{r}
 SSInoLog <- data.frame()
 for (file in SSInoLogFilesList){
-    SSIalone <- read.csv(file, )
-    SSInoLog<- rbind.fill(SSI, SSIalone)}
+    print(file)
+    SSIalone <- read.csv(file)
+    print(str(SSIalone))
+    SSInoLog<- rbind.fill(SSI, SSInoLog)}
+str(SSInoLog)
 ```
 
 ## Description of SSI data frame
 ```{r, cache=FALSE}
 str(SSI)
-View(SSI)
+#View(SSI)
 unique(SSI$video)
 SSI$video <- as.factor(SSI$video)
 unique(SSI$video)
@@ -529,7 +533,7 @@ unique(SSI$video)
 ## Description of noLogSSI data frame
 ```{r, cache=FALSE}
 str(SSInoLog)
-View(SSInoLog)
+#View(SSInoLog)
 unique(SSInoLog$video)
 SSInoLog$video <- as.factor(SSInoLog$video)
 unique(SSInoLog$video)
@@ -676,11 +680,11 @@ summary(SSI_fa_th_sq_lme)
 ```
 
 # Psychometric database
-```{r import psychometric database, results='hide}
+```{r import psychometric database, results='hide'}
 psycho <- read.csv2("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Monrado/Data/CSV/PsychomotData.csv")
 psycho <- psycho[-(38:40),]
 str(psycho)
-View(psycho)
+#View(psycho)
 ```
 
 ## Demographic description

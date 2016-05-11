@@ -15,24 +15,53 @@ The main outcome was be cannabis consumption evaluated with the Timeline Follow-
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
 ## Data structure
-Data consist of videos and psychometric data.
-### Videos
-* We collected a 252.44GB database of 277 Videos, with a rate of 25 frames by second.
-* They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format
-* There are only accessible on ISIR local network and to registered persons on [ISIR NAS](https://imi2s.isir.upmc.fr/databases/).
+Data consist of 2 databases with each one videos and psychometric data.
 
-### Psychometric data
+### INCANT study
+#### Study protocol
+The Incant study aimed to evaluate the efficacy of MDFT a familial therapy with other treatments Treatments As Usual (TAU). Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family.
+
+The MDFT is based on several general principles likes topics that needs to be addressed,attitude of the therapist.
+
+#### Videos
+* We collected a 252.44GB database of 277 Videos, with a rate of 25 frames by second.
+* They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format.
+
+#### Psychometric data
 * It consist of 3 excel files with :
 	* the Timeline Follow-Back [(TLFB)](http://link.springer.com/chapter/10.1007/978-1-4612-0357-5_3)
 	* the Youth Self-Report syndrome structure [(YSR)](http://psycnet.apa.org/?&fa=main.doiLanding&doi=10.1037/0022-006X.75.5.729) 
 	* the Child Behavior Checklist syndrome constructs [(CBCL)](http://www.ncbi.nlm.nih.gov/pubmed/10200736).
 
-However, we didn't have any data dictionary with the definition of all variables and the precise questionnaires used to collect this information, the coding of Non Available data -99. We planned to meet the team that wasn't unfortunately available at the moment.
+However, we didn't have any data dictionary with the definition of all variables and the precise questionnaires used to collect this information, the coding of Non Available data -99. We planned to meet the team that wasn't unfortunately available at that moment. A lot of videos were lost or not recorded. We couldn't know from this database which patient received MDFT or TAU. It was organized in a European level. We collected only the data from the 2 French centers.
 
+#### Advantages and limits of this database
+##### Experimental set-up
+It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. 
+We could suggest to have a much more defined psychotherapy and even before studying a psychotherapy to study specific situations : open vs closed questions , 
 
-**Example with F1044 subject**
-F1044 subject had a lot of videos so we decided to make a pilot study with him. 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
+### Monrado study
+* We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
+* They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
+
+#### Psychometric data
+* It consist of one excel file with:
+	* Identification number
+	* Demographic information
+	* Attachment style
+	* TAS Score
+	* STAIYA Score
+	* BDI score
+
+## Pilot study
+F1044 subject had a lot of videos so we decided to make a pilot study with him to develop the analysis scripts. 
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg).
+
+It is quite reprensative since
+
+We decided to make a pilot study on the most complete subject : F1044 since we have 18 videos with him. We can ask ourselves if this subject representative.The therapist is the second most representative concerning the number of patients and the first concerning the number of patient videos.The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. Two centers were included. This patient come from the main center.
+
+We have all psychometrics evaluations (initial, 3m, 6m, 9m, 12m).Unfortunatelly, the first, second, 10th and 11th videos were lost. 
 
 ## Nomenclature
 *F1044* is the name of the subject studied (called *patient*).
@@ -83,15 +112,6 @@ When we sum up the data we get, we can see that the mother and the therapist are
 Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
 They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
 It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. The evolutions of this scores are plotted [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf). 
-
-We can see that the evolution is very rarely clear and straightforward. We decided to select 4 subjects
-
-* F1002, patient, 3 videos
-* F1073, patient, 2 videos
-* F1069, patiente, 4 videos
-* F1101, patient, 3 videos
-
-All of them with the same therapist Mrs Bastard
 
 ##### Time organization
 Video length could were very different because it was necessary to reorganize them. 
@@ -264,5 +284,12 @@ Idea |  |
 ------ | ------
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =400x) | Some softwares could be used to make this process easier. The [FASST software](http://bass-db.gforge.inria.fr/fasst/) get very good results to segment a music sample in very different instruments. However, different voices are too close to distinguish them easily automatically. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/fasst.jpg =250x)
 
+We can see that the evolution of cannabis use by F1044 is not straightforward. It is quite high at the beginning, decreases and then increases. Consequently, we decided to select 4 subjects with a clear decrease of cannabis consumption.
 
+* F1002, patient, 3 videos
+* F1073, patient, 2 videos
+* F1069, patiente, 4 videos
+* F1101, patient, 3 videos
+
+All of them with the same therapist Mrs Bastard
 

@@ -445,12 +445,12 @@ for (videoName in unique(data$family)){
       slidedChild <- SlidingInterval("child", videoIndex, 5, data)
       print(head(data[which(data$family==videoName),]$child))
       print(tail(data[which(data$family==videoName),]$child))
+      print(table(is.na(data[which(data$family==videoName),]$child)))
       print(table(is.na(slidedChild)))
       slidedVideo <- data.frame(
         slidedFather, slidedMother, slidedChild)
       slidedVideo.nas <- apply(slidedVideo, 1, function(x){all(is.na(x))})
       slidedVideo <- slidedVideo[!slidedVideo.nas,]
-      print(table(is.na(slidedVideo)))
 #      indexes <-  data.frame ("video"=rep(families[videoIndex], length(slidedFather)), 
 #        frame_index = 1:length(slidedFather))
             write.csv(slidedVideo, paste("../Data/CSV/filtered/noLog/",videoName, ".slideddata.csv", sep=""))

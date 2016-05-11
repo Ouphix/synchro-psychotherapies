@@ -26,6 +26,7 @@ library("stringr")
 FileExtension <- ".MTS.avi_res.csv"
 
 # working directory
+# where this report is
 setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/Monrado/Reports/")
 
 # blue will refer to father
@@ -56,7 +57,8 @@ importdata <-function(FullnameList){
     data <- c()
     for (i in FullnameList){
         dataAlone <- read.csv(i)
-        mydata.nas <- apply(dataAlone, 1, function(x){all(is.na(x))})
+        print(head(dataAlone[,c(2:5)]))
+        mydata.nas <- apply(dataAlone[,c(2:5)], 1, function(x){all(is.na(x))})
         dataAlone <- dataAlone[!mydata.nas,]
         print(i)
         data <- rbind(data, dataAlone)
@@ -107,11 +109,14 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
   {x <- c()
   for (file in families[indexOfvideos]){
       dataVector <- data[which(data$family==file), subject]
-      NBofAnalysedFrames <- length(dataVector)-interval
-      print(NBofAnalysedFrames)
+#      print(str(dataVector))
+      NBofAnalysedFrames <- length(dataVector)-interval+1
+#      print(NBofAnalysedFrames)
           for (i in 1:NBofAnalysedFrames){
-              borneinf<- (i)
+              borneinf <- (i)
+#              print(borneinf)
               bornesup <-(interval-1+i)
+#              print(bornesup)
               dataVectorInterval <- dataVector[borneinf:bornesup]
               mean <- mean(dataVectorInterval, na.rm=TRUE)
               x <- c(x, mean)}}
@@ -421,16 +426,25 @@ videoIndex <- 1
 # videoName is the name of current video
 for (videoName in unique(data$family)){
 # Compute slinding interval for each participant
+      
       print(paste("Computing slidedFather", videoName))
       slidedFather <- SlidingInterval("father", videoIndex, 5, data)
+      print(head(data[which(data$family==videoName),]$father))
+      print(tail(data[which(data$family==videoName),]$father))
       print(table(is.na(slidedFather)))
       print(table(is.na(data[which(data$family==videoName),]$father)))
+      
       print(paste("Computing slidedMother", videoName))
       slidedMother <- SlidingInterval("mother", videoIndex, 5, data)
-      print(table(is.na(slidedMother)))
+      print(head(data[which(data$family==videoName),]$mother))
+      print(tail(data[which(data$family==videoName),]$mother))
       print(table(is.na(data[which(data$family==videoName),]$mother)))
+      print(table(is.na(slidedMother)))
+      
       print(paste("Computing slidedChild", videoName))
       slidedChild <- SlidingInterval("child", videoIndex, 5, data)
+      print(head(data[which(data$family==videoName),]$child))
+      print(tail(data[which(data$family==videoName),]$child))
       print(table(is.na(slidedChild)))
       slidedVideo <- data.frame(
         slidedFather, slidedMother, slidedChild)
@@ -438,7 +452,7 @@ for (videoName in unique(data$family)){
       slidedVideo <- slidedVideo[!slidedVideo.nas,]
       print(table(is.na(slidedVideo)))
 #      indexes <-  data.frame ("video"=rep(families[videoIndex], length(slidedFather)), 
-        frame_index = 1:length(slidedFather))
+#        frame_index = 1:length(slidedFather))
             write.csv(slidedVideo, paste("../Data/CSV/filtered/noLog/",videoName, ".slideddata.csv", sep=""))
       videoIndex <-(videoIndex+1)
       }

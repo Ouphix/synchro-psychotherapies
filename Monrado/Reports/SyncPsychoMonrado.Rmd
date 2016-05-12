@@ -57,7 +57,7 @@ importdata <-function(FullnameList){
     data <- c()
     for (i in FullnameList){
         dataAlone <- read.csv(i)
-        print(head(dataAlone[,c(2:5)]))
+#        print(head(dataAlone[,c(2:5)]))
         mydata.nas <- apply(dataAlone[,c(2:5)], 1, function(x){all(is.na(x))})
         dataAlone <- dataAlone[!mydata.nas,]
         print(i)

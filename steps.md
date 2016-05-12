@@ -42,7 +42,9 @@ We could suggest to have a much more defined psychotherapy and even before study
 ##### Technical problems
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/conflict.png)
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/otherTroubles.png) 
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/otherTroubles.png)
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/dateProblem.png)
 
 Motion history distribution
 

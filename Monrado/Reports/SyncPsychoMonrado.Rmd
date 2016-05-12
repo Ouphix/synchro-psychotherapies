@@ -483,119 +483,106 @@ for (videoName in unique(data$family)){
 ### It will return a csv file for each video [SSIXXXX.csv](../Data/CSV/Synchrony/log) with XXXX the name of the video (F1044C, F1044D1, etc) that we can import with R with
 ### this following function
 
-```{r, echo=FALSE, cache=FALSE, results="hide"}
+```{r}
 print("SSI Files Directory")
 SSIlogFilesList <- list.files("../Data/CSV/Synchrony/log/S_estimator", full.name=TRUE)
 SSIlogFilesList
 ```
 
-```{r, echo=FALSE, cache=FALSE, results="hide"}
+```{r}
 print("SSI Files Directory")
-SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_Estimator", full.name=TRUE)
+SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator", full.name=TRUE)
 SSInoLogFilesList
 ```
 
-```{r}
-SSIlog <- data.frame()
+```{r SSIlog import}
+SSIlog <- data.frame(video="Name")
 for (file in SSIlogFilesList){
     SSIalone <- read.csv(file)
-    str(SSIalone)
+    print(str(SSIalone))
     SSIlog <- rbind.fill(SSIlog, SSIalone)}
-SSIlog$video <-as.factor(SSIlog$video)
-table(SSIlog$video)
-SSIlog$video
+str(SSIlog)
+SSIlog$video <- as.factor(SSIlog$video)
+SSIlog <- SSIlog[-which(SSIlog$video=="Name"),]
 ```
 
-```{r}
-SSInoLog <- data.frame()
+```{r SSInolog import}
+SSInoLog <- data.frame(video="Name")
 for (file in SSInoLogFilesList){
- #   print(file)
+    print(file)
     SSIalone <- read.csv(file)
   #  print(str(SSIalone))
     SSInoLog<- rbind.fill(SSInoLog, SSIalone)}
 SSInoLog$video <-as.factor(SSInoLog$video)
-str(SSInoLog)
+SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
 ```
 
 ## Description of SSIlog data frame
 ```{r, cache=FALSE}
 str(SSIlog)
-dim(SSIlog)
 #View(SSI)
-table(SSIlog$video)
-SSIlog$video <- as.factor(SSIlog$video)
-unique(SSIlog$video)
-#SSI <- SSI[-which(SSI$video==""),]
 ```
 
 ## Description of noLogSSI data frame
 ```{r, cache=FALSE}
 str(SSInoLog)
-#View(SSInoLog)
-unique(SSInoLog$video)
-table(SSInoLog$video)
-SSInoLog$video <- as.factor(SSInoLog$video)
-unique(SSInoLog$video)
 ```
 
 # Synchrony scores log for each dyad, triad and for the whole group
-```{r, eval=TRUE,  fig.width=8, cache=FALSE}
-for (i in unique(SSIlog$video))
-      {par(mar=c(4,4,4,3), mfrow=c(1,1))
-      plot(SSIlog[which(SSIlog$video==i),]$Time_min,
-           SSIlog[which(SSIlog$video==i),]$SSI_fa_mo, 
-           type="l", ylim=c(0, 0.3), col=rainbow(4)[1], 
-           main=paste("Synchrony scores for each dyad and for \n the whole group in", i, "video"), 
-           xlab = "Time (minute)", ylab="Synchrony score", lwd=2,
-xaxp=c(0,length(SSIlog$Time_min), length(SSIlog$Time_min)))
-      abline(h=mean(SSIlog$SSI_fa_mo, na.rm=TRUE), col=rainbow(4)[1], lwd=2, lty=2)
-      lines(SSIlog[which(SSIlog$video==i),]$SSI_fa_mo_ch, col=rainbow(4)[2], lwd=2)
-      abline(h= mean(SSIlog$SSI_fa_mo_ch, na.rm=TRUE), col=rainbow(4)[2], lwd=2, lty=2)
-      lines(SSIlog[which(SSIlog$video==i),]$SSI_fa_ch, col=rainbow(4)[3], lwd=2)
-      abline(h= mean(SSIlog$SSI_fa_ch, na.rm=TRUE), col=rainbow(4)[3], lwd=2, lty=2)
-lines(SSIlog[which(SSIlog$video==i),]$SSI_mo_ch, col=rainbow(4)[4], lwd=2)
-abline(h= mean(SSIlog$SSI_mo_ch, na.rm=TRUE), col=rainbow(4)[4], lwd=2, lty=2)
+```{r, fig.width=8}
+par(mar=c(4,4,4,3), mfrow=c(1,1))
 
-legend("topleft", inset=.05, c("fa_mo", "fa_mo_ch", "fa_ch",
-"mo_ch"), 
-col=rainbow(4), cex=0.6, lwd=2)
+for (i in unique(SSIlog$video)){
+        plot(SSIlog[which(SSIlog$video==i),]$Time_min,
+        SSIlog[which(SSIlog$video==i),]$SSI_mo_ch, type="l", ylim=c(0, 0.3), col=rainbow(4)[1], main=paste("Synchrony scores in", i, "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, xaxp=c(0,length(SSIlog$Time_min), length(SSIlog$Time_min)))
+        lines(SSIlog[which(SSIlog$video==i),]$SSI_fa_mo_ch, col=rainbow(4)[2], lwd=2)
+        lines(SSIlog[which(SSIlog$video==i),]$SSI_fa_ch, col=rainbow(4)[3], lwd=2)
+        str(SSIlog[which(SSIlog$video==i),]$Time_min)
+        str(SSIlog[which(SSIlog$video==i),]$SSI_mo_ch)
+        str(SSIlog[which(SSIlog$video==i),]$SSI_fa_mo_ch)
+        str(SSIlog[which(SSIlog$video==i),]$SSI_fa_ch)}
+
+#abline(h= mean(SSIlog$SSI_mo_ch, na.rm=TRUE), col=rainbow(4)[4], lwd=2, lty=2)
+
+#legend("topleft", inset=.05, c("fa_mo", "fa_mo_ch", "fa_ch",
+#"mo_ch"), 
+#col=rainbow(4), cex=0.6, lwd=2)
       
-legend ("topright", inset=.05, c(
-      paste ("Mean fa_mo :", round(mean(SSIlog$SSI_fa_mo, na.rm=TRUE),3)),
-      paste ("Mean fa_mo_ch :", round(mean(SSIlog$SSI_fa_mo_ch,na.rm=TRUE),3)),
-      paste ("Mean fa_ch :", round(mean(SSIlog$SSI_fa_ch, na.rm=TRUE),3)),
-      paste ("Mean mo_ch :", round(mean(SSIlog$SSI_mo_ch,na.rm=TRUE),3))),
-col=rainbow(4), cex=0.5, lty=2, lwd=1)}
+#legend ("topright", inset=.05, c(
+#      paste ("Mean fa_mo :", round(mean(SSIlog$SSI_fa_mo, na.rm=TRUE),3)),
+#      paste ("Mean fa_mo_ch :", round(mean(SSIlog$SSI_fa_mo_ch,na.rm=TRUE),3)),
+#      paste ("Mean fa_ch :", round(mean(SSIlog$SSI_fa_ch, na.rm=TRUE),3)),
+#      paste ("Mean mo_ch :", round(mean(SSIlog$SSI_mo_ch,na.rm=TRUE),3))),
+#col=rainbow(4), cex=0.5, lty=2, lwd=1)}
 ```
 
 # Synchrony scores noLog for each dyad, triad and for the whole group
-```{r, eval=TRUE,  fig.width=8, cache=FALSE}
+```{r, fig.width=8}
+par(mar=c(4,4,4,3), mfrow=c(1,1))
 for (i in unique(SSInoLog$video))
-      {par(mar=c(4,4,4,3), mfrow=c(1,1))
-      plot(SSInoLog[which(SSInoLog$video==i),]$Time_min,
-           SSInoLog[which(SSInoLog$video==i),]$SSI_fa_mo, 
-           type="l", ylim=c(0, 0.3), col=rainbow(4)[1], 
-           main=paste("Synchrony scores for each dyad and for \n the whole group in", i, "video"), 
-           xlab = "Time (minute)", ylab="Synchrony score", lwd=2,
-xaxp=c(0,length(SSInoLog$Time_min), length(SSInoLog$Time_min)))
-      abline(h=mean(SSInoLog$SSI_fa_mo, na.rm=TRUE), col=rainbow(4)[1], lwd=2, lty=2)
-      lines(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_mo_ch, col=rainbow(4)[2], lwd=2)
-      abline(h= mean(SSInoLog$SSI_fa_mo_ch, na.rm=TRUE), col=rainbow(4)[2], lwd=2, lty=2)
-      lines(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_ch, col=rainbow(4)[3], lwd=2)
-      abline(h= mean(SSInoLog$SSI_fa_ch, na.rm=TRUE), col=rainbow(4)[3], lwd=2, lty=2)
-lines(SSInoLog[which(SSInoLog$video==i),]$SSI_mo_ch, col=rainbow(4)[4], lwd=2)
-abline(h= mean(SSInoLog$SSI_mo_ch, na.rm=TRUE), col=rainbow(4)[4], lwd=2, lty=2)
+      {plot(SSInoLog[which(SSInoLog$video==i),]$Time_min,
+SSInoLog[which(SSInoLog$video==i),]$SSI_mo_ch, type="l", ylim=c(0, 0.3), col=rainbow(4)[1], main=paste("Synchrony scores in", i, "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, xaxp=c(0,length(SSInoLog$Time_min), length(SSInoLog$Time_min)))
+lines(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_mo_ch, col=rainbow(4)[2], lwd=2)
+lines(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_ch, col=rainbow(4)[3], lwd=2)
+str(SSInoLog[which(SSInoLog$video==i),]$Time_min)
+str(SSInoLog[which(SSInoLog$video==i),]$SSI_mo_ch)
+str(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_mo_ch)
+str(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_ch)}
 
-legend("topleft", inset=.05, c("fa_mo", "fa_mo_ch", "fa_ch",
-"mo_ch"), 
-col=rainbow(4), cex=0.6, lwd=2)
+#legend("topleft", inset=.05, c("fa_mo", "fa_mo_ch", "fa_ch", "mo_ch"), col=rainbow(4), cex=0.6, lwd=2)
       
-legend ("topright", inset=.05, c(
-      paste ("Mean fa_mo :", round(mean(SSInoLog$SSI_fa_mo, na.rm=TRUE),3)),
-      paste ("Mean fa_mo_ch :", round(mean(SSInoLog$SSI_fa_mo_ch,na.rm=TRUE),3)),
-      paste ("Mean fa_ch :", round(mean(SSInoLog$SSI_fa_ch, na.rm=TRUE),3)),
-      paste ("Mean mo_ch :", round(mean(SSInoLog$SSI_mo_ch,na.rm=TRUE),3))),
-col=rainbow(4), cex=0.5, lty=2, lwd=1)}
+#legend ("topright", inset=.05, c(
+#      paste ("Mean fa_mo :", round(mean(SSInoLog$SSI_fa_mo, na.rm=TRUE),3)),
+#      paste ("Mean fa_mo_ch :", round(mean(SSInoLog$SSI_fa_mo_ch,na.rm=TRUE),3)),
+#      paste ("Mean fa_ch :", round(mean(SSInoLog$SSI_fa_ch, na.rm=TRUE),3)),
+#      paste ("Mean mo_ch :", round(mean(SSInoLog$SSI_mo_ch,na.rm=TRUE),3))),
+#col=rainbow(4), cex=0.5, lty=2, lwd=1)}
+```
+
+```{r test}
+par(mar=c(4,4,4,3), mfrow=c(1,1))
+plot(SSInoLog[which(SSInoLog$video=="DIPE004"),]$Time_min, SSInoLog[which(SSInoLog$video=="DIPE004"),]$SSI_mo_ch, type="l", ylim=c(0, 0.3), xlim=c(0,17), col=rainbow(4)[1], main="Synchrony scores for child-mother dyad in 
+     DIPE004 video", xlab = "Time (minute)", ylab="Synchrony score", lwd=2, xaxp=c(0,length(SSInoLog$Time_min), length(SSInoLog$Time_min)))
 ```
 
 ## Evolution of synchrony through time, raw each second

@@ -1,30 +1,37 @@
 # Synchrony in Psychotherapy, Data management, example with F1044 patient data
 
-## Aim and Hypothesis
-The aim of this project is to evaluate if it is possible to extract automatic signals of synchrony that could predict the outcomes of a familial psychotherapy. 
+### Author : Thomas GARGOT
 
-We began with a first database. We focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. 
+## Abstract
+### Aim and Hypothesis
+The aim of this project is to evaluate if it is possible to extract automatic signals of synchrony that could predict the outcomes of a psychotherapy.  
 
-**Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between himself, his parents and the therapist ? ** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
+**Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between a patient, his parents and a therapist ?** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
 
-This database come from a large european psychotherapy study. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. Some patients received traitment as usual and the others MDFT.
+#### INCANT Database
+We began with a first database INCANT. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. Some patients received treatment as usual and others MDFT. This database come from a large european psychotherapy study. The main outcome was be cannabis consumption evaluated with the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
 
-The main outcome was be cannabis consumption evaluated with the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
+We focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We saw that there was a lot of modules that enable automatic social signals. We decided to extract automatic signal and began to focus on motion history.
 
-## Summary figure
+#### Monrado Database
+After some drawbacks detected in this database, we switched to the MONRADO database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation 
+
+The main psychometric data in this database were attachment scores.
+
+### Summary figure
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
 ## Data structure
-Data consist of 2 databases with each one videos and psychometric data.
+The data consists of 2 databases with for each some videos and psychometric data.
 
 ### INCANT study
 #### Study protocol
-The Incant study aimed to evaluate the efficacy of MDFT a familial therapy with other treatments Treatments As Usual (TAU). Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family.
+The Incant study aimed to evaluate the efficacy of [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) a familial therapy with other treatments Treatments As Usual (TAU). Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family.
 
 The MDFT is based on several general principles likes topics that needs to be addressed,attitude of the therapist.
 
 #### Videos
-* We collected a 252.44GB database of 277 Videos, with a rate of 25 frames by second.
+* We collected a 252.44Gb database of 277 Videos, with a rate of 25 frames by second.
 * They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format.
 
 #### Psychometric data
@@ -35,41 +42,16 @@ The MDFT is based on several general principles likes topics that needs to be ad
 
 However, we didn't have any data dictionary with the definition of all variables and the precise questionnaires used to collect this information, the coding of Non Available data -99. We planned to meet the team that wasn't unfortunately available at that moment. A lot of videos were lost or not recorded. We couldn't know from this database which patient received MDFT or TAU. It was organized in a European level. We collected only the data from the 2 French centers.
 
-#### Advantages and limits of this database
-##### Experimental set-up
-It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. 
-We could suggest to have a much more defined psychotherapy and even before studying a psychotherapy to study specific situations : open vs closed questions,
-##### Technical problems
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/conflict.png)
-
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/otherTroubles.png)
-
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/dateProblem.png)
-
-Motion history distribution
-
-### Monrado study
-* We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
-* They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
-
-#### Psychometric data
-* It consist of one excel file with:
-	* Identification number
-	* Demographic information
-	* Attachment style
-	* TAS Score
-	* STAIYA Score
-	* BDI score
 
 ## Pilot study
-F1044 subject had a lot of videos so we decided to make a pilot study with him to develop the analysis scripts. 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg).
+We decided to make a pilot study on the most complete subject : F1044 since we have 18 videos with him or his family.
 
-It is quite reprensative since
-
-We decided to make a pilot study on the most complete subject : F1044 since we have 18 videos with him. We can ask ourselves if this subject representative.The therapist is the second most representative concerning the number of patients and the first concerning the number of patient videos.The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. Two centers were included. This patient come from the main center.
+We can ask ourselves if this subject representative:* The therapist is the second most representative concerning the number of patients and the first concerning the number of patient videos.* The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. * Two centers were included. This patient come from the main center.
 
 We have all psychometrics evaluations (initial, 3m, 6m, 9m, 12m).Unfortunatelly, the first, second, 10th and 11th videos were lost. 
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
+
 
 ## Nomenclature
 *F1044* is the name of the subject studied (called *patient*).
@@ -84,18 +66,18 @@ These videos are names with the name of the subject + an index letter. They can 
 ## Softwares used
 * Git
 	* [GitHub website](https://github.com/Ouphix/synchro-psychotherapies)
-* Excel
+* [Excel](https://en.wikipedia.org/wiki/Microsoft_Excel)
 * [R](https://www.cran.r-project.org/)
 	* [xlsx package](https://cran.r-project.org/web/packages/xlsx/index.html)
 * [Python](https://www.python.org/)
 	* [opencv](http://opencv.org/)
-	* panda
-	* matplotlib
+	* [pandas](http://pandas.pydata.org/)
+	* [matplotlib](http://matplotlib.org/)
 	* [syncpy](https://github.com/syncpy/SyncPy)
 	* [FFMPEG](https://ffmpeg.org/)
-* C ++
+* [C++](https://en.wikipedia.org/wiki/C%2B%2B)
 * Paintbrush 2
-* Quicktime
+* [Quicktime](http://www.apple.com/quicktime/what-is/)
 * VLC
 * Elan
 * Markdown
@@ -300,4 +282,48 @@ We can see that the evolution of cannabis use by F1044 is not straightforward. I
 * F1101, patient, 3 videos
 
 All of them with the same therapist Mrs Bastard
+
+#### Advantages and limits of this database
+##### Advantages
+INCANT study was done internationally with:
+
+- good level of scientific method with a pre-registration done in major journals in a psychotherapy field where the level of quality of the studies can be not very good.
+
+- potential possibility to retest the model on videos taken from other countries if available and/or generalize it.
+
+- Data came from almost real life family therapy settings the would be easier to generalize to everyday practice.
+
+- Pragmatically, it was the first database we got, so we could begin to ask real life problems.
+
+##### Drawbacks
+###### Experimental set-up
+It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. 
+We could suggest to have a much more defined psychotherapy and even before studying a psychotherapy to study specific situations : open vs closed questions,
+
+###### Technical problems
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/conflict.png =400x)
+
+In this frame, we can notice that there is an overlap between the region of interest of the therapist (up, embedded in a window) and the mother (right). Some motion history from the mother could consequently be lost.
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/otherTroubles.png)
+
+In this frame, we can see that half of the motion history from the mother couldn't be recorded since it was outside the camera view. Moreover, there is an overlap of the date with the patient frame (top). We can notice too that this window frame 
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/dateProblem.png)
+
+Motion history distribution
+
+### Monrado study
+* We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
+* They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
+
+#### Psychometric data
+* It consist of one excel file with:
+	* Identification number
+	* Demographic information
+	* Attachment style
+	* TAS Score
+	* STAIYA Score
+	* BDI score
+
 

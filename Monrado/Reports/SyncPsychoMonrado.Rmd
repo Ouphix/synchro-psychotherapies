@@ -501,7 +501,9 @@ for (file in SSIlogFilesList){
     SSIalone <- read.csv(file)
     str(SSIalone)
     SSIlog <- rbind.fill(SSIlog, SSIalone)}
-str(SSIlog)
+SSIlog$video <-as.factor(SSIlog$video)
+table(SSIlog$video)
+SSIlog$video
 ```
 
 ```{r}
@@ -511,6 +513,8 @@ for (file in SSInoLogFilesList){
     SSIalone <- read.csv(file)
   #  print(str(SSIalone))
     SSInoLog<- rbind.fill(SSInoLog, SSIalone)}
+SSInoLog$video <-as.factor(SSInoLog$video)
+str(SSInoLog)
 ```
 
 ## Description of SSIlog data frame

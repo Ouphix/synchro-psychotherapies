@@ -38,7 +38,13 @@ However, we didn't have any data dictionary with the definition of all variables
 #### Advantages and limits of this database
 ##### Experimental set-up
 It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. 
-We could suggest to have a much more defined psychotherapy and even before studying a psychotherapy to study specific situations : open vs closed questions , 
+We could suggest to have a much more defined psychotherapy and even before studying a psychotherapy to study specific situations : open vs closed questions,
+##### Technical problems
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/conflict.png)
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/otherTroubles.png) 
+
+Motion history distribution
 
 ### Monrado study
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.

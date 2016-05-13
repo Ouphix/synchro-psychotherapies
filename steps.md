@@ -28,7 +28,7 @@ The data consists of 2 databases with for each some videos and psychometric data
 #### Study protocol
 The Incant study aimed to evaluate the efficacy of [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) a familial therapy with other treatments Treatments As Usual (TAU). Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family.
 
-The MDFT is based on several general principles likes topics that needs to be addressed,attitude of the therapist.
+The MDFT is based on several general principles likes topics that needs to be addressed, attitude of the therapist.
 
 #### Videos
 * We collected a 252.44Gb database of 277 Videos, with a rate of 25 frames by second.
@@ -76,7 +76,7 @@ These videos are names with the name of the subject + an index letter. They can 
 	* [syncpy](https://github.com/syncpy/SyncPy)
 	* [FFMPEG](https://ffmpeg.org/)
 * [C++](https://en.wikipedia.org/wiki/C%2B%2B)
-* Paintbrush 2
+* [Paintbrush](http://paintbrush.sourceforge.net/)
 * [Quicktime](http://www.apple.com/quicktime/what-is/)
 * VLC
 * Elan

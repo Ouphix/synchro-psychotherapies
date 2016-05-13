@@ -305,13 +305,13 @@ We could suggest to have a much more defined psychotherapy and even before study
 
 In this frame, we can notice that there is an overlap between the region of interest of the therapist (up, embedded in a window) and the mother (right). Some motion history from the mother could consequently be lost.
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/otherTroubles.png)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/otherTroubles.png =400x)
 
-In this frame, we can see that half of the motion history from the mother couldn't be recorded since it was outside the camera view. Moreover, there is an overlap of the date with the patient frame (top). We can notice too that this window frame 
+In this frame, we can see that half of the motion history from the mother couldn't be recorded since it was outside the camera view. Moreover, there is an overlap of the date with the patient frame (top). We can notice too that this window frame .
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/dateProblem.png)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/dateProblem.png =400x)
 
-Motion history distribution
+In this frame, we can see that the date is overlapping with the therapist.
 
 ### Monrado study
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
@@ -325,5 +325,18 @@ Motion history distribution
 	* TAS Score
 	* STAIYA Score
 	* BDI score
+	
+#### Description of the database
+##### Length of the videos
+
+![image](../Data/images/report/plots/LengthVideoMONRADO.jpeg)
+
+##### Configuration
+
+##### Technical problems
+
+##### Results
+
+
 
 

@@ -6,8 +6,7 @@ output:
   pdf_document: 
     toc: yes
 ---
-```{r}
-# Clean Environement
+```{r Clean Environement}
 rm(list = ls(all.names = TRUE))
 ```
 
@@ -57,7 +56,6 @@ importdata <-function(FullnameList){
     data <- c()
     for (i in FullnameList){
         dataAlone <- read.csv(i)
-#        print(head(dataAlone[,c(2:5)]))
         mydata.nas <- apply(dataAlone[,c(2:5)], 1, function(x){all(is.na(x))})
         dataAlone <- dataAlone[!mydata.nas,]
         print(i)
@@ -110,21 +108,16 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
   {x <- c()
   for (file in families[indexOfvideos]){
       dataVector <- data[which(data$family==file), subject]
-#      print(str(dataVector))
       NBofAnalysedFrames <- length(dataVector)-interval+1
-#      print(NBofAnalysedFrames)
           for (i in 1:NBofAnalysedFrames){
               borneinf <- (i)
-#              print(borneinf)
               bornesup <-(interval-1+i)
-#              print(bornesup)
               dataVectorInterval <- dataVector[borneinf:bornesup]
               mean <- mean(dataVectorInterval, na.rm=TRUE)
               x <- c(x, mean)}}
   return (x)}
 ```
 
-### MeanSynchronyByTime (TODO)
 ## Import data
 ```{r import data, results="hide"}
 data <- importdata(FullNameList)
@@ -187,9 +180,9 @@ for (i in unique(data$family)){
 par(mar=c(4,4,3,1))
 barplot(videoLengthList, col="cornflowerblue", cex.axis=0.6, cex.names=0.5,
         ylab="Minutes", xlab="Video Name", las=2, names=families, 
-        main="Length in each video (min)")
+        main="Length of each video (min)")
         abline(h = mean(videoLengthList), lwd=2, lty=2)
-        text(4,16.5, "Mean")
+        text(5,14.5, "Mean", cex=1.5)
 ```
 
 ## Length of the videos in number of frames
@@ -240,10 +233,39 @@ legend("top", inset=.05, ParticipantsList,
        fill=colOrderList, cex=0.7)
 ```
 
-We can see that configurations of subjects are very similar (with always 2 subjects, except RAKA008 with 3 subjects). More often the child is with his mother. Consequently, it makes the comparaisons of the videos quite easy
+```{r Mean Motion history by video by participant (all videos), echo=FALSE, fig.height=4, cache=FALSE}
+meanMotionList <-c()
+meanMotion <- function(subject){
+    for (i in unique(data$family)){
+              index <- which(data$family==i)
+              Motionsubject<- all(!is.na(data[index,subject]))
+              meanMotionList <-c(meanMotionList, Motionsubject)}
+  return (meanMotionList)}
+
+MotionChildList <- meanMotion("child")
+MotionMotherList <- meanMotion("mother")
+MotionFatherlist <- meanMotion("father")
+
+MotionMeanDF <- rbind(MotionChildList, MotionMotherList, MotionFatherlist)
+
+par(mar=c(2,4,2,1), mfrow=c(2,1))
+barplot(MotionMeanDF[,1:20], names=families[1:20], las=1, cex.axis = 0.4, cex.names=0.5, 
+        main="Mean Motion history in each video", beside=FALSE, ylim=c(0,3),
+        col= c("green", "red", "blue"), las=2, ylab="Suject present")
+par(mar=c(1,1,1,1))
+legend("top", inset=.05, ParticipantsList, 
+       fill=colOrderList, cex=0.6)
+
+par(mar=c(4,4,1.5,1))
+barplot(MotionMeanDF[,21:39], names=families[21:39], las=1, cex.axis = 0.4, cex.names=0.5, 
+       beside=FALSE, 
+        col= c("green", "red", "blue"), las=2, ylab="Suject present", xlab="Video name")
+par(mfrow=c(1,1))
+```
+
+We can see that configurations of subjects are very similar (with always 2 subjects, except RAKA008 with 3 subjects). More often the child is with his mother. Consequently, it makes the comparaisons of the videos easier than in the INCANT study.
 
 ## Motion history box plots by frame (raw data), all videos
-
 ```{r Motion history histogram by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =FALSE}
 par(mar=c(5,4,2,1))
 hist(data$father, col="blue", main="histogram of father motion history")

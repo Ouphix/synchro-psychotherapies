@@ -9,28 +9,31 @@ The aim of this project is to evaluate if it is possible to extract automatic si
 **Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between a patient, his parents and a therapist ?** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
 
 #### INCANT Database
-We began with a first database INCANT. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. Some patients received treatment as usual and others MDFT. This database come from a large european psychotherapy study. The main outcome was be cannabis consumption evaluated with the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
+We began with a first database INCANT. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. Some patients received treatment as usual and others MDFT. This database come from a large european psychotherapy study. The main outcome was the cannabis consumption evaluated by the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
 
-We focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We saw that there was a lot of modules that enable automatic social signals. We decided to extract automatic signal and began to focus on motion history.
+For a pilot study, we focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We saw that there was a lot of modules that enable automatic social signals. We decided to extract automatic signal and began to focus on motion history.
 
 #### Monrado Database
-After some drawbacks detected in this database, we switched to the MONRADO database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation 
+After some drawbacks detected in this database, we switched to the MONRADO database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict.
 
 The main psychometric data in this database were attachment scores.
 
 ### Summary figure
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
+### Poster
+![image](https://github.com/Ouphix/synchro-psychotherapies/raw/master/Monrado/Data/images/report/ECNPPoster.jpg)
+
 ## Originality declaration
-This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy and the first to make it in families. New psychotherapy. It was the first to use material from an international psychotherapy study and on a experimental relationship study. This study is original since it is based on a engineer - psychotherapist collaboration. The package used for synchrony was developed by engineer of the lab and it was the first time it was used on real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. It is the first study to use an open science approach among the 3 studies that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
+This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after Ramseyer et Tschacher, 2011 and the first to make it in families which both configuration and theatrical frameworks are different. The package used for synchrony was developed by engineer of the lab and it was the first time it was used on real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
+
+It is the first study to use an open science approach among the 3 studies that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
 
 ## Collaborations
-First Header | Second Header | Third Header
------------- | ------------- | ------------
-Content Cell | Content Cell  | Content Cell
-Content Cell | Content Cell  | Content Cell
-
-Jonathan Aigrain	Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python and collaboration with David and Michel	jonathan.aigrain@gmail.comNicolas Bodeau	Biostatistician in ISIR,	nicolas.bodeau@aphp.frMohammed Chetouani	Development of the SyncPy library	chetouani@isir.upmc.frDavid Cohen	Original idea, supervising the project	dcohen55@noos.frCatherine Saint Georges	Psychiatrist, knowledge in interpreting synchrony scores in psychiatry	catherine.saintgeorges@gmail.comDavid Reversat	Debugging of SyncPy and Multiplatform use	reversat@isir.upmc.frMichel Spodenkievitch	Access of the database (videos from INCANT study), direct supervision	michel.spodenkiewicz@inserm.frGiovanna Varni	 Development of the SyncPy library	varni@isir.upmc.fr
+Name| Function | 
+------------ | ------------- 
+Jonathan Aigrain | Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python 
+Nicolas Bodeau	 | Biostatistician in ISIRMohammed Chetouani	 | Development of the SyncPy libraryDavid Cohen	 | Original idea, supervising the projectCatherine Saint Georges	 | knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Debugging of SyncPyMichel Spodenkievitch	| Access of the database (videos from INCANT study), direct supervisionGiovanna Varni	| Development of the SyncPy library
 
 ## Why and How evaluate psychotherapies ?
 ## Potential role of cognitive sciences in improvement of psychotherapies
@@ -347,6 +350,9 @@ In this frame, we can see that the date is overlapping with the therapist.
 ![image](../Data/images/report/plots/LengthVideoMONRADO.jpeg)
 
 ##### Configuration
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.mother.png  =400x)
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png  =400x)
 
 ##### Technical problems
 

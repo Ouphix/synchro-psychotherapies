@@ -16,24 +16,25 @@ I excluded F2010, F2013 since the configuration was too poor (overlapping subjec
 str(TLFB)
 ```
 
-
 ```{r}
-TLFB[1,c(3:7)]
-v <- as.numeric(as.vector(TLFB[1,c(3:7)]))
-v
-plot(v, type="l", col=rainbow(nrow(TLFB))[1], main="Evolution of Cannabis Consumption for 32 subjects of the INCANT Study")
-for (i in 2:nrow(TLFB)){
-  print(i)
-  v <- as.numeric(as.vector(TLFB[i,c(3:7)]))
-  print(v)
-  lines(v, type="l", col=rainbow(nrow(TLFB))[i])}
+barplot(c(mean(TLFB$data.Q18_3_0), mean(TLFB$data.Q18_3_3), mean(TLFB$data.Q18_3_6), mean(TLFB$data.Q18_3_9), mean(TLFB$data.Q18_3_12)), names.arg=c("0","3","6","9","12"), main="Mean evolution of cannabis consumption 
+        of the 32 subjects of the INCANT Study", col="green", xlab="Months", ylab="TLFB")
 ```
 
 
 ```{r}
-plot <- FALSE
-for (i in 1:length(TLFB$Case)){
-  v <- as.numeric(as.vector(TLFB[i,c(25:29)]))
-    print(paste (TLFB$Case[i], "below"))
-    plot(v, type="l", col=rainbow(length(TLFB$Case))[i])}
+v <- as.numeric(as.vector(TLFB[1,c(3:7)]))
+plot(c(0,3,6,9,12), v, type="l", col=rainbow(nrow(TLFB))[1], main="Evolution of cannabis consumption 
+     of the 32 subjects of the INCANT Study", xlab="Months", ylab="TLFB Score")
+for (i in 2:nrow(TLFB)){
+#      print(i)
+      v <- as.numeric(as.vector(TLFB[i,c(3:7)]))
+#      print(v)
+      lines(c(0,3,6,9,12), v, type="l", col=rainbow(nrow(TLFB))[i])}
+```
+
+```{r}
+for (i in 1:nrow(TLFB)){
+  v <- as.numeric(as.vector(TLFB[i,c(3:7)]))
+    plot(c(0,3,6,9,12), v, type="l", col=rainbow(nrow(TLFB))[i], xlab="Time (months)", ylab="TLFB", main=paste ("Evolution of cannabis consumption for", TLFB$data.Case[i], "subject"))}
 ```

@@ -1,6 +1,6 @@
 # Synchrony in Psychotherapy, Data management, example with F1044 patient data
 
-### Author : Thomas GARGOT
+### Author: Thomas GARGOT
 
 ## Abstract
 ### Aim and Hypothesis
@@ -14,7 +14,7 @@ We began with a first database INCANT. This [INCANT](http://www.incant.eu/) stud
 For a pilot study, we focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We saw that there was a lot of modules that enable automatic social signals. We decided to extract automatic signal and began to focus on motion history.
 
 #### Monrado Database
-After some drawbacks detected in this database, we switched to the MONRADO database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict.
+After some drawbacks detected in this database, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict.
 
 The main psychometric data in this database were attachment scores.
 
@@ -25,17 +25,17 @@ The main psychometric data in this database were attachment scores.
 ![image](https://github.com/Ouphix/synchro-psychotherapies/raw/master/Monrado/Data/images/report/ECNPPoster.jpg)
 
 ## Originality declaration
-This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after Ramseyer et Tschacher, 2011 and the first to make it in families which both configuration and theatrical frameworks are different. The package used for synchrony was developed by engineer of the lab and it was the first time it was used on real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
+This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after Ramseyer et Tschacher, 2011 and the first to study it in families which both configuration and theorical frameworks are different. The package used for synchrony was developed by engineer of the lab and it was the first time it was used on real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
 
-It is the first study to use an open science approach among the 3 studies that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
+It is the first study to use an open science approach among the 3 studies (Ramseyer et Tschacher, 2011; Orsucci et al., 2016) that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
 
 ## Collaborations
 Name| Function | 
 ------------ | ------------- 
 Jonathan Aigrain | Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python 
-Nicolas Bodeau	 | Biostatistician in ISIRMohammed Chetouani	 | Development of the SyncPy libraryDavid Cohen	 | Original idea, supervising the projectCatherine Saint Georges	 | knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Debugging of SyncPyMichel Spodenkievitch	| Access of the database (videos from INCANT study), direct supervisionGiovanna Varni	| Development of the SyncPy library
+Nicolas Bodeau	 | Bio-statistician and informatician in ISIR and La PitiéMohammed Chetouani	 | Development of the SyncPy libraryDavid Cohen	 | Original idea, supervising the projectCatherine Saint Georges	 | knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Debugging of SyncPyMichel Spodenkievitch	| Access of the database (videos from INCANT study), direct supervisionGiovanna Varni	| Development of the SyncPy library
 
-## Why and How evaluate psychotherapies ?
+## Why and How evaluate psychotherapies?
 ## Potential role of cognitive sciences in improvement of psychotherapies
 ## Theorical advantages of synchrony studies
 
@@ -64,11 +64,13 @@ However, we didn't have any data dictionary with the definition of all variables
 ## Pilot study
 We decided to make a pilot study on the most complete subject : F1044 since we have 18 videos with him or his family.
 
-We can ask ourselves if this subject representative:* The therapist is the second most representative concerning the number of patients and the first concerning the number of patient videos.* The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. * Two centers were included. This patient come from the main center.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/Numberparticipants.png)
+
+We can ask ourselves if this subject representative:* The therapist is the second most representative concerning the number of patients and the first concerning the number of patient videos.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/therapist.png)* The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. * Two centers were included. This patient come from the main center.
 
 We have all psychometrics evaluations (initial, 3m, 6m, 9m, 12m).Unfortunatelly, the first, second, 10th and 11th videos were lost. 
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
 
 
 ## Nomenclature

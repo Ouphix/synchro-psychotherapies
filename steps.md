@@ -377,6 +377,8 @@ In this frame, we can see that the date is overlapping with the therapist.
 We can see that the videos are very similar.
 
 ##### Configuration
+![image](http://)
+
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.mother.png  =400x)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png  =400x)

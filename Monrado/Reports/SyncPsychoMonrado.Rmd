@@ -105,7 +105,7 @@ Function that takes raw motion history data and compute the mean on a given inte
 - interval : number of frames in the studied interval
 - data : data frame where there is data
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/slidinginterval.jpg)
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/slidingInterval.jpg)
 
 ```{r compute Slidinginterval, cache=TRUE}
 SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data)

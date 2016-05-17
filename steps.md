@@ -13,31 +13,45 @@ We began with a first database INCANT. This [INCANT](http://www.incant.eu/) stud
 
 For a pilot study, we focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We saw that there was a lot of modules that enable automatic social signals. We decided to extract automatic signal and began to focus on motion history.
 
+Unfortunately, we couldn't answer to this question since the signal extracted from this videos was not very good. It was difficult neither to categorize easily the patients in good or bad responders neither to detect specific periods of the psychotherapy that could be of particular very good or very bad quality. Furthermore, it was difficult to compare synchrony at different moments since the configuration of the participants could be very different.
+
 #### Monrado Database
-After some drawbacks detected in this database, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict.
+Consequently, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict vs no-conflict.
 
-The main psychometric data in this database were attachment scores.
+The main psychometric data in this database were attachment scores, i.e. a evaluation of the relationship of the subject with other people.
 
-### Summary figure
+### Summary figure of technical steps
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
 ### Poster
 ![image](https://github.com/Ouphix/synchro-psychotherapies/raw/master/Monrado/Data/images/report/ECNPPoster.jpg)
 
 ## Originality declaration
-This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after Ramseyer et Tschacher, 2011 and the first to study it in families which both configuration and theorical frameworks are different. The package used for synchrony was developed by engineer of the lab and it was the first time it was used on real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
+This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after the study of Ramseyer et Tschacher, 2011. It is the first to study it in families, which both configuration and theorical frameworks are different. The package used for synchrony was developed by the engineers of the lab and it was the first time that it was used in real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
 
 It is the first study to use an open science approach among the 3 studies (Ramseyer et Tschacher, 2011; Orsucci et al., 2016) that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
 
 ## Collaborations
-Name| Function | 
+
+In alphabetical order : 
+
+Name | Function 
 ------------ | ------------- 
-Jonathan Aigrain | Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python 
-Nicolas Bodeau	 | Bio-statistician and informatician in ISIR and La PitiéMohammed Chetouani	 | Development of the SyncPy libraryDavid Cohen	 | Original idea, supervising the projectCatherine Saint Georges	 | knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Debugging of SyncPyMichel Spodenkievitch	| Access of the database (videos from INCANT study), direct supervisionGiovanna Varni	| Development of the SyncPy library
+Jonathan Aigrain | Engineer,  Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python, especially OpenCV
+Nicolas Bodeau	 | Bio-statistician and informatician in ISIR and La Pitié, supervising for RMohammed Chetouani	 | Engineer, supervising the project, and the SyncPy libraryDavid Cohen	 | Psychiatrist, Original idea, supervising the projectCatherine Saint Georges	 | Psychiatrist, knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Engineer, Debugging of SyncPyMichel Spodenkievitch	| Psychiatrist, Collection of the database (videos from INCANT and Monrado studies), direct supervisionGiovanna Varni	| Engineer, Development of the SyncPy library
 
 ## Why and How evaluate psychotherapies?
+Psychotherapy evaluation is quite difficult since it must evaluate the basics of human to human relationship. A lot of theories developed in this field (psychoanalytical, systemic, behaviorist, hypnosis) with very different practices and level of evaluation. There is not for the moment very clear and homogenous framework of its efficacy. Relationship between the 
+
 ## Potential role of cognitive sciences in improvement of psychotherapies
+
+* Cognitive therapies
+* Learning theory
+* Attention
+* Cognitive dissonance and engagement theory
+
 ## Theorical advantages of synchrony studies
+
 
 ## Data structure
 The data consists of 2 databases with for each some videos and psychometric data.
@@ -58,7 +72,7 @@ The MDFT is based on several general principles likes topics that needs to be ad
 	* the Youth Self-Report syndrome structure [(YSR)](http://psycnet.apa.org/?&fa=main.doiLanding&doi=10.1037/0022-006X.75.5.729) 
 	* the Child Behavior Checklist syndrome constructs [(CBCL)](http://www.ncbi.nlm.nih.gov/pubmed/10200736).
 
-However, we didn't have any data dictionary with the definition of all variables and the precise questionnaires used to collect this information, the coding of Non Available data -99. We planned to meet the team that wasn't unfortunately available at that moment. A lot of videos were lost or not recorded. We couldn't know from this database which patient received MDFT or TAU. It was organized in a European level. We collected only the data from the 2 French centers.
+However, we didn't have any data dictionary with the definition of all variables and the precise questionnaires used to collect this information, the coding of Non Available data -99. We planned to meet the team that wasn't unfortunately available at that moment. A lot of videos were lost or not recorded. We couldn't know from this database which patient received MDFT or TAU. It was organized in a European level. We collected only the video and psychometric data from the 2 French centers.
 
 
 ## Pilot study
@@ -66,10 +80,10 @@ We decided to make a pilot study on the most complete subject : F1044 since we h
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/Numberparticipants.png)
 
-We can ask ourselves if this subject representative:* The therapist is the second most representative concerning the number of patients and the first concerning the number of patient videos.
+We can ask ourselves if this subject representative:* The therapist is the first most representative concerning the number of patients and the first concerning the number of patient videos.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/therapist.png)* The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. * Two centers were included. This patient come from the main center.
 
-We have all psychometrics evaluations (initial, 3m, 6m, 9m, 12m).Unfortunatelly, the first, second, 10th and 11th videos were lost. 
+* We have all psychometrics evaluations (initial, 3m, 6m, 9m, 12m).Unfortunatelly, the first, second, 10th and 11th videos were lost. 
 
 
 
@@ -85,35 +99,35 @@ These videos are names with the name of the subject + an index letter. They can 
 
 ## Softwares used
 * Git
-	* [GitHub website](https://github.com/Ouphix/synchro-psychotherapies)
-* [Excel](https://en.wikipedia.org/wiki/Microsoft_Excel)
-* [R](https://www.cran.r-project.org/)
+	* [GitHub website](https://github.com/Ouphix/synchro-psychotherapies) public version control repository
+* [Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) tables manager
+* [R](https://www.cran.r-project.org/) Statistical software
 	* [xlsx package](https://cran.r-project.org/web/packages/xlsx/index.html)
-* [Python](https://www.python.org/)
-	* [opencv](http://opencv.org/)
-	* [pandas](http://pandas.pydata.org/)
-	* [matplotlib](http://matplotlib.org/)
-	* [syncpy](https://github.com/syncpy/SyncPy)
-	* [FFMPEG](https://ffmpeg.org/)
-* [C++](https://en.wikipedia.org/wiki/C%2B%2B)
-* [Paintbrush](http://paintbrush.sourceforge.net/)
-* [Quicktime](http://www.apple.com/quicktime/what-is/)
-* VLC
-* Elan
-* Markdown
+* [Python](https://www.python.org/) Programing language
+	* [opencv](http://opencv.org/) Module for extracting information from videos
+	* [pandas](http://pandas.pydata.org/) Module for managing data frame
+	* [matplotlib](http://matplotlib.org/) Module for making plots
+	* [syncpy](https://github.com/syncpy/SyncPy) Module developed by the team for studying synchrony
+	* [FFMPEG](https://ffmpeg.org/) Module for converting videos
+* [C++](https://en.wikipedia.org/wiki/C%2B%2B) Programing language used to extract motion history
+* [Paintbrush](http://paintbrush.sourceforge.net/) Drawing program used for the frame segmentation
+* [Quicktime](http://www.apple.com/quicktime/what-is/) Video player used to cut videos
+* [VLC](http://www.videolan.org/vlc/) Video player
+* [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) Annotation software use for the essay of annotation
+* [Mou](http://25.io/mou/) : Markdown editor
 
 ## Steps
 ### Description of the database
 #### Video Configurations
 ##### Spatial organisation
 In the first center, psychotherapy sessions consisted of filmed familial psychotherapies with 2 to 5 peoples organized in a circle.
-Two participants of the psychotherapy were filmed from the front. Another subject is filmed from the other side. Its video is embedded in a window. We can notice the date displayed on the video. Sometimes, there is an overlap of different subject in the same place.
+Two participants of the psychotherapy were filmed from the front. Another subject (often the therapist) is filmed from the other side. Its video is embedded in a window. We can notice the date displayed on the video. Sometimes, there is an overlap of different subject in the same place.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png =350x)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/DifferentConfigurations.jpeg)
 
-In this barplot of the mean motion history for each subject for each video, we can see that the configurations of the participants involved for the F1044 subject can be very different between videos. There is between 2 and 3 participants. There is never the 4 participants involved. Sometimes, we don't have any information from the therapist because she isn't filmed. The patient is not very present in the therapy (compliance problem).
+In this barplot of the mean motion history for each subject for each video, we can see that the configurations of the participants involved for the F1044 subject can be very different between videos. There is between 2 and 3 participants. There is never the 4 participants involved. In some videos, we don't have any information from the therapist because she isn't filmed. The patient is not very present in the therapy (because of compliance).
 
 When we sum up the data we get, we can see that the mother and the therapist are the most present participants.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/AvailableData.jpeg)
@@ -126,9 +140,9 @@ It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com
 ##### Time organization
 Video length could were very different because it was necessary to reorganize them. 
 
-The configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy, a phone was used to communicate between the main psychotherapist and the supervisor. The participants made some pauses or the same video was used for different patient.
+However, we couldn't use the raw database. It was necessary to cut the videos with [Quicktime](https://en.wikipedia.org/wiki/QuickTime) software since a phone was used to communicate between the main psychotherapist and the supervisor and the therapy stopped at that moment. Sometimes, the participants made some pauses or the same video was used for different patient.
 
-Hence, it was necessary to cut the videos with [Quicktime](https://en.wikipedia.org/wiki/QuickTime) software.
+Furthermore configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy, 
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
 
@@ -349,7 +363,9 @@ In this frame, we can see that the date is overlapping with the therapist.
 #### Description of the database
 ##### Length of the videos
 
-![image](../Data/images/report/plots/LengthVideoMONRADO.jpeg)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/LengthVideoMONRADO.jpeg)
+
+We can see that the videos are very similar.
 
 ##### Configuration
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.mother.png  =400x)

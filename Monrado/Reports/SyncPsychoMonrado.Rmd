@@ -11,6 +11,8 @@ rm(list = ls(all.names = TRUE))
 ```
 
 ```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+# To use this script, you must install packages (install.packages()) to install these packahe if you don't have it.
+
 # Loading libraries
 ## For making models
 library("lme4")
@@ -18,6 +20,8 @@ library("lme4")
 library("plyr")
 ## For editing string
 library("stringr")
+## To manage time in minutes and seconds in videos
+library("chron")
 ```
 
 ## Fixed variables
@@ -233,7 +237,7 @@ legend("top", inset=.05, ParticipantsList,
        fill=colOrderList, cex=0.7)
 ```
 
-```{r Mean Motion history by video by participant (all videos), echo=FALSE, fig.height=4, cache=FALSE}
+```{r Configuration by video by participant (all videos), echo=FALSE, fig.height=4, cache=FALSE}
 meanMotionList <-c()
 meanMotion <- function(subject){
     for (i in unique(data$family)){
@@ -350,7 +354,6 @@ summary(slidedChild)
 ## Non overlapping interval
 ```{r, cache=FALSE}
 motherFive <- MeanMotionByTime("mother", indexOfvideos=1, interval=5, data)
-
 childFive <- MeanMotionByTime("child", indexOfvideos=1, interval=5, data)
 
 summary(childFive)
@@ -537,6 +540,8 @@ for (file in SSInoLogFilesList){
     SSInoLog<- rbind.fill(SSInoLog, SSIalone)}
 SSInoLog$video <-as.factor(SSInoLog$video)
 SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
+#SSInoLog$action <- rep(NA, nrow(SSInoLog))
+#SSInoLog[which(video == & Time_min==)]$action
 ```
 
 ## Description of SSIlog data frame
@@ -548,6 +553,7 @@ str(SSIlog)
 ## Description of noLogSSI data frame
 ```{r, cache=FALSE}
 str(SSInoLog)
+#View(SSInoLog)
 ```
 
 # Synchrony scores log for each dyad, triad and for the whole group
@@ -628,6 +634,112 @@ for (i in unique(SSInoLog$video)){
 #      paste ("Mean mo_ch :", round(mean(SSInoLog$SSI_mo_ch,na.rm=TRUE),3))),
 #col=rainbow(4), cex=0.5, lty=2, lwd=1)}
 ```
+
+```{r cutFrames}
+cutFrames <- read.csv2("../Data/CSV/Cutframes.csv")
+str(cutFrames)
+cutFrames$CutBefore
+cutFramesCB <- strptime(cutFrames$CutBefore, format="%M:%S")
+cutFrames$CutBefore <- as.character(cutFrames$CutBefore)
+cutFrames$CutBefore
+cutFramesCB <- strsplit(cutFrames$CutBefore, split=":")
+
+Cut <- c()
+for (i in 1:nrow(cutFrames)){ 
+  CutBeforeAlone <- (as.numeric(cutFramesCB[i][[1]][1]) + as.numeric(cutFramesCB[i][[1]][2])/60)
+  Cut <- c(Cut, CutBeforeAlone)
+  }
+cutFrames$CutBeforeMin <- Cut
+Cut <- c()
+View(cutFrames)
+
+Cut <- c()
+cutFrames$CutMiddle1 <- as.character(cutFrames$CutMiddle1)
+cutMiddleSplit <- strsplit(cutFrames$CutMiddle1, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutMiddleSplit[i][[1]][1]) + as.numeric(cutMiddleSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  print(CutAlone)
+  }
+cutFrames$CutMiddle1Min <- Cut
+Cut <- c()
+cutFrames$CutMiddle1
+cutFrames$CutMiddle1Min
+
+Cut <- c()
+cutFrames$CutMiddle2 <- as.character(cutFrames$CutMiddle2)
+cutMiddleSplit <- strsplit(cutFrames$CutMiddle2, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutMiddleSplit[i][[1]][1]) + as.numeric(cutMiddleSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  print(CutAlone)
+  }
+cutFrames$CutMiddle2Min <- Cut
+Cut <- c()
+cutFrames$CutMiddle2
+cutFrames$CutMiddle2Min
+
+Cut <- c()
+cutFrames$CutFinal <- as.character(cutFrames$CutFinal)
+cutSplit <- strsplit(cutFrames$CutFinal, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutSplit[i][[1]][1]) + as.numeric(cutSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  print(CutAlone)
+  }
+cutFrames$CutFinalMin <- Cut
+Cut <- c()
+cutFrames$CutFinal
+cutFrames$CutFinalMin
+View(cutFrames)
+```
+
+```{r}
+str(SSInoLog)
+a <- merge(SSInoLog, cutFrames, by.x="video", by.y="indexList")
+#View(a)
+a$LabelVideo <- rep(NA, nrow(a)) 
+a[which(a$Time_min < a$CutBeforeMin),]$LabelVideo <- "Cut"
+
+a[which(a$Time_min > a$CutBeforeMin & a$Time_min < a$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+
+a[which(a$Time_min > a$CutMiddle1Min & a$Time_min < a$CutMiddle2Min),]$LabelVideo <- "Cut"
+
+a[which(a$Time_min > a$CutMiddle2Min & a$Time_min < a$CutFinalMin),]$LabelVideo <- "Conflict"
+
+#a[which(a$Time_min >= a$CutFinalMin),]$LabelVideo <- "Cut"
+
+SSIConflict <- c(a[which(a$LabelVideo=="Conflict"),]$SSI_mo_ch, a[which(a$LabelVideo=="Conflict"),]$SSI_mo_ch)
+mean(SSIConflict, na.rm=TRUE)
+
+SSINoConflict <- c(a[which(a$LabelVideo=="No Conflict"),]$SSI_mo_ch, a[which(a$LabelVideo=="No Conflict"),]$SSI_mo_ch)
+mean(SSINoConflict, na.rm=TRUE)
+
+hist(log(SSIConflict))
+hist(log(SSINoConflict))
+
+mean(log(SSIConflict), na.rm=TRUE)
+
+barplot(c(mean(log(SSIConflict), na.rm=TRUE)+10, mean(log(SSINoConflict), na.rm=TRUE)+10), names=c("Conflict", "No Conflict"), col=terrain.colors(2), ylab="Synchrony score", las=1, cex.axis=0.7, main="Synchrony scores between 2 situations")
+
+barplot(c(mean(SSIConflict, na.rm=TRUE), mean(SSINoConflict, na.rm=TRUE)), names=c("Conflict", "No Conflict"), col=terrain.colors(2), ylab="Synchrony score", las=1, cex.axis=0.7, main="Synchrony scores in 2 situations")
+
+df <- data.frame(NA, NA)
+for (i in unique(a$video)){
+      print (i)
+      b <- mean(a[which(a$LabelVideo=="No Conflict" & a$video==i),]$SSI_mo_ch)
+      print(b)
+      e <- mean(a[which(a$LabelVideo=="Conflict" & a$video==i),]$SSI_mo_ch)
+      print(c)
+      d <- c(b, e)
+      df <- cbind(df,d)
+      print(df)}
+
+df <- df[,-(1:10)]
+
+barplot(as.matrix(df), beside=TRUE, xlab="Video", ylab="SSI score", cex.names=0.3)
+```
+
 
 ```{r test}
 par(mar=c(4,4,4,3), mfrow=c(1,1))

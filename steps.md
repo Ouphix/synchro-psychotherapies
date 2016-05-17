@@ -22,7 +22,15 @@ The main psychometric data in this database were attachment scores.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
 ## Originality declaration
-This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy and the first to make it in families. It was the first to use material from an international psychotherapy study and on a experimental relationship study. This study is original since it is based on a engineer - psychotherapist collaboration. The package used for synchrony was developed by engineer of the lab and it was the first time it was used on real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. It is the first study to use an open science approach among the 3 studies that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
+This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy and the first to make it in families. New psychotherapy. It was the first to use material from an international psychotherapy study and on a experimental relationship study. This study is original since it is based on a engineer - psychotherapist collaboration. The package used for synchrony was developed by engineer of the lab and it was the first time it was used on real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. It is the first study to use an open science approach among the 3 studies that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
+
+## Collaborations
+First Header | Second Header | Third Header
+------------ | ------------- | ------------
+Content Cell | Content Cell  | Content Cell
+Content Cell | Content Cell  | Content Cell
+
+Jonathan Aigrain	Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python and collaboration with David and Michel	jonathan.aigrain@gmail.comNicolas Bodeau	Biostatistician in ISIR,	nicolas.bodeau@aphp.frMohammed Chetouani	Development of the SyncPy library	chetouani@isir.upmc.frDavid Cohen	Original idea, supervising the project	dcohen55@noos.frCatherine Saint Georges	Psychiatrist, knowledge in interpreting synchrony scores in psychiatry	catherine.saintgeorges@gmail.comDavid Reversat	Debugging of SyncPy and Multiplatform use	reversat@isir.upmc.frMichel Spodenkievitch	Access of the database (videos from INCANT study), direct supervision	michel.spodenkiewicz@inserm.frGiovanna Varni	 Development of the SyncPy library	varni@isir.upmc.fr
 
 ## Why and How evaluate psychotherapies ?
 ## Potential role of cognitive sciences in improvement of psychotherapies

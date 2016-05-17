@@ -137,22 +137,27 @@ Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) for
 They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
 It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. 
 
+Globally, the cannabis consumption is decreasing with time for the subjects.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/MeanEvolution.jpeg)
+
+We didn't have any group defined. When we look of the evolution of the cannabis consumption, it is not very easy to define good and bad responders.
+
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/EvolutionCannabis.jpeg)
 
-The evolutions of this scores are plotted [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf). 
+All the evolutions of this scores are plotted [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf). 
 
 ##### Time organization
 Video length could were very different because it was necessary to reorganize them. 
 
 However, we couldn't use the raw database. It was necessary to cut the videos with [Quicktime](https://en.wikipedia.org/wiki/QuickTime) software since a phone was used to communicate between the main psychotherapist and the supervisor and the therapy stopped at that moment. Sometimes, the participants made some pauses or the same video was used for different patient.
 
-Furthermore configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy, 
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthVideoF1044.png)
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthMinute.jpeg)
+Furthermore configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy, 
 
 
 ### Raw data
-The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/Frames_extractor) python script made by Jonathan with [FFMPEG](https://ffmpeg.org/).
+The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/Frames_extractor) python script made by Jonathan Aigrain with [FFMPEG](https://ffmpeg.org/).
 
 
 Idea  |  |
@@ -377,6 +382,8 @@ We can see that the videos are very similar.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png  =400x)
 
 ##### Technical problems
+None
+
 
 ##### Results
 

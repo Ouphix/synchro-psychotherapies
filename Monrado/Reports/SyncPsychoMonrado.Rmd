@@ -715,6 +715,10 @@ mean(SSIConflict, na.rm=TRUE)
 SSINoConflict <- c(a[which(a$LabelVideo=="No Conflict"),]$SSI_mo_ch, a[which(a$LabelVideo=="No Conflict"),]$SSI_mo_ch)
 mean(SSINoConflict, na.rm=TRUE)
 
+```
+
+```{r}
+
 hist(log(SSIConflict))
 hist(log(SSINoConflict))
 
@@ -732,7 +736,7 @@ for (i in unique(a$video)){
       e <- mean(a[which(a$LabelVideo=="Conflict" & a$video==i),]$SSI_mo_ch)
      # print(c)
       d <- c(b, e)
-      df <- cbind(df,d)
+      df <- cbind(df,d)}
       # print(df)}
 
 df <- df[,-(1:10)]

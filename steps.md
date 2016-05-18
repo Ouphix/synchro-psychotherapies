@@ -398,6 +398,9 @@ In this frame, we can see that the date is overlapping with the therapist.
 	* BDI score
 	
 #### Description of the database
+##### Selection of relevant videos
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/FlowchartMonrado.jpeg =300x)
+
 ##### Length of the videos
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/LengthVideoMONRADO.jpeg =400x)
@@ -414,6 +417,7 @@ The participants are two in front of the camera. We can see that the quality of 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png  =400x)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/Configuration%20of%20participant%20by%20video.jpg =400x)
+
 The configuration in the different videos are very similar. There is only one video with 3 persons.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/Demographic%20description.jpg =400x)

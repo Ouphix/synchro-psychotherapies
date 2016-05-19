@@ -1,4 +1,4 @@
-# Synchrony in Psychotherapy, Data management, example with F1044 patient data
+# Does synchrony detected from videos predict the outcomes of familial psychotherapies or the presence of a conflict ?
 
 ### Author: Thomas GARGOT
 
@@ -98,7 +98,9 @@ When a variable is referring to several participants, it is organised in alphabe
 This familly had several consultations with the psychotherapist (*therapist*). Some of them were video recorded.
 These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg *F1044C*).
 
-## Softwares used
+
+## Method
+### Softwares used
 * [Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) tables manager
 
 * [R](https://www.cran.r-project.org/) Statistical software
@@ -120,8 +122,7 @@ These videos are names with the name of the subject + an index letter. They can 
 * [Mou](http://25.io/mou/) : Markdown editor
 * [Git](https://en.wikipedia.org/wiki/Git_%28software%29)
 	* [GitHub website](https://github.com/Ouphix/synchro-psychotherapies) public version control repository
-
-## Steps
+	
 ### Description of the database
 
 #### Summary figure of technical steps

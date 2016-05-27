@@ -34,39 +34,86 @@ In alphabetical order :
 
 Name | Function 
 ------------ | ------------- 
-Jonathan Aigrain | Engineer,  Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python, especially OpenCV
-Nicolas Bodeau	 | Bio-statistician and informatician in ISIR and La Pitié, supervising for RMohammed Chetouani	 | Engineer, supervising the project, and the SyncPy libraryDavid Cohen	 | Psychiatrist, Original idea, supervising the projectCatherine Saint Georges	 | Psychiatrist, knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Engineer, Debugging of SyncPyMichel Spodenkievitch	| Psychiatrist, Collection of the database (videos from INCANT and Monrado studies), direct supervisionGiovanna Varni	| Engineer, Development of the SyncPy library
-The Monrado and Incant groups recruited subjects and psychometric data
-I helped to define and operationalize the scientific question from the general idea, the tools and databases available. I did bibliography based on the team work and Ramseyer article. I cleaned and prepared the databases. I adapt the Python and R script to make the extraction of the signal and perform the analysis. I realized the figures and diagrams to explain the process of the method and describe the results.
+Jonathan Aigrain | Phd Student Social Robotics,  Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python, especially OpenCV
+Nicolas Bodeau	 | Bio-statistician and informatician in ISIR and La Pitié, supervising for RMohammed Chetouani	 | Prof Social Robotics, supervising the project, and the SyncPy libraryDavid Cohen	 | Prof of Psychiatry, Original idea, supervising the projectCatherine Saint Georges	 | Psychiatrist, knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Informarician, Debugging of SyncPyMichel Spodenkievitch	| Psychiatrist, Collection of the database (videos from INCANT and Monrado studies), direct supervisionGiovanna Varni	| Post doc researcher, Development of the SyncPy library
+The Monrado (Dr Coady Vulliez, Mrs Monika Szymanska) and Incant (Dr Phan, Mrs Bastard) groups recruited subjects and psychometric dataI helped to define and operationalize the scientific question from the general idea, the tools and databases available. I did bibliography based on the team work and Ramseyer article. I cleaned and prepared the databases. I adapt the Python and R script to make the extraction of the signal and perform the analysis. I realized the figures and diagrams to explain the process of the method and describe the results.
 
-## Why and How evaluate psychotherapies?
+## Theorical background
+
+### Why and How evaluate psychotherapies?
 Psychotherapy evaluation is quite difficult since it must evaluate the basics of human to human relationship. A lot of theories developed in this field (psychoanalytical, systemic, behaviorist, hypnosis) with very different practices and level of evaluation. There is not for the moment very clear and homogenous framework of its efficacy. Relationship between the 
 
-## Potential role of cognitive sciences in improvement of psychotherapies
+* NNT Xavier Briffault
 
-* Cognitive therapies
-* Learning theory
-* Attention
-* Cognitive dissonance and engagement theory
-* Bandura
-* Miror neurons
-* Therapeutic alliance (Dodo Effect / Thrive book)
+* Cost 
+* Thrive IAPT
+give feedback, supervision
+annotated psychotherapy problem
+How to train , supervision temporality of feedback and evaluation
+
+### Potential role of cognitive sciences in improvement of psychotherapies
+
+#### Learning theory
+Pavlov Skinner 
+
+#### Cognitive therapies
+Ellis, Beck, MBA ?
+
+#### Attention
+Dehaene
+
+#### Cognitive dissonance and engagement theory
+Festonner, Beauvois, Joule
+
+#### Bandura 
+imitation learning
+
+#### Therapeutic alliance
+(Dodo Effect / Thrive book)
+ 
+#### Miror neurons
 
 ## Theorical advantages of synchrony studies
+Delaerche
+We will describe in a IMRAD organisation work on 2 databases : INCANT and MONRADO.
 
+## INCANT Study
+### Introduction
 
-## Data structure
-The data consists of 2 databases with for each some videos and psychometric data.
-
-### INCANT study
-#### Study protocol
 The Incant study aimed to evaluate the efficacy of [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) a familial therapy with other treatments Treatments As Usual (TAU). Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family.
 
 The MDFT is based on several general principles likes topics that needs to be addressed, attitude of the therapist.
 
+### Material and methods
+#### Study protocol
 #### Videos
 * We collected a 252.44Gb database of 277 Videos, with a rate of 25 frames by second.
 * They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format.
+
+### Softwares used
+* [Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) tables manager
+* [Powerpoint](https://en.wikipedia.org/wiki/Microsoft_PowerPoint) (figures)
+* [C++](https://en.wikipedia.org/wiki/C%2B%2B) Programing language used to extract motion history
+* [R](https://www.cran.r-project.org/) Statistical software, filtering of the data frames, graphs
+	* [xlsx package](https://cran.r-project.org/web/packages/xlsx/index.html)
+* [Python](https://www.python.org/) Programing language
+	* [opencv](http://opencv.org/) Module for extracting information from videos
+	* [pandas](http://pandas.pydata.org/) Module for managing data frame
+	* [matplotlib](http://matplotlib.org/) Module for making plots
+	* [syncpy](https://github.com/syncpy/SyncPy) Module developed by the team for computing synchrony scores
+	* [FFMPEG](https://ffmpeg.org/) Module for converting videos
+
+
+* [Paintbrush](http://paintbrush.sourceforge.net/) Drawing program used for the frame segmentation
+* [Quicktime](http://www.apple.com/quicktime/what-is/) Video player used to cut videos
+* [VLC](http://www.videolan.org/vlc/) Video player
+
+* [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) Annotation software use for the essay of annotation
+* [Lucidchart](https://www.lucidchart.com/) (figures)
+
+* [Mou](http://25.io/mou/) : Markdown editor
+* [Git](https://en.wikipedia.org/wiki/Git_%28software%29)
+	* [GitHub website](https://github.com/Ouphix/synchro-psychotherapies) public version control repository
 
 #### Psychometric data
 * It consist of 3 excel files with :
@@ -76,8 +123,7 @@ The MDFT is based on several general principles likes topics that needs to be ad
 
 However, we didn't have any data dictionary with the definition of all variables and the exact questionnaires used to collect this information, the coding of Non Available data that may be -99. We planned to meet the team that wasn't unfortunately available at that moment. A lot of videos were lost or not recorded. We couldn't know from this database which patient received MDFT or TAU. It was organized in a European level. We collected only the video and psychometric data from the 2 French centers.
 
-
-## Pilot study
+#### Pilot study: F1044 subject, his father, mother and therapist
 We decided to make a pilot study on the most complete subject : F1044 since we have 18 videos with him or his family.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/Numberparticipants.png)
@@ -85,9 +131,9 @@ We decided to make a pilot study on the most complete subject : F1044 since we h
 We can ask ourselves if this subject representative:* The therapist is the first most representative concerning the number of patients and the first concerning the number of patient videos.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/therapist.png)* The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. * Two centers were included. This patient come from the main center.
 
-* We have all our [psychometrics evaluations](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) (cannabis consumption : initial, 3m, 6m, 9m, 12m).Unfortunatelly, the first, second, 10th and 11th videos were lost. 
-
-
+* We have all our [psychometrics evaluations](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) (cannabis consumption : initial, 3m, 6m, 9m, 12m).Unfortunately, the first, second, 10th and 11th videos were lost. 
+	
+### Description of the database
 ## Nomenclature
 *F1044* is the name of the subject studied (called *patient*).
 When referring to several persons, variables take the name of the shorter form *pa* for *patient*.
@@ -95,49 +141,25 @@ When referring to several persons, variables take the name of the shorter form *
 He has a *mother* (*mo*) a *father* (*fa*) helped by a *therapist* (*th*).
 When a variable is referring to several participants, it is organised in alphabetical order separated by underscores, eg. *SSI_fa_mo* refers to the synchrony index (*SSI*) between the *father* and the *mother*. *SSI_mo_fa* doesn't exist.
 
-This familly had several consultations with the psychotherapist (*therapist*). Some of them were video recorded.
-These videos are names with the name of the subject + an index letter. They can subdivised after that with numbers (eg *F1044C*).
-
-
-## Method
-### Softwares used
-* [Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) tables manager
-
-* [R](https://www.cran.r-project.org/) Statistical software
-	* [xlsx package](https://cran.r-project.org/web/packages/xlsx/index.html)
-* [Python](https://www.python.org/) Programing language
-	* [opencv](http://opencv.org/) Module for extracting information from videos
-	* [pandas](http://pandas.pydata.org/) Module for managing data frame
-	* [matplotlib](http://matplotlib.org/) Module for making plots
-	* [syncpy](https://github.com/syncpy/SyncPy) Module developed by the team for studying synchrony
-	* [FFMPEG](https://ffmpeg.org/) Module for converting videos
-* [C++](https://en.wikipedia.org/wiki/C%2B%2B) Programing language used to extract motion history
-
-* [Paintbrush](http://paintbrush.sourceforge.net/) Drawing program used for the frame segmentation
-* [Quicktime](http://www.apple.com/quicktime/what-is/) Video player used to cut videos
-* [VLC](http://www.videolan.org/vlc/) Video player
-
-* [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) Annotation software use for the essay of annotation
-
-* [Mou](http://25.io/mou/) : Markdown editor
-* [Git](https://en.wikipedia.org/wiki/Git_%28software%29)
-	* [GitHub website](https://github.com/Ouphix/synchro-psychotherapies) public version control repository
-	
-### Description of the database
+This family had several consultations with the psychotherapist (*therapist*). Some of them were video recorded.
+These videos are names with the name of the subject + an index letter. They can subdivided after that with numbers (eg *F1044C*).
 
 #### Summary figure of technical steps
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
 #### Video Configurations
 ##### Verbal signal extraction
-I began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the speaking of each participants. 
+We began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the speaking of each participants. 
 This waveform helped to identify the zones of speaking vs no speaking. 
 
-Most often they were filmed so it helped to detect manually who spoke but it wasn't always the case. Quite often, participant speech overlap that made the process quite difficult. There was some short onomatopoeia that were sometimes quite arbitrary to annotate or not. The end of the sentence was not always obvious with long vowels with not precise end especially during the overlap of speeches. It was made from the video and the waveform extracted from the video in an audio file. 
+Most often locutors were filmed so it helped to detect manually who spoke but it wasn't always the case. Quite often, participant speech overlap that made the process quite difficult. There was some short onomatopoeia that were sometimes quite arbitrary to annotate or not. The end of the sentence was not always obvious with long vowels with not precise end especially during the overlap of speeches. It was made from the video and the waveform extracted from the video in an audio file. 
 
 Consequently, this process was very laborious. It was possible to annotate one hour of video with a whole week work.
 
-We tried to find ways to make source separation automatic even if it couldn't be perfect. We found the [FASST software](http://bass-db.gforge.inria.fr/fasst/) that is very powerful to separate sounds coming from different music instruments. However, we contacted the author of this software and this material is to difficult to separate at the moment since two voices are not so much different than two different music instruments. This separation could be made during the record of the video with several mikes that could be small tie mikes attached to each participant.
+We tried to find ways to make source separation automatic even if it couldn't be perfect. We found the [FASST software](http://bass-db.gforge.inria.fr/fasst/) that is very powerful to separate sounds coming from different music instruments. However, we contacted the author of this software and this material is to difficult to separate at the moment since two voices are not so much different from two different music instruments. 
+
+##### Verbal signal extraction discussion
+This separation could be made during the record of the video with several mikes that could be small tie mikes attached to each participant.
 
 It is often necessary to extract manually some features even because of the lack of automatic process or in case of developing, training and evaluating these tools.
 
@@ -355,8 +377,15 @@ We can see that the evolution of cannabis use by F1044 is not straightforward. I
 
 All of them with the same therapist Mrs Bastard
 
-#### Advantages and limits of this database
-##### Advantages
+### Results
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/SSImoth.jpg)
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/datalogtherapist.jpg)
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/loffather.jpg)
+
+#### Discussion
+##### Advantages of this database
 INCANT study was done internationally with:
 
 - good level of scientific method with a pre-registration done in major journals in a psychotherapy field where the level of quality of the studies can be not very good.
@@ -367,10 +396,15 @@ INCANT study was done internationally with:
 
 - Pragmatically, it was the first database we got, so we could begin to ask real life problems.
 
-##### Drawbacks
+##### Limits of this database
 ###### Experimental set-up
 It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. 
 We could suggest to have a much more defined psychotherapy and even before studying a psychotherapy to study specific situations : open vs closed questions,
+
+Well defined
+Motivtional interviewing
+CBT
+not enough evidence based
 
 ###### Technical problems
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/conflict.png =400x)
@@ -385,28 +419,22 @@ In this frame, we can see that half of the motion history from the mother couldn
 
 In this frame, we can see that the date is overlapping with the therapist.
 
-### Monrado study
-* We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
-* They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
+Sometimes, the camera is moving during the film. Obviously, this leads to a shift of pixel and consequently a signal of motion history even if nobody is moving. Consequently, it is very important to keep a motion less camera or cameras.
 
-#### Psychometric data
-* It consist of one excel file with:
-	* Identification number
-	* Demographic information
-	* Attachment style
-	* TAS Score
-	* STAIYA Score
-	* BDI score
-	
-#### Description of the database
-##### Selection of relevant videos
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/FlowchartMonrado.jpeg =300x)
+Furthermore, in next protocol, it would be considered to use either a kinect, either, to keep always the same orientation of the subject toward the camera.
 
-##### Length of the videos
+###### Technical discussions
+It seems that it would be very important to have several devices (camera, kinect, mikes). This leads to a problem that wasn't raised in this set up since there was only one camera. In case, of several devices, it is very important that all of them are synchronized.
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/LengthVideoMONRADO.jpeg =400x)
+Multi person : not the majority of psychotherapy more often filmed for supervision and educational use.
 
-We can see that the videos are very similar.
+shared database and problems of confidentiality
+
+## MONRADO study
+### Aim of the study
+The aim of the study was to evaluate the response to conflict in a dyad of a parent and a child. There was two phases. After the experimenter left the room, the dyad spoke about a casual topics. After around 5 minutes, the experimenter came back in the room and asked the child to speak about a conflictual conflict that was selected before the video during an interview alone with him or her.
+
+Consequently, from these videos, we can extract easily two phases : without then with conflict.
 
 ##### Configuration
 The participants are two in front of the camera. We can see that the quality of the video is much better. There is not overlap between the subject. There isn't embedded subjects. There is not any date embedded.
@@ -421,13 +449,61 @@ The participants are two in front of the camera. We can see that the quality of 
 
 The configuration in the different videos are very similar. There is only one video with 3 persons.
 
+#### Psychometric data
+* It consist of one excel file with:
+	* Identification number
+	* Identification of the video
+	* Demographic information (Age, Birthday, Birth place)
+	* Attachment style
+	* TAS Score
+	* STAIYA Score
+	* BDI score
+	
+###### Attachment style
+Attachment theory is a psychological model that tries to describe the dynamics of short and long-term relationships between humans. 
+
+The Attachment Style Interview for Adolescents (ASI-AD) seems to be user-friendly, transparent and reliable measure?
+
+It offers the adolescent the opportunity to talk about their recent life events, their close relationships (with parents and friends), their support networks and how they feel about getting close to others. (Jacobs et al, 2012) Caring about attachment in young people in residential care: The use of the Attachment Style Interview.Report of a voluntary sector and university partnership(‘Community Care Inform’ electronic information source. Spring 2012)Catherine Jacobs, Yael Ilan-Clarke and Professor Antonia Bifulco, Lifespan Research Group, Centre for Abuse and Trauma Studies) http://www.attachmentstyleinterview.com/
+
+Attachement styles were Secure, Enmeshed, Fearful, Withdrawn and Dual when two different styles)
+
+After a contact with the MONRADO team, we clustered the attachments styles in 3 groups:
+
+* Secure
+* Fearful-Enmeshed (FE)
+* Withdrawn
+
+* DUAL were excluded
+
+###### TAS Score
+The Alexithymie
+The TAS (Toronto Alexithymie Score) that was developed by Taylor, Graeme J.; Ryan, David; Bagby, R. Michael (1986). "Toward the development of a new self-report alexithymia scale". Psychotherapy and Psychosomatics, 44, 191-199
+
+M.P. Marchand et G. Loas (1994).
+
+###### STAIYA Score
+The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation of Anxiety. It is one of the most used Anxiety questionnaire. It dissociate the anxiety at a precise moment (state) and the habitual anxiety of the subject (trait). It  was evaluated on more than 5000 subjects.
+
+#### Description of the database
+* We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
+* They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
+
+##### Selection of relevant videos
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/FlowchartMonrado.jpeg =300x)
+
+##### Length of the videos
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/LengthVideoMONRADO.jpeg =400x)
+
+We can see that the videos are very similar.
+
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/Demographic%20description.jpg =400x)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/attachment.jpg =400x)
 
 ##### Technical problems
 None
-
+There was only one video which never moved. There wasn't any date. There was very few overlap of the subjects.
 
 ##### Results
 
@@ -443,10 +519,40 @@ We could extract other features :
 
 * Anotation of conflict and non conflict period with [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) software
 
-* Electrodermal activity that seems to be relevant in stress, dissonance cognitive paradigms. Its history as feedback of psychotherapy is ver old since it was used in [psychoanalysis by C. G. Jung](http://www.freezoneearth.org/allmeters/scrapbook/historymeter.htm#Die%20Wort)
+* Electrodermal activity that seems to be relevant in stress, dissonance cognitive paradigms. Its history as feedback of psychotherapy is ver old since it was used in [psychoanalysis by C. G. Jung](http://www.freezoneearth.org/allmeters/scrapbook/historymeter.htm#Die%20Wort).
 
 * Motion capture Optitrack
 
-* Kinect 
+* [Ethome](https://www.youtube.com/watch?v=IBPxokjqvZ8) and special suits
+
+* Kinect : skeletton
 
 * Source separation source : FASST
+
+* Facial / Upper body recognition to segment images
+* precise camera ? for each person ?
+
+background subtraction
+gaze direction
+optic flow and trajectories
+
+## Discussion
+
+### Experimental discussion
+It would be interesting to 
+Assertiveness
+Motivational interviewing
+provocation
+relaxation
+exposition
+dream analysis
+speaking of its own or other emotions
+Gaze
+Emotions classifier (Smiles) Hupont, I., Baldassarri, S., & Cerezo, E. (2013). Facial emotional classification: from a discrete perspective to a continuous emotional space.Pattern Analysis and Applications, 16(1), 41-54.
+
+Head Pose (Head direction) De la Torre, F., Chu, W. S., Xiong, X., Vicente, F., Ding, X., & Cohn, J. (2015, May). Intraface. In Automatic Face and Gesture Recognition (FG), 2015 11th IEEE International Conference and Workshops on (Vol. 1, pp. 1-8). IEEE.
+
+Analysis discussion
+Modeling, Machine learning
+
+

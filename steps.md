@@ -1,9 +1,13 @@
-# How synchrony detected from videos could evaluate the quality of a therapeutic or parent relationship
+# How synchrony detected from videos could predict the quality of a therapeutic or parent relationship
 
 ### Author: Thomas GARGOT
 
 ## Abstract
-### Aim and Hypothesis
+### Introduction and motivations
+Psychotherapy is an important part of treatment of mental disorders alone or complementary with pharmacotherapy. Some techniques are now widely evidence-based and very cost effective (Layard & Clark, 2014).Most of the studies are indirectly based on patient reported outcomes or problematic behaviors that are evaluated before and after the psychotherapy. Unfortunately, studies hardly control what is actually happening during psychotherapy, especially the interaction between the patient and the therapist that could be a predictor of the psychotherapy efficacy. Consequently, it is difficult to make precise links between theory and practice, control its application and understand which of its ingredients are the most important.It is already feasible to annotate manually videos. However, this task is tedious. It can be either very repetitive (annotation of turn-taking or non-verbal behavior) or very technical (annotation of application of some specific techniques like in motivational interviewing (Moyers et al, 2015) and a potential source of bias.In the future, an automatic feedback during the psychotherapy could also even help the therapists to reorganize a treatment.
+In the future, an automatic feedback during the psychotherapy could also even help the therapists to reorganize a treatment.
+Here we suggest a research framework to extract automatically social signals from psychotherapy videos. We focus on motor synchrony considered as a predictor of psychotherapy outcome in a first study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. Varni et al. 2015 developped the SyncPy open source python library to help researchers and practitioners to automatically analyse synchrony. It could be possible to measure synchrony even in familial therapies.
+### Aim and Hypothesis
 The aim of this project is to evaluate if it is possible to extract automatic signals of synchrony that could predict the outcomes of a psychotherapy and to identify the challenges of this process.  
 
 **Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between a patient, his parents and a therapist ?** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
@@ -20,7 +24,7 @@ Consequently, we switched to the Monrado database, an other video database, with
 
 The main psychometric data in this database were attachment scores, i.e. a evaluation of the relationship of the subject with other people.
 
-#### Results
+### Results
 This work led to the development of R scripts to manipulate motion history, filter it ; adaptation of Python module of SyncPy. Too our knowledge, these are the first scripts that are are published in open access to enable easy replication and further developments. We draw some recommendation to get psychotherapy material of better quality in terms of video and sound recording and psychotherapy techniques and outcomes. Furthermore, we suggest some modules that could be added to extract more social signals from other modalities and precisions.
 
 ### Poster
@@ -119,11 +123,21 @@ However, in these settings, there could be only one patient and one therapist. F
 
 Some recordings are used in diagnostic phase where lack of coordination in non-verbal behaviors was found as a risk of recurrence of depression (Bouhuys & Sam, 2000).
 
+Independently of the psychotherapy theory and framework, it seems that synchrony could be used in very different settings and could reflect the therapeutic alliance. In the future, we can imagine that synchrony score could be extracted automatically in different modalities (synchrony of speech, motion history, smiles, expressed emotions). That would give a feedback about the process of the psychotherapy that will be more objective and less time consuming than filling a psychometric questionnaire. 
+
 ## Attachment and psychotherapy
+TODO
 
 ## Open science, Open data, Confidentiality 
+It was quite difficult at the beginning to replicate the studies that were done by other teams and to find these two databases that could be relevant for this goal because of quality of the recording and quality of psychometric data collected. After we had our own scripts and procedure for INCANT database, it was very easy to replicate the analysis for MONRADO database. 
 
-We will describe in a IMRAD organisation work on 2 databases : INCANT and MONRADO.
+To avoid this lost of time, we tried to develop an open science approach to improve accessibility, transparency of this work to help future improvements. The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship.
+
+We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts.
+
+However, it is not possible to share the raw materials with consist of confidential psychotherapy sessions. It would be very relevant to share this material to let possibility to other team to compare this results with other softwares or modules with different goals than motion history synchrony analysis. In the research in algorithm development, some databases are shared and promoted in challenges that enable the development of the best classifier for instance. 
+
+We will describe in a IMRAD organization work on 2 databases : INCANT and MONRADO.
 
 ## INCANT Study
 ### Introduction

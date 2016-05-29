@@ -120,6 +120,20 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
   return (x)}
 ```
 
+## Before importing data
+We prepared videos in AVI format (converted by [Converting video script](https://github.com/Ouphix/synchro-psychotherapies/tree/master/INCANT/Scripts/convertingVideos)) and frames extracted by [Frames extractor](https://github.com/Ouphix/synchro-psychotherapies/tree/master/INCANT/Scripts/Frames_extractor) script and non relevant part of the images masked by Paintbrush in green.
+
+With these videos and frames, we used the [motionHistoryExtractor.cpp](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/motionHistoryExtractor.cpp) script in C++ which extracted motion history in CSV files for each video. This script use the opencv modue. There is a filter in this script to avoid too much noise.
+ 
+### Data dictionnary of raw files
+They are in the form videoname.MTS.avi_res.csv
+frame : index of the frame, with frame rate of 25/s
+father : motion history for father from 0 (no pixel change) to 1 (all pixels are changed)
+mother : idem for mother
+child : idem for child
+therapist : idem for therapist (non relevant here but used in INCANT study)
+file : name of the file in the form : videoname.MTS.avi
+
 ## Import data
 ```{r import data, results="hide"}
 data <- importdata(FullNameList)
@@ -166,7 +180,32 @@ data$file <- NULL
 data <- data[,c("family", "frame", "timeMin", "child", "childShifted", "logChild", "father", "fatherShifted", "logFather", "mother", "motherShifted", "logMother")]
 ```
 
+### Data dictionnary of clean data data dataframe
+* family : code of the family
+* frame : index of the frame, with frame rate of 25/s
+* timeMin : time in minute for each video ie frame/(25*60)
+* child : motion history for child from 0 (no pixel change) to 1 (all pixels are changed) 
+* childShifted : motion history of child + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
+* logChild : natural logarithm of childShifted
+* father : motion history of father from 0 (no pixel change) to 1 (all pixels are changed) 
+* fatherShifted : motion history of father + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
+* logFather : natural logarithm of childShifted
+* mother : motion history of mother from 0 (no pixel change) to 1 (all pixels are changed) 
+* motherShifted : motion history of mother + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
+* logMother : natural logarithm of motherShifted
+
 ## Clean time annotations data frame (cutFrames)
+### Preparing cutFrames
+The cutFrames data frame was done manually by looking manually all videos and define the :
+* when the experimenter leave the room and the interaction begin, 
+Between is the non conflictual discussion
+* when the experimenter come back to explain that the participants are asked to have a conflictual discussion
+* when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion
+* when the experimenter come back to shut down the camera
+* Sex of the child
+* Sex of the parent
+
 ```{r cutFrames to translate for ME}
 # Import data
 cutFrames <- read.csv2("../Data/CSV/Cutframes.csv")
@@ -216,18 +255,56 @@ for (i in 1:nrow(cutFrames)){
 cutFrames$CutFinalMin <- Cut
 Cut <- c()
 
-#View(cutFrames)
+View(cutFrames)
 ```
 
+### Data dictionnary of cutFrames dataframe
+* indexList : code of the family
+* CutBefore : when the experimenter leave the room and the interaction begin character string in the form min:sec
+* CutMiddle1 : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
+* CutMiddle2 : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, character string in the form min:sec
+* CutFinal : when the experimenter come back to shut down the camera, character string in the form min:sec
+* ChildSex : Factor variable : Male of Female
+* ParentSex : Factor variable : Male of Female
+* CutBeforeMin : when the experimenter leave the room and the interaction begin numeric variable in minutes
+* CutMiddle1Min : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
+* CutMiddle2Min : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, numeric variable in minutes
+* CutFinalMin : when the experimenter come back to shut down the camera, numeric variable in minutes
+
 ## Psychometric database
+### Preparing psycho dataframe
+This demographic and psychometric data were collected by the MONRADO team. 
+The data file was cleaned following this flowchart.
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/FlowchartMonrado.jpeg)
+
 ```{r import psychometric database, results='hide'}
 psycho <- read.csv2("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Monrado/Data/CSV/PsychomotData.csv")
+
+# replace 1 code by male and 2 by female
 psycho$Sex[which(psycho$Sex == 1 )] <- "male"
 psycho$Sex[which(psycho$Sex == 2 )] <- "female"
+
 psycho$Birth_place <- as.character(psycho$Birth_place)
+# Clean Besancon town name with a special character
 psycho$Birth_place[which(psycho$Birth_place =="Besan\x8don")] <- "Besancon" 
-#View(psycho)
+
+psycho$Num_identification <- NULL
+
+View(psycho)
+str(psycho)
 ```
+
+### Data dictionnary of cutFrames dataframe
+* Num._ident_videos : code of the family
+* interview_date : interview_date in a character format
+* Sex : sex of the child
+* Birthday : Birthday of the child
+* Birth_place : Birth place of the child
+* attachement_style : attachement style in 7 factors
+* attachement_cluster : 
 
 ## Merge the data and the annotation data frames
 ```{r to translate for ME}

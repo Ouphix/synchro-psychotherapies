@@ -4,7 +4,7 @@
 
 ## Abstract
 ### Aim and Hypothesis
-The aim of this project is to evaluate if it is possible to extract automatic signals of synchrony that could predict the outcomes of a psychotherapy.  
+The aim of this project is to evaluate if it is possible to extract automatic signals of synchrony that could predict the outcomes of a psychotherapy and to identify the challenges of this process.  
 
 **Is there synchrony signals computed by [SyncPy module](https://github.com/syncpy) between a patient, his parents and a therapist ?** Could this synchrony signal predict outcomes of the psychotherapy ? See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
 
@@ -34,48 +34,86 @@ In alphabetical order :
 
 Name | Function 
 ------------ | ------------- 
-Jonathan Aigrain | Phd Student Social Robotics,  Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python, especially OpenCV
-Nicolas Bodeau	 | Bio-statistician and informatician in ISIR and La Pitié, supervising for RMohammed Chetouani	 | Prof Social Robotics, supervising the project, and the SyncPy libraryDavid Cohen	 | Prof of Psychiatry, Original idea, supervising the projectCatherine Saint Georges	 | Psychiatrist, knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Informarician, Debugging of SyncPyMichel Spodenkievitch	| Psychiatrist, Collection of the database (videos from INCANT and Monrado studies), direct supervisionGiovanna Varni	| Post doc researcher, Development of the SyncPy library
+Jonathan Aigrain | Phd Student Social signal,  Creating frames from videos , extracting Momentum from videos frame by frame, knowledges in Python, especially OpenCV
+Nicolas Bodeau	 | Bio-statistician and informatician in ISIR and La Pitié, supervising for RMohammed Chetouani	 | Prof Social signal, supervising the project, and the SyncPy libraryDavid Cohen	 | Prof of Psychiatry, Original idea, supervising the projectCatherine Saint Georges	 | Psychiatrist, knowledge in interpreting synchrony scores in psychiatryDavid Reversat	| Informarician, Debugging of SyncPyMichel Spodenkiewicz | Psychiatrist, Collection of the database (videos from INCANT and Monrado studies), direct supervisionGiovanna Varni	| Post doc researcher Social signal, Development of the SyncPy library
 The Monrado (Dr Coady Vulliez, Mrs Monika Szymanska) and Incant (Dr Phan, Mrs Bastard) groups recruited subjects and psychometric dataI helped to define and operationalize the scientific question from the general idea, the tools and databases available. I did bibliography based on the team work and Ramseyer article. I cleaned and prepared the databases. I adapt the Python and R script to make the extraction of the signal and perform the analysis. I realized the figures and diagrams to explain the process of the method and describe the results.
 
 ## Theorical background
 
 ### Why and How evaluate psychotherapies?
-Psychotherapy evaluation is quite difficult since it must evaluate the basics of human to human relationship. A lot of theories developed in this field (psychoanalytical, systemic, behaviorist, hypnosis) with very different practices and level of evaluation. There is not for the moment very clear and homogenous framework of its efficacy. Relationship between the 
+Psychotherapy evaluation is quite difficult since it must evaluate the basics of human to human relationship. A lot of theories developed in this field (hypnosis, psychoanalytical, cognitive-behaviorist, systemic ...) with very different histories, with very different practices and level of evaluation. Contrary to other parts of medicine, psychotherapy and consequently psychiatry remains organized as schools which hardly understands and interact each others. A lot of choices are done relative to the orientation of an hospital or a ward and not based on the best evidence based information which if often very limited in this field. Consequently, there isn't any consensual framework between psychotherapies. 
 
-* NNT Xavier Briffault
+Due to its history of being based upon scientific bases and in a scientific process of operationalize precisely the targets, Cognitive and Behavioral Therapies are the most evidence based psychotherapy which is caused in great part by a lack of experimental work in other schools of psychotherapy (Canceil et al., 2004 ; Layard & Clark, 2014).
 
-* Cost 
-* Thrive IAPT
-give feedback, supervision
-annotated psychotherapy problem
-How to train , supervision temporality of feedback and evaluation
+Paradoxically, psychotherapies methods seems to be the most efficient treatment in medicine with a very low number needed to treat, i.e. it is necessary to treat only a few patient to have a remission impact on a group of patient (Wampold cited by L’évaluation des psychothérapies Méthodes, résultats, réflexions, Xavier Briffault, Séminaire de Pierre-Henri Castel du 14 janvier 2009).
+
+This is striking to say that we are using useful and efficient treatments without knowing how they work. It is not an exception in medicine. Contrary to the classical biological and pathophysiological point of view, we don't need to know the mechanism of action of a treatment to prove that it is efficient. We only need to use experimental method (evidence based medicine approach) to compare it with an other treatment like a previous classical treatment or a placebo. For instance, paracetamol is a widely used analgesic and the proof of its efficacy is widely done. Unfortunately, in 2016, we can't say exactly how it is working on the body (Bonnefont, Courade, Alloui, & Eschalier, 2002).
+
+Unfortunately, it is costly because it takes times and well trained therapist. Contrary to pills, psychotherapy isn't reimbursed in many countries. Public services hardly offer best practice of psychotherapy because of a lack of training and time. Particularly, it is difficult to operationalize precisely what a psychotherapist does during a psychotherapy. Even the more operationalized psychotherapy has relaxation techniques, Cognitive and Behavioral Therapies deals with the particularity of each patient, its motivation, its context and don't have a priori a very precise roadmap.
+
+Despite these theoretical and evidence debates, there is a almost a consensus that the relationship between the patient and the therapist. Establishing this 
+(therapeutic alliance) seems to be a very important part of the efficacy of psychotherapy (Horvath & Dianne, 1991 ; Martin, Garske, & Katherine, 2000 ; Tschacher, Haken, & Kyselo, 2015). Even it is difficult to operationalize, some psychometric tools were developed like the Working Alliance Inventory questionnaire (Corbière, Bisson, Lauzon, & Ricard, 2006). This leads to the Dodo theory. It states like the judgment made by the Dodo bird after a race in the Alice and the Wonderland book that all participants are equals. It would mean than nothing technical could differentiate a psychotherapy versus an other one. This consensus is challenged by some behaviorist that state that this determinant is only important when psychotherapist are not well trained and in poorly designed studies (Layard & Clark, 2014). This is the reflect too that the numbers of studies on psychotherapies outside Cognitive Behavioral therapies is very low. 
+ 
+Therapeutic alliance is a first step before any other specific technique (Cungi & Cottraux, 2006). This process was a lot studied by the first psychotherapies like hypnosis. In a good therapeutic alliance, the contact is warm, authentic, collaborative. There is a lot of empathy, the therapist understand the point of view and the representation of his patient, shares it (contrary to apathy) while keeping in mind that he is not in the same situation that his patient and without being struggled by too much emotions (contrary to sympathy). One of the best operationalized and Evidence based kind of psychotherapy is motivational interviewing which if much used in first steps Cognitive Behavioral Therapies or psychoeducation. It can be the essential part of a work with addict patient or patients with addictions problems. The goal of motivational interviewing is to increase change discourse by stimulating it by some techniques:
+
+* open question (like how are you today ?) with let the patient a wide range of possible answers contrary to close questions, specifically with Yes/no answers (like did you slept well yesterday night ?)
+* Rephrasing what the patient is saying (like : If I understand well, you told me that..., isn't it ?) especially the change discourse.
+* Sum up
+* Avoiding direct advices but stimulating it by questions
+* Accept the ambivalence in a change
+* Avoid judgement
+* Searching for small and positive steps toward change
+* Reinforcing any positive step
+* Define and raising the values of the patient and not the therapist values
+* Giving advices only when it is requested by the patient
+
+Even if it wasn't described by the creators of the motivational interviewing, we can see that this process is very close to the engagement theory developed by Beauvois and Joule after the work on cognitive dissonance by Festinger. This theory was developed and validated in control people without any mental illnesses but could be very interesting in psychiatric patients. We can see consequently that we could use some very defined experimental settings like in cognitive and social psychology to improve our understanding of the process of psychotherapy. This is what will be used in the MONRADO study.
+
+We can see that even this very operationalized psychotherapy let place for a lot of improvisation and adaptation to a precise. Consequently, it needs a lot of practice and training beyond the theoretical knowledge. However, it is quite difficult to give precise feedback (supervision) without being involved directly in the therapy with the therapist. In complex settings like familial psychotherapies, the therapist can be directly supervised by a colleague behind a "glace sans teint". An other way 
+
+One way to improve learning process and evaluation of psychotherapy in practice is to make annotation of them. After filming psychotherapy, it is possible to evaluate what is exactly happening during this process. Some evaluation tools were developed like the MITI (Moyers, Manuel, & Ernst, 2014) for the motivational interviewing.  Software like Elan can be very useful for that. However, it can be very difficult and fastidious.
+
+In many parts of medicine, we don't directly evaluate the desired outcome of a therapy (like the mortality) because it happens to late. Consequently, intermediate marker help the physician to choose the best treatment. For instance, we can evaluate the efficacy of an anti diabetic on blood sugar mean reflected by Hb1Ac. This avoid to wait several years to check if the treatment is efficient or not (which can be evaluated only by disability created by diabetes and mortality). Consequently, it is very convenient. However, we need to keep in mind that this intermediate markers are only intermediate and are not always relevant. Some anti-diabetics decrease Hb1Ac and Increase mortality versus classical one. 
+
+It is possible to evaluate the efficacy of a psychotherapy via two means. The first one are the direct outcomes of psychotherapy with behavior or consumptions (like number of cannabis joint consumed or number of panic attacks). This kind of easily reported outcomes are more the exception than the norm. However, it is not possible in all mental illnesses. Some psychometric data like Beck Depression Inventory (BDI) (Beck, Steer, & Carbin, 1988) for depression, or State-trait anxiety inventory (STAI) (Spielberger, 1970) were developed to evaluate the state of different pathological characteristics. These scales can be filled by the therapist or the patient directly. However, it is quite time consuming and not much done in practice outside research or cognitive behavioral training.  
+
+To sum up, we can say that there are a lot of different kinds of psychotherapies. Some of them are largely evidence based and operationalized which can help for research. It is difficult and costly to train psychotherapist. Psychotherapies are efficient but it is hard to say exactly why.  There are ways to evaluate its efficacy but they are not used since they are time consuming. There aren't many easy and quick ways to evaluate them.
 
 ### Potential role of cognitive sciences in improvement of psychotherapies
 
 #### Learning theory
-Pavlov Skinner 
-
-#### Cognitive therapies
-Ellis, Beck, MBA ?
+Learning theories were developed by Skinner and Pavlov. They state that during a learning period, there are association between different stimulus. For instance, a behavior that will be positively reinforced will be repeated. A situation that is painful will be avoided. They are widely used in most recent cognitive studies in the term reinforcement learning. They are very used in cognitives sciences especially in modeling decisions process and understand brain activity. In psychotherapy, they are widely used in cognitive behavioral approach to understand maintenance of a pathological process. Often a patient is being reinforced by avoiding a short term pain but this leads to avoidance of the situation and keep abnormal and painful emotions and cognitives schemas.  
 
 #### Attention
-Dehaene
+Dehaene (Neuroeducation, Curiosity, Sleep)
 
 #### Cognitive dissonance and engagement theory
-Festonner, Beauvois, Joule
+Cognitive dissonance theory is a counter-intuitive theory but very developed and replicated that deals with how we react to cognitive conflict and how we often rationalize our behavior in several situations.
+Festinger asked participants to make a dull task. When the participant is freely making it for free, he feels a conflict between thoughts like "I am a clever guy free to make something" and its behavior "I am making something completely dull and useless". This conflict is difficult to handle. The subject is in a situation of cognitive dissonance. In this situation, he resolve his dissonance by changing his thoughts "this task is not the dull but rather interesting". However, in exactly the same situation, when the participants is paid, the effect disappear, there isn't anymore conflict. The subject still find the task completely dull as it was organized (Festinger & Carlsmith, 1959). After this classical paradigm, several explanations were developed especially by Beauvois, Joule who evaluated some other paradigms consistent with this theory (Beauvois & Joule, 1987, 1996, 2010). The Foot in the door technique (how to change a behavioral by very small steps), the "You are free" paradigm, the "labelling technique" (it seems your health is very important for you), "touch technique" were widely evaluated without much publicity inside psychotherapy field even if a lot of their approach can be consistent with Motivational Interview. Consequently, a behavior can be much more explained by a context and by the previous behaviors of the subject than on the expected outcome as expected by the reinforcement learning theory. 
 
 #### Bandura 
-imitation learning
-
-#### Therapeutic alliance
-(Dodo Effect / Thrive book)
+Bandura challenged the reinforcement theory too by demonstrating that imitation was a major process of learning. In the Dodo doll experiment, he show that the behaviors of children could be predicated by the models of adults they saw just before. This process is widely used in psychotherapy where the therapist can play the role of model in role play or exposure for instance which the patient can imitate.
  
-#### Miror neurons
+#### Mirror neurons, mirroring and empathy
+Mirror neurons were discovered by Rizzolatti (Rizzolatti & Craighero, 2004). When a monkey seize an object, specific neurons of this task (in this receptor field) fire. The same neurons fire when this monkey see an other one making the same action. Consequently, it seems that there is a system in which the monkey simulate the outside world. This system is still activated when he really perform the task.
+Neal and Chartrand showed that the mimicry of facial expression could be very useful in the process of empathy. They blocked expression of emotion with injection of Botox in subjects faces. In this condition, emotion perceptions of the subjects were impaired (Neal & Chartrand, 2011). Consequently, we can say the perception can't be separated with action but both of them interact a lot in a very strong loop.
+Beyond that, some researchers like Iacoboni stated that the system of minor neurons could be involved in mirroring and imitation, a system that could be involved in empathy (Iacoboni, 2009). However and This role of mirror neurons is not consensual.
+
 
 ## Theorical advantages of synchrony studies
-Delaerche
+"Synchrony refers to individuals’ temporal coordination during social interactions" (Delaerche et al, 2012). However, definition of synchronies are very numerous. There is a possibility to switch from the social world to a mathematical definition but since the point of view is different, it doesn't always refer to the same thing. Interdependence of dyadic partners’ behaviors was described by many terms in the literature (mimicry, social resonance, coordination, synchrony, attunement, chameleon effect, etc.)(Delaerche et al, 2012).
+
+Behavior matching [21]; mirroring; mimicry [22], [23], [24]; congruence and the chameleon effect [25] are related to convergence
+
+multimodality
+
+## Attachment and psychotherapy
+
 We will describe in a IMRAD organisation work on 2 databases : INCANT and MONRADO.
+
+## Open science, Open data, Confidentiality 
+
+
 
 ## INCANT Study
 ### Introduction

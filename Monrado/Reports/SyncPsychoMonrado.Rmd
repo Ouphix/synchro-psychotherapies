@@ -304,7 +304,18 @@ str(psycho)
 * Birthday : Birthday of the child
 * Birth_place : Birth place of the child
 * attachement_style : attachement style in 7 factors
-* attachement_cluster : 
+* attachement_cluster : attachement style in 5 factors, DUALS will be excluded
+* Insecurity_level : level of insecurity not used
+* global score : global score of attachment not used
+* TAS1 : score for 1st question of TAS Questionnaire : Toronto Alexithymia Score idem until TAS20 (Alexithymia questionnaire : difficulty to express emotions)
+* TASDF ?
+* TASEOT ?
+* TAS_total : total score of TAS
+* STAYIA1 : socre for the 1st question of State-Trait Anxiety Inventory
+
+Beck Depression Inventory questionnaire (Depression questionnaire) idem until STAYIA20
+* STAYIA2..
+TODO
 
 ## Merge the data and the annotation data frames
 ```{r to translate for ME}

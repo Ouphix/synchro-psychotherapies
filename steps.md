@@ -1,4 +1,4 @@
-# Does synchrony detected from videos predict the outcomes of familial psychotherapies or the presence of a conflict ?
+# How synchrony detected from videos could evaluate the quality of a therapeutic or parent relationship
 
 ### Author: Thomas GARGOT
 
@@ -11,14 +11,17 @@ The aim of this project is to evaluate if it is possible to extract automatic si
 #### INCANT Database
 We began with a first database INCANT. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. Some patients received treatment as usual and others MDFT. This database come from a large european psychotherapy study. The main outcome was the cannabis consumption evaluated by the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
 
-For a pilot study, we focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We saw that there was a lot of modules that enable automatic social signals. We decided to extract automatic signal and began to focus on motion history.
+For a pilot study, we focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We saw that there was a lot of modules that enable automatic social signals. We decided to extract automatically signal and began to focus on motion history.
 
-Unfortunately, we couldn't answer to this question since the signal extracted from this videos was not very good. It was difficult neither to categorize easily the patients in good or bad responders neither to detect specific periods of the psychotherapy that could be of particular very good or very bad quality. Furthermore, it was difficult to compare synchrony at different moments since the configuration of the participants could be very different.
+Unfortunately, we couldn't answer to this question since the signal extracted from this videos was not very good. It was difficult to categorize easily the patients in good or bad responders and to detect specific periods of the psychotherapy that could be of particular very good or very bad relationship quality. Furthermore, it was difficult to compare synchrony at different moments since the configuration of the participants could be very different.
 
 #### Monrado Database
-Consequently, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict vs no-conflict.
+Consequently, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict versus no-conflict.
 
 The main psychometric data in this database were attachment scores, i.e. a evaluation of the relationship of the subject with other people.
+
+#### Results
+This work led to the development of R scripts to manipulate motion history, filter it ; adaptation of Python module of SyncPy. Too our knowledge, these are the first scripts that are are published in open access to enable easy replication and further developments. We draw some recommendation to get psychotherapy material of better quality in terms of video and sound recording and psychotherapy techniques and outcomes. Furthermore, we suggest some modules that could be added to extract more social signals from other modalities and precisions.
 
 ### Poster
 ![image](https://github.com/Ouphix/synchro-psychotherapies/raw/master/Monrado/Data/images/report/ECNPPoster.jpg)
@@ -100,20 +103,27 @@ Neal and Chartrand showed that the mimicry of facial expression could be very us
 Beyond that, some researchers like Iacoboni stated that the system of minor neurons could be involved in mirroring and imitation, a system that could be involved in empathy (Iacoboni, 2009). However and This role of mirror neurons is not consensual.
 
 
-## Theorical advantages of synchrony studies
+## Theorical advantages and pitfalls of synchrony studies
 "Synchrony refers to individuals’ temporal coordination during social interactions" (Delaerche et al, 2012). However, definition of synchronies are very numerous. There is a possibility to switch from the social world to a mathematical definition but since the point of view is different, it doesn't always refer to the same thing. Interdependence of dyadic partners’ behaviors was described by many terms in the literature (mimicry, social resonance, coordination, synchrony, attunement, chameleon effect, etc.)(Delaerche et al, 2012).
 
 Behavior matching [21]; mirroring; mimicry [22], [23], [24]; congruence and the chameleon effect [25] are related to convergence
 
-multimodality
+Synchrony is related to the adaptation of one individual to the rhythms and move- ments of the interaction partner (Condon & W. Ogston, 1967). For Delaherche, "synchrony is the dynamic and reciprocal adaptation of the temporal structure of behaviors between interactive partners" (Delaerche et al, 2012). It can be unimodal (eg. speech-speech) or multimodal (eg. speech-motor, someone answering to a sentence by a sign of the head).
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/multilevel.png)
+*From Human communication dynamics presentation, D. Cohen*
+
+It was studied in psychotherapeutic settings by other teams. Ramseyer et al. investigated non-verbal synchrony between patient and therapist during psychotherapy sessions. They showed that non-verbal synchrony was associated with therapy outcome and patient’s view of the therapy process (Ramseyer & Tschacher, 2011). They found that synchrony was increased in sessions that were considered by patient as sessions with high relationship quality and in patients experiencing high self-efficacy. Furthermore, higher non-verbal synchrony predicted psychotherapies with higher symptom reduction.
+
+However, in these settings, there could be only one patient and one therapist. Furthermore, it is not possible to replicate directly this study since the technical aspects are not explicated and programs codes are not shared.
+
+Some recordings are used in diagnostic phase where lack of coordination in non-verbal behaviors was found as a risk of recurrence of depression (Bouhuys & Sam, 2000).
 
 ## Attachment and psychotherapy
 
-We will describe in a IMRAD organisation work on 2 databases : INCANT and MONRADO.
-
 ## Open science, Open data, Confidentiality 
 
-
+We will describe in a IMRAD organisation work on 2 databases : INCANT and MONRADO.
 
 ## INCANT Study
 ### Introduction
@@ -593,4 +603,5 @@ Head Pose (Head direction) De la Torre, F., Chu, W. S., Xiong, X., Vicente, F., 
 Analysis discussion
 Modeling, Machine learning
 
+Shuffle : non random synchrony signal
 

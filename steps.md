@@ -131,7 +131,7 @@ TODO
 ## Open science, Open data, Confidentiality 
 It was quite difficult at the beginning to replicate the studies that were done by other teams and to find these two databases that could be relevant for this goal because of quality of the recording and quality of psychometric data collected. After we had our own scripts and procedure for INCANT database, it was very easy to replicate the analysis for MONRADO database. 
 
-To avoid this lost of time, we tried to develop an open science approach to improve accessibility, transparency of this work to help future improvements. The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship.
+To avoid this lost of time, and to improve validity and replicability and improvements of our work. we tried to develop an open science approach to improve accessibility, transparency of this work to help future improvements. The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship.
 
 We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts.
 
@@ -145,6 +145,14 @@ We will describe in a IMRAD organization work on 2 databases : INCANT and MONRAD
 The Incant study aimed to evaluate the efficacy of [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) a familial therapy with other treatments Treatments As Usual (TAU). Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family.
 
 The MDFT is based on several general principles likes topics that needs to be addressed, attitude of the therapist.
+
+Cannabis dependence psychotherapy is a important because cannabis is the most used illicit drug worldwide (Danovitch & Gorelick, 2012). Cannabis dependence is defined by DMS V by:" A. A problematic pattern of cannabis use leading to clinically significant impairment or distress, as manifested by at least two of the following, occurring within a 12-month period:	1. Cannabis is often taken in larger amounts or over a longer period than was intended.	2. There is a persistent desire or unsuccessful efforts to cut down or control cannabis use.	3. A great deal of time is spent in activities necessary to obtain cannabis, use cannabis, or recover from its effects.	4. Craving, or a strong desire or urge to use cannabis.	5. Recurrent cannabis use resulting in a failure to fulfill major role obligations at work, school, or home.	6. Continued cannabis use despite having persistent or recurrent social or interpersonal problems caused or exacerbated by the effects of cannabis.	7. Important social, occupational, or recreational activities are given up or reduced be cause of cannabis use.	8. Recurrent cannabis use in situations in which it is physically hazardous.	9. Cannabis use is continued despite knowledge of having a persistent or recurrent physical or psychological problem that is likely to have been caused or exacerbated by cannabis.	10. Tolerance, as defined by either of the following:		a. A need for markedly increased amounts of cannabis to achieve intoxication or desired effect.		b. Markedly diminished effect with continued use of the same amount of cannabis.	11. Withdrawal, as manifested by either of the following:		a. The characteristic withdrawal syndrome for cannabis (refer to Criteria A and B of the criteria set for cannabis withdrawal, pp. 517-518).		b. Cannabis (or a closely related substance) is taken to relieve or avoid withdrawal symptoms.[...]Specify current severity:	305.20 (F12.10) Mild: Presence of 2-3 symptoms.	304.30 (F12.20) Moderate: Presence of 4-5 symptoms. 	304.30 (F12.20) Severe: Presence of 6 or more symptoms."(American Psychiatric Association, 2013)There are several researches for pharmacological intervention (agonist substitution, antagonist and modulation of other neurotransmitters pathways) but none approved nor recommended. Psychotherapy is the better treatment accessible in 2016.  There are evidences for some of them: -	Motivational Enhancement Therapy (MET or Motivational interviewing MI) and Cognitive and Behavioural Therapies (CBT) in which I am trained -	Contingency Management (giving positive reinforcement to support change)-	Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy(Danovitch & Gorelick, 2012).-	In a Cochrane review, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
+C.	INCANT Study in France"There were two sub‐sites in France, the main one being Centre Emergence in downtown Paris. Centre Emergence is allied with the Department of Psychiatry of Paris‐Sud University. Adolescents living in Paris itself differ from adolescents living in the suburbs, in terms of higher social‐economic background and smaller prevalence of ethnic minorities for instance. To increase the practical relevance of INCANT results, two suburban sites were selected as well, viz. CEDAT (Conseils Aide et Action contre le Toximanie) in Mantes la Jolie and St Germain en Laye, respectively. Centre Emergence and CEDAT are both specialized in addiction care, initially for adults and since 2003 also for adolescents. They are part of CSAPA = Centre de Soins, d’Accueil et de Prévention en Addictologie. MDFT treatment staff was combined across sub‐sites into one team. The MDFT team and the group of control treatment therapists were composed of psychiatrists and psychologists. The French site is not for profit. Treatments are being reimbursed from public (insurance) funds, through Institut Mutualiste Montsouris (Centre Emergence) and through alliance with Centre Hospitalier de Versailles (CEDAT). " REPORT ON THE INCANT STUDYPilot studyPre-resgistrationRandomised COntrolMulticentricIntent to treatStratifications
+
+cannabis
+different kinds of treatment
+MI,
+Tokens economy
 
 ### Material and methods
 #### Study protocol
@@ -164,8 +172,7 @@ The MDFT is based on several general principles likes topics that needs to be ad
 	* [matplotlib](http://matplotlib.org/) Module for making plots
 	* [syncpy](https://github.com/syncpy/SyncPy) Module developed by the team for computing synchrony scores
 	* [FFMPEG](https://ffmpeg.org/) Module for converting videos
-
-
+	
 * [Paintbrush](http://paintbrush.sourceforge.net/) Drawing program used for the frame segmentation
 * [Quicktime](http://www.apple.com/quicktime/what-is/) Video player used to cut videos
 * [VLC](http://www.videolan.org/vlc/) Video player
@@ -183,10 +190,12 @@ The MDFT is based on several general principles likes topics that needs to be ad
 	* the Youth Self-Report syndrome structure [(YSR)](http://psycnet.apa.org/?&fa=main.doiLanding&doi=10.1037/0022-006X.75.5.729) 
 	* the Child Behavior Checklist syndrome constructs [(CBCL)](http://www.ncbi.nlm.nih.gov/pubmed/10200736).
 
+We decided to focus on the primary outcomes of the psychotherapy the cannabis consumption, i.e. the TLFB.
+
 However, we didn't have any data dictionary with the definition of all variables and the exact questionnaires used to collect this information, the coding of Non Available data that may be -99. We planned to meet the team that wasn't unfortunately available at that moment. A lot of videos were lost or not recorded. We couldn't know from this database which patient received MDFT or TAU. It was organized in a European level. We collected only the video and psychometric data from the 2 French centers.
 
 #### Pilot study: F1044 subject, his father, mother and therapist
-We decided to make a pilot study on the most complete subject : F1044 since we have 18 videos with him or his family.
+We decided to make a pilot study on the most complete subject : F1044 since we have  the most videos (18 videos) with him or his family.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/Numberparticipants.png)
 
@@ -220,7 +229,7 @@ Consequently, this process was very laborious. It was possible to annotate one h
 
 We tried to find ways to make source separation automatic even if it couldn't be perfect. We found the [FASST software](http://bass-db.gforge.inria.fr/fasst/) that is very powerful to separate sounds coming from different music instruments. However, we contacted the author of this software and this material is to difficult to separate at the moment since two voices are not so much different from two different music instruments. 
 
-##### Verbal signal extraction discussion
+##### Discussion
 This separation could be made during the record of the video with several mikes that could be small tie mikes attached to each participant.
 
 It is often necessary to extract manually some features even because of the lack of automatic process or in case of developing, training and evaluating these tools.
@@ -263,16 +272,13 @@ However, we couldn't use the raw database. It was necessary to cut the videos wi
 
 Furthermore configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy, 
 
-
 ### Raw data
 The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/Frames_extractor) python script made by Jonathan Aigrain with [FFMPEG](https://ffmpeg.org/).
-
 
 Idea  |  |
 ------ | ------
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png) | In a lot of other domains of fundamental algorithm development, computer labs compete on public databases to improve the detection rates of some features for instance. This work are presented during [challenge sessions](http://sspnet.eu/avec2011/) in congresses. However, there is a problem with confidentiality when we deal with psychotherapy videos.
   | It would be better to make a specific database for this kind of automatic analyses to avoid changes of configuration of the room, the luminosity, the place of the different subjects, the number of subjects, the movement of the camera during recording. |
-
 
 ### A. Motion extraction
 
@@ -280,11 +286,9 @@ Idea  |  |
 Extract a frame with [*Frames_extractor.py*
 ](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Frames_extractor/Frames_extractor.py) with a [python](https://www.python.org/) script from the beginning of the video to make a mask. This script was developed by Jonathan Aigrain with [Open CV](http://opencv.org/).
 
-
 Here is an example of the father (eyes blurred to keep anonymity).
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png =250x)
-
 
 Idea  |  |
 ------ | ------
@@ -336,7 +340,6 @@ Values equal to 0 can't be loged. They generate a -Inf value. These values are s
 
 This normalized log data is shown on column 2.
 
-
 Raw Motion history | Natural Log Motion history 
 ------------ | -------
 ***Father ***|
@@ -346,13 +349,11 @@ Raw Motion history | Natural Log Motion history
 
 If we check all participants, we can see that the father and the mother motion history distribution is very similar. However, the therapist, which is always in a small window of the video, as a very different distribution. We have less signal on it. In some videos the patient is in this window, it explains, it intermediates position.
 
-
 Idea |  |
 ---- | ----
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =300x) | - It could be possible to extract [background](https://en.wikipedia.org/wiki/Background_subtraction) to improve the quality of the motion history. See for instance [backgroundExtractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/backgroundExtractor.py) with openCV  [BGS library](https://github.com/andrewssobral/bgslibrary/blob/master/README.md). 
  | - It could be interesting to evaluate the trajectories of the people. If they are going toward the same direction or not. For that, the [optic flow modules of open CV](http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_video/py_lucas_kanade/py_lucas_kanade.html) or the [Dense Trajectories Video Description](http://lear.inrialpes.fr/people/wang/dense_trajectories) could help. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/trajectories.png =250x)
 | Tiny changes can't be always obvious. [Some softwares](https://lambda.qrilab.com/site/) can amplify a lot very tiny changes in specific frequencies that can't be seen normally with naked eyes. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/magnifyingMotion.png =250x)
-
 
 #### 4. Motion history filtered with slindingInterval function
 Motion history raw data is filters with a [R](https://www.cran.r-project.org/) function on [Rmarkdown script analysis](https://github.com/Ouphix/synchro-psychotherapies/blob/master/SyncPsycho.Rmd). It generates CSV file of the form "F1044C.VOB.slideddata.csv". See files [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/filtered).
@@ -364,7 +365,6 @@ Motion history raw data is filters with a [R](https://www.cran.r-project.org/) f
 Sliding interval (raw Data) | Sliding interval (log Data)
 --------------------------- | ---------------------------
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/MeanMotionHistory%28Sliding5framesinterval_raw_data%29on%20F1044C1_first_10_seconds.jpeg)|![Content Cell](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/MeanMotionHistory%28Sliding5framesinterval_log_data%29on%20F1044C1_first_10_seconds.jpeg) 
-
 
 ##### Headers :
 
@@ -463,10 +463,7 @@ INCANT study was done internationally with:
 It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. 
 We could suggest to have a much more defined psychotherapy and even before studying a psychotherapy to study specific situations : open vs closed questions,
 
-Well defined
-Motivtional interviewing
-CBT
-not enough evidence based
+A much more operrationnalized psychotherapy like motivational interviewing could be useful. This kind of psychotherapy can be rated with the degree of adherence of the psychotherapist to the principles of the therapy. Consequently, we could compare two quantitative variables that will reflect the quality of the psychotherapy at a more precise moment instead of a more general outcome.
 
 ###### Technical problems
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/conflict.png =400x)
@@ -489,8 +486,6 @@ Furthermore, in next protocol, it would be considered to use either a kinect, ei
 It seems that it would be very important to have several devices (camera, kinect, mikes). This leads to a problem that wasn't raised in this set up since there was only one camera. In case, of several devices, it is very important that all of them are synchronized.
 
 Multi person : not the majority of psychotherapy more often filmed for supervision and educational use.
-
-shared database and problems of confidentiality
 
 ## MONRADO study
 ### Aim of the study
@@ -618,4 +613,6 @@ Analysis discussion
 Modeling, Machine learning
 
 Shuffle : non random synchrony signal
+
+#	Bibliographiehttps://www.zotero.org/groups/448197/items
 

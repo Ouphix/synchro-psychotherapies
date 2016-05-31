@@ -1,15 +1,16 @@
 ---
 title: "Synchrony in relationship, example with MONRADO Data"
 author: "Thomas Gargot"
-date: "May, 10th 2016"
+date: "May, 31st 2016"
 output: 
   pdf_document: 
     toc: yes
 ---
-```{r Clean Environement}
+```{r Clean Environement, echo=FALSE}
 rm(list = ls(all.names = TRUE))
 ```
 
+# Preparation of the data
 ```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 # To use this script, you must install packages (install.packages()) to install these packages if you don't have them.
 
@@ -51,7 +52,8 @@ filesList
 ## Functions list
 ### Import Data List
 Function that import data from .csv files inside a CSV folder
-##### Arguments:
+
+#### Arguments:
 List FullNameList with the full name of the .csv
 ```{r function to import data and exclude empty lines without motion history (NA lines)}
 importdata <-function(FullnameList){
@@ -68,13 +70,13 @@ importdata <-function(FullnameList){
 ```
 
 ### MeanMotionByTime
-Function that takes raw motion history data and compute the mean on a given interval. Intervals don't overlap, so the frequency of the data change (from 25 frames by seconde to 25 frames/interval by second).
+Function that takes raw motion history data and computes the mean on a given interval. Intervals don't overlap, so the frequency of the data change (from 25 frames by seconde to 25 frames/interval by second).
 
-##### Arguments:
-- subject : Subject studied (patient, mother, father or therapist)
-- indexOfvideos : List of videos studied (element eg 3 or list eg 1:3 or c(1,2,4))
-- interval : number of frames in the studied interval
-- data : data frame where there is data
+#### Arguments:
+* **subject** : Subject studied (patient, mother, father or therapist)
+* **indexOfvideos** : List of videos studied (element eg 3 or list eg 1:3 or c(1,2,4))
+* **interval** : number of frames in the studied interval
+* **data** : data frame where there is data
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/MeanMotionByTime.jpg)
 
@@ -95,15 +97,17 @@ MeanMotionByTime <- function(subject, indexOfvideos=1:NumberOfvideos, interval, 
 ```
 
 ### Slidinginterval
-Function that takes raw motion history data and compute the mean on a given interval. The interval overlap, so the frequency of the data don't change. It stays at 25 frames/s.
+Function that takes raw motion history data and computes the mean on a given interval. The interval overlap, so the frequency of the data don't change. It stays at 25 frames/s (fig.2.).
 
 #### Arguments:
-- subject : subject studied (patient, mother, father or therapist)
-- indexOfvideos : list of videos studied (element eg. 3 or list eg 1:3 or c(1,2,4))
-- interval : number of frames in the studied interval
-- data : data frame where there is data
+* **subject** : subject studied (patient, mother, father or therapist)
+* **indexOfvideos** : list of videos studied (element eg. 3 or list eg 1:3 or c(1,2,4))
+* **interval** : number of frames in the studied interval
+* **data** : data frame where there is data
+
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/slidingInterval.jpg)
+
 
 ```{r compute Slidinginterval, cache=TRUE}
 SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data)
@@ -123,21 +127,21 @@ SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, d
 ## Before importing data
 We prepared videos in AVI format (converted by [Converting video script](https://github.com/Ouphix/synchro-psychotherapies/tree/master/INCANT/Scripts/convertingVideos)) and frames extracted by [Frames extractor](https://github.com/Ouphix/synchro-psychotherapies/tree/master/INCANT/Scripts/Frames_extractor) script and non relevant part of the images masked by Paintbrush in green.
 
-With these videos and frames, we used the [motionHistoryExtractor.cpp](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/motionHistoryExtractor.cpp) script in C++ which extracted motion history in CSV files for each video. This script use the opencv modue. There is a filter in this script to avoid too much noise.
+With these videos and frames, we used the [motionHistoryExtractor.cpp](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/motionHistoryExtractor.cpp) script in C++ which extracted motion history in CSV files for each video. This script use the opencv module. There is a filter in this script to avoid too much noise.
  
 ### Data dictionnary of raw files
 They are in the form videoname.MTS.avi_res.csv
-frame : index of the frame, with frame rate of 25/s
-father : motion history for father from 0 (no pixel change) to 1 (all pixels are changed)
-mother : idem for mother
-child : idem for child
-therapist : idem for therapist (non relevant here but used in INCANT study)
-file : name of the file in the form : videoname.MTS.avi
+
+* **frame** : index of the frame, with frame rate of 25/s
+* **father** : motion history for father from 0 (no pixel change) to 1 (all pixels are changed)
+* **mother** : idem for mother
+* **child** : idem for child
+* **therapist** : idem for therapist (non relevant here but used in INCANT study)
+* **file** : name of the file in the form : videoname.MTS.avi
 
 ## Import data
 ```{r import data, results="hide"}
 data <- importdata(FullNameList)
-View(data)
 ```
 
 ## Clean dataframe
@@ -161,10 +165,11 @@ families
 NumberOfvideos <- length(families)
 NumberOfvideos
 
-# create a list with the simplified dname (whitout extension), make a data frmae of it  and merge 2 data frames
+# create a list with the simplified dname (whitout extension), make a data frame of it  and merge 2 data frames
 a <- data.frame(family = families, unique(data$file))
 data <- merge(data, a, by.x="file", by.y="unique.data.file.")
 
+# Compute log
 data$fatherShifted <- data$father + min(data$father[which (data$father >0)])/2
 data$logFather <- log(data$fatherShifted)
 
@@ -181,28 +186,31 @@ data <- data[,c("family", "frame", "timeMin", "child", "childShifted", "logChild
 ```
 
 ### Data dictionnary of clean data data dataframe
-* family : code of the family
-* frame : index of the frame, with frame rate of 25/s
-* timeMin : time in minute for each video ie frame/(25*60)
-* child : motion history for child from 0 (no pixel change) to 1 (all pixels are changed) 
-* childShifted : motion history of child + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
-* logChild : natural logarithm of childShifted
-* father : motion history of father from 0 (no pixel change) to 1 (all pixels are changed) 
-* fatherShifted : motion history of father + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
-* logFather : natural logarithm of childShifted
-* mother : motion history of mother from 0 (no pixel change) to 1 (all pixels are changed) 
-* motherShifted : motion history of mother + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
-* logMother : natural logarithm of motherShifted
+* **family** : code of the family
+* **frame** : index of the frame, with frame rate of 25/s
+* **timeMin** : time in minute for each video ie frame/(25*60)
+* **child** : motion history for child from 0 (no pixel change) to 1 (all pixels are changed) 
+* **childShifted** : motion history of child + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
+* **logChild** : natural logarithm of childShifted
+* **father** : motion history of father from 0 (no pixel change) to 1 (all pixels are changed) 
+* **fatherShifted** : motion history of father + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
+* **logFather** : natural logarithm of childShifted
+* **mother** : motion history of mother from 0 (no pixel change) to 1 (all pixels are changed) 
+* **motherShifted** : motion history of mother + mininimum of data$child[which (data$chid >0)])/2 to avoid 0 values which log can't be computed
+* **logMother** : natural logarithm of motherShifted
 
 ## Clean time annotations data frame (cutFrames)
 ### Preparing cutFrames
-The cutFrames data frame was done manually by looking manually all videos and define the :
-* when the experimenter leave the room and the interaction begin, 
+The cutFrames data frame was done manually by looking manually all videos and definining:
+
+* when the experimenter leaves the room and the interaction begin, 
+
 Between is the non conflictual discussion
-* when the experimenter come back to explain that the participants are asked to have a conflictual discussion
-* when the experimenter leave and the conflictual discussion begin
+
+* when the experimenter comes back to ask participants to have a conflictual discussion
+* when the experimenter leaves and the conflictual discussion begins
 Between is the conflictual discussion
-* when the experimenter come back to shut down the camera
+* when the experimenter comes back to shut down the camera
 * Sex of the child
 * Sex of the parent
 
@@ -250,33 +258,30 @@ cutSplit <- strsplit(cutFrames$CutFinal, split=":")
 for (i in 1:nrow(cutFrames)){ 
   CutAlone <- (as.numeric(cutSplit[i][[1]][1]) + as.numeric(cutSplit[i][[1]][2])/60)
   Cut <- c(Cut, CutAlone)
- # print(CutAlone)
   }
 cutFrames$CutFinalMin <- Cut
 Cut <- c()
-
-View(cutFrames)
 ```
 
 ### Data dictionnary of cutFrames dataframe
-* indexList : code of the family
-* CutBefore : when the experimenter leave the room and the interaction begin character string in the form min:sec
-* CutMiddle1 : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
-* CutMiddle2 : when the experimenter leave and the conflictual discussion begin
+* **family** : code of the family
+* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
+* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
+* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
 Between is the conflictual discussion, character string in the form min:sec
-* CutFinal : when the experimenter come back to shut down the camera, character string in the form min:sec
-* ChildSex : Factor variable : Male of Female
-* ParentSex : Factor variable : Male of Female
-* CutBeforeMin : when the experimenter leave the room and the interaction begin numeric variable in minutes
-* CutMiddle1Min : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
-* CutMiddle2Min : when the experimenter leave and the conflictual discussion begin
+* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
+* **ChildSex** : Factor variable : Male of Female
+* **ParentSex** : Factor variable : Male of Female
+* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
+* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
+* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
 Between is the conflictual discussion, numeric variable in minutes
-* CutFinalMin : when the experimenter come back to shut down the camera, numeric variable in minutes
+* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
 
 ## Psychometric database
 ### Preparing psycho dataframe
 This demographic and psychometric data were collected by the MONRADO team. 
-The data file was cleaned following this flowchart.
+The data file was cleaned following this flowchart (fig.3).
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/FlowchartMonrado.jpeg)
 
@@ -292,42 +297,42 @@ psycho$Birth_place <- as.character(psycho$Birth_place)
 psycho$Birth_place[which(psycho$Birth_place =="Besan\x8don")] <- "Besancon" 
 
 psycho$Num_identification <- NULL
-
-View(psycho)
-str(psycho)
+psycho$Sex <- NULL
+psycho$TASDF <- NULL
+psycho$TASIF <- NULL
+psycho$TASEOT<- NULL
+psycho <- rename (psycho, c("Num._ident_videos" = "family"))
+#View(psycho)
+#str(psycho)
 ```
 
 ### Data dictionnary of cutFrames dataframe
-* Num._ident_videos : code of the family
-* interview_date : interview_date in a character format
-* Sex : sex of the child
-* Birthday : Birthday of the child
-* Birth_place : Birth place of the child
-* attachement_style : attachement style in 7 factors
-* attachement_cluster : attachement style in 5 factors, DUALS will be excluded
-* Insecurity_level : level of insecurity not used
-* global score : global score of attachment not used
-* TAS1 : score for 1st question of TAS Questionnaire : Toronto Alexithymia Score idem until TAS20 (Alexithymia questionnaire : difficulty to express emotions)
-* TASDF ?
-* TASEOT ?
-* TAS_total : total score of TAS
-* STAYIA1 : socre for the 1st question of State-Trait Anxiety Inventory
-
-Beck Depression Inventory questionnaire (Depression questionnaire) idem until STAYIA20
-* STAYIA2..
-TODO
+* **family** : code of the family
+* **interview_date** : interview_date in a character format
+* **Birthday** : Birthday of the child
+* **Birth_place** : Birth place of the child
+* **attachement_style** : attachement style in 7 factors
+* **attachement_cluster** : attachement style in 5 factors, DUALS will be excluded
+* **Insecurity_level** : level of insecurity not used
+* **global score** : global score of attachment not used
+* **TAS1** : score for 1st question of TAS Questionnaire : Toronto Alexithymia Score idem until TAS20 (Alexithymia questionnaire : difficulty to express emotions)
+* **TAS_total** : total score of TAS
+* **STAIYA1** : score for the 1st question of State-Trait Anxiety Inventory State score (at this specific moment), for the 1st question of State-Trait Anxiety Inventory State idem until 20
+* **STAIYA_total** : total score of STAIYA Anxiety State score (at this specific moment)
+* **STAIYB1** : score for the 1st question of State-Trait Anxiety Inventory Trait score (not at this specific moment), idem until 20
+* **STAIYB_total** : total score of STAIYB Anxiety Trait score (not at this specific moment)
+* **BDI1** : score for the 1st question of the BDI (Beck Depression Inventory questionnaire) (Depression questionnaire) idem until BDI13
+* **BDI_total** : total score of BDI (Beck Depression Inventory questionnaire)
 
 ## Merge the data and the annotation data frames
 ```{r to translate for ME}
-str(data)
-str(cutFrames)
 # merge the two data frames
-data <- merge(data, cutFrames, by.x="family", by.y="indexList")
-data <- merge(data, psycho, by.x="family", by.y="Num._ident_videos")
-data$Sex <- NULL
+data <- merge(data, cutFrames, by.x="family", by.y="family")
+data <- merge(data, psycho, by.x="family", by.y="family")
+
 # reorder by family, then by frame order
 data <- data[order(data$family, data$frame),]
-View(data)
+
 # Create a column corresponding to the phase of the video for each time limit
 data$LabelVideo <- rep(NA, nrow(data)) 
 data[which(data$timeMin <= data$CutBeforeMin),]$LabelVideo <- "Cut"
@@ -339,8 +344,11 @@ data[which(data$timeMin >= data$CutMiddle1Min & data$timeMin <= data$CutMiddle2M
 data[which(data$timeMin > data$CutMiddle2Min & data$timeMin < data$CutFinalMin),]$LabelVideo <- "Conflict"
 
 data[which(data$timeMin >= data$CutFinalMin),]$LabelVideo <- "Cut"
-View(data)
+
+#View(data)
 ```
+
+* **LabelVideo** : description of the phase of the video : cut, No-Conflict, Cut, or Conflict
 
 # Presentation of the data
 ```{r Presentation of the data, cache=FALSE}
@@ -372,9 +380,12 @@ barplot(table(data$family), col="cornflowerblue", cex.axis=0.6, cex.names=0.5, c
         names = families, xlab="Video Name", las=2)
 ```
 
+# Configurations of the videos
 ## Number of Available (True) and Not Available (False) data for each participant
-```{r Number of Available (True) and Not Available (False) data for each participant, echo=FALSE, cache=FALSE}
-tab <- cbind(table(is.na(data[,"father"])),table(is.na(data[,"mother"])),table(is.na(data[,"child"])))
+```{r Number of Available (True) and Not Available (False) data for each participant, echo=FALSE, cache=FALSE, fig.height=4}
+tab <- cbind(table(is.na(data[,"father"])),table(is.na(data[,"mother"])), c(table(is.na(data[,"child"])), "TRUE"= c(0)))
+        
+tab
 
 par(mar=c(4,4,2,1))
 barplot(tab, cex.axis = 0.7, las=2, names=ParticipantsList, 
@@ -382,123 +393,10 @@ barplot(tab, cex.axis = 0.7, las=2, names=ParticipantsList,
   beside=TRUE, las=1, col=terrain.colors(2), ylim=c(0,9E5), ylab="Number of frames", xlab="Participant")
 legend("topleft", c("T", "F"), fill=terrain.colors(2), cex=0.8)
 ```
+
 * All the participants involved are filmed. 
-* All the children are filmed and we have data dor each. 
-* More often there is the other with him/her sometimes, it is the father
-* In some videos for instance RAKA008, there are 3 subjects, so it was excluded
-
-# Global Motion history
-## Mean Motion history by video by participant
-```{r Mean Motion history by video by participant (all videos), echo=FALSE, fig.height=4, cache=FALSE}
-meanMotionList <-c()
-meanMotion <- function(subject){
-    for (i in unique(data$family)){
-              index <- which(data$family==i)
-              Motionsubject<- mean(data[index,subject], na.rm=TRUE)
-              meanMotionList <-c(meanMotionList, Motionsubject)}
-  return (meanMotionList)}
-
-MotionFatherlist <- meanMotion("father")
-MotionMotherList <- meanMotion("mother")
-MotionChildList <- meanMotion("child")
-
-MotionMeanDF <- rbind(MotionFatherlist, MotionMotherList, MotionChildList)
-
-par(mar=c(5,4,2,1))
-barplot(MotionMeanDF, names=families, las=1, cex.axis = 0.4, cex.names=0.5, 
-        main="Mean Motion history in each video", beside=TRUE, 
-        col=colOrderList, las=2, ylab="Mean motion history", xlab="Video name")
-par(mar=c(1,0.5,0.5,1))
-legend("top", inset=.05, ParticipantsList, 
-       fill=colOrderList, cex=0.7)
-```
-
-## Global motion history by situation : "conflict" vs "no conflict"
-```{r raw Global motion history by situation : "conflict" vs "no conflict"}
-MeanMotionNoConflict <- c(
-  mean(data[which(data$LabelVideo=="No Conflict"),]$father, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="No Conflict"),]$mother, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="No Conflict"),]$child, na.rm=TRUE))
-
-MeanMotionConflict <- c(
-  mean(data[which(data$LabelVideo=="Conflict"),]$father, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="Conflict"),]$mother, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="Conflict"),]$child, na.rm=TRUE))
-
-MeanMotion<- data.frame(MeanMotionNoConflict, MeanMotionConflict, names=c("father", "mother", "child"))
-MeanMotion
-
-par(mar=c(5,4,2,1))
-barplot (as.matrix(MeanMotion[,1:2]), beside=TRUE, ylab= "Mean Motion history for each participant", col=colOrderList, names.arg=c("No conflict", "Conflict"))
-par(mar=c(1,0.5,0.5,1))
-legend("top", inset=.05, ParticipantsList, 
-       fill=colOrderList, cex=0.7)
-```
-We can see that it seems to be a decrease of movement in conflict amond child but not much change among parents.
-
-## Log of Global motion history by situation : "conflict" vs "no conflict"
-```{r raw Global motion history by situation : "conflict" vs "no conflict"}
-MeanMotionNoConflict <- c(
-  mean(data[which(data$LabelVideo=="No Conflict"),]$logFather, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="No Conflict"),]$logMother, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="No Conflict"),]$logChild, na.rm=TRUE))
-
-MeanMotionConflict <- c(
-  mean(data[which(data$LabelVideo=="Conflict"),]$logFather, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="Conflict"),]$logMother, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="Conflict"),]$logChild, na.rm=TRUE))
-
-MeanMotionlog <- data.frame(MeanMotionNoConflict, MeanMotionConflict, names=c("father", "mother", "child"))
-MeanMotion
-
-par(mar=c(5,4,2,1))
-barplot (as.matrix(MeanMotionlog[,1:2]), beside=TRUE, ylab= "Log of Mean Motion history for each participant", col=colOrderList, names.arg=c("No conflict", "Conflict"))
-legend("topleft", inset=.02, ParticipantsList, 
-       fill=colOrderList, cex=0.6)
-```
-With a log distribution of motion history, we can't see any more this difference.
-
-```{r}
-MeanMotion <- data.frame(MeanMotionNoConflict=NA, MeanMotionConflict=NA, names=NA, family=NA)
-
-for (i in unique(data$family)){
-  MeanMotionNoConflict <- c(
-  mean(data[which(data$LabelVideo=="No Conflict" & data$family==i),]$father, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="No Conflict" & data$family==i),]$mother, na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="No Conflict" & data$family==i),]$child, na.rm=TRUE))
-  MeanMotionConflict <- c(
-  mean(data[which(data$LabelVideo=="Conflict" & data$family==i),]$father , na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="Conflict" & data$family==i),]$mother , na.rm=TRUE),
-  mean(data[which(data$LabelVideo=="Conflict") & data$family==i,]$child , na.rm=TRUE))
-  
-  dataAlone<- data.frame(MeanMotionNoConflict, MeanMotionConflict, names=c("father", "mother", "child"), family= rep(i,3))
-  MeanMotion <- rbind(MeanMotion,dataAlone)
-  print(MeanMotion)
-}
-
-MeanMotion <- MeanMotion[-1,]
-MeanMotion
-summary(MeanMotion$MeanMotionConflict)
-
-for (i in unique(data$family)){
-  print(as.matrix(data.frame(NoConflict=MeanMotion[which(MeanMotion$family==i),1], Conflict=MeanMotion[which(MeanMotion$family==i),2])))
-
-  barplot(as.matrix(data.frame(NoConflict=is.na(MeanMotion[which(MeanMotion$family==i),1]), Conflict=complete.cases(MeanMotion[which(MeanMotion$family==i),2]))))
-}
-
-MMNC <- data.frame(father=NA, mother=NA, child=NA)
-MMNC <- MMNC[-1,]
-for (i in 1:34){
-  row <- c(MeanMotion$MeanMotionNoConflict[i+(i-1)*3], MeanMotion$MeanMotionNoConflict[i+1+(i-1)*3], MeanMotion$MeanMotionNoConflict[i+2+(i-1)*3])
-  print (row)
-}
-
-par(mar=c(5,4,2,1))
-barplot (MeanMotion$MeanMotionNoConflict, col=colOrderList, names.arg = MeanMotion[,4], las=2, cex.names=0.5)
-legend("top", inset=.02, ParticipantsList, 
-       fill=colOrderList, cex=0.6)
-```
-
+* All the children are filmed and we have all the data for each. 
+* More often there is the mother with him/her but sometimes, it is the father
 
 ```{r Configuration of participant by video, echo=FALSE, fig.height=4, cache=FALSE}
 meanMotionList <-c()
@@ -532,8 +430,133 @@ par(mfrow=c(1,1))
 
 We can see that configurations of subjects are very similar (with always 2 subjects, we excluded RAKA008 with 3 subjects). More often the child is with his mother. Consequently, it makes the comparaisons of the videos easier than in the INCANT study.
 
-## Motion history box plots by frame (raw data), all videos
-```{r Motion history histogram by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =FALSE}
+# Global Motion history
+## Mean Motion history by video by participant
+```{r Mean Motion history by video by participant (all videos), echo=FALSE, fig.height=4, cache=FALSE}
+meanMotionList <-c()
+meanMotion <- function(subject){
+    for (i in unique(data$family)){
+              index <- which(data$family==i)
+              Motionsubject<- mean(data[index,subject], na.rm=TRUE)
+              meanMotionList <-c(meanMotionList, Motionsubject)}
+  return (meanMotionList)}
+
+MotionFatherlist <- meanMotion("father")
+MotionMotherList <- meanMotion("mother")
+MotionChildList <- meanMotion("child")
+
+MotionMeanDF <- rbind(MotionFatherlist, MotionMotherList, MotionChildList)
+
+par(mar=c(5,4,2,1))
+barplot(MotionMeanDF, names=families, las=1, cex.axis = 0.4, cex.names=0.5, 
+        main="Mean Motion history in each video", beside=TRUE, 
+        col=colOrderList, las=2, ylab="Mean motion history", xlab="Video name")
+par(mar=c(1,0.5,0.5,1))
+legend("top", inset=.05, ParticipantsList, 
+       fill=colOrderList, cex=0.7)
+```
+
+## Global motion history by situation : "conflict" vs "no conflict"
+```{r raw Global motion history by situation : "conflict" vs "no conflict", fig.height=2}
+MeanMotionNoConflict <- c(
+  mean(data[which(data$LabelVideo=="No Conflict"),]$father, na.rm=TRUE),
+  mean(data[which(data$LabelVideo=="No Conflict"),]$mother, na.rm=TRUE),
+  mean(data[which(data$LabelVideo=="No Conflict"),]$child, na.rm=TRUE))
+
+MeanMotionConflict <- c(
+  mean(data[which(data$LabelVideo=="Conflict"),]$father, na.rm=TRUE),
+  mean(data[which(data$LabelVideo=="Conflict"),]$mother, na.rm=TRUE),
+  mean(data[which(data$LabelVideo=="Conflict"),]$child, na.rm=TRUE))
+
+MeanMotion<- data.frame(MeanMotionNoConflict, MeanMotionConflict, names=c("father", "mother", "child"))
+MeanMotion
+
+par(mar=c(5,4,4,1))
+barplot (as.matrix(MeanMotion[,1:2]), beside=TRUE, ylab= "Mean Motion history", col=colOrderList, names.arg=c("No conflict", "Conflict"), main="Mean Motion history for each participant 
+         without and with conflict")
+par(mar=c(1,0.5,0.5,1))
+legend("top", inset=.05, ParticipantsList, 
+       fill=colOrderList, cex=0.7)
+```
+
+We can see that it seems to be a decrease of movement in conflict amond child but not much change among parents.
+
+## Log of Global motion history by situation : "conflict" vs "no conflict"
+```{r raw log Global motion history by situation : "conflict" vs "no conflict"}
+MeanMotionNoConflict <- c(
+  mean(data[which(data$LabelVideo=="No Conflict"),]$logFather, na.rm=TRUE),
+  mean(data[which(data$LabelVideo=="No Conflict"),]$logMother, na.rm=TRUE),
+  mean(data[which(data$LabelVideo=="No Conflict"),]$logChild, na.rm=TRUE))
+
+MeanMotionConflict <- c(
+  mean(data[which(data$LabelVideo=="Conflict"),]$logFather, na.rm=TRUE),
+  mean(data[which(data$LabelVideo=="Conflict"),]$logMother, na.rm=TRUE),
+  mean(data[which(data$LabelVideo=="Conflict"),]$logChild, na.rm=TRUE))
+
+MeanMotionlog <- data.frame(MeanMotionNoConflict, MeanMotionConflict, names=c("father", "mother", "child"))
+MeanMotion
+
+par(mar=c(5,4,4,1))
+barplot (as.matrix(MeanMotionlog[,1:2]), beside=TRUE, ylab= "Log of Mean Motion history", col=colOrderList, names.arg=c("No conflict", "Conflict"), main = "Log of Mean Motion history for each participant 
+         without and with conflict")
+legend("topleft", inset=.02, ParticipantsList, 
+       fill=colOrderList, cex=0.6)
+```
+
+With a log distribution of motion history, we can't see any more this difference.
+
+```{r histogram of motion history with and withouth conflict, fig.height=3}
+par(mar=c(3,3,4,1))
+hist(data[which(data$LabelVideo=="No Conflict"),]$logFather, col="blue", main= "Motion History histogram for father, no conflict", xlab= "")
+hist(data[which(data$LabelVideo=="No Conflict"),]$logMother, col="red", main= "Motion History histogram for mother, no conflict", xlab= "")
+hist(data[which(data$LabelVideo=="No Conflict"),]$logChild, col="green", main= "Motion History histogram for child, no conflict", xlab= "")
+
+hist(data[which(data$LabelVideo=="Conflict"),]$logFather, col="blue", main= "Motion History histogram for father, in conflict", xlab= "")
+hist(data[which(data$LabelVideo=="Conflict"),]$logMother, col="red", main= "Motion History histogram for mother, in conflict", xlab= "")
+hist(data[which(data$LabelVideo=="Conflict"),]$logChild, col="green", main= "Motion History histogram for child, in conflict", xlab= "")
+```
+
+```{r}
+table(psycho$attachement_cluster)
+```
+
+If we exclude dual attachement styles which are more complicated, heterogenous and not very numerous :  BRLO041 (Withdrawn Fearful), HAJA052 (Angry Dismissive Fearful). We got 4 attachement styles that we can compare.
+
+```{r}
+attachementStyles <- c("FE", "Secure", "Withdrawn", "DU")
+for (i in attachementStyles){
+      MeanMotionNoConflict <- c(
+           mean(data[which(data$LabelVideo=="No Conflict" & data$attachement_cluster==i),]$father, na.rm=TRUE),
+           mean(data[which(data$LabelVideo=="No Conflict" & data$attachement_cluster==i),]$mother, na.rm=TRUE),
+           mean(data[which(data$LabelVideo=="No Conflict" & data$attachement_cluster==i),]$child, na.rm=TRUE))
+
+      MeanMotionConflict <- c(
+           mean(data[which(data$LabelVideo=="Conflict"& data$attachement_cluster==i),]$father , na.rm=TRUE),
+           mean(data[which(data$LabelVideo=="Conflict"& data$attachement_cluster==i),]$mother , na.rm=TRUE),
+           mean(data[which(data$LabelVideo=="Conflict" & data$attachement_cluster==i),]$child, na.rm=TRUE))
+      
+      #print(i)
+      #print (MeanMotionNoConflict)
+      #print (MeanMotionConflict)
+      
+      par(mar=c(5,4,4,1))
+      barplot (MeanMotionNoConflict, beside=FALSE, ylab = "Mean Motion history", col=colOrderList, main=paste("Mean Motion history for each participant 
+               without conflict, attachement cluster", i))
+      par(mar=c(1,0.5,0.5,1))
+      legend("top", inset=.05, ParticipantsList, 
+             fill=colOrderList, cex=0.7)
+      
+      par(mar=c(5,4,4,1))
+      barplot (MeanMotionConflict, beside=TRUE, ylab = "Mean Motion history", col=colOrderList, main=paste("Mean Motion history for each participant 
+               with conflict, attachement cluster", i))
+      par(mar=c(1,0.5,0.5,1))
+      legend("top", inset=.05, ParticipantsList, 
+             fill=colOrderList, cex=0.7)
+}
+```
+
+## Motion history histogram by frame (raw data), all videos
+```{r Motion history histogram by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =TRUE, fig.height=3.5}
 par(mar=c(5,4,2,1))
 hist(data$father, col="blue", main="histogram of father motion history")
 hist(data$mother, col="red", main="histogram of mother motion history")
@@ -552,14 +575,16 @@ boxplot(data$father, data$mother, data$child,
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 ```
+
 The subjects data distribution are very similar.
 
-```{r Motion history histogram by frame (raw data) }
+```{r Motion history histogram by frame (raw data), fig.height=3 }
 par(mar=c(4,4,2,2))
 hist(data$logFather, col="blue", las=1, xlab="Log of father motion history")
 hist(data$logMother, col="red", las=1, xlab="Log of mother motion history", cex.axis=0.7)
 hist(data$logChild, col="green", las=1, xlab="Log of child motion history", cex.axis=0.7)
 ```
+
 When doing the log, we almost normalized the distribution.
 We couldn't do the log on 0. The result would gave -Inf. We shifted all the distribution to the right by adding the half of the minimum after 0 of the distribution.
 
@@ -574,28 +599,6 @@ boxplot(data$logFather, data$logMother, data$logChild,
         all videos", las=1, xlab="Participants", ylab="Motion history")
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
-```
-
-# Raw data and mean of Motion History on sliding and non overlapping intervals on 00034 video
-It is the first video of 00034.
-
-## Raw data
-```{r, cache=FALSE}
-rawdataFather <- data[which(data$family=="1606"),]$father
-rawdataChild <- data[which(data$family=="1606"),]$child
-
-summary(rawdataFather)
-summary(rawdataChild)
-```
-
-```{r, cache=FALSE, eval=FALSE, echo=FALSE}
-par(mar=c(4,4,3,1))
-boxplot(rawdataFather, rawdataChild,
-        col=colOrderList[c(1,3)], 
-        names=ParticipantsList[c(1,3)], 
-        main= "Box plots of motion history rawdata on 00034 video", las=1, ylab="Mean motion history", xlab="Video name")
-par(mar=c(1,0.5,0.5,1))
-legend("topleft", ParticipantsList[c(1,3)], fill=colOrderList[c(1,3)], cex=0.7)
 ```
 
 ## Sliding interval
@@ -641,7 +644,7 @@ legend("topright", ParticipantsList[c(1,3)], fill=colOrderList[c(1,3)], cex=0.7)
 ### Non overlapping interval function on a 5 frames interval
 ```{r, cache=FALSE}
 par(mar=c(4,4,4,2))
-plot (1:50, fatherFive[1:50], type="l", col="red", 
+plot (1:50, fatherFive[1:50], type="l", col="blue", 
 main="Mean Motion history (non overlapping 5 frames
       intervals) for father on 00034 video, first 10 seconds", 
 ylab="Motion history", xlab="Frame index (each 5 frames)", ylim=c(0, 0.075))
@@ -676,7 +679,7 @@ legend("topright", ParticipantsList[c(1,3)], fill=colOrderList[c(1,3)], cex=0.7)
 ```
 
 # Mean motion history by 10 sec plots
-```{r, fig.height=4, cache=FALSE}
+```{r, fig.height=3, cache=FALSE}
 for (i in 1:NumberOfvideos){
   fatherMinute<- MeanMotionByTime("father", indexOfvideos=i, interval=250, data)
   
@@ -688,7 +691,7 @@ for (i in 1:NumberOfvideos){
       plot ((1:length(fatherMinute)/6), fatherMinute, type="l", col="blue", 
       main=paste("Mean motion history (non overlaping 10 sec intervals) 
       on ", families[i], " video" , sep=""), 
-      ylab="Motion history", xlab="Time by Minute", ylim=c(0, 20E-03),
+      ylab="Motion history", xlab="Time by Minute", ylim=c(0, 25E-03),
       xaxp=c(0, (round(length(fatherMinute)/6)), round((length(fatherMinute)/6))))
       lines((1:length(fatherMinute)/6), motherMinute, col="red")
       lines((1:length(fatherMinute)/6), childMinute, col="green")
@@ -705,35 +708,18 @@ for (videoName in unique(data$family)){
       
       print(paste("Computing slidedFather", videoName))
       slidedFather <- SlidingInterval("father", videoIndex, 5, data)
-#      print(head(data[which(data$family==videoName),]$father))
-#      print(tail(data[which(data$family==videoName),]$father))
-#      print(table(is.na(slidedFather)))
-#      print(table(is.na(data[which(data$family==videoName),]$father)))
       
       print(paste("Computing slidedMother", videoName))
       slidedMother <- SlidingInterval("mother", videoIndex, 5, data)
-#      print(head(data[which(data$family==videoName),]$mother))
-#      print(tail(data[which(data$family==videoName),]$mother))
-#      print(table(is.na(data[which(data$family==videoName),]$mother)))
-#      print(table(is.na(slidedMother)))
       
       print(paste("Computing slidedChild", videoName))
       slidedChild <- SlidingInterval("child", videoIndex, 5, data)
-#      print(head(data[which(data$family==videoName),]$child))
-#      print(tail(data[which(data$family==videoName),]$child))
-#      print(table(is.na(data[which(data$family==videoName),]$child)))
-#      print(table(is.na(slidedChild)))
 
       slidedVideo <- data.frame(
         slidedFather, slidedMother, slidedChild, 
         "video"=rep(families[videoIndex], length(slidedFather)), 
         frame_index = 1:length(slidedFather))
-      
-      
-#      slidedVideo.nas <- apply(slidedVideo, 1, function(x){all(is.na(x))})
-#      slidedVideo <- slidedVideo[!slidedVideo.nas,]
-#      indexes <-  data.frame ("video"=rep(families[videoIndex], length(slidedFather)), 
-#        frame_index = 1:length(slidedFather))
+# write the file       
             write.csv(slidedVideo, paste("../Data/CSV/filtered/noLog/",videoName, ".slideddata.csv", sep=""))
       videoIndex <-(videoIndex+1)
       }
@@ -756,7 +742,7 @@ for (videoName in unique(data$family)){
         slidedFather, slidedMother, slidedChild, 
         "video"=rep(families[videoIndex], length(slidedFather)), 
         frame_index = 1:length(slidedFather))
-      
+# write the file     
             write.csv(slidedVideo, paste("../Data/CSV/filtered/log/",videoName, ".log.slideddata.csv", sep=""))
       videoIndex <-(videoIndex+1)
       }
@@ -766,7 +752,7 @@ for (videoName in unique(data$family)){
 ### After extracting filtered motion motion history with mean on sliding interval (overlapping interval) of 5 frames
 ### And after puting this data on a CSV file [slideddata.csv](../Data/CSV/filtered/log)
 
-### We import this data on python Script with panda module [Call_S_Estimator.py](/SyncPy/examples/Call_S_Estimator.py)
+### We import this data on python Script with panda module [Call_S_Estimator.py](../Scripts/Call_S_Estimator.py)
 ### This script will compute the synchrony between each dyad of the interaction and of the whole group
 ### It will return a csv file for each video [SSIXXXX.csv](../Data/CSV/Synchrony/log) with XXXX the name of the video (F1044C, F1044D1, etc) that we can import with R with
 ### this following function
@@ -792,6 +778,9 @@ for (file in SSIlogFilesList){
 str(SSIlog)
 SSIlog$video <- as.factor(SSIlog$video)
 SSIlog <- SSIlog[-which(SSIlog$video=="Name"),]
+SSIlog$Interval <- NULL
+SSIlog <- rename (SSIlog, c("video" = "family"))
+SSIlog <- rename (SSIlog, c("X" = "SSI-interval"))
 ```
 
 ```{r SSInolog import}
@@ -803,6 +792,9 @@ for (file in SSInoLogFilesList){
     SSInoLog<- rbind.fill(SSInoLog, SSIalone)}
 SSInoLog$video <-as.factor(SSInoLog$video)
 SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
+SSInoLog$Interval <- NULL
+SSInoLog <- rename (SSIlog, c("video" = "family"))
+SSInoLog <- rename (SSIlog, c("X" = "SSI-interval"))
 #SSInoLog$action <- rep(NA, nrow(SSInoLog))
 #SSInoLog[which(video == & timeMin==)]$action
 ```
@@ -812,6 +804,12 @@ SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
 str(SSIlog)
 #View(SSI)
 ```
+### Data dictionnary of SSIlog data frame
+* **family** : code of the family
+* SSI-interval** : interval of SSI
+* **Time_min** : Time in minutes
+* **SSI_fa_ch** : SSI index of Synchrony between father and child
+* **SSI_mo_ch** : SSI index of Synchrony between mother and child
 
 ## Description of noLogSSI data frame
 ```{r SSInologdf  description , cache=FALSE}
@@ -819,198 +817,74 @@ str(SSInoLog)
 #View(SSInoLog)
 ```
 
+### Data dictionnary of SSIlog data frame
+* **family** : code of the family
+* **SSI-interval** : interval of SSI
+* **Time_min** : Time in minutes
+* **SSI_fa_ch** : SSI index of Synchrony between father and child
+* **SSI_mo_ch** : SSI index of Synchrony between mother and child
+
 # Synchrony scores log for each dyad, triad and for the whole group
-```{r, fig.width=8}
+```{r, fig.width=8, fig.height=3.5}
 par(mar=c(4,4,4,3), mfrow=c(1,1))
-for (i in unique(SSIlog$video)){
-      if (all(!is.na(SSIlog[which(SSIlog$video==i),]$SSI_mo_ch)==TRUE)){
-        #print(SSIlog[which(SSIlog$video==i),]$Time_min)
-        #print(str(SSIlog[which(SSIlog$video==i),]$SSI_mo_ch))
-            plot(SSIlog[which(SSIlog$video==i),]$Time_min, SSIlog[which(SSIlog$video==i),]$SSI_mo_ch, 
-                 ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col=rainbow(2)[1], cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$video==i),]$Time_min), length(SSIlog[which(SSIlog$video==i),]$Time_min)))}
+for (i in unique(SSIlog$family)){
+      if (all(!is.na(SSIlog[which(SSIlog$family==i),]$SSI_mo_ch)==TRUE)){
+        #print(SSIlog[which(SSIlog$family==i),]$Time_min)
+        #print(str(SSIlog[which(SSIlog$family==i),]$SSI_mo_ch))
+            plot(SSIlog[which(SSIlog$family==i),]$Time_min, SSIlog[which(SSIlog$family==i),]$SSI_mo_ch, 
+                 ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col=rainbow(2)[1], cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSIlog[which(SSIlog$family==i),]$Time_min)))}
       
-      else if(all(!is.na(SSIlog[which(SSIlog$video==i),]$SSI_fa_ch)==TRUE)){
-    plot(SSIlog[which(SSIlog$video==i),]$Time_min, SSIlog[which(SSIlog$video==i),]$SSI_fa_ch, 
-              ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSIlog[which(SSIlog$video==i),]$Time_min), length(SSIlog[which(SSIlog$video==i),]$Time_min)), col=rainbow(2)[2], cex.axis=0.7)}
+      else if(all(!is.na(SSIlog[which(SSIlog$family==i),]$SSI_fa_ch)==TRUE)){
+    plot(SSIlog[which(SSIlog$family==i),]$Time_min, SSIlog[which(SSIlog$family==i),]$SSI_fa_ch, 
+              ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSIlog[which(SSIlog$family==i),]$Time_min)), col=rainbow(2)[2], cex.axis=0.7)}
   else{print("error")}}
-
-#par(mar=c(4,4,4,3), mfrow=c(1,1))
-
-#for (i in unique(SSIlog$video)){
- #       plot(SSIlog[which(SSIlog$video==i),]$Time_min,
-#        SSIlog[which(SSIlog$video==i),]$SSI_mo_ch, type="l", ylim=c(0, 0.3), #col=rainbow(4)[1], main=paste("Synchrony scores in", i, "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, xaxp=c(0,length(SSIlog$Time_min), length(SSIlog$Time_min)))
-        
-#        lines(SSIlog[which(SSIlog$video==i),]$SSI_fa_mo_ch, col=rainbow(4)[2], lwd=2)
-#        lines(SSIlog[which(SSIlog$video==i),]$SSI_fa_ch, col=rainbow(4)[3], lwd=2)
-#        
-#        str(SSIlog[which(SSIlog$video==i),]$Time_min)
-#        str(SSIlog[which(SSIlog$video==i),]$SSI_mo_ch)
-#        str(SSIlog[which(SSIlog$video==i),]$SSI_fa_mo_ch)
-#        str(SSIlog[which(SSIlog$video==i),]$SSI_fa_ch)}
-
-#abline(h= mean(SSIlog$SSI_mo_ch, na.rm=TRUE), col=rainbow(4)[4], lwd=2, lty=2)
-
-#legend("topleft", inset=.05, c("fa_mo", "fa_mo_ch", "fa_ch",
-#"mo_ch"), 
-#col=rainbow(4), cex=0.6, lwd=2)
-      
-#legend ("topright", inset=.05, c(
-#      paste ("Mean fa_mo :", round(mean(SSIlog$SSI_fa_mo, na.rm=TRUE),3)),
-#      paste ("Mean fa_mo_ch :", round(mean(SSIlog$SSI_fa_mo_ch,na.rm=TRUE),3)),
-#      paste ("Mean fa_ch :", round(mean(SSIlog$SSI_fa_ch, na.rm=TRUE),3)),
-#      paste ("Mean mo_ch :", round(mean(SSIlog$SSI_mo_ch,na.rm=TRUE),3))),
-#col=rainbow(4), cex=0.5, lty=2, lwd=1)}
 ```
 
 # Synchrony scores noLog for each dyad, triad and for the whole group
-```{r, fig.width=8}
+```{r, fig.width=8, fig.height=3.5}
 par(mar=c(4,4,4,3), mfrow=c(1,1))
-for (i in unique(SSInoLog$video)){
-      if (all(!is.na(SSInoLog[which(SSIlog$video==i),]$SSI_mo_ch)==TRUE)){
-#        print(str(SSInoLog[which(SSIlog$video==i),]$Time_min))
-#        print(str(SSInoLog[which(SSInoLog$video==i),]$SSI_mo_ch))
-        plot(SSInoLog[which(SSIlog$video==i),]$Time_min, SSInoLog[which(SSInoLog$video==i),]$SSI_mo_ch, 
-             ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col="red", cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$video==i),]$Time_min), length(SSInoLog[which(SSIlog$video==i),]$Time_min)))}
+for (i in unique(SSInoLog$family)){
+      if (all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_mo_ch)==TRUE)){
+        plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSInoLog$family==i),]$SSI_mo_ch, 
+             ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col="red", cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)))}
       
-      else if(all(!is.na(SSInoLog[which(SSIlog$video==i),]$SSI_fa_ch)==TRUE)){
-#    print(str(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_ch))
-    plot(SSInoLog[which(SSIlog$video==i),]$Time_min, SSInoLog[which(SSIlog$video==i),]$SSI_fa_ch, ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSInoLog[which(SSIlog$video==i),]$Time_min), length(SSInoLog[which(SSIlog$video==i),]$Time_min)), col="blue", cex.axis=0.7)}
+      else if(all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch)==TRUE)){
+#    print(str(SSInoLog[which(SSInoLog$family==i),]$SSI_fa_ch))
+    plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch, ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSInoLog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)), col="blue", cex.axis=0.7)}
       else{print("error")}}
-
-#par(mar=c(4,4,4,3), mfrow=c(1,1))
-#for (i in unique(SSInoLog$video))
-#      {plot(SSInoLog[which(SSInoLog$video==i),]$Time_min,
-#SSInoLog[which(SSInoLog$video==i),]$SSI_mo_ch, type="l", ylim=c(0, 0.3), #col=rainbow(4)[1], main=paste("Synchrony scores in", i, "video"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, xaxp=c(0,length(SSInoLog$Time_min), length(SSInoLog$Time_min)))
-#lines(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_mo_ch, col=rainbow(4)[2], lwd=2)
-#lines(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_ch, col=rainbow(4)[3], lwd=2)
-#str(SSInoLog[which(SSInoLog$video==i),]$Time_min)
-#str(SSInoLog[which(SSInoLog$video==i),]$SSI_mo_ch)
-#str(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_mo_ch)
-#str(SSInoLog[which(SSInoLog$video==i),]$SSI_fa_ch)}
-
-#legend("topleft", inset=.05, c("fa_mo", "fa_mo_ch", "fa_ch", "mo_ch"), col=rainbow(4), cex=0.6, lwd=2)
-      
-#legend ("topright", inset=.05, c(
-#      paste ("Mean fa_mo :", round(mean(SSInoLog$SSI_fa_mo, na.rm=TRUE),3)),
-#      paste ("Mean fa_mo_ch :", round(mean(SSInoLog$SSI_fa_mo_ch,na.rm=TRUE),3)),
-#      paste ("Mean fa_ch :", round(mean(SSInoLog$SSI_fa_ch, na.rm=TRUE),3)),
-#      paste ("Mean mo_ch :", round(mean(SSInoLog$SSI_mo_ch,na.rm=TRUE),3))),
-#col=rainbow(4), cex=0.5, lty=2, lwd=1)}
 ```
 
 ```{r}
 str(SSInoLog)
-a <- merge(SSInoLog, cutFrames, by.x="video", by.y="indexList")
-#View(a)
-a$LabelVideo <- rep(NA, nrow(a)) 
-a[which(a$Time_min < a$CutBeforeMin),]$LabelVideo <- "Cut"
+SSInoLog <- merge(SSInoLog, cutFrames, by.x="family", by.y="family")
+SSInoLog$LabelVideo <- rep(NA, nrow(SSInoLog)) 
+SSInoLog[which(SSInoLog$Time_min < SSInoLog$CutBeforeMin),]$LabelVideo <- "Cut"
 
-a[which(a$Time_min > a$CutBeforeMin & a$Time_min < a$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutBeforeMin & SSInoLog$Time_min < SSInoLog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
 
-a[which(a$Time_min > a$CutMiddle1Min & a$Time_min < a$CutMiddle2Min),]$LabelVideo <- "Cut"
+SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle1Min & SSInoLog$Time_min < SSInoLog$CutMiddle2Min),]$LabelVideo <- "Cut"
 
-a[which(a$Time_min > a$CutMiddle2Min & a$Time_min < a$CutFinalMin),]$LabelVideo <- "Conflict"
+SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
 
-#a[which(a$Time_min >= a$CutFinalMin),]$LabelVideo <- "Cut"
 
-SSIConflict <- c(a[which(a$LabelVideo=="Conflict"),]$SSI_mo_ch, a[which(a$LabelVideo=="Conflict"),]$SSI_mo_ch)
+SSIConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_mo_ch)
 mean(SSIConflict, na.rm=TRUE)
 
-SSINoConflict <- c(a[which(a$LabelVideo=="No Conflict"),]$SSI_mo_ch, a[which(a$LabelVideo=="No Conflict"),]$SSI_mo_ch)
+SSINoConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch)
 mean(SSINoConflict, na.rm=TRUE)
 
 ```
 
-```{r}
-
-hist(log(SSIConflict))
-hist(log(SSINoConflict))
-
-mean(log(SSIConflict), na.rm=TRUE)
-
-barplot(c(mean(log(SSIConflict), na.rm=TRUE)+10, mean(log(SSINoConflict), na.rm=TRUE)+10), names=c("Conflict", "No Conflict"), col=terrain.colors(2), ylab="Synchrony score", las=1, cex.axis=0.7, main="Synchrony scores between 2 situations")
-
-barplot(c(mean(SSIConflict, na.rm=TRUE), mean(SSINoConflict, na.rm=TRUE)), names=c("Conflict", "No Conflict"), col=terrain.colors(2), ylab="Synchrony score", las=1, cex.axis=0.7, main="Synchrony scores in 2 situations")
-
-df <- data.frame(NA, NA)
-for (i in unique(a$video)){
-     # print (i)
-      b <- mean(a[which(a$LabelVideo=="No Conflict" & a$video==i),]$SSI_mo_ch)
-      #print(b)
-      e <- mean(a[which(a$LabelVideo=="Conflict" & a$video==i),]$SSI_mo_ch)
-     # print(c)
-      d <- c(b, e)
-      df <- cbind(df,d)}
-      # print(df)}
-
-df <- df[,-(1:10)]
-
-barplot(as.matrix(df), beside=TRUE, xlab="Video", ylab="SSI score", cex.names=0.3)
-```
-
-
-```{r test}
-par(mar=c(4,4,4,3), mfrow=c(1,1))
-plot(SSInoLog[which(SSInoLog$video=="DIPE004"),]$Time_min, SSInoLog[which(SSInoLog$video=="DIPE004"),]$SSI_mo_ch, type="l", ylim=c(0, 0.3), xlim=c(0,17), col=rainbow(4)[1], main="Synchrony scores for child-mother dyad in 
-     DIPE004 video", xlab = "Time (minute)", ylab="Synchrony score", lwd=2, xaxp=c(0,length(SSInoLog$Time_min), length(SSInoLog$Time_min)))
-```
-
-## Evolution of synchrony through time, raw each second
-```{r, fig.width=8, cache=FALSE, eval=FALSE}
-par(mar=c(4,4,4,4))
-    col <- 1
-for (i in 5:length(SSI)){
-    plot(1:length(SSI[,i]), SSI[,i], type="l",
-    col=rainbow(4)[col], main = names(SSI)[i])
-    col <- col+1}
-```
-
-## Evolution of synchrony through time, mean by minute
-```{r, fig.width=8, cache=FALSE, eval=FALSE}
-par(mar=c(4,4,4,4))
-    col = 1
-for (indexSSI in 5:length(SSI)){
-    IntervalNumbersVideo <- ceiling(length(SSI[,indexSSI])/6)
-    SSIColumn <- SSI[,indexSSI]
-    SSIMinute <- c()
-    for (i in 1:IntervalNumbersVideo){
-          borneInf <- 1+(i-1)*6
-          borneSup <- i * 6
-          SSIVectorInterval <- SSIColumn[borneInf:borneSup]
-          mean <- mean(SSIVectorInterval, na.rm=TRUE)
-          SSIMinute <- c(SSIMinute, mean)}
-    plot(1:length(SSIMinute), SSIMinute, type="l", col=rainbow(11)[col], main = names(SSI)[indexSSI])
-    col <- col+1}
-```
-
-## Evolution of synchrony through time, mean by 10 minutes
-```{r, fig.width=8, cache=FALSE, eval=FALSE}
-par(mar=c(4,4,4,4))
-    col = 1
-for (indexSSI in 5:length(SSI)){
-    IntervalNumbersVideo <- ceiling(length(SSI[,indexSSI])/60)
-    SSIColumn <- SSI[,indexSSI]
-    SSITenMinute <- c()
-    for (i in 1:IntervalNumbersVideo){
-          borneInf <- 1+(i-1)*60
-          borneSup <- i * 60
-          SSIVectorInterval <- SSIColumn[borneInf:borneSup]
-          mean <- mean(SSIVectorInterval, na.rm=TRUE)
-          SSITenMinute <- c(SSITenMinute, mean)}
-    plot(1:length(SSITenMinute), SSITenMinute, type="l", col=rainbow(4)[col], main = names(SSI)[indexSSI])
-    col <- col+1}
-```
-
-
+# Demographic and Psychometric data
 ## Demographic description
 ### Sex
-```{r Demographic description}
+```{r Demographic description, eval=FALSE}
 par(mar=c(3,4,4,4))
 barplot(table(psycho$Sex), col=c("red", "blue"), main ="Sex repartition")
 ```
 
 ### Age
-```{r}
+```{r, fig.height=4}
 psycho$Birthday <- as.Date(psycho$Birthday, format="%d/%m/%y")
 psycho$interview_date <- as.Date(psycho$interview_date, format="%d/%m/%y")
 str(psycho$Birthday )
@@ -1022,26 +896,32 @@ hist(as.numeric(psycho$age), col="green")
 ```
 
 ### Birth places
-```{r}
+```{r, fig.height=4}
 par(mar=c(5,4,4,4))
 barplot(sort(table(psycho$Birth_place), decreasing = TRUE ), las=2, cex.names=0.5, main="Birth place")
-psycho$Birth_place
 ```
 
 ## Attachement styles
-```{r}
+### Raw
+```{r Attachement styles raw, fig.height=4}
 par(mar=c(9,5,3,3))
 barplot(table(psycho$attachement_style), las=2, cex.names=0.6)
 ```
 
+### Clusters
+```{r Attachement styles clusters, fig.height=4}
+par(mar=c(9,5,3,3))
+barplot(table(psycho$attachement_cluster), las=2, cex.names=0.6)
+```
+
 ## Insecurity level
-```{r}
+```{r Insecurity level, fig.height=4}
 par(mar=c(9,5,3,3))
 barplot(table(psycho$insecurite_level), las=2)
 ```
 
 ## TAS
-```{r}
+```{r TAS, fig.height=2.5}
 par(mar=c(3,3,3,3))
 barplot(table(psycho$TAS_total), las=2, col="orange", main="Distribution of the TAS scores", cex.name=0.9)
 
@@ -1049,7 +929,7 @@ hist(psycho$TAS_total, las=1, col="orange", main="Distribution of the TAS scores
 ```
 
 ## STAIYA
-```{r STAIYA}
+```{r STAIYA, fig.height=2.5}
 par(mar=c(3,3,3,3))
 barplot(table(psycho$STAIYA_total), las=2, col="blue", main="Distribution of the STAIYA scores", cex.name=0.9)
 
@@ -1057,7 +937,7 @@ hist(psycho$STAIYA_total, las=1, col="blue", main="Distribution of the STAIYA sc
 ```
 
 ## STAIYB
-```{r STAIYB}
+```{r STAIYB, fig.height=2.5}
 par(mar=c(3,3,3,3))
 barplot(table(psycho$STAIYB_total), las=2, col="red", main="Distribution of the STAIYB scores", cex.name=0.9)
 
@@ -1065,43 +945,9 @@ hist(psycho$STAIYB_total, las=1, col="red", main="Distribution of the STAIYA sco
 ```
 
 ## BDI total
-```{r BDI total}
+```{r BDI total, fig.height=2.5}
 par(mar=c(3,3,3,3))
 barplot(table(psycho$BDI_total), las=2, col="green", main="Distribution of the BDI scores", cex.name=0.9)
 
 hist(psycho$BDI_total, las=1, col="green", main="Distribution of the BDI scores", cex.name=0.9)
-```
-
-## Models of synchrony
-```{r, cache=TRUE, eval=FALSE}
-SSI_fa_th_lme <- lmer(SSI_fa_th ~ Time_min + (1|video), data=SSI)
-summary(SSI_fa_th_lme)
-#plot(SSI_fa_th_lme)
-res <- residuals(SSI_fa_th_lme)
-hist(SSI$SSI_fa_th)
-qqnorm(res)
-SSI_fa_th_List <- c()
-for (i in families){
-  SSI_fa_th_List <- c(SSI_fa_th_List, mean(SSI[which(SSI$video==i),]$SSI_fa_th, na.rm=TRUE))
-}
-print(SSI_fa_th_List)
-#plot(SSI_fa_th_List, type="b")
-```
-
-```{r, cache=TRUE, eval=FALSE}
-# log of the data
-log_SSI_fa_th <- hist(log(SSI$SSI_fa_th))
-SSI_fa_th_log_lme <- lmer(log(SSI_fa_th) ~ Time_min + (1|video), data=SSI)
-res_log <- residuals(SSI_fa_th_log_lme)
-qqnorm(res_log)
-summary(SSI_fa_th_log_lme)
-```
-
-```{r, cache=TRUE, eval=FALSE}
-# root square of the data
-sq_SSI_fa_th <- hist(sqrt(SSI$SSI_fa_th))
-SSI_fa_th_sq_lme <- lmer(sqrt(SSI_fa_th) ~ Time_min + (1|video), data=SSI)
-res_sq <- residuals(SSI_fa_th_sq_lme)
-qqnorm(res_sq)
-summary(SSI_fa_th_sq_lme)
 ```

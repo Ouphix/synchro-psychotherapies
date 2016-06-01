@@ -186,11 +186,7 @@ Specify current severity:
 
 ##### Cannabis addiction treatments
 
-###### Pharmacological
-
 There are several researches for pharmacological intervention (agonist substitution, antagonist and modulation of other neurotransmitters pathways) but none approved nor recommended. 
-
-###### Psychotherapeutic
 
 Psychotherapy is the better treatment accessible in 2016.  There are evidences for some of them: 
 
@@ -204,28 +200,15 @@ The Incant study aimed to evaluate the efficacy of [Multi Dimensional Family The
 
 The MDFT is a "family based and developmentally oriented outpatient treatment for adolescent substance use disorders and associated or related problems". (Incant.eu) It was developped in Miami, US since 1985 and was evaluated in a lot of studies. It is an integrative group of interventions used in a lot of situations. In MDFT, sees the problem of cannabis consumption as a reflect of deleterious lifestyle. Consequently, the therapist targets as many life domains and problem behaviors as possible. 
 
-The INCANT study was a multi-site, trans-national randomized controlled trial lead in five countries (Belgium, France, Germany, the Netherlands, and Switzerland) aiming to compare the efficacy of . After a pilot sudy and a [pre-registration](http://www.incant.eu/index.php?id=10,0,0,1,0,0), it showed that
+The INCANT study was a multi-site, trans-national randomized controlled trial lead in five countries (Belgium, France, Germany, the Netherlands, and Switzerland) aiming to compare the efficacy of the MDFT versus Individual therapy. Randomization was stratified as to gender, age and level of cannabis consumption. After a pilot sudy and a [pre-registration](http://www.incant.eu/index.php?id=10,0,0,1,0,0), it recruited 450 adolescents from 13 to 18. It showed that MDFT was more efficient than Individual Therapy (Rigter et al., 2013). It is very rare to run such an international study with high level of scientific setting in psychotherapy.
 
 ### INCANT Study in France
 
 We didn't collect the videos of all the centers, instead, we had access to the videos of France study. There were several centers with several configurations. The videos were recorded in order to evaluate the application of MDFT principals. Technically, it was not supposed a priori that they would be used to evaluate social signal. For somes subjects, there are a lot of videos but for others, only a few were recorded.
 
-Pilot study
-Pre-resgistration
-Randomised COntrol
-Multicentric
-Intent to treat
-Stratifications
-
-cannabis
-different kinds of treatment
-MI,
-Tokens economy
-
 ### Material and methods
-#### Study protocol
 #### Videos
-* We collected a 252.44Gb database of 277 Videos, with a rate of 25 frames by second.
+* We collected a 252.44Gb database of 277 Videos from 32 patients and their families, with a rate of 25 frames by second.
 * They are encoded in [VOB](https://en.wikipedia.org/wiki/VOB) format.
 
 #### Softwares used
@@ -266,7 +249,7 @@ However, we didn't have any data dictionary with the definition of all variables
 
 #### Pilot study: F1044 subject, his father, mother and therapist
 
-We decided to make a pilot study on the most complete subject : F1044 since we have  the most videos (18 videos) with him or his family.
+We decided to make a pilot study on the most complete subject out of the 32 patients : F1044 since we have  the most videos (18 videos) with him or his family.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/Numberparticipants.png)
 
@@ -283,33 +266,25 @@ We can ask ourselves if this subject representative:
 * We have all our [psychometrics evaluations](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) (cannabis consumption : initial, 3m, 6m, 9m, 12m).
 
 Unfortunately, the first, second, 10th and 11th videos were lost. 
-​	
 ### Description of the database
 
-
-
-*F1044* is the name of the subject studied (called *patient*).
-When referring to several persons, variables take the name of the shorter form *pa* for *patient*.
-
-He has a *mother* (*mo*) a *father* (*fa*) helped by a *therapist* (*th*).
-When a variable is referring to several participants, it is organised in alphabetical order separated by underscores, eg. *SSI_fa_mo* refers to the synchrony index (*SSI*) between the *father* and the *mother*. *SSI_mo_fa* doesn't exist.
-
-This family had several consultations with the psychotherapist (*therapist*). Some of them were video recorded.
-These videos are names with the name of the subject + an index letter. They can subdivided after that with numbers (eg *F1044C*).
-
-#### Summary figure of technical steps
+#### Social signal extraction
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
-#### Video Configurations
+This figure summarize the databases we collected (dark blue), differents steps that were done (blue and light blue) and some suggestions (yellow) that could enable to extract social signal from psychotherapy videos.
+
 ##### Verbal signal extraction
+
 We began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the speaking of each participants. 
 This waveform helped to identify the zones of speaking vs no speaking. 
 
 Most often locutors were filmed so it helped to detect manually who spoke but it wasn't always the case. Quite often, participant speech overlap that made the process quite difficult. There was some short onomatopoeia that were sometimes quite arbitrary to annotate or not. The end of the sentence was not always obvious with long vowels with not precise end especially during the overlap of speeches. It was made from the video and the waveform extracted from the video in an audio file. 
 
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/elan_anot.jpg)
+
 Consequently, this process was very laborious. It was possible to annotate one hour of video with a whole week work.
 
-We tried to find ways to make source separation automatic even if it couldn't be perfect. We found the [FASST software](http://bass-db.gforge.inria.fr/fasst/) that is very powerful to separate sounds coming from different music instruments. However, we contacted the author of this software and this material is to difficult to separate at the moment since two voices are not so much different from two different music instruments. 
+We tried to find ways to make source separation automatic even if it couldn't be perfect. We found the [FASST software](http://bass-db.gforge.inria.fr/fasst/) that is very powerful to separate sounds coming from different music instruments. However, even if the source sepration of several music instruments is very efficient, diferenciating automatically two voics at the moment is too difficult. We contacted the author of this software and this material is to difficult to separate at the moment since two voices are not so much different from two different music instruments. 
 
 ##### Discussion
 This separation could be made during the record of the video with several mikes that could be small tie mikes attached to each participant.
@@ -320,9 +295,9 @@ Consequently, we decided to give up this approach.
 
 ##### Spatial organisation
 In the first center, psychotherapy sessions consisted of filmed familial psychotherapies with 2 to 5 peoples organized in a circle.
-Two participants of the psychotherapy were filmed from the front. Another subject (often the therapist) is filmed from the other side. Its video is embedded in a window. We can notice the date displayed on the video. Sometimes, there is an overlap of different subject in the same place.
+Two participants of the psychotherapy were filmed from the front. Another subject (often the therapist) is filmed from the other side. Its video is embedded in a window. We can notice taht in this video, there isn't the patient but his two parents since he which wasn't motivated enough to come in this session. It is still possible to do a pschotherapy with this settings since we consider the communication and the attitude of each member of the family and we don't consider only the patient.
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png =350x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/DifferentConfigurations.jpeg)
 
@@ -331,7 +306,12 @@ In this barplot of the mean motion history for each subject for each video, we c
 When we sum up the data we get, we can see that the mother and the therapist are the most present participants.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/AvailableData.jpeg)
 
+Of course, the therapist is always present in the sessions but sometimes due to technicall difficulties she can't be filmed.
+
 #### Psychometric data
+
+Due to technicals problems we got the cannabis consumption data very late. 
+
 Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
 They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
 It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. 

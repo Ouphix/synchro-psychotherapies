@@ -245,6 +245,23 @@ We decided to focus on the primary outcomes of the psychotherapy the cannabis co
 
 However, we didn't have any data dictionary with the definition of all variables and the exact questionnaires used to collect this information, the coding of Non Available data that may be -99. We planned to meet the team that wasn't unfortunately available at that moment. A lot of videos were lost or not recorded. We couldn't know from this database which patient received MDFT or TAU. It was organized in a European level. We collected only the video and psychometric data from the 2 French centers.
 
+#### Psychometric data
+
+Due to technicals problems we got the cannabis consumption data very late. 
+
+Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
+They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
+It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. 
+
+Globally, as expected, the cannabis consumption is decreasing with time for the subjects.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanEvolution.jpeg)
+
+We couldn't have acess to the randomization to know which subjects received MDFT and which received Individual Therapy. When we looked of the evolution of the cannabis consumption, it was neither very easy to define good and bad responders.
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/EvolutionCannabis.jpeg)
+
+All the evolutions of this scores are plotted [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf). 
+
 ### Results
 
 #### Pilot study: F1044 subject, his father, mother and therapist
@@ -266,6 +283,11 @@ We can ask ourselves if this subject representative:
 * We have all our [psychometrics evaluations](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) (cannabis consumption : initial, 3m, 6m, 9m, 12m).
 
 Unfortunately, the first, second, 10th and 11th videos were lost. 
+
+Furthermore, when we got the cannabis consumption evolution, we saw that the efficacy of the psychotherapy was not very clear and the evolution of it wasn't straitforward.
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB-F1044.jpg)
+
 ### Description of the database
 
 #### Social signal extraction
@@ -308,23 +330,6 @@ When we sum up the data we get, we can see that the mother and the therapist are
 
 Of course, the therapist is always present in the sessions but sometimes due to technicall difficulties she can't be filmed.
 
-#### Psychometric data
-
-Due to technicals problems we got the cannabis consumption data very late. 
-
-Files were collected in [xls](https://en.wikipedia.org/wiki/Microsoft_Excel) format.
-They were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script.
-It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. 
-
-Globally, the cannabis consumption is decreasing with time for the subjects.
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/MeanEvolution.jpeg)
-
-We didn't have any group defined. When we look of the evolution of the cannabis consumption, it is not very easy to define good and bad responders.
-
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/EvolutionCannabis.jpeg)
-
-All the evolutions of this scores are plotted [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf). 
-
 ##### Time organization
 Video length could were very different because it was necessary to reorganize them. 
 
@@ -332,10 +337,10 @@ However, we couldn't use the raw database. It was necessary to cut the videos wi
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/plots/lengthVideoF1044.png)
 
-Furthermore configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy, 
+Furthermore configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy. Consequently, it was very difficult to compare the synchrony between different configurations. We couldn't  
 
 ### Raw data
-The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/Frames_extractor) python script made by Jonathan Aigrain with [FFMPEG](https://ffmpeg.org/).
+The first step was to extract frames with the [Frames_extractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/Frames_extractor) python script made by Jonathan Aigrain with [FFMPEG](https://ffmpeg.org/) module of Python.
 
 | Idea                                     |                                          |      |
 | ---------------------------------------- | ---------------------------------------- | ---- |
@@ -345,19 +350,18 @@ The first step was to extract frames with the [Frames_extractor.py](https://gith
 ### A. Motion extraction
 
 #### 1. Extracting frame from the beginning of the video
-Extract a frame with [*Frames_extractor.py*
-](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Frames_extractor/Frames_extractor.py) with a [python](https://www.python.org/) script from the beginning of the video to make a mask. This script was developed by Jonathan Aigrain with [Open CV](http://opencv.org/).
+Extract a frame with [*Frames_extractor.py*](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Frames_extractor/Frames_extractor.py) with a [python](https://www.python.org/) script from the beginning of the video to make a mask. This script was developed by Jonathan Aigrain with [Open CV](http://opencv.org/).
 
 Here is an example of the father (eyes blurred to keep anonymity).
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png)
 
 | Idea                                     |                                          |      |
 | ---------------------------------------- | ---------------------------------------- | ---- |
-| ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =130x) | It was suggested to take a mean image of the video to be more precise instead of taking a video from the beginning. |      |
+| ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png) | It was suggested to take a mean image of the video to be more precise instead of taking a video from the beginning. |      |
  | It would be much more relevant to extract the exact 3D position of the skeleton instead of the raw pixel. This can be extracted quite easily by a [kinect](http://www.xbox.com/fr-FR/xbox-one/accessories/kinect-for-xbox-one). A lot of other features could be extracted but the volume of this data can be very heavy several megabytes by minute of video. This is much more difficult to record for psychotherapist but would be much more relevant than raw video alone.
 **Beware** |  |
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg =70x) | Notice the date that was always masked after during the step 2.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg) | Notice the date that was always masked after during the step 2.
 | We can change the value of the [median filter](https://en.wikipedia.org/wiki/Median_filter).
 
 #### 2. Make a mask for each relevant part of each video with Paintbrush
@@ -366,17 +370,17 @@ Select a part of the video with each participant (father, mother, patient, thera
 
 | Paint masking                            | Result                                   |      |
 | ---------------------------------------- | ---------------------------------------- | ---- |
-| ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/F1044C1paint.mov.avi.father.jpg =250x) | ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/F1044C1.mov.avi.father.jpg =250x) |      |
+| ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/F1044C1paint.mov.avi.father.jpg) | ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/F1044C1.mov.avi.father.jpg) |      |
 
 This operation is repeated for each participant on each video.
 
 |                  Beware                  |                                          |      |
 | :--------------------------------------: | ---------------------------------------- | ---- |
-| ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg =70x) | It is necessary to always use the same background color, for instance [RGB green](http://rapidtables.com/web/color/RGB_Color.htm). (0,255,0) |      |
+| ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/Beware.jpg) | It is necessary to always use the same background color, for instance [RGB green](http://rapidtables.com/web/color/RGB_Color.htm). (0,255,0) |      |
 | Participants can move during the video (change their seats, leave the room). It would be preferable to anticipate it. Camera is moving sometimes too. Mean Motion history by minute can help us to detect big changes or disappearance of a participant. |                                          |      |
 | Participants are labelled in the mask name (eg *F1044C1.avi.father.jpg*)
 **Idea** |  |
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png =300x) | [Deep learning software](http://image-net.org/challenges/LSVRC/2014/) or machine learning used for categorization/detection of people could make this process completely automatic. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/deeplearningsegmentation.jpg =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/man-with-bulb-01-300x300.png) | [Deep learning software](http://image-net.org/challenges/LSVRC/2014/) or machine learning used for categorization/detection of people could make this process completely automatic. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/deeplearningsegmentation.jpg)
 
 #### 3. Motion history extracted
 The VOB videos were converted in [AVI](https://en.wikipedia.org/wiki/Audio_Video_Interleave) format in the form *F1044C1.avi*.
@@ -420,9 +424,9 @@ If we check all participants, we can see that the father and the mother motion h
 #### 4. Motion history filtered with slindingInterval function
 Motion history raw data is filters with a [R](https://www.cran.r-project.org/) function on [Rmarkdown script analysis](https://github.com/Ouphix/synchro-psychotherapies/blob/master/SyncPsycho.Rmd). It generates CSV file of the form "F1044C.VOB.slideddata.csv". See files [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/filtered).
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/slidingInterval.jpg)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/slidingInterval.jpg)
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/MeanMotionByTime.jpg)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/MeanMotionByTime.jpg)
 
 | Sliding interval (raw Data)              | Sliding interval (log Data)              |
 | ---------------------------------------- | ---------------------------------------- |
@@ -482,7 +486,7 @@ There is not any NA in this file. Only the possible combinations are computed (e
 #### 1. Manually
 It is possible to use the software Elan to annotate a video. You need to extract first the sound (with [Free Video Converter](http://www.freemake.com/free_video_converter/) for instance) to get a waveform and import the video and the waveform. 
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/elan_anot.jpg =250x)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/elan_anot.jpg)
 
 Then you can annotate when someone is speaking. This process is very fastidious (1 week work for one hour video at the beginning and so was gave up).
 
@@ -536,7 +540,7 @@ In this frame, we can notice that there is an overlap between the region of inte
 
 In this frame, we can see that half of the motion history from the mother couldn't be recorded since it was outside the camera view. Moreover, there is an overlap of the date with the patient frame (top). We can notice too that this window frame.
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/dateProblem.png)
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/dateProblem.png)
 
 In this frame, we can see that the date is overlapping with the therapist.
 

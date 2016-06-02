@@ -143,9 +143,9 @@ Independently of the psychotherapy theory and framework, it seems that synchrony
 ### Open science, Open data, Confidentiality 
 It was quite difficult at the beginning to replicate the studies that were done by other teams and to find these two databases that could be relevant for this goal because of quality of the recording and quality of psychometric data collected. After we had our own scripts and procedure for INCANT database, it was very easy to replicate the analysis for MONRADO database. 
 
-To avoid this lost of time, and to improve validity and replicability and improvements of our work. we tried to develop an open science approach to improve accessibility, transparency of this work to help future improvements. The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship.
+To avoid this lost of time, and to improve validity and replicability and improvements of our work. we tried to develop an open science approach. The synchrony computation software SyncPy developped by the team G. Varni and M. Avril was published on open source on GitHub. We decided to continue this approach to improve accessibility, transparency of this work to help future improvements. 
 
-We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts.
+The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship. We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts.
 
 However, it is not possible to share the raw materials with consist of confidential psychotherapy sessions. It would be very relevant to share this material to let possibility to other team to compare this results with other softwares or modules with different goals than motion history synchrony analysis. In the research in algorithm development, some databases are shared and promoted in challenges that enable the development of the best classifier for instance. 
 
@@ -295,9 +295,11 @@ This figure summarize the databases we collected (dark blue), differents steps t
 
 ##### Verbal signal extraction to compute verbal synchrony
 
-We began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the speaking of each participants. This waveform helped to identify the zones of speaking vs no speaking unfortunately couldn't help to identify the source of the sound. 
+We began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the speaking of each participants.  We used [Free Video Converter](http://www.freemake.com/free_video_converter/) to get a waveform and import the video and the waveform. This waveform helped me to identify the zones of speaking vs no speaking unfortunately couldn't help to identify the source of the sound. 
 
 Most often locutors were filmed so it helped to detect manually who spoke but it wasn't always the case. Quite often, participant speech overlap that made the process quite difficult. There was some short onomatopoeia that were sometimes quite arbitrary to annotate or not. The end of the sentence was not always obvious with long vowels with not precise end especially during the overlap of speeches. It was made from the video and the waveform extracted from the video in an audio file. 
+
+Then you can annotate when someone is speaking. This process is very fastidious (1 week work for one hour video at the beginning and so was gave up).
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/elan_anot.jpg)
 
@@ -373,7 +375,7 @@ In this frame, we can notice that there is an overlap between the region of inte
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/otherTroubles.png)
 
-In this frame, we can see that half of the motion history from the mother couldn't be recorded since it was outside the camera view. Moreover, there is an overlap of the date with the patient frame (top). We can notice too that this window frame.
+In this frame, we can see that half of the motion history from the mother couldn't be recorded since it was outside the camera view. Moreover, there is an overlap of the date and the time with the patient frame (top). This was a big problem since the time was always changing and changed the pixels in this zone.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/dateProblem.png)
 
@@ -415,7 +417,7 @@ Unfortunately, several values equal to 0 can't be loged. They generate a -Inf va
 | All participants                         |                                          |
 | ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MotionHistoryBoxPlots.jpeg) | ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/LogMotionHistoryBoxplots.jpeg) |
 
-If we check all participants, we can see that the father and the mother motion history distribution are very similar. However, the therapist, which is always in a small window of the video with a different zoom, has a very different distribution. We have less signal on it. In some videos the patient is in this window, it explains, it intermediates position.
+If we check all participants, we can see that the father and the mother motion history distribution are very similar. However, the therapist, which is always in a small window of the video with a different zoom, has a very different distribution. We have less signal on it. In some videos the patient is in this window, it explains, it intermediates position. Consequently, we can say that the signal extracted on the therapist is not directly comparable with the signal from the other subjects. A lot very small movements are not detected by the software and leads to 0 values. These values are over-represented.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/datalogtherapist.jpg)
 
@@ -490,13 +492,7 @@ It returns synchrony CSV files that can be found [here](https://github.com/Ouphi
 
 There is not any NA in this file. Only the possible combinations are computed (eg there is not the *patient* (*pa*) in the video so, there isn't *SSI_fa_pa* signal neither any other combination with the patient).
 
-### B. Speech extraction
-#### 1. Manually
-It is possible to use the software Elan to annotate a video. You need to extract first the sound (with [Free Video Converter](http://www.freemake.com/free_video_converter/) for instance) to get a waveform and import the video and the waveform. 
-
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/elan_anot.jpg)
-
-Then you can annotate when someone is speaking. This process is very fastidious (1 week work for one hour video at the beginning and so was gave up).
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/SSImoth.jpg)
 
 #### 2. Automatically
 
@@ -510,8 +506,6 @@ We can see that the evolution of cannabis use by F1044 is not straightforward. I
 All of them with the same therapist Mrs Bastard
 
 ### Results
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/SSImoth.jpg)
-
 #### Discussion
 ##### Advantages of this database
 INCANT study was done internationally with:

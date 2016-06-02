@@ -14,7 +14,7 @@ Most of the studies are indirectly based on patient reported outcomes or problem
 It is already feasible to annotate manually videos. However, this task is tedious. It can be either very repetitive (annotation of turn-taking or non-verbal behavior) or very technical (annotation of application of some specific techniques like in motivational interviewing (Moyers et al, 2015) and a potential source of bias.
 In the future, an automatic feedback during the psychotherapy could also even help the therapists to reorganize a treatment.
 
-Here we suggest a research framework to extract automatically social signals from psychotherapy videos and test it on two database. We focus on motor synchrony considered as a predictor of psychotherapy outcome in a first study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. Varni et al. 2015 developped the [SyncPy](https://github.com/syncpy) open source python library in our lab to help researchers and practitioners to automatically analyse synchrony. It could be possible to measure synchrony even in familial therapies.
+Here we suggest a research framework to extract automatically social signals from psychotherapy videos and test it on two database. We focus on the feasability to extract motor signal and compute its synchrony since it was considered as a predictor of psychotherapy outcome in a first study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. Varni et al. 2015 developped the [SyncPy](https://github.com/syncpy) open source python library in our lab to help researchers and practitioners to automatically analyse synchrony. It could be possible to measure synchrony even in familial therapies.
 
 #### International Cannabis Need of Treatment (INCANT) study Database
 
@@ -28,7 +28,7 @@ Unfortunately, we couldn't answer to this question since the signal extracted fr
 
 Consequently, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict versus no-conflict. The main psychometric data in this database were attachment scores, i.e. a evaluation of the relationship of the subject with other people. Contrary to what was published in other studies, the difference of synchrony between the two phases (conflict vs no-conflict) was not obvious but further analyses depending on the level of conflict evaluated by external cotators and the analysis of the different profiles of attachement could lead to more positive and precise conclusions.
 
-#### Conclussion
+#### Conclusion
 
 This work led to the development of R scripts to manipulate motion history, filter it ; adaptation of Python module of SyncPy. Too our knowledge, these are the first scripts that are are published in open access to enable easy replication and further developments. We draw some recommendation to get psychotherapy material of better quality in terms of video and sound recording and psychotherapy techniques and outcomes. Furthermore, we suggest some modules that could be added to extract more social signals from other modalities and precisions.
 
@@ -145,22 +145,21 @@ It was quite difficult at the beginning to replicate the studies that were done 
 
 To avoid this lost of time, and to improve validity and replicability and improvements of our work. we tried to develop an open science approach. The synchrony computation software SyncPy developped by the team G. Varni and M. Avril was published on open source on GitHub. We decided to continue this approach to improve accessibility, transparency of this work to help future improvements. 
 
-The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship. We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts.
+The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship. We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts. Both of them are published but the MONRADO script is much more commented, organized. Data dictionnaries are more described in order to better understand the process.
 
 However, it is not possible to share the raw materials with consist of confidential psychotherapy sessions. It would be very relevant to share this material to let possibility to other team to compare this results with other softwares or modules with different goals than motion history synchrony analysis. In the research in algorithm development, some databases are shared and promoted in challenges that enable the development of the best classifier for instance. 
-
-We will describe in a IMRAD organization work on 2 databases : INCANT and MONRADO.
 
 ### INCANT Study
 
 #### Introduction
 
-Cannabis dependence psychotherapy is a important because cannabis is the most used illicit drug worldwide (Danovitch & Gorelick, 2012). This substance leads to cognitive troubles that could be harmful for studies, to find a job. Furthermore, it increases the risk of schizophrenia (Large, Sharma, Compton, Slade, & Nielssen, 2011).
+Cannabis dependence psychotherapy is important because cannabis is the most used illicit drug worldwide (Danovitch & Gorelick, 2012). This substance leads to cognitive troubles (motivation, social withdrawal) that could be harmful for learning process or to find a job. Furthermore, it increases the risk of schizophrenia (Large, Sharma, Compton, Slade, & Nielssen, 2011).
 
 ##### Cannabis addiction
 
-Cannabis dependence is defined by DMS V by:
-" A. A problematic pattern of cannabis use leading to clinically significant impairment or distress, as manifested by at least two of the following, occurring within a 12-month period:
+Cannabis dependence is defined by DMS V (Diagnostic and Statistical Manual of Mental Disorders) by:
+"A. A problematic pattern of cannabis use leading to clinically significant impairment or distress, as manifested by at least two of the following, occurring within a 12-month period:
+
 1. Cannabis is often taken in larger amounts or over a longer period than was intended.
 2. There is a persistent desire or unsuccessful efforts to cut down or control cannabis use.
 3. A great deal of time is spent in activities necessary to obtain cannabis, use cannabis, or recover from its effects.
@@ -188,23 +187,23 @@ Specify current severity:
 
 There are several researches for pharmacological intervention (agonist substitution, antagonist and modulation of other neurotransmitters pathways) but none approved nor recommended. 
 
-Psychotherapy is the better treatment accessible in 2016.  There are evidences for some of them: 
+Psychotherapy is the better treatment accessible in 2016. There are evidences for some of them: 
 
 -	Motivational Enhancement Therapy (MET or Motivational interviewing MI) and Cognitive and Behavioural Therapies (CBT) in which I am trained 
-  -Contingency Management (giving positive reinforcement to support change)
-  -Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive and much evidence based. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy(Danovitch & Gorelick, 2012).
-  -In a Cochrane review, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
+-	Contingency Management (giving positive reinforcement to support change)
+-	Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive and much evidence based. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy (Danovitch & Gorelick, 2012).
+-	In a Cochrane review, one of the most consensual Evidence Based Reviews, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
 
 
-The Incant study aimed to evaluate the efficacy of [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) a familial therapy with other treatments Treatments As Usual (TAU). Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family.
+##### MDFT and the INCANT study
 
-The MDFT is a "family based and developmentally oriented outpatient treatment for adolescent substance use disorders and associated or related problems". (Incant.eu) It was developped in Miami, US since 1985 and was evaluated in a lot of studies. It is an integrative group of interventions used in a lot of situations. In MDFT, sees the problem of cannabis consumption as a reflect of deleterious lifestyle. Consequently, the therapist targets as many life domains and problem behaviors as possible. 
+The MDFT is a "family based and developmentally oriented outpatient treatment for adolescent substance use disorders and associated or related problems". (Incant.eu) It was developped in Miami, US since 1985. It is an integrative group of interventions used in a lot of situations. In MDFT, sees the problem of cannabis consumption as a reflect of deleterious lifestyle. Consequently, the therapist targets as many life domains and problem behaviors as possible. 
 
-The INCANT study was a multi-site, trans-national randomized controlled trial lead in five countries (Belgium, France, Germany, the Netherlands, and Switzerland) aiming to compare the efficacy of the MDFT versus Individual therapy. Randomization was stratified as to gender, age and level of cannabis consumption. After a pilot sudy and a [pre-registration](http://www.incant.eu/index.php?id=10,0,0,1,0,0), it recruited 450 adolescents from 13 to 18. It showed that MDFT was more efficient than Individual Therapy (Rigter et al., 2013). It is very rare to run such an international study with high level of scientific setting in psychotherapy.
+The INCANT study was a multi-site, trans-national randomized controlled trial led in five countries (Belgium, France, Germany, the Netherlands, and Switzerland) aiming to compare the efficacy of the [MDFT](http://www.mdft.org/) versus Individual therapy. Randomization was stratified as to gender, age and level of cannabis consumption. After a pilot sudy and a [pre-registration](http://www.incant.eu/index.php?id=10,0,0,1,0,0), it recruited 450 adolescents from 13 to 18 years old. It showed that MDFT was more efficient than Individual Therapy (Rigter et al., 2013). It is very rare to run such an international study with high level of scientific setting in psychotherapy.
 
 ### INCANT Study in France
 
-We didn't collect the videos of all the centers, instead, we had access to the videos of France study, from French centers. There were 2 centers with different configurations. The videos were recorded in order to evaluate the application of MDFT principals. Technically, it was not supposed a priori that they would be used to evaluate social signal. For somes subjects, there are a lot of videos but for others, only a few were recorded.
+We didn't collect the videos of all the centers, instead, we had only access to the videos from French centers. There were 2 centers with different configurations. Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family. Technically, it was not supposed a priori that they would be used to evaluate social signal. For somes subjects, there are a lot of videos but for others, only a few were recorded.
 
 ### Material and methods
 #### Videos
@@ -231,7 +230,7 @@ We didn't collect the videos of all the centers, instead, we had access to the v
 * [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) Annotation software use for the essay of annotation
 * [Lucidchart](https://www.lucidchart.com/) (figures)
 
-* [Mou](http://25.io/mou/) : Markdown editor
+* [Typora](http://www.typora.io/) : Markdown editor
 * [Git](https://en.wikipedia.org/wiki/Git_%28software%29)
   * [GitHub website](https://github.com/Ouphix/synchro-psychotherapies) public version control repository
 
@@ -264,7 +263,7 @@ All the evolutions of this scores subject by subject are represented [here](http
 
 #### Pilot study: F1044 subject, his father, mother and therapist
 
-We decided to make a pilot study on the most complete subject out of the 32 patients in order to evaluate the feasbaility of the concept and developp the process especially the R scripts. We chose the F1044 subject since we have the most videos (18 videos) with him or his family.
+We decided to make a pilot study on the most complete subject out of the 32 patients in order to evaluate the feasability of the concept and to developp the process especially the R scripts. We chose the F1044 subject since we have the most videos (18 videos) with him or his family.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/Numberparticipants.png)
 
@@ -275,12 +274,10 @@ We can ask ourselves if this subject representative:
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/therapist.png)
 
 * The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. 
-
 * Two centers were included. This patient come from the main center.
-
 * We have all our [psychometrics evaluations](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) (cannabis consumption : initial, 3m, 6m, 9m, 12m).
 
-Unfortunately, the first, second, 10th and 11th videos were lost. 
+Consequently, we can say that this subject is very representative of the sample. Unfortunately, the first, second, 10th and 11th videos were lost. 
 
 Furthermore, when we got the cannabis consumption evolution, we saw that the efficacy of the psychotherapy was not very clear and the evolution of it wasn't straitforward. Consequently, if our hypothesis of good synchrony or good evolution of synchrony as predictor of good quality of psychotherapy was good, we couldn't really expect any of these results in the F1044 subject when we see the objective evolution of the psychotherapy. 
 
@@ -288,55 +285,53 @@ Furthermore, when we got the cannabis consumption evolution, we saw that the eff
 
 ### Description of the database
 
-#### Social signal extraction
+#### Different steps of the social signal extraction
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
 This figure summarize the databases we collected (dark blue), differents steps that were done (blue and light blue) and some suggestions (yellow) that could enable to extract social signal from psychotherapy videos.
 
 ##### Verbal signal extraction to compute verbal synchrony
 
-We began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the speaking of each participants.  We used [Free Video Converter](http://www.freemake.com/free_video_converter/) to get a waveform and import the video and the waveform. This waveform helped me to identify the zones of speaking vs no speaking unfortunately couldn't help to identify the source of the sound. 
+We began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the speaking of each participants.  We used [Free Video Converter](http://www.freemake.com/free_video_converter/) to get a waveform and import the video and the waveform. This waveform helped me to identify the period of speaking versus no speaking unfortunately couldn't help to identify the source of the sound. 
 
 Most often locutors were filmed so it helped to detect manually who spoke but it wasn't always the case. Quite often, participant speech overlap that made the process quite difficult. There was some short onomatopoeia that were sometimes quite arbitrary to annotate or not. The end of the sentence was not always obvious with long vowels with not precise end especially during the overlap of speeches. It was made from the video and the waveform extracted from the video in an audio file. 
 
-Then you can annotate when someone is speaking. This process is very fastidious (1 week work for one hour video at the beginning and so was gave up).
+Then you can annotate when someone is speaking. This process is very fastidious (1 week work for one hour video at the beginning and so was gave up). Even when speaking with more trained annotators, the productivity is not much better.
+
+For the moment, when we focus on this strategy, it is often necessary to extract manually some features even because of the lack of automatic process or in case of development, training and evaluation of these tools.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/elan_anot.jpg)
 
-Consequently, this process was very laborious. It was possible to annotate one hour of video with a whole week work.
-
-We tried to find ways to make source separation automatic even if it couldn't be perfect. We found the [FASST software](http://bass-db.gforge.inria.fr/fasst/) that is very powerful to separate sounds coming from different music instruments. However, even if the source sepration of several music instruments is very efficient, diferenciating automatically two voices at the moment is too difficult. We contacted the author of this software and this material is to difficult to separate at the moment since two voices are not so much different from two different music instruments. 
+We tried to find ways to make source separation automatic even if it couldn't be perfect. We found the [FASST software](http://bass-db.gforge.inria.fr/fasst/). It is very powerful in order to separate sounds coming from different music instruments. However, even if the source separation of several music instruments is very efficient, diferenciating automatically two voices at the moment is too difficult. We contacted the author of this software. He told us that this material is to difficult to separate at the moment since two voices are much more similar than two different music instruments. 
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/fasst.jpg)
 
 Example of source separation using FASST on a music sample.
 
-However, this separation problem can be anticipated. It could be made during the recording of the video with several mikes that could be small tie mikes attached on each participant.
-
-For the moment, when we focus on this strategy, it is often necessary to extract manually some features even because of the lack of automatic process or in case of development, training and evaluation of these tools.
+However, this separation problem can be anticipated during the recording of the videos. Several tie-mikes could be atached to each participant.
 
 Consequently, we decided to give up this approach.
 
 ##### Spatial organisation
-In the first center, psychotherapy sessions consisted of filmed familial psychotherapies with 2 to 5 peoples organized in a circle.
-Two participants of the psychotherapy were filmed from the front. Another subject (often the therapist) is filmed from the other side. Its video is embedded in a window. We can notice taht in this video, there isn't the patient but his two parents since he which wasn't motivated enough to come in this session. It is still possible to do a pschotherapy with this settings since we consider the communication and the attitude of each member of the family and we don't consider only the patient.
+In the first center, psychotherapy sessions consisted of filmed familial psychotherapies with 2 to 5 peoples organized in a circle. They are in samm room with a two-way mirror. Behind it, there is the supervisor of the psychotherapist that can call the therapist to give her some advice. The family is aware of this oragnization but this supervisor is not seen or known by them.
+Two participants of the psychotherapy were filmed from the front. Another subject (often the therapist) is filmed from the other side. Its video is embedded in a window. We can notice that in this video, there isn't the patient but his two parents since he which wasn't motivated enough to come in this session, which is not so problematic from a theoretical point of view in systemic therapies. It is still possible to do a pschotherapy with this settings since we consider the communication and the attitude of each member of the family and we don't consider only the patient.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/DifferentConfigurations.jpeg)
 
-In this barplot of the mean motion history for each subject for each video, we can see that the configurations of the participants involved for the F1044 subject for each video. There is between 2 and 3 participants. Alle these configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy. Consequently, it was very difficult to compare the synchrony between different configurations. There is never the 4 participants involved. In some videos, we don't have any information from the therapist because she isn't filmed. The patient is not very present in the therapy (because of compliance).
+TODO : change to True/false plot
+
+In this barplot of the mean motion history for each subject for each video, we can see the configurations of the participants involved for the F1044 subject for each video. These configurations can be very different. There are between 2 and 3 participants. All these configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy. Consequently, it was very difficult to compare the synchrony between different configurations. We can never get the information from the all 4 participants involved at the same time even if they are all involve like in D2 video since the psychotherapist wasn't filmed because of technicall reasons. In some videos, we don't have any information from the therapist because she isn't filmed. The patient is not very present in the therapy (because of compliance).
 
 When we sum up the data we get, we can see that the mother and the therapist are the most present participants.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/AvailableData.jpeg)
 
-Of course, the therapist is always present in the sessions but sometimes due to technicall difficulties she can't be filmed.
-
 ##### Time organization
 Video length could were very different because it was necessary to reorganize them. 
 
-However, we couldn't use the raw database. It was necessary to cut the videos with [Quicktime](https://en.wikipedia.org/wiki/QuickTime) software since a phone was used during the psychotherapy to communicate between the main psychotherapist and the supervisor and the therapy stopped at that moment. Sometimes, the participants made some pauses or the same video was used for different patient.
+However, we couldn't use the raw database. It was necessary to cut the videos with [Quicktime](https://en.wikipedia.org/wiki/QuickTime) software since a phone was used during the psychotherapy to communicate between the main psychotherapist and the supervisor behing a two-way mirror and the therapy stopped at that moment. Sometimes, the participants made some pauses or the same video was used for different patient.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/lengthVideoF1044.png)
 
@@ -350,18 +345,20 @@ Here is an example of the father (eyes blurred to keep anonymity).
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png)
 
-It was suggested to take a mean image of the video to verlap the different configuration of the subjects on one video to be more precise during the spacial segmentation instead of taking a frame from the beginning of the video.
+It was suggested to take a mean image of the video to superimpose the different configurations of the subjects on one video to be more precise during the spacial segmentation instead of taking a frame from the beginning of the video.
 
-It would be much more relevant to extract the exact 3D position of the skeleton instead of the raw pixel. This can be extracted quite easily by a [kinect](http://www.xbox.com/fr-FR/xbox-one/accessories/kinect-for-xbox-one). In a complex setting like this, it could be usefull to use even several kinects for each side of the room or even better for each subject. A lot of other features could be extracted but the volume of this data can be very heavy with several megabytes by minute of video. This is much more difficult technicall difficulties to be handle by the clinicians team during the recording, especiall the synchronisation of the different cameras but would be much more relevant than raw videos alone. Some algorithm can extract relevant social signal from videos were they are recorded from the front (smiles, emotions, direction of the head (Hupont, Baldassarri, & Cerezo, 2012 ; Torre et al., 2015).
+It would be much more relevant to extract the exact 3D position of the skeleton instead of the raw pixel. This can be extracted quite easily by a [kinect](http://www.xbox.com/fr-FR/xbox-one/accessories/kinect-for-xbox-one). In a complex setting like this, it could be usefull to use even several kinects for each side of the room or even better for each subject. A lot of other features could be extracted but the volume of this data can be very heavy with several megabytes by minute of video. This is much more difficult technicall difficulties to be handle by the clinicians team during the recording, especially the synchronisation of the different cameras but would be much more relevant than raw videos alone. Some algorithm can extract relevant social signal from videos were they are recorded from the front (smiles, emotions, direction of the head (Hupont, Baldassarri, & Cerezo, 2012 ; Torre et al., 2015).
 
 #### 2. Make a mask for each relevant part of each video with Paintbrush
 We selected a part of the video with each participant (father, mother, patient, therapist) with [*Paintbrush*](http://paintbrush.sourceforge.net/). We took only the upper part of the body of each subject to compare them since you can see only the upper part of the therapist. Consequelty, we had one mask for each participant, so beween 2 and 3 masks for each video.
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png)
+
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/F1044C1paint.mov.avi.father.jpg)
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/F1044C1.mov.avi.father.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/segmentation.png)
 
 #### Technical problems
 
@@ -375,11 +372,11 @@ In this frame, we can notice that there is an overlap between the region of inte
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/otherTroubles.png)
 
-In this frame, we can see that half of the motion history from the mother couldn't be recorded since it was outside the camera view. Moreover, there is an overlap of the date and the time with the patient frame (top). This was a big problem since the time was always changing and changed the pixels in this zone.
+In this frame, we can see that half of the motion history from the mother couldn't be recorded since it was outside the camera view. Moreover, there is an overlap of the date and the time with the patient frame (top). 
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/dateProblem.png)
 
-In this frame, we can see that the date is overlapping with the therapist.
+In this frame, we can see that the date is overlapping with the therapist. This was a big problem since the time was always changing and changed the pixels in this zone.
 
 Sometimes, the camera is moving during the film. Obviously, this leads to a shift of pixel and consequently a signal of motion history even if nobody is moving. Consequently, it is very important to keep a motion less camera or cameras.
 
@@ -470,27 +467,27 @@ The representation of the mean motion by minute enable to detect high change of 
 
 To compute synchrony SyncPy used the amplitude (difference between min and max. The baseline levels (min) are not relevant to compute synchrony.
 
+In this configuration, the patient is embeded in the window, the mother and father are in front of the main camera. The therapist isn't filmed.
 
+We downloaded and installed [SyncPy](https://github.com/syncpy/SyncPy).
 
-We expected that the signal to fluctuate between 0 and 1. However, we can see that there is signal only between the participants 
-
-we don't have much signal in this video.
+We adapted the script [Call_S_Estimator.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Call_S_Estimator.py) that must be installed in Syncpy installation in examples folder. We used this script because we had continuous data and tried to compute synchrony between more than two subjects.We created a folder *SynchronyCSV* in this folder.
 
 The script in [Python](https://www.python.org/), [Call_S_Estimator.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Call_S_Estimator.py) takes this filtered motion data and compute a synchrony score for each association possible of two or more subjects.
-
-Download and install [SyncPy](https://github.com/syncpy/SyncPy).
-
-We adapted the script [Call_S_Estimator.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Call_S_Estimator.py) must be installed in Syncpy installation in examples folder. Create a folder *SynchronyCSV* in this folder.
 
 **You need to specify, **
 
 - the folder where you put your data (eg dataFolder = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/') 
-
-- the list of videos you want to analyze, (eg VideoList = ["F1044C.VOB", "F1044D1.VOB", "F1044D2.VOB", "F1044E.VOB", "F1044F.VOB", "F1044G.VOB", "F1044H.VOB", "F1044I.VOB", "F1044L.VOB", "F1044M1.VOB", "F1044M2.VOB", "F1044N.VOB", "F1044O.VOB", "F1044P.VOB", "F1044Q.VOB", "F1044R1.VOB", "F1044R2.VOB"])
-
-- the number of frames used in an interval to compute synchrony, Nota bene, there are 25 frames by second. (eg. numberOfFramesByInterval = 25*10)
+- The cvs files are automatically detected from this folder and S_estimator is used on them.
+- the number of frames used in an interval to compute synchrony, Nota bene, there are 25 frames by second. (eg. numberOfFramesByInterval = 25*10). We chose this parameter since it seems to be clinically relevant but other parameters could be tested.
 
 This process is relatively long and can take several minutes, especially with short intervals.
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/synchrony.jpg)
+
+We expected that the signal to fluctuate between 0 and 1. However, we can see that the signal fluctuate only beween 0 and 0.25 with a lot of synchrony scores very low around 0. The synchrony scores are better with the subjects in front of the main camera i.e. the mother and the father in this configuration.
+
+When we tried to check what could be the relevance of this signal, since the psychotherapy wasn't very operationnalized, it was difficult to match the two. We contacted the INCANT team o 
 
 It returns synchrony CSV files that can be found [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/SynchronyCSV).
 
@@ -506,21 +503,23 @@ It returns synchrony CSV files that can be found [here](https://github.com/Ouphi
 
 There is not any NA in this file. Only the possible combinations are computed (eg there is not the *patient* (*pa*) in the video so, there isn't *SSI_fa_pa* signal neither any other combination with the patient).
 
+We can evaluate the evolution of the synchrony for a dyad or tryad through the evolution of the psychotherapy. Here it is represented hrough the whole therapy. Sometimes, there wasn't any data because the configuration didn't enable that. We can notice that is not obvious to evaluate and compare the synchrony of a dyad if it is alone or with other participants since the interaction could be different.
+
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/SSImoth.jpg)
 
-#### 2. Automatically
+We saw that the evolution of cannabis use of F1044 is not straightforward. It is quite high at the beginning, decreases and then increases. Consequently, we couldn't evaluate of the dynamic of the synchrony could be a predictor of the psychotherapy and the consumption of cannabis since this ast dynamic wasn't clear. 
 
-We can see that the evolution of cannabis use by F1044 is not straightforward. It is quite high at the beginning, decreases and then increases. Consequently, we decided to select 4 subjects with a clear decrease of cannabis consumption.
+We decided to select 4 subjects with a clear decrease of cannabis consumption, we expected that this better dynamic could give clearer results.
 
 * F1002, patient, 3 videos
 * F1073, patient, 2 videos
 * F1069, patiente, 4 videos
 * F1101, patient, 3 videos
 
-All of them with the same therapist Mrs Bastard
+All of them with the same therapist Mrs Bastard. However, we had problems with the conversion of the files from VOB to AVI. The number of videos from this families were much lower, to evaluate a dynamic could even more challenging. Since, we got a better database with less technicall problems on it and a experimental setting, we decided to switch to it to further developp the concept.
 
-### Results
-#### Discussion
+#### Conclusion
+
 ##### Advantages of this database
 INCANT study was done internationally with:
 
@@ -534,10 +533,7 @@ INCANT study was done internationally with:
 
 #### Limits of this database
 #### Experimental set-up
-It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. 
-We could suggest to have a much more defined psychotherapy and even before studying a psychotherapy to study specific situations : open vs closed questions,
-
-A much more operrationnalized psychotherapy like motivational interviewing could be useful. This kind of psychotherapy can be rated with the degree of adherence of the psychotherapist to the principles of the therapy. Consequently, we could compare two quantitative variables that will reflect the quality of the psychotherapy at a more precise moment instead of a more general outcome.
+It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. A much more operrationnalized psychotherapy like motivational interviewing could be useful. This kind of psychotherapy can be rated with the degree of adherence of the psychotherapist to the principles of the therapy like the MITI. Consequently, we could compare two quantitative variables that will reflect the quality of the psychotherapy at a more precise moment instead of a more general outcome.
 
 ##### Technical discussions
 In a lot of other domains of fundamental algorithm development, computer labs compete on public databases developped for a specific purpose to develop algorithm for the detection of some features for instance. This work are presented during [challenge sessions](http://sspnet.eu/avec2011/) in congresses. However, there is a problem with confidentiality when we deal with psychotherapy videos.
@@ -546,7 +542,7 @@ It would be better to have a more experimental set up to improve this problems, 
 
 It seems that it would be very important to have several devices (camera, kinect, mikes). This leads to a problem that wasn't raised in this set up since there was only one camera. In case, of several devices, it is very important that all of them are synchronized.
 
-Multi person : not the majority of psychotherapy more often filmed for supervision and educational use.
+To begin to work in a multiperson psychotherapy was theorcally possible and the team developped scripts for that on SyncPy (S_Estimator) however, it is much more challenging that evaluate the synchrony of the dyad since the configuration needs to be comparable, the subject musn't overlap and must be filmed in the same conditions (zoom).
 
 ## MONRADO study
 ### Aim of the study

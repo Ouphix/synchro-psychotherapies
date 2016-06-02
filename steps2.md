@@ -439,10 +439,6 @@ I filtered motion history raw data with a [R](https://www.cran.r-project.org/) f
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/MeanMotionByTime.jpg)
 
-| Sliding interval (raw Data)              | Sliding interval (log Data)              |
-| ---------------------------------------- | ---------------------------------------- |
-| ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanMotionHistory%28Sliding5framesinterval_raw_data%29on%20F1044C1_first_10_seconds.jpeg) | ![Content Cell](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanMotionHistory%28Sliding5framesinterval_log_data%29on%20F1044C1_first_10_seconds.jpeg) |
-
 ##### Headers :
 
 - **video** : name of the video (eg F1044C.VOB)
@@ -451,22 +447,40 @@ I filtered motion history raw data with a [R](https://www.cran.r-project.org/) f
 - **slidedMother** : idem for mother
 - **slidedTherapist** : idem for therapist
 - **slidedPatient** : idem for patient
+- idem with log TODO
 - **NA** : corresponding to absent subject
 
-It is possible to change the size of interval to change the ration signal/noise
+| Sliding interval (filtered raw Data)     | Sliding interval (filtered log Data)     |
+| ---------------------------------------- | ---------------------------------------- |
+| ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanMotionHistory%28Sliding5framesinterval_raw_data%29on%20F1044C1_first_10_seconds.jpeg) | ![Content Cell](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanMotionHistory%28Sliding5framesinterval_log_data%29on%20F1044C1_first_10_seconds.jpeg) |
+
+It is possible to change the size of interval to change the ration signal/noise.
+
+We can see that there is a shift of the therapist motion history even in the filtered raw data. It is possible that the noise on this small window makes decrease the signal/noise ratio.
 
 Bad quality of first frames at the beginning or end of the videos with NA were deleted to prepare the next script analysis.
 
  The number of frames is changed since it is necessary to get frames before and after the index.
 
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/meanMotion.jpg)
+
+The representation of the mean motion by minute enable to detect high change of motion history that could be the reflect of movement of all persons in the scene.
+
 ##### 4. Computing synchrony score with this filtered motion data
-Amplitude (difference between min and max) and baseline levels (min) are not relevant to compute synchrony.
+
+To compute synchrony SyncPy used the amplitude (difference between min and max. The baseline levels (min) are not relevant to compute synchrony.
+
+
+
+We expected that the signal to fluctuate between 0 and 1. However, we can see that there is signal only between the participants 
+
+we don't have much signal in this video.
 
 The script in [Python](https://www.python.org/), [Call_S_Estimator.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Call_S_Estimator.py) takes this filtered motion data and compute a synchrony score for each association possible of two or more subjects.
 
 Download and install [SyncPy](https://github.com/syncpy/SyncPy).
 
-The script [Call_S_Estimator.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Call_S_Estimator.py) must be installed in Syncpy installation in examples folder. Create a folder *SynchronyCSV* in this folder.
+We adapted the script [Call_S_Estimator.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Call_S_Estimator.py) must be installed in Syncpy installation in examples folder. Create a folder *SynchronyCSV* in this folder.
 
 **You need to specify, **
 

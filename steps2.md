@@ -557,6 +557,7 @@ The aim of the study was to evaluate the response to conflict in a dyad of a par
 Consequently, from these videos, we can extract easily two phases : without then with conflict.
 
 ##### Configuration
+
 The participants are two in front of the camera. We can see that the quality of the video is much better. There is not overlap between the subject. There isn't embedded subjects. There is not any date embedded.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.jpg)
@@ -565,9 +566,17 @@ The participants are two in front of the camera. We can see that the quality of 
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png)
 
+##### Selection of relevant videos
+
+In order to match the psychometric data which was more important and the videos, we decided to clean the database to delete the copies and keep the data with psychometric informations. We decided to delete a video with a different configuration with the two parents.
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/FlowchartMonrado.jpeg)
+
+
+
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/configuration.jpeg)
 
-The configuration in the different videos are very similar. There is only one video with 3 persons.
+The configuration in the different videos are very similar. There is only one video with 3 persons which was excluded.
 
 #### Psychometric data
 * It consist of one excel file with:
@@ -621,9 +630,6 @@ BDI Score
 #### Description of the database
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
 * They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
-
-##### Selection of relevant videos
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/FlowchartMonrado.jpeg)
 
 ##### Length of the videos
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/LengthVideoMONRADO.jpeg)

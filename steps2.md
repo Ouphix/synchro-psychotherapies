@@ -565,7 +565,7 @@ The participants are two in front of the camera. We can see that the quality of 
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png)
 
-
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/configuration.jpeg)
 
 The configuration in the different videos are very similar. There is only one video with 3 persons.
 
@@ -579,7 +579,12 @@ The configuration in the different videos are very similar. There is only one vi
   * STAIYA Score
   * BDI score
 
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/age.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Birth%20places.jpg)
+
 ##### Attachment style
+
 Attachment theory is a psychological model that tries to describe the dynamics of short and long-term relationships between humans. 
 
 The Attachment Style Interview for Adolescents (ASI-AD) seems to be user-friendly, transparent and reliable measure?
@@ -596,8 +601,9 @@ After a contact with the MONRADO team, we clustered the attachments styles in 3 
 * Secure
 * Fearful-Enmeshed (FE)
 * Withdrawn
-
 * DUAL were excluded
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Attachement%20styles%20clusters.jpg)
 
 ##### TAS Score
 The Alexithymie
@@ -607,6 +613,10 @@ M.P. Marchand et G. Loas (1994).
 
 ##### STAIYA Score
 The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation of Anxiety. It is one of the most used Anxiety questionnaire. It dissociate the anxiety at a precise moment (state) and the habitual anxiety of the subject (trait). It  was evaluated on more than 5000 subjects.
+
+BDI Score
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/BDI%20total-hist.jpg)
 
 #### Description of the database
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
@@ -620,11 +630,44 @@ The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation
 
 We can see that the videos are very similar.
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Demographic%20description.jpg)
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/attachment.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20by%20frame%20box%20plots%20%28raw%20data%29-1.jpg)
+
+boxplots no log
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/SI.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29%2C%20all%20videos-1.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29-1.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictMH-small.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictSSI-small.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Number%20of%20Available%20%28True%29%20and%20Not%20Available%20%28False%29%20data%20for%20each%20participant.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/STAIYA.jpg)
+
+TODO : histogram
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/STAIYB.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/TAS.jpg)
+
+Normal vs pathologic
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/raw%20Global%20motion%20history%20by%20situation%20%3A%20conflict%20vs%20no%20conflict.jpg)
+
+log before mean not after it
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/motion%20attachementStyles.jpg)
 
 ##### Technical problems
+
+
+
 None
 There was only one video which never moved. There wasn't any date. There was very few overlap of the subjects.
 
@@ -660,6 +703,8 @@ gaze direction
 optic flow and trajectories
 
 actimetry
+
+Level of conflict
 
 ## Discussion
 

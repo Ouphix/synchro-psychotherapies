@@ -385,7 +385,7 @@ We can see that the video are very comparable. THere is a shorter video in which
 ## Length of the videos in number of frames
 ```{r length number of frames, echo=FALSE, cache=FALSE, eval=TRUE}
 barplot(table(data$family), col="cornflowerblue", cex.axis=0.6, cex.names=0.5, cex.lab=0.8,
-        main="Number of frames in each 00034 video", cex.main=0.8, ylab="Frame number", 
+        main="Number of frames in each 00034 video (barplot)", cex.main=0.8, ylab="Frame number", 
         names = families, xlab="Video Name", las=2)
 ```
 
@@ -398,7 +398,7 @@ tab
 
 par(mar=c(4,4,2,1))
 barplot(tab, cex.axis = 0.7, las=2, names=ParticipantsList, 
-  main="Number of available data by participant", 
+  main="Number of available data by participant (barplot)", 
   beside=TRUE, las=1, col=terrain.colors(2), ylim=c(0,9E5), ylab="Number of frames", xlab="Participant")
 legend("topleft", c("T", "F"), fill=terrain.colors(2), cex=0.8)
 ```
@@ -468,9 +468,9 @@ legend("top", inset=.05, ParticipantsList,
 ## Motion history histogram by frame (raw data), all videos
 ```{r Motion history histogram by frame (raw data), all videos, echo=FALSE, cache=FALSE, eval =TRUE, fig.height=3.5}
 par(mar=c(5,4,2,1))
-hist(data$father, col="blue", main="histogram of father motion history")
-hist(data$mother, col="red", main="histogram of mother motion history")
-hist(data$child, col="green", main="histogram of child motion history")
+hist(data$father, col="blue", main="Histogram of father motion history")
+hist(data$mother, col="red", main="Histogram of mother motion history")
+hist(data$child, col="green", main="Histogram of child motion history")
 ```
 The motion history is not normal at all. Most of motions are very small but some of them are much big (long tail). This is very usual with this algorithm extraction motion history.
 
@@ -490,9 +490,9 @@ The subjects data distribution are very similar.
 
 ```{r Motion history histogram by frame (raw data), fig.height=3 }
 par(mar=c(4,4,2,2))
-hist(data$logFather, col="blue", las=1, xlab="Log of father motion history")
-hist(data$logMother, col="red", las=1, xlab="Log of mother motion history", cex.axis=0.7)
-hist(data$logChild, col="green", las=1, xlab="Log of child motion history", cex.axis=0.7)
+hist(data$logFather, col="blue", las=1, main="Histogram of log of father motion history")
+hist(data$logMother, col="red", las=1, xlab="Histogram of log of mother motion history", cex.axis=0.7)
+hist(data$logChild, col="green", las=1, xlab="Histogram of log of child motion history", cex.axis=0.7)
 ```
 
 When doing the log, we almost normalized the distribution.
@@ -505,7 +505,7 @@ par(mar=c(4,4,3,2))
 boxplot(data$logFather, data$logMother, data$logChild, 
         col=colOrderList, 
         names=ParticipantsList, 
-        main= "Motion history by frame box plots (raw data), 
+        main= "Motion history by frame box plots (log data no filtered), 
         all videos", las=1, xlab="Participants", ylab="Motion history")
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
@@ -553,7 +553,7 @@ MeanMotionlog <- data.frame(MeanMotionNoConflict, MeanMotionConflict, names=c("f
 MeanMotion
 
 par(mar=c(5,4,4,1))
-barplot (as.matrix(MeanMotionlog[,1:2]), beside=TRUE, ylab= "Log of Mean Motion history", col=colOrderList, names.arg=c("No conflict", "Conflict"), main = "Log of Mean Motion history for each participant 
+barplot (as.matrix(MeanMotionlog[,1:2]), beside=TRUE, ylab= "Mean of Motion history", col=colOrderList, names.arg=c("No conflict", "Conflict"), main = "Log of Mean Motion history for each participant 
          without and with conflict")
 legend("top", inset=.02, ParticipantsList, 
        fill=colOrderList, cex=0.6)
@@ -595,14 +595,14 @@ for (i in attachementStyles){
       #print (MeanMotionNoConflict)
       #print (MeanMotionConflict)
       
-      par(mar=c(5,4,4,1))
+      par(mar=c(2.5,4,4,1))
       barplot (MeanMotionNoConflict, beside=FALSE, ylab = "Mean Motion history", col=colOrderList, main=paste("Mean Motion history for each participant 
                without conflict, attachement cluster", i))
       par(mar=c(1,0.5,0.5,1))
       legend("top", inset=.05, ParticipantsList, 
              fill=colOrderList, cex=0.7)
       
-      par(mar=c(5,4,4,1))
+      par(mar=c(2.5,4,4,1))
       barplot (MeanMotionConflict, beside=TRUE, ylab = "Mean Motion history", col=colOrderList, main=paste("Mean Motion history for each participant 
                with conflict, attachement cluster", i))
       par(mar=c(1,0.5,0.5,1))
@@ -701,7 +701,7 @@ for (i in 1:NumberOfvideos){
       plot ((1:length(fatherMinute)/6), fatherMinute, type="l", col="blue", 
       main=paste("Mean motion history (non overlaping 10 sec intervals) 
       on ", families[i], " video" , sep=""), 
-      ylab="Motion history", xlab="Time (minute)", ylim=c(0, 25E-03), las=2,
+      ylab="Motion history", xlab="Time (minute)", ylim=c(0, 35E-03), las=2,
       xaxp=c(0, (round(length(fatherMinute)/6)), round((length(fatherMinute)/6))))
       lines((1:length(fatherMinute)/6), motherMinute, col="red")
       lines((1:length(fatherMinute)/6), childMinute, col="green")
@@ -784,7 +784,7 @@ SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator", full.
 SSIlog <- data.frame(video="Name")
 for (file in SSIlogFilesList){
     SSIalone <- read.csv(file)
- #   print(str(SSIalone))
+    print(str(SSIalone))
     SSIlog <- rbind.fill(SSIlog, SSIalone)}
 str(SSIlog)
 SSIlog$video <- as.factor(SSIlog$video)
@@ -804,7 +804,7 @@ for (file in SSInoLogFilesList){
 SSInoLog$video <-as.factor(SSInoLog$video)
 SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
 SSInoLog$Interval <- NULL
-SSInoLog <- rename (SSIlog, c("video" = "family"))
+#SSInoLog <- rename (SSIlog, c("video" = "family"))
 SSInoLog <- rename (SSIlog, c("X" = "SSI-interval"))
 #SSInoLog$action <- rep(NA, nrow(SSInoLog))
 #SSInoLog[which(video == & timeMin==)]$action
@@ -883,15 +883,14 @@ mean(SSIConflict, na.rm=TRUE)
 
 SSINoConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch)
 mean(SSINoConflict, na.rm=TRUE)
-
 ```
 
 # Demographic and Psychometric data
 ## Demographic description
 ### Sex
-```{r Demographic description, eval=FALSE}
+```{r Demographic description, eval=TRUE}
 par(mar=c(3,4,4,4))
-barplot(table(psycho$Sex), col=c("red", "blue"), main ="Sex repartition")
+barplot(table(cutFrames$ChildSex), col=c("red", "blue"), main ="Sex repartition, boxplot")
 ```
 
 ### Age
@@ -903,13 +902,13 @@ str(psycho$interview_date)
 psycho$age <- (psycho$interview_date-psycho$Birthday)/365.25
 
 par(mar=c(3,4,4,4))
-hist(as.numeric(psycho$age), col="green", main="Age of the teenagers")
+hist(as.numeric(psycho$age), col="green", main="Histogram of the age of the teenagers")
 ```
 
 ### Birth places
 ```{r Birth places, fig.height=4}
 par(mar=c(5,4,4,4))
-barplot(sort(table(psycho$Birth_place), decreasing = TRUE ), las=2, cex.names=0.5, main="Birth place", col="yellow")
+barplot(sort(table(psycho$Birth_place), decreasing = TRUE ), las=2, cex.names=0.5, main="Barplot of the Birth places", col="yellow")
 ```
 
 ## Attachement styles
@@ -921,14 +920,8 @@ barplot(table(psycho$attachement_style), las=2, cex.names=0.6, col="blue")
 
 ### Clusters
 ```{r Attachement styles clusters, fig.height=4}
-par(mar=c(5,3,3,3))
-barplot(table(psycho$attachement_cluster), las=2, cex.names=0.6, col="cornflowerblue", main="Attachement style after clustering")
-```
-
-## Insecurity level
-```{r Insecurity level, fig.height=4}
-par(mar=c(9,5,3,3))
-barplot(table(psycho$insecurite_level), las=2)
+par(mar=c(4,3,3,3))
+barplot(table(psycho$attachement_cluster), las=2, cex.names=0.6, col="cornflowerblue", main="Bar plot of attachement style after clustering")
 ```
 
 ## TAS
@@ -936,29 +929,29 @@ barplot(table(psycho$insecurite_level), las=2)
 par(mar=c(3,3,3,3))
 barplot(table(psycho$TAS_total), las=2, col="orange", main="Distribution of the TAS scores", cex.name=0.9)
 
-hist(psycho$TAS_total, las=1, col="orange", main="Distribution of the TAS scores")
+hist(psycho$TAS_total, las=1, col="orange", main="Histogram of the TAS scores")
 ```
 
 ## STAIYA
 ```{r STAIYA, fig.height=4}
 par(mar=c(3,3,3,3))
-barplot(table(psycho$STAIYA_total), las=2, col="blue", main="Distribution of the STAIYA scores")
+barplot(table(psycho$STAIYA_total), las=2, col="blue", main="Barplot of the STAIYA scores")
 
-hist(psycho$STAIYA_total, las=1, col="blue", main="Distribution of the STAIYA scores")
+hist(psycho$STAIYA_total, las=1, col="blue", main="Histogram of the STAIYA scores")
 ```
 
 ## STAIYB
 ```{r STAIYB, fig.height=4}
 par(mar=c(3,3,3,3))
-barplot(table(psycho$STAIYB_total), las=2, col="red", main="Distribution of the STAIYB scores")
+barplot(table(psycho$STAIYB_total), las=2, col="red", main="Barplot of the STAIYB scores")
 
-hist(psycho$STAIYB_total, las=1, col="red", main="Distribution of the STAIYA scores")
+hist(psycho$STAIYB_total, las=1, col="red", main="Histogram of the STAIYA scores")
 ```
 
 ## BDI total
 ```{r BDI total, fig.height=4}
 par(mar=c(3,3,3,3))
-barplot(table(psycho$BDI_total), las=2, col="green", main="Distribution of the BDI scores")
+barplot(table(psycho$BDI_total), las=2, col="green", main="Barplot of the BDI scores")
 
-hist(psycho$BDI_total, las=1, col="green", main="Distribution of the BDI scores")
+hist(psycho$BDI_total, las=1, col="green", main="Histogram of the BDI scores")
 ```

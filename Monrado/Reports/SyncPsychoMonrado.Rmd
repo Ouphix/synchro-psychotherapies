@@ -877,12 +877,16 @@ SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle1Min & SSInoLog$Time_min < 
 
 SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
 
-
-SSIConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_mo_ch)
+SSIConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_fa_ch)
 mean(SSIConflict, na.rm=TRUE)
 
-SSINoConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch)
+SSINoConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_fa_ch)
 mean(SSINoConflict, na.rm=TRUE)
+
+SSIDUal <- c(mean(SSIConflict, na.rm=TRUE), mean(SSINoConflict, na.rm=TRUE))
+SSIDUal
+barplot(SSIDUal, names.arg = c("No conflict", "Conflict"), col="cornflowerblue", main="Comparaison between SSI without 
+Conflict and with Conflict")
 ```
 
 # Demographic and Psychometric data
@@ -891,6 +895,7 @@ mean(SSINoConflict, na.rm=TRUE)
 ```{r Demographic description, eval=TRUE}
 par(mar=c(3,4,4,4))
 barplot(table(cutFrames$ChildSex), col=c("red", "blue"), main ="Sex repartition, boxplot")
+prop.table(table(cutFrames$ChildSex))
 ```
 
 ### Age
@@ -900,11 +905,12 @@ psycho$interview_date <- as.Date(psycho$interview_date, format="%d/%m/%y")
 str(psycho$Birthday )
 str(psycho$interview_date)
 psycho$age <- (psycho$interview_date-psycho$Birthday)/365.25
+psycho$age <- as.numeric(psycho$age)
 
 par(mar=c(3,4,4,4))
-hist(as.numeric(psycho$age), col="green", main="Histogram of the age of the teenagers")
+hist(psycho$age, col="green", main="Histogram of the age of the teenagers")
 str(psycho$age)
-mean(psycho$age)
+sd(psycho$age)
 ```
 
 ### Birth places
@@ -924,6 +930,7 @@ barplot(table(psycho$attachement_style), las=2, cex.names=0.6, col="blue")
 ```{r Attachement styles clusters, fig.height=4}
 par(mar=c(4,3,3,3))
 barplot(table(psycho$attachement_cluster), las=2, cex.names=0.6, col="cornflowerblue", main="Bar plot of attachement style after clustering")
+prop.table(table(psycho$attachement_cluster))
 ```
 
 ## TAS

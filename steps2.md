@@ -489,15 +489,17 @@ The script in [Python](https://www.python.org/), [Call_S_Estimator.py](https://g
 - The cvs files are automatically detected from this folder and S_estimator is used on them.
 - the number of frames used in an interval to compute synchrony, Nota bene, there are 25 frames by second. (eg. numberOfFramesByInterval = 25*10). We chose this parameter since it seems to be clinically relevant but other parameters could be tested.
 
-This process is relatively long and can take several minutes, especially with short intervals.
+This process is relatively long and can take several minutes, especially with short intervals. It returns synchrony CSV files that can be found [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/SynchronyCSV).
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/synchrony.jpg)
 
 We expected that the signal to fluctuate between 0 and 1. However, we can see that the signal fluctuate only beween 0 and 0.25 with a lot of synchrony scores very low around 0. The synchrony scores are better with the subjects in front of the main camera i.e. the mother and the father in this configuration.
 
-When we tried to check what could be the relevance of this signal, since the psychotherapy wasn't very operationnalized, it was difficult to match the two. We contacted the INCANT team o 
+We saw that the distribution of motion history was much more informative when we compared the log of it instead of the raw data. This enable to detect the aberrant distribution of the therapist and the periods with no motion at all which were over-represented.
 
-It returns synchrony CSV files that can be found [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/SynchronyCSV).
+When we did the log scores before computing even if it was interresting in order to compare motion history distributions, however, that didn't change the relevance of the synchrony signal.
+
+When we tried to check what could be the relevance of this signal, since the psychotherapy wasn't very operationnalized, it was difficult to match the two. We contacted the INCANT team however, we couldn't meet them quickly.
 
 ##### Headers :
 
@@ -572,6 +574,10 @@ In order to match the psychometric data which was more important and the videos,
 
 The configuration in the different videos are very similar.
 
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Number%20of%20Available%20%28True%29%20and%20Not%20Available%20%28False%29%20data%20for%20each%20participant.jpg)
+
+In these videos all the participants are filmed. The child is always filmed. More often, the mother is involved but not the father.
+
 ##### Length of the videos
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/length%20minutes.jpg)
@@ -590,11 +596,17 @@ We can see that the length of the videos are very similar. In NUMA027 video, the
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/age.jpg)
 
+The mean age of the participants was 15.4 years (sd : 2).
+
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Birth%20places.jpg)
+
+Most of the children were born in Besancon.
 
 Sex of the child
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/sex.jpg)
+
+82 % of the teenagers involved were female.
 
 ##### Attachment style
 
@@ -615,73 +627,85 @@ After a contact with the MONRADO team, we clustered the attachments styles in 3 
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Attachement%20styles%20clusters.jpg)
 
+Secure (44%) and Fearful-Enmeshed (FE) (38%) clusters are over-represented.
+
 ##### TAS Score
+
 The Alexithymie
 The TAS (Toronto Alexithymie Score) that was developed by Taylor, Graeme J.; Ryan, David; Bagby, R. Michael (1986). "Toward the development of a new self-report alexithymia scale". Psychotherapy and Psychosomatics, 44, 191-199. It was translated by M.P. Marchand et G. Loas (1994). It evaluates the level of Alexythymie. If this level is high, the ability of the adolescent to understand and express his own emotions is low.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/TAS.jpg)
 
 ##### STAIYA Score
-The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation of Anxiety. It is one of the most used Anxiety questionnaire. It dissociate the anxiety at a precise moment (state) and the habitual anxiety of the subject (trait). When this quetionnaire was developped, it was evaluated on more than 5000 subjects.
+The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation of Anxiety. It is one of the most used Anxiety auto- questionnaire. It dissociate the anxiety at a precise moment (state) and the habitual anxiety of the subject (trait). When this quetionnaire was developped, it was evaluated on more than 5000 subjects. The score ranges from 20 to 80.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/STAIYA.jpg)
 
-
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/STAIYB.jpeg)
 
 BDI Scores
 
+The Beck Depression Inventory is a depression score ranging from 0 to 63. It evaluates the severoty of a depression when it was clinically diagnosed. From 0-13, the depressive state is minimal, between 14 and 19, the depressive state is mild (Osman, 2008). This mesure support that the teenagers recruited in this study are not severe depressed people but not depressed people.										
+
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/BDI total-2.jpg)
-
-
 
 #### Description of the database
 
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
 * They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
 
-We used the same procedure that for the INCANT study, we masked the non relevant part of a frame for each subject. 
+We used the same procedure that for the INCANT study, we masked the non relevant part of a frame for each subject. Instead of selecting only the upper part of the bidy, we were able to select the half of the image with more information about the subjects.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.mother.png)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png)
 
-
-
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/boxplotsraw.jpeg)
-
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20by%20frame%20box%20plots%20%28raw%20data%29-1.jpg)
-
-boxplots no log
-
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/SI.jpg)
+#### Extraction of motion history
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29%2C%20all%20videos-1.jpg)
 
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/boxplotsraw.jpeg)
+
+We can see that the distribution of motion history is vey similar with the motion history extracted from the INCANT study. The small movements are very important and the big movements are very rare with a long tail.
+
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29-1.jpg)
+
+When we compute the log of this data, we can notice that the distribution is much more normal that for the INCANT study. The first pick representing the null motion histories (no motion) is much smaller and not overrepresented. This confirm that the quality of the motion history signal extracted from this video is much better than the previous one extracted from INCANT study.
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20by%20frame%20box%20plots%20%28raw%20data%29-1.jpg)
+
+When we compare these distributions, we can see that these distribution are much more similar that the distributions in the INCANT study in which the therapist motion history distribution was very different from the other distributions.
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/SI.jpg)
+
+Like in the INCANT study, we filtered the motion histories.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictMH-small.jpg)
 
+We could very easilly detect the two periods of the video. THe first one without any conflict and the second with a conflict. These periods we annotated manually. 
+
+The cutFrames data frame was done manually by looking manually all videos and definining:
+
+* when the experimenter leaves the room and the interaction begin, 
+
+Between is the non conflictual discussion
+
+* when the experimenter comes back to ask participants to have a conflictual discussion
+* when the experimenter leaves and the conflictual discussion begins
+  Between is the conflictual discussion
+* when the experimenter comes back to shut down the camera
+
+However, we can notice that the conflict wasn't always very authentic and important. It would be interesting to ask outside observers, blinded with the objective of the study to annotate the level of the conflict of the participants. That would be done with crowdsourcind and will be much more easier that the annotation of speech that we did for the INCANT study.
+
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictSSI-small.jpg)
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Number%20of%20Available%20%28True%29%20and%20Not%20Available%20%28False%29%20data%20for%20each%20participant.jpg)
+However, we can see that the synchrony score are not so much different that from the INCANT study. Although, it was expected to fluctuate between 0 and 1, the maximum of it is around 0.2-0.3 depending on the videos. When we did the log scores before computing however, that didn't change the relevance of the signal.
 
-
-
-![]()
-
-TODO : histogram
-
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/STAIYB.jpg)
-
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/TAS.jpg)
-
-Normal vs pathologic
+Thanks to that, we were able to compare the mean motion history between the two conditions.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/raw%20Global%20motion%20history%20by%20situation%20%3A%20conflict%20vs%20no%20conflict.jpg)
 
-log before mean not after it
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/motion%20attachementStyles.jpg)
 
 ##### Technical problems
 

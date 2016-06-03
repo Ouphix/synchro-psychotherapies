@@ -939,7 +939,7 @@ hist(psycho$TAS_total, las=1, col="orange", main="Histogram of the TAS scores")
 par(mar=c(3,3,3,3))
 barplot(table(psycho$STAIYA_total), las=2, col="blue", main="Barplot of the STAIYA scores")
 
-hist(psycho$STAIYA_total, las=1, col="blue", main="Histogram of the STAIYA scores")
+hist(psycho$STAIYA_total, las=1, col="blue", main="Histogram of the STAIY-A scores")
 ```
 
 ## STAIYB
@@ -947,7 +947,7 @@ hist(psycho$STAIYA_total, las=1, col="blue", main="Histogram of the STAIYA score
 par(mar=c(3,3,3,3))
 barplot(table(psycho$STAIYB_total), las=2, col="red", main="Barplot of the STAIYB scores")
 
-hist(psycho$STAIYB_total, las=1, col="red", main="Histogram of the STAIYA scores")
+hist(psycho$STAIYB_total, las=1, col="red", main="Histogram of the STAIY-B scores")
 ```
 
 ## BDI total

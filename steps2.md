@@ -592,17 +592,16 @@ We can see that the length of the videos are very similar. In NUMA027 video, the
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Birth%20places.jpg)
 
+Sex of the child
+
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/sex.jpg)
 
 ##### Attachment style
 
 Attachment theory is a psychological model that tries to describe the dynamics of short and long-term relationships between humans. 
 
-The Attachment Style Interview for Adolescents (ASI-AD) seems to be user-friendly, transparent and reliable measure?
+The Attachment Style Interview for Adolescents (ASI-AD) is a user-friendly, transparent and reliable measure. It offers the adolescents the opportunity to talk about their recent life events, their close relationships (with parents and friends), their support networks and how they feel about getting close to others. (Jacobs et al, 2012). Caring about attachment in young people in residential care: The use of the Attachment Style Interview. (‘Community Care Inform’ electronic information source. Spring 2012)
 
-It offers the adolescent the opportunity to talk about their recent life events, their close relationships (with parents and friends), their support networks and how they feel about getting close to others. (Jacobs et al, 2012) Caring about attachment in young people in residential care: The use of the Attachment Style Interview.
-Report of a voluntary sector and university partnership
-(‘Community Care Inform’ electronic information source. Spring 2012)
 Catherine Jacobs, Yael Ilan-Clarke and Professor Antonia Bifulco, Lifespan Research Group, Centre for Abuse and Trauma Studies) http://www.attachmentstyleinterview.com/
 
 Attachement styles were Secure, Enmeshed, Fearful, Withdrawn and Dual when two different styles)
@@ -618,18 +617,25 @@ After a contact with the MONRADO team, we clustered the attachments styles in 3 
 
 ##### TAS Score
 The Alexithymie
-The TAS (Toronto Alexithymie Score) that was developed by Taylor, Graeme J.; Ryan, David; Bagby, R. Michael (1986). "Toward the development of a new self-report alexithymia scale". Psychotherapy and Psychosomatics, 44, 191-199
+The TAS (Toronto Alexithymie Score) that was developed by Taylor, Graeme J.; Ryan, David; Bagby, R. Michael (1986). "Toward the development of a new self-report alexithymia scale". Psychotherapy and Psychosomatics, 44, 191-199. It was translated by M.P. Marchand et G. Loas (1994). It evaluates the level of Alexythymie. If this level is high, the ability of the adolescent to understand and express his own emotions is low.
 
-M.P. Marchand et G. Loas (1994).
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/TAS.jpg)
 
 ##### STAIYA Score
-The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation of Anxiety. It is one of the most used Anxiety questionnaire. It dissociate the anxiety at a precise moment (state) and the habitual anxiety of the subject (trait). It  was evaluated on more than 5000 subjects.
+The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation of Anxiety. It is one of the most used Anxiety questionnaire. It dissociate the anxiety at a precise moment (state) and the habitual anxiety of the subject (trait). When this quetionnaire was developped, it was evaluated on more than 5000 subjects.
 
-BDI Score
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/STAIYA.jpg)
+
+
+
+BDI Scores
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/BDI total-2.jpg)
 
+
+
 #### Description of the database
+
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
 * They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
 
@@ -640,6 +646,8 @@ We used the same procedure that for the INCANT study, we masked the non relevant
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png)
 
 
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/boxplotsraw.jpeg)
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20by%20frame%20box%20plots%20%28raw%20data%29-1.jpg)
 
@@ -657,7 +665,9 @@ boxplots no log
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Number%20of%20Available%20%28True%29%20and%20Not%20Available%20%28False%29%20data%20for%20each%20participant.jpg)
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/STAIYA.jpg)
+
+
+![]()
 
 TODO : histogram
 

@@ -2,7 +2,15 @@
 
 ### Author: Thomas GARGOT
 
+**To improve**
 
+Units
+
+Synchrony description
+
+Synchrony articles before
+
+what we expect, pre-registration+++
 
 [TOC]
 
@@ -147,7 +155,7 @@ To avoid this lost of time, and to improve validity and replicability and improv
 
 The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship. We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts. Both of them are published but the MONRADO script is much more commented, organized. Data dictionnaries are more described in order to better understand the process.
 
-However, it is not possible to share the raw materials with consist of confidential psychotherapy sessions. It would be very relevant to share this material to let possibility to other team to compare this results with other softwares or modules with different goals than motion history synchrony analysis. In the research in algorithm development, some databases are shared and promoted in challenges that enable the development of the best classifier for instance. 
+However, it is not possible to share the raw materials with consist of confidential psychotherapy sessions. It would be very relevant to share this material to let possibility to other team to compare this results with other softwares or modules with different goals than motion history synchrony analysis. In the research in algorithm development, some databases are shared and promoted during [challenge sessions](http://sspnet.eu/avec2011/) between  laboratories. This enable the development of the best classifier for instance.
 
 ### INCANT Study
 
@@ -190,9 +198,9 @@ There are several researches for pharmacological intervention (agonist substitut
 Psychotherapy is the better treatment accessible in 2016. There are evidences for some of them: 
 
 -	Motivational Enhancement Therapy (MET or Motivational interviewing MI) and Cognitive and Behavioural Therapies (CBT) in which I am trained 
--	Contingency Management (giving positive reinforcement to support change)
--	Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive and much evidence based. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy (Danovitch & Gorelick, 2012).
--	In a Cochrane review, one of the most consensual Evidence Based Reviews, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
+  -Contingency Management (giving positive reinforcement to support change)
+  -Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive and much evidence based. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy (Danovitch & Gorelick, 2012).
+  -In a Cochrane review, one of the most consensual Evidence Based Reviews, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
 
 
 ##### MDFT and the INCANT study
@@ -535,12 +543,10 @@ INCANT study was done internationally with:
 #### Experimental set-up
 It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. A much more operrationnalized psychotherapy like motivational interviewing could be useful. This kind of psychotherapy can be rated with the degree of adherence of the psychotherapist to the principles of the therapy like the MITI. Consequently, we could compare two quantitative variables that will reflect the quality of the psychotherapy at a more precise moment instead of a more general outcome.
 
-##### Technical discussions
-In a lot of other domains of fundamental algorithm development, computer labs compete on public databases developped for a specific purpose to develop algorithm for the detection of some features for instance. This work are presented during [challenge sessions](http://sspnet.eu/avec2011/) in congresses. However, there is a problem with confidentiality when we deal with psychotherapy videos.
-
+##### Technical limits
 It would be better to have a more experimental set up to improve this problems, make a specific database for this kind of automatic analyses to avoid changes of configuration of the room, the luminosity, the place of the different subjects, the number of subjects, the movement of the camera during recording.
 
-It seems that it would be very important to have several devices (camera, kinect, mikes). This leads to a problem that wasn't raised in this set up since there was only one camera. In case, of several devices, it is very important that all of them are synchronized.
+It seems that it would be very important to have several devices (camera, kinect, mikes, actimetr). This leads to a problem that wasn't raised in this set up since there was only one camera. In case, of several devices, it is very important that all of them are synchronized.
 
 To begin to work in a multiperson psychotherapy was theorcally possible and the team developped scripts for that on SyncPy (S_Estimator) however, it is much more challenging that evaluate the synchrony of the dyad since the configuration needs to be comparable, the subject musn't overlap and must be filmed in the same conditions (zoom).
 
@@ -559,7 +565,7 @@ The participants are two in front of the camera. We can see that the quality of 
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png)
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/plots/Configuration%20of%20participant%20by%20video.jpg)
+
 
 The configuration in the different videos are very similar. There is only one video with 3 persons.
 
@@ -653,12 +659,16 @@ background subtraction
 gaze direction
 optic flow and trajectories
 
+actimetry
+
 ## Discussion
 
 ### Experimental discussion
 We saw with the INCANT study that there was a limit with contasting different conditions. In order to make this possible, it would be usefull to use much more opperationnalized psychotherapy like (Assertivenes, Motivational interviewing, exposition), but it is not restricted to CBT. We could use it in (provocation vs no provocation used in brief psychotherapy, hypnosis induction versus no hypnosis induction, dream analysis )
 
 Gaze
+
+
 
 Analysis discussion
 

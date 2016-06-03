@@ -576,7 +576,7 @@ In order to match the psychometric data which was more important and the videos,
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/configuration.jpeg)
 
-The configuration in the different videos are very similar. There is only one video with 3 persons which was excluded.
+The configuration in the different videos are very similar.
 
 #### Psychometric data
 * It consist of one excel file with:
@@ -591,6 +591,8 @@ The configuration in the different videos are very similar. There is only one vi
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/age.jpg)
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Birth%20places.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/sex.jpg)
 
 ##### Attachment style
 
@@ -625,7 +627,7 @@ The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation
 
 BDI Score
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/BDI%20total-hist.jpg)
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/BDI total-2.jpg)
 
 #### Description of the database
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.

@@ -552,31 +552,31 @@ To begin to work in a multiperson psychotherapy was theorcally possible and the 
 
 ## MONRADO study
 ### Aim of the study
-The aim of the study was to evaluate the response to conflict in a dyad of a parent and a child. There was two phases. After the experimenter left the room, the dyad spoke about a casual topics. After around 5 minutes, the experimenter came back in the room and asked the child to speak about a conflictual conflict that was selected before the video during an interview alone with him or her.
+The aim of the study was to evaluate the response to a conflict in a dyad of a parent and a child. There were two phases. After the experimenter left the room, the dyad spoke about casual topics. After around 5 minutes, the experimenter came back in the room and asked the dyad to speak about a conflictual conflict that was selected by the child before the video during an interview alone with him or her.
 
-Consequently, from these videos, we can extract easily two phases : without then with conflict.
+Consequently, from these videos, we can extract easily two phases that we could contrast : without then with conflict.
 
 ##### Configuration
 
-The participants are two in front of the camera. We can see that the quality of the video is much better. There is not overlap between the subject. There isn't embedded subjects. There is not any date embedded.
+The participants are two in front of the camera. We can see that the quality of the video is much better. There is not often overlap between the subject. There isn't embedded subjects with a different zoom level. There is not any date embedded. All the subjects that takes part in the interaction are filmed.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.jpg)
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.mother.png)
-
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png)
-
 ##### Selection of relevant videos
 
-In order to match the psychometric data which was more important and the videos, we decided to clean the database to delete the copies and keep the data with psychometric informations. We decided to delete a video with a different configuration with the two parents.
+In order to match the psychometric data which was more important and the videos, we decided to clean the database to delete the copies and keep only the data with psychometric informations. We decided to delete a video with a different configuration with the two parents.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/FlowchartMonrado.jpeg)
-
-
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/configuration.jpeg)
 
 The configuration in the different videos are very similar.
+
+##### Length of the videos
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/length%20minutes.jpg)
+
+We can see that the length of the videos are very similar. In NUMA027 video, the instructions were not very well understood by the subjects. The mother left the room before the end to see the experimenter.
 
 #### Psychometric data
 * It consist of one excel file with:
@@ -633,10 +633,11 @@ BDI Score
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
 * They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
 
-##### Length of the videos
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/LengthVideoMONRADO.jpeg)
+We used the same procedure that for the INCANT study, we masked the non relevant part of a frame for each subject. 
 
-We can see that the videos are very similar.
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.mother.png)
+
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/ExampleFrames/00034.MTS.child.png)
 
 
 

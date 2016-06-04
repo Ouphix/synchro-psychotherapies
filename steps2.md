@@ -4,9 +4,7 @@
 
 **To improve**
 
-Units
-
-Synchrony description
+Units : /nobmer of pixels : %age
 
 Synchrony articles before
 
@@ -22,23 +20,23 @@ Most of the studies are indirectly based on patient reported outcomes or problem
 It is already feasible to annotate manually videos. However, this task is tedious. It can be either very repetitive (annotation of turn-taking or non-verbal behavior) or very technical (annotation of application of some specific techniques like in motivational interviewing (Moyers et al, 2015) and a potential source of bias.
 In the future, an automatic feedback during the psychotherapy could also even help the therapists to reorganize a treatment.
 
-Here we suggest a research framework to extract automatically social signals from psychotherapy videos and test it on two database. We focus on the feasability to extract motor signal and compute its synchrony since it was considered as a predictor of psychotherapy outcome in a first study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. Varni et al. 2015 developped the [SyncPy](https://github.com/syncpy) open source python library in our lab to help researchers and practitioners to automatically analyse synchrony. It could be possible to measure synchrony even in familial therapies.
+Here we suggest a research framework to extract automatically social signals from psychotherapy videos and test it on two database. We focus on the feasability to extract motor signal and compute its synchrony since it was considered as a predictor of psychotherapy outcome in a first study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. In our team, Varni et al. 2015 developped the [SyncPy](https://github.com/syncpy) open source python library to help researchers to automatically analyse synchrony.
 
 #### International Cannabis Need of Treatment (INCANT) study Database
 
-We began with the International Cannabis Need of Treatment (INCANT) study database from France. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. Some patients received treatment as usual and others MDFT. This database came from a large european psychotherapy study. The main outcome was the cannabis consumption evaluated by the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
+We began with the International Cannabis Need of Treatment (INCANT) study database from France. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents. Some patients received MDFT and the others Individual Therapy. The main outcome was the cannabis consumption evaluated by the Timeline Follow-Back (TFLB) [questionnaire](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/Questionnaries/TimeLineFollowBack_2014Mar24%281%29.pdf).
 
-For a pilot study, we focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We saw that there was a lot of modules that enable automatic social signals. We decided to extract automatically signal and began to focus on motion history.
+For a pilot study, we focused on the analysis of the F1044 subject, his family (father and mother) and the therapist. We saw that the manual extraction of speech was very laborious and quite subjective so difficult to replicate. We decided to extract  signal and began to focus on automatically extraction of motion history.
 
 Unfortunately, we couldn't answer to this question since the signal extracted from this videos was not good enough. Furthermore, it was difficult to categorize easily the patients in good and bad responders and to detect specific periods of the psychotherapy that could be of particular very good or very bad relationship quality. Finally, it was difficult to compare synchrony at different moments since the configuration of the participants could be very different.
 
 #### Monrado Database
 
-Consequently, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict versus no-conflict. The main psychometric data in this database were attachment scores, i.e. a evaluation of the relationship of the subject with other people. Contrary to what was published in other studies, the difference of synchrony between the two phases (conflict vs no-conflict) was not obvious but further analyses depending on the level of conflict evaluated by external cotators and the analysis of the different profiles of attachement could lead to more positive and precise conclusions.
+Consequently, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict versus no-conflict. The main psychometric data in this database were attachment scores, i.e. a evaluation of the relationship of the subject with other people. We can began to draw some preliminary conclusions about using synchrony in order to classify the relationship quality of these videos.
 
 #### Conclusion
 
-This work led to the development of R scripts to manipulate motion history, filter it ; adaptation of Python module of SyncPy. Too our knowledge, these are the first scripts that are are published in open access to enable easy replication and further developments. We draw some recommendation to get psychotherapy material of better quality in terms of video and sound recording and psychotherapy techniques and outcomes. Furthermore, we suggest some modules that could be added to extract more social signals from other modalities and precisions.
+This work led to the development of R scripts to manipulate motion history, filter it ; adaptation of Python module of SyncPy. Too our knowledge, these are the first scripts that are are published in open access to enable easy replication and further developments. We draw some recommendation to get psychotherapy material of better quality in terms of video and sound recording and psychotherapy techniques and outcomes. Furthermore, we suggest some modules that could be added to extract more social signals from other modalities and precisions.  We can began to draw some preliminary conclusions about using synchrony in order to classify the relationship quality of these videos.
 
 See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/projet%20presoutenance.pdf).
 
@@ -46,9 +44,9 @@ See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapie
 ![image](https://github.com/Ouphix/synchro-psychotherapies/raw/master/Monrado/Data/images/report/ECNPPoster.jpg)
 
 ## Originality declaration
-This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after the study of [Ramseyer et Tschacher, 2011](http://psycnet.apa.org/journals/ccp/79/3/284/). It is the first to study it in families, which both configuration and theorical frameworks are different. The package used for synchrony was developed by the engineers of the lab and it was the first time that it was used in real world data. The input of psychiatrist and psychotherapist helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
+This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after the study of [Ramseyer et Tschacher, 2011](http://psycnet.apa.org/journals/ccp/79/3/284/). It is the first to study it in families with S_Estimator technique, which both different configuration and theorical frameworks. The package used for synchrony was developed by the engineers of the team and it was the first time that it was used in real world data. The input of psychiatrists and psychotherapists helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
 
-It is the first study to use an open science approach among the 3 studies (Ramseyer et Tschacher, 2011; Orsucci et al., 2016) that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
+It is the first study to use an open science approach among the 3 studies (Ramseyer et Tschacher, 2011; Orsucci et al, 2016) that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
 
 ## Collaborations
 
@@ -56,14 +54,14 @@ In alphabetical order :
 
 | Name                    | Function                                 |
 | ----------------------- | ---------------------------------------- |
-| Jonathan Aigrain        | Phd Student in Social signal processing,  Creating the script to extract frames from videos, extracting Momentum from videos frame by frame, knowledges in Python (OpenCV) |
-| Nicolas Bodeau          | Bio-statistician and informatician in ISIR and La Pitié, supervising for R |
-| Mohammed Chetouani      | Prof in Social signal processing, supervising the project, and the SyncPy library |
-| David Cohen             | Prof of Psychiatry, Original idea, supervising the project |
-| Catherine Saint Georges | Psychiatrist, knowledge in interpreting synchrony scores in psychiatry, help with first speech annotation with Elan |
-| David Reversat          | Informartician, Debugging of SyncPy      |
-| Michel Spodenkiewicz    | Psychiatrist, collecte the databases from other teams (videos from INCANT and Monrado studies), direct supervision |
-| Giovanna Varni          | Post doc researcher Social signal processing, Development of the SyncPy library, supervising for Python |
+| Jonathan Aigrain        | Phd Student in social signal processing. He did scripts to extract frames from videos, to extract Motion History from videos frame by frame, knowledges in Python (OpenCV) |
+| Nicolas Bodeau          | Bio-statistician and informatician in ISIR and La Pitié, he supervised me for R and statistical analysis |
+| Mohammed Chetouani      | Prof in social signal processing, supervised the project, and the SyncPy library |
+| David Cohen             | Prof of Psychiatry, original idea, supervised the project |
+| Catherine Saint Georges | Psychiatrist, knowledge in interpreting synchrony scores in psychiatry, helped with first speech annotation with Elan |
+| David Reversat          | Computer engineer, debugged SyncPy       |
+| Michel Spodenkiewicz    | Psychiatrist, collected the databases from other teams (videos from INCANT and Monrado studies), direct supervision |
+| Giovanna Varni          | Post doc researcher Social signal processing, Development of the SyncPy library, supervised me for Python |
 
 The Monrado (Dr Coady Vulliez, Mrs Monika Szymanska) and Incant (Dr Phan, Mrs Bastard) teams recruited subjects and psychometric data.
 
@@ -82,7 +80,7 @@ This could be striking to say that we are using useful and efficient treatments 
 
 Unfortunately, good psychotherapy is costly because it takes times and well trained therapist. Contrary to pills, psychotherapy isn't reimbursed in many countries. Public services hardly offer best practice of psychotherapy because of a lack of training and time. 
 
-Particularly, it is difficult to operationalize precisely what a psychotherapist does during a psychotherapy. Even the more operationalized psychotherapy as relaxation techniques, CBT deals with the particularity of each patient, its motivation, its context and don't have a priori a very precise roadmap. Despite these theoretical and evidence debates, there is a almost a consensus that the relationship between the patient and the therapist. Establishing this therapeutic alliance seems to be a very important part of the efficacy of psychotherapy (Horvath & Dianne, 1991 ; Martin, Garske, & Katherine, 2000 ; Tschacher, Haken, & Kyselo, 2015). Even it is difficult to operationalize, some psychometric tools were developed like the Working Alliance Inventory (WAI) questionnaire (Corbière, Bisson, Lauzon, & Ricard, 2006). This leads to the Dodo theory. It states, like the judgment made by the Dodo bird after a race in the Alice and the Wonderland book, that all participants are equals. It would mean than nothing technical could differentiate a psychotherapy versus an other one. This consensus is challenged by some behaviorist (CBT) that state that this determinant is only important when psychotherapist are not well trained and in poorly designed studies (Layard & Clark, 2014).
+Particularly, it is difficult to operationalize precisely what a psychotherapist does during a psychotherapy. Even the more operationalized psychotherapy as relaxation techniques, CBT deals with the particularity of each patient, its motivation, its context and don't have a priori a very precise roadmap. Despite these theoretical and evidence debates, there is a almost a consensus that the relationship between the patient and the therapist. Establishing this therapeutic alliance seems to be a very important part of the efficacy of psychotherapy (Horvath & Dianne, 1991 ; Martin, Garske, & Katherine, 2000 ; Cungi & Cottraux,2006 ; Tschacher, Haken, & Kyselo, 2015). Even it is difficult to operationalize, some psychometric tools were developed like the Working Alliance Inventory (WAI) questionnaire (Corbière, Bisson, Lauzon, & Ricard, 2006). This leads to the Dodo theory. It states, like the judgment made by the Dodo bird after a race in the Alice and the Wonderland book, that all participants are equals. It would mean than nothing technical could differentiate a psychotherapy versus an other one. This consensus is challenged by some behaviorist (CBT) that state that this determinant is only important when psychotherapist are not well trained and in poorly designed studies (Layard & Clark, 2014).
 
 Therapeutic alliance is a first step before any other specific technique (Cungi & Cottraux, 2006). This process was a lot studied by the first psychotherapies like hypnosis. In a good therapeutic alliance, the contact is warm, authentic, collaborative. There is a lot of empathy, ie the therapist understand the point of view and the representation of his patient, shares it (contrary to apathy) while keeping in mind that he is not in the same situation that his patient and without being struggled by too much emotions (contrary to sympathy). One of the best operationalized and Evidence based kind of psychotherapy is motivational interviewing which if much used in first steps CBT or psychoeducation. It can be the essential part of a work with addict patient or patients with addictions problems. The goal of motivational interviewing is to increase change discourse by stimulating it by some techniques:
 
@@ -136,6 +134,8 @@ Beyond that, some researchers like Iacoboni stated that the system of minor neur
 Behavior matching [21]; mirroring; mimicry [22], [23], [24]; congruence and the chameleon effect [25] are related to convergence
 
 Synchrony is related to the adaptation of one individual to the rhythms and move- ments of the interaction partner (Condon & W. Ogston, 1967). For Delaherche, "synchrony is the dynamic and reciprocal adaptation of the temporal structure of behaviors between interactive partners" (Delaerche et al, 2012). It can be unimodal (eg. speech-speech) or multimodal (eg. speech-motor, someone answering to a sentence by a sign of the head).
+
+La synchronie semble être un élément déterminant parmi les facteurs aspécifiques favorisant une bonnealliance thérapeutique, en lien avec de bonnes capacités d'empathie et d'imitation. Elle pourrait être mesuréeautomatiquement sans a priori théoriques. Elle a été objectivée à différents niveaux d'organisation. C’est unsignal social à part entière (Leclère et al., 2014), avec des corrélats cérébraux (Dumas, Nadel, Soussignan,Martinerie, & Garnero, 2010) et hormonaux (tels que l'ocytocine) (Weisman et al., 2013).										
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/multilevel.png)
 *From Human communication dynamics presentation, D. Cohen*
@@ -261,7 +261,9 @@ It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com
 Globally, as expected, the cannabis consumption is decreasing with time for the subjects.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanEvolution.jpeg)
 
-We tried to cluster 2 groups to contrast the synchrony scores between good responders and bad responders. Unfortunately, when we looked at the evolution of the cannabis consumption, it wasn't very easy to define good and bad responders.
+We tried to cluster 2 groups to contrast the synchrony scores between good responders and bad responders. Unfortunately, when we looked at the evolution of the cannabis consumption, it wasn't very easy to define good and bad responders. TODO put 2-3 subjects, table.
+
+
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/EvolutionCannabis.jpeg)
 
@@ -290,6 +292,8 @@ Consequently, we can say that this subject is very representative of the sample.
 Furthermore, when we got the cannabis consumption evolution, we saw that the efficacy of the psychotherapy was not very clear and the evolution of it wasn't straitforward. Consequently, if our hypothesis of good synchrony or good evolution of synchrony as predictor of good quality of psychotherapy was good, we couldn't really expect any of these results in the F1044 subject when we see the objective evolution of the psychotherapy. 
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB-F1044.jpg)
+
+TODO que points, abcisses à points intéressants
 
 ### Description of the database
 
@@ -401,6 +405,8 @@ The VOB videos were converted in [AVI](https://en.wikipedia.org/wiki/Audio_Video
 With these masks and videos, we could extract motion history with a [C++](https://en.wikipedia.org/wiki/C%2B%2B) script. It returns
 [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) file of the form "*F1044C.VOB_res2.csv*". See files [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/INCANT/Data/CSV/MotionHistory/raw). We can notice that we can change the value of the [median filter](https://en.wikipedia.org/wiki/Median_filter). In order to be able to compare several subjects, we decided to divide the motion history extracted by the size of the frame selected, it correct partly the zoom problem. 
 
+This motion history is 
+
 ##### Headers :
 - **frame** : number of the frame (original rate of 25 frames by second)
 - **father** : motion history of the father frame by frame. It ranges from 0 (same frame than the previous frame, no movement) to 1 (every pixel change).
@@ -413,7 +419,7 @@ With these masks and videos, we could extract motion history with a [C++](https:
 
 If we plot (in histograms and box plots) this raw data, we notice that the distribution is not normal at all. Very small motion history values are over represented and bigger motion history are much more rare with a very long tail. Consequently, it is difficult to compare two distributions from two different subject. To normalize the distribution to compare the motion distribution of several subjects and compute synchrony scores on it, we made the natural logarithm.
 
-Unfortunately, several values equal to 0 can't be loged. They generate a -Inf value. If these values are set to NA, we lose the information of no movement at all. If we give a arbitrary value to this data by shifting the discribution by a very small value (eg. the half first value after 0), they are over represented) like in figure 2.
+Unfortunately, several values equal to 0 and the log function can not be applied. They generate a -Inf value. If these values are set to NA, we lose the information of no movement at all. If we give a arbitrary value to this data by shifting the discribution by a very small value (eg. the half first value after 0), they are over represented) like in figure 2.
 
 | Raw Motion history                       | Natural Log Motion history               |
 | ---------------------------------------- | ---------------------------------------- |
@@ -483,6 +489,8 @@ We adapted the script [Call_S_Estimator.py](https://github.com/Ouphix/synchro-ps
 
 The script in [Python](https://www.python.org/), [Call_S_Estimator.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Call_S_Estimator.py) takes this filtered motion data and compute a synchrony score for each association possible of two or more subjects.
 
+To compute the synchrony, we use the S_Estimator algorithm that is drawn from information theory. It makes a matrix of correlation on the  standardised motion history time series (mean =0 and SD = 1). Consequeltly, only the shape of the signal matters. Afterwards, it computes the eigenvalues of this matrix. Finally, after the normalization of the eigenvalues, it can compute the synchrony from a sort of entropy (Carneli et al, 2005). Hte index ranges from 0 (no synchrony) to 1 (full synchrony). If all signals are equals, the synchrony scores equals 1.
+
 **You need to specify, **
 
 - the folder where you put your data (eg dataFolder = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/') 
@@ -528,9 +536,18 @@ We decided to select 4 subjects with a clear decrease of cannabis consumption, w
 
 All of them with the same therapist Mrs Bastard. However, we had problems with the conversion of the files from VOB to AVI. The number of videos from this families were much lower, to evaluate a dynamic could even more challenging. Since, we got a better database with less technicall problems on it and a experimental setting, we decided to switch to it to further developp the concept.
 
+TODO
+
+Les indices de synchronie SSI issu d’une analyse par le logiciel SyncPy entre la quantité de mouvementde la partie supérieure du buste et de la tête du thérapeute et du patient sont corrélés positivement àl’efficacité des psychothérapies familiales (dans ce cadre d'une addiction au cannabis, diminution des joursde consommation de cannabis). Coefficient de corrélation linéaire de Pearson ]0,1] avec p < 0,05
+
+Une mauvaise synchronie est retrouvée chez les patients peu observants à la thérapie (les sujets perdusde vue et les patients qui participent à moins de 50% des séances filmées alors que les parents participent).Comparaison de moyenne t student avec p < 0,05										
+
 #### Conclusion
 
+TODO  : we couldn't answer the questions with the INCANT study beacause of the technicalls problems of the database
+
 ##### Advantages of this database
+
 INCANT study was done internationally with:
 
 - good level of scientific method with a pre-registration done in major journals in a psychotherapy field where the level of quality of the studies can be not very good.
@@ -572,11 +589,21 @@ In order to match the psychometric data which was more important and the videos,
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/configuration.jpeg)
 
+Presence of participants,
+
+video
+
+efface axe
+
+delete 0.5
+
 The configuration in the different videos are very similar.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Number%20of%20Available%20%28True%29%20and%20Not%20Available%20%28False%29%20data%20for%20each%20participant.jpg)
 
 In these videos all the participants are filmed. The child is always filmed. More often, the mother is involved but not the father.
+
+TODO nombre de minutes
 
 ##### Length of the videos
 
@@ -596,17 +623,21 @@ We can see that the length of the videos are very similar. In NUMA027 video, the
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/age.jpg)
 
-The mean age of the participants was 15.4 years (sd : 2).
+The mean age of the participants was 15.4 years (SD : 2.0).
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Birth%20places.jpg)
 
 Most of the children were born in Besancon.
+
+TODO Frequency
 
 Sex of the child
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/sex.jpg)
 
 82 % of the teenagers involved were female.
+
+TODO FrequenCY
 
 ##### Attachment style
 
@@ -662,6 +693,8 @@ We used the same procedure that for the INCANT study, we masked the non relevant
 
 #### Extraction of motion history
 
+TODmother
+
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29%2C%20all%20videos-1.jpg)
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/boxplotsraw.jpeg)
@@ -682,6 +715,8 @@ Like in the INCANT study, we filtered the motion histories.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictMH-small.jpg)
 
+TODO : cut zone in the middle
+
 We could very easilly detect the two periods of the video. THe first one without any conflict and the second with a conflict. These periods we annotated manually. 
 
 The cutFrames data frame was done manually by looking manually all videos and definining:
@@ -699,11 +734,27 @@ However, we can notice that the conflict wasn't always very authentic and import
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictSSI-small.jpg)
 
+TODO : cut zone in the middle
+
 However, we can see that the synchrony score are not so much different that from the INCANT study. Although, it was expected to fluctuate between 0 and 1, the maximum of it is around 0.2-0.3 depending on the videos. When we did the log scores before computing however, that didn't change the relevance of the signal.
 
 Thanks to that, we were able to compare the mean motion history between the two conditions.
 
+t-test
+
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/raw%20Global%20motion%20history%20by%20situation%20%3A%20conflict%20vs%20no%20conflict.jpg)
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/SSICOnflict-NoConflict.jpeg)
+
+As expected and like previous authors showed before, it seemed that the synchrony is lower in conflictual situations.
+
+TODO t-test
+
+AUC?
+
+coorelation entre données psychometriques et SSI
+
+anxiety, TAS, BDI, tableau à faire
 
 
 

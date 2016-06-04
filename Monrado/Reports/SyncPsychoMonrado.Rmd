@@ -17,7 +17,7 @@ rm(list = ls(all.names = TRUE))
 
 # Loading libraries
 ## For making models
-library("lme4")
+#library("lme4")
 ## For managing data frames easilly : rbinds function
 library("plyr")
 ## For editing string
@@ -481,7 +481,7 @@ par(mar=c(3,4,2,2))
 boxplot(data$father, data$mother, data$child, 
         col=colOrderList, 
         names=ParticipantsList, 
-        main= "Motion history by frame box plots (raw data), all videos", las=1, ylab="Motion history")
+        main= "Motion history by fra me box plots (raw data), all videos", las=1, ylab="Motion history")
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 ```

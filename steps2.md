@@ -2,13 +2,7 @@
 
 ### Author: Thomas GARGOT
 
-**To improve**
-
-Units : /nobmer of pixels : %age
-
 Synchrony articles before
-
-what we expect, pre-registration+++
 
 [TOC]
 
@@ -405,7 +399,7 @@ The VOB videos were converted in [AVI](https://en.wikipedia.org/wiki/Audio_Video
 With these masks and videos, we could extract motion history with a [C++](https://en.wikipedia.org/wiki/C%2B%2B) script. It returns
 [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) file of the form "*F1044C.VOB_res2.csv*". See files [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/INCANT/Data/CSV/MotionHistory/raw). We can notice that we can change the value of the [median filter](https://en.wikipedia.org/wiki/Median_filter). In order to be able to compare several subjects, we decided to divide the motion history extracted by the size of the frame selected, it correct partly the zoom problem. 
 
-This motion history is 
+The motion history doesn't have any unit, it is the percentage of change of pixels change among all the pixels seclected (non msked in green here). 
 
 ##### Headers :
 - **frame** : number of the frame (original rate of 25 frames by second)
@@ -491,7 +485,7 @@ The script in [Python](https://www.python.org/), [Call_S_Estimator.py](https://g
 
 To compute the synchrony, we use the S_Estimator algorithm that is drawn from information theory. It makes a matrix of correlation on the  standardised motion history time series (mean =0 and SD = 1). Consequeltly, only the shape of the signal matters. Afterwards, it computes the eigenvalues of this matrix. Finally, after the normalization of the eigenvalues, it can compute the synchrony from a sort of entropy (Carneli et al, 2005). Hte index ranges from 0 (no synchrony) to 1 (full synchrony). If all signals are equals, the synchrony scores equals 1.
 
-**You need to specify, **
+**You need to specify,**
 
 - the folder where you put your data (eg dataFolder = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/') 
 - The cvs files are automatically detected from this folder and S_estimator is used on them.
@@ -536,16 +530,6 @@ We decided to select 4 subjects with a clear decrease of cannabis consumption, w
 
 All of them with the same therapist Mrs Bastard. However, we had problems with the conversion of the files from VOB to AVI. The number of videos from this families were much lower, to evaluate a dynamic could even more challenging. Since, we got a better database with less technicall problems on it and a experimental setting, we decided to switch to it to further developp the concept.
 
-TODO
-
-Les indices de synchronie SSI issu d’une analyse par le logiciel SyncPy entre la quantité de mouvementde la partie supérieure du buste et de la tête du thérapeute et du patient sont corrélés positivement àl’efficacité des psychothérapies familiales (dans ce cadre d'une addiction au cannabis, diminution des joursde consommation de cannabis). Coefficient de corrélation linéaire de Pearson ]0,1] avec p < 0,05
-
-Une mauvaise synchronie est retrouvée chez les patients peu observants à la thérapie (les sujets perdusde vue et les patients qui participent à moins de 50% des séances filmées alors que les parents participent).Comparaison de moyenne t student avec p < 0,05										
-
-#### Conclusion
-
-TODO  : we couldn't answer the questions with the INCANT study beacause of the technicalls problems of the database
-
 ##### Advantages of this database
 
 INCANT study was done internationally with:
@@ -568,6 +552,14 @@ It would be better to have a more experimental set up to improve this problems, 
 It seems that it would be very important to have several devices (camera, kinect, mikes, actimetr). This leads to a problem that wasn't raised in this set up since there was only one camera. In case, of several devices, it is very important that all of them are synchronized.
 
 To begin to work in a multiperson psychotherapy was theorcally possible and the team developped scripts for that on SyncPy (S_Estimator) however, it is much more challenging that evaluate the synchrony of the dyad since the configuration needs to be comparable, the subject musn't overlap and must be filmed in the same conditions (zoom).
+
+#### Conclusion
+
+We couldn't answer the questions with the INCANT study we asked in the pre-registration, because of the technicals and quality  problems of the database and experimental setting. We can't say if the motion history synchronization between different participants are correlated with the outcomes of the familial psychotherapy (decrease consumption of cannabis).
+
+Since the number of videos can be very low, we couldn't neither say if the synchrnony coud be the reflect of the adherence.
+
+However, this database can precisely enlighten some points that need to be adressed to consider this evaluation.
 
 ## MONRADO study
 ### Aim of the study
@@ -754,68 +746,69 @@ AUC?
 
 coorelation entre données psychometriques et SSI
 
-anxiety, TAS, BDI, tableau à faire
-
-
+The next steps will be to evaluate the synchrony scores in different conditions (different psychometric scores, especially attachment evaluation) and make proper statisticall evaluations. We consider too, presenting the process to psychotherapy training team to get raw data of better quality. We will meet a representant of the Motivational Interviewing Network of Trainers (MINT).
 
 ##### Technical problems
 
-
-
 None
-There was only one video which never moved. There wasn't any date. There was very few overlap of the subjects.
+There was only one video which no movement of the camera. There wasn't any date emebeded in the videos. There was very few overlap of the subjects.
+
+However, the subjects weren't always looking at the camera that would be a problem to automatically detect their emotions, their smiles for instance. 
 
 ##### Results
 
 ##### Discussions
-It could be relevant to annotate the level of conflict by blinded rotator since the conflict is not always completely obvious nor strong.
-We could extract other features : 
 
-* Hormons
-  * cortisol
-  * ocytocin
-
-* Cardiac Frequency : direct or indirect on videos with systems like [Lambda](https://lambda.qrilab.com/site/) or [webcam pulse detector](https://github.com/thearn/webcam-pulse-detector)
-
-* Anotation of conflict and non conflict period with [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) software
-
-* Electrodermal activity that seems to be relevant in stress, dissonance cognitive paradigms. Its history as feedback of psychotherapy is ver old since it was used in [psychoanalysis by C. G. Jung](http://www.freezoneearth.org/allmeters/scrapbook/historymeter.htm#Die%20Wort).
-
-* Motion capture Optitrack
-
-* [Ethome](https://www.youtube.com/watch?v=IBPxokjqvZ8) and special suits
-
-* Kinect : skeletton
-
-* Source separation source : FASST
-
-* Facial / Upper body recognition to segment images
-* precise camera ? for each person ?
-
-background subtraction
-gaze direction
-optic flow and trajectories
-
-actimetry
-
-Level of conflict
+It could be relevant to annotate the level of conflict by blinded annotators since the conflict is not always completely obvious nor strong.
 
 ## Discussion
 
 ### Experimental discussion
+
 We saw with the INCANT study that there was a limit with contasting different conditions. In order to make this possible, it would be usefull to use much more opperationnalized psychotherapy like (Assertivenes, Motivational interviewing, exposition), but it is not restricted to CBT. We could use it in (provocation vs no provocation used in brief psychotherapy, hypnosis induction versus no hypnosis induction, dream analysis )
 
-Gaze
-
-
-
 Analysis discussion
-
 
 We could make a shuffle of the data to check if the signal if more synchrone than expected by chance. We could try to replicate this data with a more simple algorithm : correlation.py which was specifically designed for a 2 persons synchrony study.
 
 In the future, we could integrate much more kind of social signals and the cluster of it in a more general score could be more relevant. Some techniques in modelling used at the moment in neuroscience in fMRI could de very usefull for this purpose. 
 
+# Perspectives
+
+We could extract other features : 
+
+* **Psychometric**
+  * **Annotation** : annotation of conflict and non conflict period with [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) software to get better time resolution especially with more complex annotations. In subjective annotations if they are not too much difficult, it would be usefull to use crowsourcing anotation by asking naive subjects about the level of conflict or stress that can be detected on a video.
+
+
+* **Physiological**
+  * **Cortisol** : Cortisol levels can be the reflect of stress. Some techniques are minimally invasive like [saliva measures](http://www.sciencedirect.com/science/article/pii/0009898181903533.)(Teruhisa et al., 1981).
+  * **Ocytocin** : Ocyctonin could be involved in attachment and trust [(Kosfeld, Heinrichs, Zak, Fischbacher, & Fehr, 2005)](http://www.nature.com/nature/journal/v435/n7042/full/nature03701.html). This could improve the social competence of Asperger patients with some social impairments. We could imagine to evaluate the relationship and the synchrony of two subjects normal and with social impairments with and without oxytocin.
+  * **Cardiac Frequency :** direct or indirect on videos with systems like [Lambda](https://lambda.qrilab.com/site/) or [webcam pulse detector](https://github.com/thearn/webcam-pulse-detector)
+  * **Electrodermal activity t**hat seems to be relevant in stress, dissonance cognitive paradigms. Its history as feedback of psychotherapy is ver old since it was used in [psychoanalysis by C. G. Jung](http://www.freezoneearth.org/allmeters/scrapbook/historymeter.htm#Die%20Wort).
+
+* **Motion information**
+
+  We could be much more precise in the measure of the motion by using a Motion capture devices. There are basically two systems:
+
+  * We could measure directly very cheaply motion by using actimetry devices that looks like watches on the wrist. Unfortunately, taht could help for motion of hands but that couldn't give precise information about the motion of the head.
+  * One is minimally invasive with a Kinect, a special camera that project infra-red light and can detect it to measure depth of a scene. It has a much a higher frequency signal detect that can rebuild a 3D representation of a subject and extract its skeletton. We saw that the law frequency of the signal we got 25 Hz could be a limitation of the synchrony signals we could get.  
+  * Optitrack that are some markers on the body of the subject that can help to create a 3D representation of the subject.
+  * An other strategy is to use special suits like in the [Ethome](https://www.youtube.com/watch?v=IBPxokjqvZ8) project that could record precisely a lot of motions directly.
+  * **Facial / Upper body recognition :** We could use automatical detection of Facial / Upper body recognition to segment images automatically instead doing it automatically.
+  * **Emotions**: We could use a camera for each person to have a more precise vision of its face to detect emotions more easily. 
+  * **Background subtraction** could be useful to improve the quality of the motion we get
+  * We could measure the **gaze direction** to check if the quantity of gaze interaction could be a reflect of a good relationship like it is desribed widely by the psychiatrist and psychotherapist in social impairments (social phobia, autism, schizophrenia)
+  * **Trajectories :** We could measure optic flow and trajectories instead of motion since the 
+
+
+* **Speech extraction**
+
+  * We could anticipate the problem of speech extraction by using mikes to compute the synchrony of this signal
+
+
 #	Bibliographie
 https://www.zotero.org/groups/448197/items
+
+> 
 

@@ -11,6 +11,11 @@ output:
 rm(list = ls(all.names = TRUE))
 ```
 
+# Session info
+```{r}
+sessionInfo()
+```
+
 # Preparation of the data
 ```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 # To use this script, you must install packages (install.packages()) to install these packages if you don't have them.
@@ -527,7 +532,7 @@ MeanMotionConflict <- c(
 MeanMotion<- data.frame(MeanMotionNoConflict, MeanMotionConflict, names=c("father", "mother", "child"))
 MeanMotion
 
-par(mar=c(5,4,4,1))
+par(mar=c(3,4,4,1))
 barplot (as.matrix(MeanMotion[,1:2]), beside=TRUE, ylab= "Mean Motion history", col=colOrderList, names.arg=c("No conflict", "Conflict"), main="Mean Motion history for each participant 
          without and with conflict")
 par(mar=c(1,0.5,0.5,1))
@@ -552,7 +557,7 @@ MeanMotionConflict <- c(
 MeanMotionlog <- data.frame(MeanMotionNoConflict, MeanMotionConflict, names=c("father", "mother", "child"))
 MeanMotion
 
-par(mar=c(5,4,4,1))
+par(mar=c(3,4,4,1))
 barplot (as.matrix(MeanMotionlog[,1:2]), beside=TRUE, ylab= "Mean of Motion history", col=colOrderList, names.arg=c("No conflict", "Conflict"), main = "Log of Mean Motion history for each participant 
          without and with conflict")
 legend("top", inset=.02, ParticipantsList, 
@@ -562,7 +567,7 @@ legend("top", inset=.02, ParticipantsList,
 With a log distribution of motion history, we can't see any more this difference.
 
 ```{r histogram of motion history with and withouth conflict, fig.height=3}
-par(mar=c(3,3,4,1))
+par(mar=c(3,4,4,1))
 hist(data[which(data$LabelVideo=="No Conflict"),]$logFather, col="blue", main= "Motion History histogram for father, no conflict", xlab= "")
 hist(data[which(data$LabelVideo=="No Conflict"),]$logMother, col="red", main= "Motion History histogram for mother, no conflict", xlab= "")
 hist(data[which(data$LabelVideo=="No Conflict"),]$logChild, col="green", main= "Motion History histogram for child, no conflict", xlab= "")
@@ -697,9 +702,8 @@ for (i in 1:NumberOfvideos){
 
   childMinute<- MeanMotionByTime("child", indexOfvideos=i, interval=250, data)
 
-  par(mar=c(4,4,4,2))
-      plot ((1:length(fatherMinute)/6), fatherMinute, type="l", col="blue", 
-      main=paste("Mean motion history (non overlaping 10 sec intervals) 
+  par(mar=c(4,5,4,2))
+      plot ((1:length(fatherMinute)/6), fatherMinute, type="l", col="blue", cex.axis=0.7, main=paste("Mean motion history (non overlaping 10 sec intervals) 
       on ", families[i], " video" , sep=""), 
       ylab="Motion history", xlab="Time (minute)", ylim=c(0, 35E-03), las=2,
       xaxp=c(0, (round(length(fatherMinute)/6)), round((length(fatherMinute)/6))))
@@ -792,6 +796,7 @@ SSIlog <- SSIlog[-which(SSIlog$video=="Name"),]
 SSIlog$Interval <- NULL
 SSIlog <- rename (SSIlog, c("video" = "family"))
 SSIlog <- rename (SSIlog, c("X" = "SSI-interval"))
+SSIlog$SSI<-rowSums(SSIlog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
 ```
 
 ```{r SSInolog import}
@@ -804,10 +809,66 @@ for (file in SSInoLogFilesList){
 SSInoLog$video <-as.factor(SSInoLog$video)
 SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
 SSInoLog$Interval <- NULL
-#SSInoLog <- rename (SSIlog, c("video" = "family"))
-SSInoLog <- rename (SSIlog, c("X" = "SSI-interval"))
+SSInoLog <- rename (SSInoLog, c("video" = "family"))
+SSInoLog <- rename (SSInoLog, c("X" = "SSI-interval"))
 #SSInoLog$action <- rep(NA, nrow(SSInoLog))
 #SSInoLog[which(video == & timeMin==)]$action
+SSInoLog$SSI<-rowSums(SSInoLog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
+```
+
+# Annotating data frames noLog
+```{r SSInoLog}
+str(SSInoLog)
+SSInoLog <- merge(SSInoLog, cutFrames, by.x="family", by.y="family")
+SSInoLog$LabelVideo <- rep(NA, nrow(SSInoLog)) 
+SSInoLog[which(SSInoLog$Time_min < SSInoLog$CutBeforeMin),]$LabelVideo <- "Cut"
+
+SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutBeforeMin & SSInoLog$Time_min < SSInoLog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+
+SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle1Min & SSInoLog$Time_min < SSInoLog$CutMiddle2Min),]$LabelVideo <- "Cut"
+
+SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
+
+SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutFinalMin),]$LabelVideo <- "Cut"
+```
+
+```{r}
+View(SSInoLog)
+SSIConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_fa_ch)
+SSIConflict
+str(SSInoLog)
+mean(SSIConflict, na.rm=TRUE)
+
+SSInoLog$SSI<-rowSums(SSInoLog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
+SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI
+SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI
+SSInoLog$LabelVideo
+
+SSINoConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_fa_ch)
+mean(SSINoConflict, na.rm=TRUE)
+
+SSIDUal <- c(mean(SSIConflict, na.rm=TRUE), mean(SSINoConflict, na.rm=TRUE))
+SSIDUal
+barplot(SSIDUal, names.arg = c("No conflict", "Conflict"), col="cornflowerblue", main="Comparaison between SSI without 
+Conflict and with Conflict")
+```
+
+# Global Synchrony scores no conflict vs conflict (log data)
+```{r SSIlog}
+str(SSIlog)
+str(cutFrames)
+View(cutFrames)
+SSIlog <- merge(SSIlog, cutFrames, by.x="family", by.y="family")
+SSIlog$LabelVideo <- rep(NA, nrow(SSIlog)) 
+SSIlog[which(SSIlog$Time_min < SSIlog$CutBeforeMin),]$LabelVideo <- "Cut"
+
+SSIlog[which(SSIlog$Time_min >= SSIlog$CutBeforeMin & SSIlog$Time_min < SSIlog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+
+SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle1Min & SSIlog$Time_min < SSIlog$CutMiddle2Min),]$LabelVideo <- "Cut"
+
+SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle2Min & SSIlog$Time_min < SSIlog$CutFinalMin),]$LabelVideo <- "Conflict"
+
+SSIlog[which(SSIlog$Time_min +0.5 >= SSIlog$CutFinalMin),]$LabelVideo <- "Cut"
 ```
 
 ## Description of SSIlog data frame
@@ -865,48 +926,10 @@ for (i in unique(SSInoLog$family)){
       else{print("error")}}
 ```
 
-# Global Synchrony scores no conflict vs conflict (no Log data)
-```{r SSInoLog}
-str(SSInoLog)
-SSInoLog <- merge(SSInoLog, cutFrames, by.x="family", by.y="family")
-SSInoLog$LabelVideo <- rep(NA, nrow(SSInoLog)) 
-SSInoLog[which(SSInoLog$Time_min < SSInoLog$CutBeforeMin),]$LabelVideo <- "Cut"
 
-SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutBeforeMin & SSInoLog$Time_min < SSInoLog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
-
-SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle1Min & SSInoLog$Time_min < SSInoLog$CutMiddle2Min),]$LabelVideo <- "Cut"
-
-SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
-
-SSIConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_fa_ch)
-mean(SSIConflict, na.rm=TRUE)
-
-SSINoConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_fa_ch)
-mean(SSINoConflict, na.rm=TRUE)
-
-SSIDUal <- c(mean(SSIConflict, na.rm=TRUE), mean(SSINoConflict, na.rm=TRUE))
-SSIDUal
-barplot(SSIDUal, names.arg = c("No conflict", "Conflict"), col="cornflowerblue", main="Comparaison between SSI without 
-Conflict and with Conflict")
-```
-
-# Global Synchrony scores no conflict vs conflict (log data)
-```{r SSIlog}
-str(SSIlog)
-str(cutFrames)
-SSIlog <- merge(SSIlog, cutFrames, by.x="family", by.y="family")
-SSIlog$LabelVideo <- rep(NA, nrow(SSIlog)) 
-SSIlog[which(SSIlog$Time_min < SSIlog$CutBeforeMin),]$LabelVideo <- "Cut"
-
-SSIlog[which(SSIlog$Time_min >= SSIlog$CutBeforeMin & SSIlog$Time_min < SSIlog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
-
-SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle1Min & SSIlog$Time_min < SSIlog$CutMiddle2Min),]$LabelVideo <- "Cut"
-
-SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle2Min & SSIlog$Time_min < SSIlog$CutFinalMin),]$LabelVideo <- "Conflict"
-
-SSIlog[which(SSIlog$Time_min +0.5 >= SSIlog$CutFinalMin),]$LabelVideo <- "Cut"
-
+```{r}
 SSIConflict <- c(SSIlog[which(SSIlog$LabelVideo=="Conflict"),]$SSI_mo_ch, SSIlog[which(SSIlog$LabelVideo=="Conflict"),]$SSI_fa_ch)
+SSIConflict
 mean(SSIConflict, na.rm=TRUE)
 
 SSINoConflict <- c(SSIlog[which(SSIlog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSIlog[which(SSIlog$LabelVideo=="No Conflict"),]$SSI_fa_ch)
@@ -931,8 +954,9 @@ SSINoConflict <- SSINoConflict[!is.na(SSINoConflict)]
 str(SSINoConflict)
 
 t.test(SSIConflict, SSINoConflict, alternative = c("two.sided"), paired=TRUE, conf.level = 0.95)
-
 ```
+
+
 # Demographic and Psychometric data
 ## Demographic description
 ### Sex

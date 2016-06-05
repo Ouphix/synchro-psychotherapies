@@ -938,24 +938,21 @@ cSSI <- c()
 
 for (i in unique(SSInoLog$family)){
   print (i)
-  nc <- mean(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict" & SSInoLog$family==i),]$SSI))
+  nc <- mean(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict" & SSInoLog$family==i),]$SSI)
   print(nc)
   ncSSI <- c(ncSSI, nc)
-  co <-mean(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"  & SSInoLog$family==i),]$SSI))
+  co <-mean(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"  & SSInoLog$family==i),]$SSI)
   print (co)
   cSSI <- c(cSSI, co)
 }
 
-hist(log(SSInoLog$SSI))
-
 hist(ncSSI)
 hist(cSSI)
-hist(log(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI))
-hist(log(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI))
+
 
 SSImean <- data.frame(ncSSI, cSSI)
-SSImean
-barplot(as.matrix(SSImean))
+par(mar=c(3,5,3,3))
+barplot(as.matrix(SSImean), col=terrain.colors(34), ylab="Synchrony scores", main="Sum of mean synchrony scores for all videos", names.arg = c("No conflict", "Conflict"))
 
 t.test(ncSSI, cSSI, alternative = c("two.sided"),
 paired=TRUE, conf.level = 0.95)

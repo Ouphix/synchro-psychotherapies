@@ -189,9 +189,9 @@ There are several researches for pharmacological intervention (agonist substitut
 Psychotherapy is the better treatment accessible in 2016. There are evidences for some of them: 
 
 -	Motivational Enhancement Therapy (MET or Motivational interviewing MI) and Cognitive and Behavioural Therapies (CBT) in which I am trained 
--	Contingency Management (giving positive reinforcement to support change)
--	Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive and much evidence based. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy (Danovitch & Gorelick, 2012).
--	In a Cochrane review, one of the most consensual Evidence Based Reviews, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
+  -Contingency Management (giving positive reinforcement to support change)
+  -Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive and much evidence based. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy (Danovitch & Gorelick, 2012).
+  -In a Cochrane review, one of the most consensual Evidence Based Reviews, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
 
 
 ##### MDFT and the INCANT study
@@ -253,6 +253,8 @@ Globally, as expected, the cannabis consumption is decreasing with time for the 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanEvolution.jpeg)
 
 We tried to cluster 2 groups to contrast the synchrony scores between good responders and bad responders. Unfortunately, when we looked at the evolution of the cannabis consumption, it wasn't very easy to define good and bad responders.
+
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB2-F1044.jpg)
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB.jpg)
 
@@ -394,17 +396,7 @@ With these masks and videos, we could extract motion history with a [C++](https:
 
 The motion history doesn't have any unit, it is the percentage of change of pixels change among all the pixels seclected (non msked in green here). 
 
-##### Headers :
-- **frame** : number of the frame (original rate of 25 frames by second)
-- **father** : motion history of the father frame by frame. It ranges from 0 (same frame than the previous frame, no movement) to 1 (every pixel change).
-- **mother**, : idem for mother
-- **patient** : idem for patient
-- **therapist** : idem for therapist
-- **file** : name of the file in the form *F1044C.VOB*
-
-- **NA** : (Non available) corresponding to absent subjects (NA column) or bad quality of frames at the beginning or end of the videos making impossible extraction of motion history for any participant (NA line). After a problem of encoding, from .VOB, to .mov (video format exported from quicktime when cut are made) and then to AVI, there is a problem of encoding and the length of the video is not well recognized and NA lines are generated that correspond to nothing.
-
-If we plot (in histograms and box plots) this raw data, we notice that the distribution is not normal at all. Very small motion history values are over represented and bigger motion history are much more rare with a very long tail. Consequently, it is difficult to compare two distributions from two different subject. To normalize the distribution to compare the motion distribution of several subjects and compute synchrony scores on it, we made the natural logarithm.
+If we make a plot (in histograms and box plots) this raw data, we notice that the distribution is not normal at all. Very small motion history values are over represented and bigger motion history are much more rare with a very long tail. Consequently, it is difficult to compare two distributions from two different subject. To normalize the distribution to compare the motion distribution of several subjects and compute synchrony scores on it, we made the natural logarithm.
 
 Unfortunately, several values equal to 0 and the log function can not be applied. They generate a -Inf value. If these values are set to NA, we lose the information of no movement at all. If we give a arbitrary value to this data by shifting the discribution by a very small value (eg. the half first value after 0), they are over represented) like in figure 2.
 
@@ -421,7 +413,7 @@ If we check all participants, we can see that the father and the mother motion h
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/loffather.jpg)
 
-- It could be possible to extract [background](https://en.wikipedia.org/wiki/Background_subtraction) to improve the quality of the motion history. See for instance [backgroundExtractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/backgroundExtractor.py) with openCV  [BGS library](https://github.com/andrewssobral/bgslibrary/blob/master/README.md).
+- It could be possible to extract [background](https://en.wikipedia.org/wiki/Background_subtraction) to improve the quality of the motion history. See for instance [backgroundExtractor.py](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/backgroundExtractor.py) with openCV [BGS library](https://github.com/andrewssobral/bgslibrary/blob/master/README.md).
 
 Instead of extracting only the motion history, we could extract more relavant signals.
 
@@ -436,17 +428,6 @@ I filtered motion history raw data with a [R](https://www.cran.r-project.org/) f
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/slidingInterval.jpg)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/MeanMotionByTime.jpg)
-
-##### Headers :
-
-- **video** : name of the video (eg F1044C.VOB)
-- **frame_index** : number of the frame (original rate of 25 frames by second)
-- **slidedFather** : filtered motion history with the sliding motion history function making mean on 5 frames (2 frames before and after the index frame). It ranges from 0 (same frame than the previous frame, no movement) to 1 (every pixel change).
-- **slidedMother** : idem for mother
-- **slidedTherapist** : idem for therapist
-- **slidedPatient** : idem for patient
-- idem with log TODO
-- **NA** : corresponding to absent subject
 
 | Sliding interval (filtered raw Data)     | Sliding interval (filtered log Data)     |
 | ---------------------------------------- | ---------------------------------------- |
@@ -495,16 +476,6 @@ We saw that the distribution of motion history was much more informative when we
 When we did the log scores before computing even if it was interresting in order to compare motion history distributions, however, that didn't change the relevance of the synchrony signal.
 
 When we tried to check what could be the relevance of this signal, since the psychotherapy wasn't very operationnalized, it was difficult to match the two. We contacted the INCANT team however, we couldn't meet them quickly.
-
-##### Headers :
-
-- **Interval**
-  - **Time_min** 
-- **video** : name of the video (eg F1044C.VOB)
-- **SSI_fa_mo** : synchrony index between the filtered motion history of the *father* and *mother*. It ranges from 0 (no synchrony at al, not any relationship between the different participants of the score) to 1 (complete synchrony, the different elements move a lot at the same moment or don't move at all at the same moment).
-  - **SSI_fa_mo_th** : idem between *father*, *mother* and *therapist*
-- **SSI_fa_th** : idem between *father* and *therapist*
-- **SSI_mo_th** : idem between *mother* and *therapist*
 
 There is not any NA in this file. Only the possible combinations are computed (eg there is not the *patient* (*pa*) in the video so, there isn't *SSI_fa_pa* signal neither any other combination with the patient).
 
@@ -583,8 +554,6 @@ The configuration in the different videos are very similar.
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NumberOfAvailable.jpeg)
 
 In these videos all the participants are filmed. The child is always filmed. More often, the mother is involved but not the father.
-
-TODO nombre de minutes
 
 ##### Length of the videos
 
@@ -721,11 +690,11 @@ However, we can see that the synchrony score are not so much different that from
 
 Thanks to that, we were able to compare the mean motion history between the two conditions.
 
-t-test
+Results
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/raw%20Global%20motion%20history%20by%20situation%20%3A%20conflict%20vs%20no%20conflict.jpg)
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/SSICOnflict-NoConflict.jpeg)
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/SSImeansbarplot.jpeg)
 
 As expected and like previous authors showed before, it seemed that the synchrony is lower in conflictual situations.
 
@@ -739,6 +708,7 @@ alternative hypothesis: true difference in means is not equal to 0
  -0.007279512  0.008585109
 sample estimates:
 mean of the differences 0.0006527983 
+
 coorelation entre données psychometriques et SSI
 
 The next steps will be to evaluate the synchrony scores in different conditions (different psychometric scores, especially attachment evaluation) and make proper statisticall evaluations. We consider too, presenting the process to psychotherapy training team to get raw data of better quality. We will meet a representant of the Motivational Interviewing Network of Trainers (MINT).
@@ -749,8 +719,6 @@ None
 There was only one video which no movement of the camera. There wasn't any date emebeded in the videos. There was very few overlap of the subjects.
 
 However, the subjects weren't always looking at the camera that would be a problem to automatically detect their emotions, their smiles for instance. 
-
-##### Results
 
 ##### Discussions
 
@@ -786,10 +754,10 @@ We could extract other features :
 
   We could be much more precise in the measure of the motion by using a Motion capture devices. There are basically two systems:
 
-  * We could measure directly very cheaply motion by using actimetry devices that looks like watches on the wrist. Unfortunately, taht could help for motion of hands but that couldn't give precise information about the motion of the head.
-  * One is minimally invasive with a Kinect, a special camera that project infra-red light and can detect it to measure depth of a scene. It has a much a higher frequency signal detect that can rebuild a 3D representation of a subject and extract its skeletton. We saw that the law frequency of the signal we got 25 Hz could be a limitation of the synchrony signals we could get.  
-  * Optitrack that are some markers on the body of the subject that can help to create a 3D representation of the subject.
-  * An other strategy is to use special suits like in the [Ethome](https://www.youtube.com/watch?v=IBPxokjqvZ8) project that could record precisely a lot of motions directly.
+  * We could measure directly very cheaply motion by using **actimetry** devices that looks like watches on the wrist. Unfortunately, taht could help for motion of hands but that couldn't give precise information about the motion of the head.
+  * One is minimally invasive with a **Kinect**, a special camera that project infra-red light and can detect it to measure depth of a scene. It has a much a higher frequency signal detect that can rebuild a 3D representation of a subject and extract its skeletton. We saw that the law frequency of the signal we got 25 Hz could be a limitation of the synchrony signals we could get.  
+  * Optitrack that are some **markers on the body** of the subject that can help to create a 3D representation of the subject.
+  * An other strategy is to use special **suits** like in the [Ethome](https://www.youtube.com/watch?v=IBPxokjqvZ8) project that could record precisely a lot of motions directly.
   * **Facial / Upper body recognition :** We could use automatical detection of Facial / Upper body recognition to segment images automatically instead doing it automatically.
   * **Emotions**: We could use a camera for each person to have a more precise vision of its face to detect emotions more easily. 
   * **Background subtraction** could be useful to improve the quality of the motion we get

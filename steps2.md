@@ -280,9 +280,7 @@ Consequently, we can say that this subject is very representative of the sample.
 
 Furthermore, when we got the cannabis consumption evolution, we saw that the efficacy of the psychotherapy was not very clear and the evolution of it wasn't straitforward. Consequently, if our hypothesis of good synchrony or good evolution of synchrony as predictor of good quality of psychotherapy was good, we couldn't really expect any of these results in the F1044 subject when we see the objective evolution of the psychotherapy. 
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB-F1044.jpg)
-
-TODO que points, abcisses à points intéressants
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB2-F1044.jpg)
 
 ### Description of the database
 
@@ -731,10 +729,16 @@ t-test
 
 As expected and like previous authors showed before, it seemed that the synchrony is lower in conflictual situations.
 
-TODO t-test
+Paired t-test
 
-AUC?
 
+data:  ncSSI and cSSI
+t = 0.16743, df = 33, p-value = 0.8681
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.007279512  0.008585109
+sample estimates:
+mean of the differences 0.0006527983 
 coorelation entre données psychometriques et SSI
 
 The next steps will be to evaluate the synchrony scores in different conditions (different psychometric scores, especially attachment evaluation) and make proper statisticall evaluations. We consider too, presenting the process to psychotherapy training team to get raw data of better quality. We will meet a representant of the Motivational Interviewing Network of Trainers (MINT).

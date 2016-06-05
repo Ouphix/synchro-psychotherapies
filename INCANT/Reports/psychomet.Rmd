@@ -36,5 +36,8 @@ for (i in 2:nrow(TLFB)){
 ```{r, cache=TRUE}
 for (i in 1:nrow(TLFB)){
   v <- as.numeric(as.vector(TLFB[i,c(3:7)]))
-    plot(c(0,3,6,9,12), v, type="l", col=rainbow(nrow(TLFB))[i], xlab="Time (months)", ylab="TLFB", main=paste ("Evolution of cannabis consumption for", TLFB$data.Case[i], "subject"))}
+    plot(c(0,3,6,9,12), v, type="o", col=rainbow(nrow(TLFB))[i], xlab="Time (months)", ylab="TLFB", xaxt="n", lwd=2, main=paste ("Evolution of cannabis consumption for", TLFB$data.Case[i], "subject"))
+    
+    axis(1, at=c(0,3,6,9,12))}
 ```
+

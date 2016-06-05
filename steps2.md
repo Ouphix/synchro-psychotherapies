@@ -12,7 +12,7 @@ Psychotherapy is an important part of treatment of mental disorders alone or com
 
 Most of the studies are indirectly based on patient reported outcomes or problematic behaviors that are evaluated before and after the psychotherapy. Unfortunately, studies hardly control what is actually happening during psychotherapy, especially the interaction between the patient and the therapist that is a predictor of the psychotherapy efficacy. Consequently, it is difficult to make precise links between theory and practice, control its application and understand which of its ingredients are the most important.
 
-Here we suggest a research framework to extract automatically social signals from psychotherapy videos and tested it on two databases. We focused on the extraction of synchrony of the motor signal since it was considered as a predictor of psychotherapy outcome in a first study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. We adapted a python software in open source [SyncPy](https://github.com/syncpy) to compute this synchrony.
+Here we suggest a research framework to extract automatically social signals from psychotherapy videos and tested it on two databases. We focused on the extraction of synchrony of the motor signal since it was considered as a predictor of psychotherapy outcome in a first study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. We adapted a python software in open source [SyncPy](https://github.com/syncpy) (Varni, Avril, Usta, & Chetouani, 2015) to compute this synchrony.
 
 #### International Cannabis Need of Treatment (INCANT) study Database
 
@@ -36,7 +36,7 @@ See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapie
 ## Originality declaration
 This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after the study of [Ramseyer et Tschacher, 2011](http://psycnet.apa.org/journals/ccp/79/3/284/). It is the first to study it in families, which both different configuration and theorical frameworks (S Estimator technique). The package used for synchrony was developed by the engineers of the team and it was the first time that it was used in real world data. The input of psychiatrists and psychotherapists helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
 
-It is the first study to use an open science approach among the 3 studies (Ramseyer et Tschacher, 2011; Orsucci et al, 2016) that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
+It is the first study to use an open science approach among the 3 studies ([Ramseyer et Tschacher, 2011](http://psycnet.apa.org/journals/ccp/79/3/284/); Orsucci et al, 2016) that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
 
 ## Collaborations
 
@@ -60,7 +60,7 @@ Personnaly, I helped to define and operationalize the scientific question from t
 ## Theorical background
 
 ### Why and How evaluate psychotherapies?
-Psychotherapy evaluation is quite difficult since it must evaluate the basics of human to human relationship. A lot of theories developed in this field (hypnosis, psychoanalytical, cognitive-behaviorist, systemic ...) with very different histories, with very different practices and level of evaluation. Contrary to other parts of medicine, psychotherapy and consequently psychiatry remains organized as schools which hardly interact each others. A lot of choices are done relative to the orientation of an hospital or a ward and not based on the best evidence based information which if often very limited in this field. Consequently, there isn't any consensual framework between psychotherapies.
+Psychotherapy evaluation is quite difficult since it must evaluate the basics of human to human relationship. A lot of theories developed in this field (hypnosis, psychoanalytical, cognitive-behaviorist, systemic ...) with very different histories, practices and level of evaluation. Contrary to other parts of medicine, psychotherapy and consequently psychiatry remains organized as schools which hardly interact each others. A lot of choices are done relative to the orientation of an hospital or a ward and not based on the best evidence based information which if often very limited in this field. Consequently, there isn't any consensual framework between psychotherapies.
 
 Due to its history of being based upon scientific bases and in a scientific process of operationalize precisely the targets, Cognitive and Behavioral Therapies (CBT) are the most evidence based psychotherapy (Canceil et al., 2004 ; Layard & Clark, 2014) which is caused in great part by a lack of experimental work in other schools of psychotherapy.
 
@@ -72,7 +72,7 @@ Unfortunately, good psychotherapy is costly because it takes times and well trai
 
 Particularly, it is difficult to operationalize precisely what a psychotherapist does during a psychotherapy. Even the more operationalized psychotherapy as relaxation techniques, CBT deals with the particularity of each patient, its motivation, its context and don't have a priori a very precise roadmap. Despite these theoretical and evidence debates, there is a almost a consensus that the relationship between the patient and the therapist. Establishing this therapeutic alliance is a very important part of the efficacy of psychotherapy (Horvath & Dianne, 1991 ; Martin, Garske, & Katherine, 2000 ; Cungi & Cottraux, 2006 ; Tschacher, Haken, & Kyselo, 2015). Even it is difficult to operationalize, some psychometric tools were developed like the Working Alliance Inventory (WAI) questionnaire (Corbière, Bisson, Lauzon, & Ricard, 2006). This led to the Dodo theory. It states, like the judgment made by the Dodo bird after a race in the Alice and the Wonderland book, that all participants are equals. It would mean than nothing technical could differentiate a psychotherapy versus an other one, only the patient-therapist relationship would be important. This consensus is challenged by some behaviorist (CBT) that state that this determinant is only important when psychotherapist are not well trained and in poorly designed studies (Layard & Clark, 2014).
 
-Therapeutic alliance is a first step before any other specific technique (Cungi & Cottraux, 2006). This process was a lot studied by the first psychotherapies like hypnosis. In a good therapeutic alliance, the contact is warm, authentic, collaborative. There is a lot of empathy, ie the therapist understand the point of view and the representation of his patient, shares it (contrary to apathy) while keeping in mind that he is not in the same situation that his patient and without being struggled by too much emotions (contrary to sympathy). One of the best operationalized and Evidence based kind of psychotherapy is motivational interviewing which if much used in first steps CBT or psychoeducation. It can be the essential part of a work with addict patient or patients with addictions problems. The goal of motivational interviewing is to increase change discourse by stimulating it by some techniques:
+Therapeutic alliance is a first step before any other specific technique (Cungi & Cottraux, 2006). This process was a lot studied by the first psychotherapies like hypnosis. In a good therapeutic alliance, the contact is warm, authentic, collaborative. There is a lot of empathy, ie the therapist understand the point of view and the representation of his patient, shares it (contrary to apathy) while keeping in mind that he is not in the same situation that his patient and without being struggled by too much emotions (contrary to sympathy). One of the best operationalized and Evidence based kind of psychotherapy is motivational interviewing (Miller & Rollnick, 2013) which if much used in first steps CBT or psychoeducation. It can be the essential part of a work with addict patient or patients with addictions problems. The goal of motivational interviewing is to increase change discourse by stimulating it by some techniques:
 
 * open question (like how are you today ?) with let the patient a wide range of possible answers contrary to close questions, specifically with Yes/no answers (like did you slept well yesterday night ?)
 * Rephrasing what the patient is saying (eg If I understand well, you told me that..., isn't it ?) especially the change discourse.
@@ -85,11 +85,11 @@ Therapeutic alliance is a first step before any other specific technique (Cungi 
 * Defining and raising the values of the patient and not the therapist values
 * Giving advices only when it is requested by the patient
 
-We can see that even this very operationalized psychotherapy let place for a lot of improvisation and adaptation to a precise. Consequently, it needs a lot of practice and training beyond the theoretical knowledge. A lot of reflexes (like giving advices) need to be unlearned, that takes time. However, it is quite difficult to give precise feedback (supervision) without being involved directly in the therapy with the therapist. In complex settings like familial psychotherapies, the therapist can be directly supervised by a colleague behind a two-way mirror.
+We can see that even this very operationalized psychotherapy let place for a lot of improvisation and adaptation to a precise situation and can not be standardized. Consequently, it needs a lot of practice and training beyond the theoretical knowledge. A lot of reflexes (like giving advices) need to be unlearned, that takes time. However, it is quite difficult to give precise feedback (supervision) without being involved directly in the therapy with the therapist. In complex settings like familial psychotherapies, the therapist can be directly supervised by a colleague behind a two-way mirror.
 
-One way to improve learning process and evaluation of psychotherapy in practice is to make annotation of them. After filming psychotherapy, it is possible to evaluate what is exactly happening during this process. Some evaluation tools were developed like the MITI (Moyers, Manuel, & Ernst, 2014) for the motivational interviewing.  Software like Elan can be very useful for that and enable to annotate several modalities at the same time. However, it can be very difficult and tedious.
+One way to improve learning process and evaluation of psychotherapy in practice is to make annotation of them. After filming psychotherapy, it is possible to evaluate what is exactly happening during this process. Some evaluation tools were developed like the MITI (Moyers, Manuel, & Ernst, 2014) for the motivational interviewing.  Software like [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) can be very useful for that and enable to annotate several modalities at the same time. However, it can be very difficult and tedious.
 
-In many parts of medicine, we don't directly evaluate the desired outcome of a therapy (like the mortality) because it happens too late. Consequently, intermediate marker help the physician to choose the best treatment. For instance, we can evaluate the efficacy of an anti diabetic on blood sugar mean reflected by Hb1Ac. This avoid to wait several years to check if the treatment is efficient or not (which can be evaluated only by disability created by diabetes or mortality). Consequently, it is very convenient. If we can get a automatic signal of this therapeutic alliance, we could get an intermediate marker of the efficacy of the psychotherapy which unfortunatelly doesn't exist at the moment. However, we need to keep in mind that this intermediate markers are only intermediate and are not always relevant. Some anti-diabetics decrease Hb1Ac and Increase mortality whereas classical one decrease both.
+In many parts of medicine, we don't directly evaluate the desired outcome of a therapy (like the mortality) because it happens too late. Consequently, intermediate marker help the physician to choose the best treatment. For instance, we can evaluate the efficacy of an anti diabetic on blood sugar mean reflected by Hb1Ac. This avoid to wait several years to check if the treatment is efficient or not (which can be evaluated only by disability created by diabetes or mortality). Consequently, it is very convenient. If we can get a automatic signal of this therapeutic alliance, we could get an intermediate marker of the efficacy of the psychotherapy which unfortunatelly doesn't exist at the moment. ~~However, we need to keep in mind that this intermediate markers are only intermediate and are not always relevant. Some anti-diabetics decrease Hb1Ac and Increase mortality whereas classical one decrease both.~~
 
 Fortunately, it is possible to evaluate the efficacy of a psychotherapy via two direct means. The first one are the direct outcomes of psychotherapy with behavior or consumptions (like number of cannabis joint consumed or number of panic attacks). This kind of easily reported outcomes are more the exception than the norm. However, it is not possible in all mental illnesses. Some psychometric data like Beck Depression Inventory (BDI) (Beck, Steer, & Carbin, 1988) for depression, or State-trait anxiety inventory (STAI) (Spielberger, 1970) were developed to evaluate the state of different pathological characteristics. These scales can be filled by the therapist or the patient directly. However, it is quite time consuming and not much done in practice outside research or CBT training.  
 
@@ -100,17 +100,18 @@ To sum up, we can say that there are a lot of different kinds of psychotherapies
 #### Learning theory
 Learning theories were developed by Skinner and Pavlov. They state that during a learning period, there are association between different stimulus. For instance, a behavior that will be positively reinforced will be repeated. A situation that is painful will be avoided. They are widely used in most recent cognitive studies in the term reinforcement learning. They are very used in cognitives sciences especially in modeling decisions process and understand brain activity. In psychotherapy, they are widely used in CBT approach to understand maintenance of a pathological process. Often a patient is being reinforced by avoiding a short term pain but this leads to avoidance of the situation and keep abnormal and painful emotions and cognitives schemas. The role of the therapist if to help the patient to became of this process during the functional analysis and to suggest him to change to healthier behavior by using new reinforcers. 
 
-#### Attention
-Dehaene (Neuroeducation, Curiosity, Sleep)
+#### Cognitive neuroscience and education
+
+With the progress of neuroscience there is a a growing evidence toward some techniques to improve curiosity, attention, motivation of students (Dehaene, 2014). A new field of research neuroeducation is developping, a lot of these work could be used in psychotherapy too.  
 
 #### Cognitive dissonance and engagement theory
-Even if it wasn't described by the creators of the motivational interviewing, we can see that this process is very close to the engagement theory, and engaging communication developed by Beauvois and Joule (Joule & Beauvois, 2010) after the work on cognitive dissonance by Festinger (Festinger & Carlsmith, 1959). This theory was developed and validated in control people without any mental illnesses but could be very interesting in psychiatric patients and in Psychiatry settings (Fond et al, 2014). We can see consequently that we could use some very defined experimental settings like in cognitive and social psychology to improve our understanding of the process of psychotherapy. This is what will be used in the MONRADO study to compare two situation without any conflit and with a conflict.
+Even if it wasn't described by the creators of the motivational interviewing, we can see that this process is very close to the engagement theory, and engaging communication developed by Beauvois and Joule (Joule & Beauvois, 2010) after the work on cognitive dissonance by Festinger (Festinger & Carlsmith, 1959). This theory was developed and validated in control people without any mental illnesses but could be very interesting in psychiatric patients and in Psychiatry settings (Fond et al, 2014). We can see consequently that we could use some very defined experimental settings like in cognitive and social psychology to improve our understanding of the process of psychotherapy. This is what will be used in the Monrado study to compare two situation without any conflit and with a conflict.
 
 Cognitive dissonance theory is a counter-intuitive theory but very developed and replicated that deals with how we react to cognitive conflict and how we often rationalize our behavior in several situations.
 Festinger asked participants to make a dull task. When the participant is freely making it for free, he feels a conflict between thoughts like "I am a clever guy free to make something" and its behavior "I am making something completely dull and useless". This conflict is difficult to handle. The subject is in a situation of cognitive dissonance. In this situation, he resolve his dissonance by changing his thoughts "this task is not the dull but rather interesting". However, in exactly the same situation, when the participants is paid, the effect disappear, there isn't anymore conflict. The subject still find the task completely dull as it was organized (Festinger & Carlsmith, 1959). After this classical paradigm, several explanations were developed especially by Beauvois, Joule who evaluated some other paradigms consistent with this theory (Beauvois & Joule, 1987, 1996, 2010). The Foot in the door technique (how to change a behavioral by very small steps), the "You are free" paradigm, the "labelling technique" (it seems your health is very important for you), "touch technique" were widely evaluated without much publicity inside psychotherapy field even if a lot of their approach can be consistent with Motivational Interview. Consequently, a behavior can be much more explained by a context and by the previous behaviors of the subject than on the expected outcome as expected by the reinforcement learning theory. 
 
 #### Bandura 
-Bandura challenged the reinforcement theory too by demonstrating that imitation was a major process of learning. In the Dodo doll experiment, he show that the behaviors of children could be predicated by the models of adults they saw just before. This process is widely used in psychotherapy where the therapist can play the role of model in role play or exposure for instance which the patient can imitate.
+Bandura challenged the reinforcement theory too by demonstrating that imitation was a major process of learning. In the Dodo doll experiment (Bandura et al, 1963), he showed that the behaviors of children could be predicated by the models of adults they saw just before. This process is widely used in psychotherapy where the therapist can play the role of model in role play or exposure for instance which the patient can imitate.
 
 #### Mirror neurons, mirroring and empathy
 Mirror neurons were discovered by Rizzolatti (Rizzolatti & Craighero, 2004). When a monkey seize an object, specific neurons of this task (in this receptor field) fire. The same neurons fire when this monkey see an other one making the same action. Consequently, it seems that there is a system in which the monkey simulate the outside world. This system is still activated when he really perform the task.
@@ -119,13 +120,13 @@ Beyond that, some researchers like Iacoboni stated that the system of minor neur
 
 
 ### Theorical advantages and pitfalls of synchrony studies
-"Synchrony refers to individuals’ temporal coordination during social interactions" (Delaerche et al, 2012). However, definition of synchronies are very numerous. There is a possibility to switch from the social world to a mathematical definition but since the point of view is different, it doesn't always refer to the same thing. Interdependence of dyadic partners’ behaviors was described by many terms in the literature (mimicry, social resonance, coordination, synchrony, attunement, chameleon effect, etc.)(Delaerche et al, 2012).
+"Synchrony refers to individuals’ temporal coordination during social interactions" (Delaerche et al, 2012). However, definition of synchronies are very numerous. There is a possibility to switch from the social world to a mathematical definition but since the point of view is different, it doesn't always refer to the same thing. Interdependence of dyadic partners’ behaviors was described by many terms in the literature (mimicry, social resonance, coordination, synchrony, attunement, chameleon effect, etc.) (Delaerche et al, 2012).
 
-Behavior matching [21]; mirroring; mimicry [22], [23], [24]; congruence and the chameleon effect [25] are related to convergence
+TODO Behavior matching [21]; mirroring; mimicry [22], [23], [24]; congruence and the chameleon effect [25] are related to convergence
 
-Synchrony is related to the adaptation of one individual to the rhythms and move- ments of the interaction partner (Condon & W. Ogston, 1967). For Delaherche, "synchrony is the dynamic and reciprocal adaptation of the temporal structure of behaviors between interactive partners" (Delaerche et al, 2012). It can be unimodal (eg. speech-speech) or multimodal (eg. speech-motor, someone answering to a sentence by a sign of the head).
+Synchrony is related to the adaptation of one individual to the rhythms and movements of the interaction partner. For Delaherche, "synchrony is the dynamic and reciprocal adaptation of the temporal structure of behaviors between interactive partners" (Delaerche et al, 2012). It can be unimodal (eg. speech-speech) or multimodal (eg. speech-motor, someone answering to a sentence by a sign of the head).
 
-La synchronie semble être un élément déterminant parmi les facteurs aspécifiques favorisant une bonnealliance thérapeutique, en lien avec de bonnes capacités d'empathie et d'imitation. Elle pourrait être mesuréeautomatiquement sans a priori théoriques. Elle a été objectivée à différents niveaux d'organisation. C’est unsignal social à part entière (Leclère et al., 2014), avec des corrélats cérébraux (Dumas, Nadel, Soussignan,Martinerie, & Garnero, 2010) et hormonaux (tels que l'ocytocine) (Weisman et al., 2013).										
+Synchrony could an important element of therapeutic relationship. This could be measured in any kind of psychotherapy without theorical a priori. It is is social signal but brain correlates were found (Dumas, Nadel, Soussignan,Martinerie, & Garnero, 2010) and hormonals correlates too (Weisman et al., 2013).										
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/multilevel.png)
 *From Human communication dynamics presentation, D. Cohen*
@@ -139,17 +140,13 @@ Some recordings are used in diagnostic phase where lack of coordination in non-v
 Independently of the psychotherapy theory and framework, it seems that synchrony could be used in very different settings and could reflect the therapeutic alliance. In the future, we can imagine that synchrony score could be extracted automatically in different modalities (synchrony of speech, motion history, smiles, expressed emotions). That would give a feedback about the process of the psychotherapy that will be more objective and less time consuming than filling a psychometric questionnaire. 
 
 ### Open science, Open data, Confidentiality 
-It was quite difficult at the beginning to replicate the studies that were done by other teams and to find these two databases that could be relevant for this goal because of quality of the recording and quality of psychometric data collected. After we had our own scripts and procedure for INCANT database, it was very easy to replicate the analysis for MONRADO database. 
+It was quite difficult at the beginning to replicate the studies that were done by other teams and to find these two databases that could be relevant for this goal because of quality of the recording and quality of psychometric data collected. After we had our own scripts and procedure for Incant database, it was very easy to replicate the analysis for Monrado database. 
 
 To avoid this lost of time, and to improve validity and replicability and improvements of our work. we tried to develop an open science approach. The synchrony computation software SyncPy developped by the team G. Varni and M. Avril was published on open source on GitHub. We decided to continue this approach to improve accessibility, transparency of this work to help future improvements. 
 
-The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship. We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts. Both of them are published but the MONRADO script is much more commented, organized. Data dictionnaries are more described in order to better understand the process.
+The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship. We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts. Both of them are published but the Monrado script is much more commented, organized. Data dictionnaries are more described in order to better understand the process.
 
 However, it is not possible to share the raw materials with consist of confidential psychotherapy sessions. It would be very relevant to share this material to let possibility to other team to compare this results with other softwares or modules with different goals than motion history synchrony analysis. In the research in algorithm development, some databases are shared and promoted during [challenge sessions](http://sspnet.eu/avec2011/) between  laboratories. This enable the development of the best classifier for instance.
-
-
-
-Git R markdown
 
 ### INCANT Study
 
@@ -159,7 +156,7 @@ Cannabis dependence psychotherapy is important because cannabis is the most used
 
 ##### Cannabis addiction
 
-Cannabis dependence is defined by DMS V (Diagnostic and Statistical Manual of Mental Disorders) by:
+Cannabis dependence is defined by DMS V  (Diagnostic and Statistical Manual of Mental Disorders, (American Psychiatric Association, 2013) by:
 "A. A problematic pattern of cannabis use leading to clinically significant impairment or distress, as manifested by at least two of the following, occurring within a 12-month period:
 
 1. Cannabis is often taken in larger amounts or over a longer period than was intended.
@@ -192,9 +189,9 @@ There are several researches for pharmacological intervention (agonist substitut
 Psychotherapy is the better treatment accessible in 2016. There are evidences for some of them: 
 
 -	Motivational Enhancement Therapy (MET or Motivational interviewing MI) and Cognitive and Behavioural Therapies (CBT) in which I am trained 
-  -Contingency Management (giving positive reinforcement to support change)
-  -Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive and much evidence based. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy (Danovitch & Gorelick, 2012).
-  -In a Cochrane review, one of the most consensual Evidence Based Reviews, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
+-	Contingency Management (giving positive reinforcement to support change)
+-	Familial and systems interventions, in which Multidimensional family therapy (MDFT) which is very comprehensive and much evidence based. A 224 adolescent randomized trial showed that MDFT was more effective than CBT (Liddle, Dakof, Turner, Henderson, & Greenbaum, 2008) but a big study Cannabis Youth Treatment didn't. INCANT study is an international study evaluating its efficacy (Danovitch & Gorelick, 2012).
+-	In a Cochrane review, one of the most consensual Evidence Based Reviews, (Denis, Lavie, Fatseas, & Auriacombe, 2006) found 39 studies considered eligible and selected only 6 quality studies with enough quality on psychotherapeutic intervention for cannabis abuse and/or dependence in outpatient settings. Pooled together, these six studies represent 1297 patients. They confirmed the efficacy quality of CBT and MET. Contingency Management can be combined with these therapies. Systemic and familial therapies studies weren't selected in this analysis.
 
 
 ##### MDFT and the INCANT study
@@ -255,13 +252,11 @@ It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com
 Globally, as expected, the cannabis consumption is decreasing with time for the subjects.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanEvolution.jpeg)
 
-We tried to cluster 2 groups to contrast the synchrony scores between good responders and bad responders. Unfortunately, when we looked at the evolution of the cannabis consumption, it wasn't very easy to define good and bad responders. TODO put 2-3 subjects, table.
-
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/EvolutionCannabis.jpeg)
+We tried to cluster 2 groups to contrast the synchrony scores between good responders and bad responders. Unfortunately, when we looked at the evolution of the cannabis consumption, it wasn't very easy to define good and bad responders.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB.jpg)
 
-All the evolutions of this scores subject by subject are represented [here](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Reports/psychomet.pdf). 
+![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/EvolutionCannabis.jpeg)
 
 ### Results
 
@@ -563,7 +558,7 @@ However, this database can precisely enlighten some points that need to be adres
 
 ## MONRADO study
 ### Aim of the study
-The aim of the study was to evaluate the response to a conflict in a dyad of a parent and a child. There were two phases. After the experimenter left the room, the dyad spoke about casual topics. After around 5 minutes, the experimenter came back in the room and asked the dyad to speak about a conflictual conflict that was selected by the child before the video during an interview alone with him or her.
+The aim of the study was to evaluate the response to a conflict in a dyad of a parent and a child. There were two phases. After the experimenter left the room, the dyad spoke about casual topics. After around 5 minutes, the experimenter came back in the room and asked the dyad to speak during around 10 minutes about a conflictual conflict that was selected by the child before the video during an interview alone with him or her.
 
 Consequently, from these videos, we can extract easily two phases that we could contrast : without then with conflict.
 
@@ -583,11 +578,7 @@ In order to match the psychometric data which was more important and the videos,
 
 Presence of participants,
 
-video
 
-efface axe
-
-delete 0.5
 
 The configuration in the different videos are very similar.
 

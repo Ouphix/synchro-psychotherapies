@@ -21,8 +21,6 @@ sessionInfo()
 # To use this script, you must install packages (install.packages()) to install these packages if you don't have them.
 
 # Loading libraries
-## For making models
-#library("lme4")
 ## For managing data frames easilly : rbinds function
 library("plyr")
 ## For editing string
@@ -818,39 +816,17 @@ SSInoLog$SSI<-rowSums(SSInoLog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
 
 # Annotating data frames noLog
 ```{r SSInoLog}
-str(SSInoLog)
 SSInoLog <- merge(SSInoLog, cutFrames, by.x="family", by.y="family")
 SSInoLog$LabelVideo <- rep(NA, nrow(SSInoLog)) 
-SSInoLog[which(SSInoLog$Time_min < SSInoLog$CutBeforeMin),]$LabelVideo <- "Cut"
+SSInoLog[which(SSInoLog$Time_min <= SSInoLog$CutBeforeMin),]$LabelVideo <- "Cut"
 
-SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutBeforeMin & SSInoLog$Time_min < SSInoLog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutBeforeMin & SSInoLog$Time_min < SSInoLog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
 
-SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle1Min & SSInoLog$Time_min < SSInoLog$CutMiddle2Min),]$LabelVideo <- "Cut"
+SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle1Min & SSInoLog$Time_min <= SSInoLog$CutMiddle2Min),]$LabelVideo <- "Cut"
 
-SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
+SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
 
 SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutFinalMin),]$LabelVideo <- "Cut"
-```
-
-```{r}
-View(SSInoLog)
-SSIConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI_fa_ch)
-SSIConflict
-str(SSInoLog)
-mean(SSIConflict, na.rm=TRUE)
-
-SSInoLog$SSI<-rowSums(SSInoLog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
-SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI
-SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI
-SSInoLog$LabelVideo
-
-SSINoConflict <- c(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI_fa_ch)
-mean(SSINoConflict, na.rm=TRUE)
-
-SSIDUal <- c(mean(SSIConflict, na.rm=TRUE), mean(SSINoConflict, na.rm=TRUE))
-SSIDUal
-barplot(SSIDUal, names.arg = c("No conflict", "Conflict"), col="cornflowerblue", main="Comparaison between SSI without 
-Conflict and with Conflict")
 ```
 
 # Global Synchrony scores no conflict vs conflict (log data)
@@ -858,17 +834,18 @@ Conflict and with Conflict")
 str(SSIlog)
 str(cutFrames)
 View(cutFrames)
+
 SSIlog <- merge(SSIlog, cutFrames, by.x="family", by.y="family")
 SSIlog$LabelVideo <- rep(NA, nrow(SSIlog)) 
-SSIlog[which(SSIlog$Time_min < SSIlog$CutBeforeMin),]$LabelVideo <- "Cut"
+SSIlog[which(SSIlog$Time_min <= SSIlog$CutBeforeMin),]$LabelVideo <- "Cut"
 
-SSIlog[which(SSIlog$Time_min >= SSIlog$CutBeforeMin & SSIlog$Time_min < SSIlog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+SSIlog[which(SSIlog$Time_min > SSIlog$CutBeforeMin & SSIlog$Time_min < SSIlog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
 
-SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle1Min & SSIlog$Time_min < SSIlog$CutMiddle2Min),]$LabelVideo <- "Cut"
+SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle1Min & SSIlog$Time_min <= SSIlog$CutMiddle2Min),]$LabelVideo <- "Cut"
 
-SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle2Min & SSIlog$Time_min < SSIlog$CutFinalMin),]$LabelVideo <- "Conflict"
+SSIlog[which(SSIlog$Time_min > SSIlog$CutMiddle2Min & SSIlog$Time_min < SSIlog$CutFinalMin),]$LabelVideo <- "Conflict"
 
-SSIlog[which(SSIlog$Time_min +0.5 >= SSIlog$CutFinalMin),]$LabelVideo <- "Cut"
+SSIlog[which(SSIlog$Time_min >= SSIlog$CutFinalMin),]$LabelVideo <- "Cut"
 ```
 
 ## Description of SSIlog data frame
@@ -882,6 +859,20 @@ str(SSIlog)
 * **Time_min** : Time in minutes
 * **SSI_fa_ch** : SSI index of Synchrony between father and child
 * **SSI_mo_ch** : SSI index of Synchrony between mother and child
+* **SSI** : SSI index of the interaction (father-child or mother-child)
+* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
+* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
+* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, character string in the form min:sec
+* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
+* **ChildSex** : Factor variable : Male of Female
+* **ParentSex** : Factor variable : Male of Female
+* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
+* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
+* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, numeric variable in minutes
+* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
+* **LabelVideo** : label of the video if it is related to No Conflict period or Conflict Perido
 
 ## Description of noLogSSI data frame
 ```{r SSInologdf  description , cache=FALSE}
@@ -895,6 +886,20 @@ str(SSInoLog)
 * **Time_min** : Time in minutes
 * **SSI_fa_ch** : SSI index of Synchrony between father and child
 * **SSI_mo_ch** : SSI index of Synchrony between mother and child
+* **SSI** : SSI index of the interaction (father-child or mother-child)
+* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
+* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
+* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, character string in the form min:sec
+* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
+* **ChildSex** : Factor variable : Male of Female
+* **ParentSex** : Factor variable : Male of Female
+* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
+* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
+* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, numeric variable in minutes
+* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
+* **LabelVideo** : label of the video if it is related to No Conflict period or Conflict Perido
 
 # Synchrony scores log for each dyad
 ```{r Synchrony scores log for each dyad, fig.width=8, fig.height=3.5}
@@ -928,34 +933,33 @@ for (i in unique(SSInoLog$family)){
 
 
 ```{r}
-SSIConflict <- c(SSIlog[which(SSIlog$LabelVideo=="Conflict"),]$SSI_mo_ch, SSIlog[which(SSIlog$LabelVideo=="Conflict"),]$SSI_fa_ch)
-SSIConflict
-mean(SSIConflict, na.rm=TRUE)
+ncSSI <- c()
+cSSI <- c()
 
-SSINoConflict <- c(SSIlog[which(SSIlog$LabelVideo=="No Conflict"),]$SSI_mo_ch, SSIlog[which(SSIlog$LabelVideo=="No Conflict"),]$SSI_fa_ch)
-mean(SSINoConflict, na.rm=TRUE)
+for (i in unique(SSInoLog$family)){
+  print (i)
+  nc <- mean(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict" & SSInoLog$family==i),]$SSI))
+  print(nc)
+  ncSSI <- c(ncSSI, nc)
+  co <-mean(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"  & SSInoLog$family==i),]$SSI))
+  print (co)
+  cSSI <- c(cSSI, co)
+}
 
-SSIDual <- c(mean(SSIConflict, na.rm=TRUE), mean(SSINoConflict, na.rm=TRUE))
-SSIDual
-barplot(SSIDual, names.arg = c("No Conflict", "Conflict"), col="cornflowerblue", main="Comparaison between SSI without 
-Conflict and with Conflict")
+hist(log(SSInoLog$SSI))
 
-View(SSIlog)
+hist(ncSSI)
+hist(cSSI)
+hist(log(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict"),]$SSI))
+hist(log(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"),]$SSI))
 
-SSIDual
-SSIConflict <- SSIlog[which(SSIlog$LabelVideo=="Conflict"),]$SSI_mo_ch
-SSIConflict
-SSINoConflict <- SSIlog[which(SSIlog$LabelVideo=="No Conflict"),]$SSI_mo_ch
-SSINoConflict
+SSImean <- data.frame(ncSSI, cSSI)
+SSImean
+barplot(as.matrix(SSImean))
 
-SSIConflict <- SSIConflict[!is.na(SSIConflict)]
-str(SSIConflict)
-SSINoConflict <- SSINoConflict[!is.na(SSINoConflict)]
-str(SSINoConflict)
-
-t.test(SSIConflict, SSINoConflict, alternative = c("two.sided"), paired=TRUE, conf.level = 0.95)
+t.test(ncSSI, cSSI, alternative = c("two.sided"),
+paired=TRUE, conf.level = 0.95)
 ```
-
 
 # Demographic and Psychometric data
 ## Demographic description

@@ -4,7 +4,7 @@
 
 ### Project website : [bit.ly/syncpsy](http://bit.ly/syncpsy)
 
-Synchrony articles before
+
 
 [TOC]
 
@@ -112,7 +112,7 @@ Even if it wasn't described by the creators of the motivational interviewing, we
 Cognitive dissonance theory is a counter-intuitive theory but very developed and replicated that deals with how we react to cognitive conflict and how we often rationalize our behavior in several situations.
 Festinger asked participants to make a dull task. When the participant is willingly making it for free, he feels a conflict between thoughts like "I am a clever person free to make something" and his behavior "I am making something completely dull and useless". This conflict is difficult to handle. The subject is in a situation of cognitive dissonance. In this situation, he resolves his dissonance by changing his thoughts "this task is not so dull but rather interesting". However, in exactly the same situation, when the participants are paid, the effect disappear, there isn't anymore conflict. The subject still find the task completely dull as it is ([Festinger & Carlsmith, 1959]((http://psychclassics.yorku.ca/Festinger)). After this classical paradigm, several explanations were developed especially by Beauvois, Joule who evaluated some other paradigms consistent with this theory (Beauvois & Joule, 1987, 1996, 2010). The Foot in the door technique (how to change a behavioral by very small steps), the "You are free" paradigm, the "labelling technique" (it seems your health is very important for you), "touch technique" were widely evaluated without much publicity inside psychotherapy field even if a lot of their approach can be consistent with Motivational Interview. Consequently, a behavior can be much more explained by a context and by the previous behaviors of the subject than on the expected outcome as expected by the reinforcement learning theory. 
 
-#### Bandura 
+#### Bandura theory of social learning and importance of imitation 
 Bandura challenged the reinforcement theory too by demonstrating that imitation was a major process of learning. In the Dodo doll experiment [(Bandura et al, 1961](http://psychclassics.yorku.ca/Bandura/bobo.htm)), he showed that the behaviors of children could be predicated by the models of adults they saw just before. This process is widely used in psychotherapy where the therapist can play the role of model in role play or exposure for instance which the patient can imitate.
 
 #### Mirror neurons, mirroring and empathy
@@ -343,7 +343,7 @@ In this barplot of the mean motion history for each subject for each video, we c
 
 When we sum up the data we get, we can see that the mother and the therapist are the most present participants.
 
-
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/NA.jpeg)
 
 ##### Time organization
 Video length could were very different because it was necessary to reorganize them. 
@@ -453,7 +453,7 @@ It is possible to change the size of interval to change the ration signal/noise.
 
 We can see that there is a shift of the therapist motion history even in the filtered raw data. It is possible that the noise on this small window makes decrease the signal/noise ratio.
 
-Bad quality of first frames at the beginning or end of the videos with NA were deleted to prepare the next script analysis.
+Low quality of first frames at the beginning or end of the videos with NA were deleted to prepare the next script analysis.
 
  The number of frames is changed since it is necessary to get frames before and after the index.
 
@@ -478,7 +478,7 @@ To compute the synchrony, we use the S_Estimator algorithm that is drawn from in
 **You need to specify,**
 
 - the folder where you put your data (eg dataFolder = '/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/CSV/filtered/') 
-- The cvs files are automatically detected from this folder and S_estimator is used on them.
+- the csv files are automatically detected from this folder and S_estimator is used on them.
 - the number of frames used in an interval to compute synchrony, Nota bene, there are 25 frames by second. (eg. numberOfFramesByInterval = 25*10). We chose this parameter since it seems to be clinically relevant but other parameters could be tested.
 
 This process is relatively long and can take several minutes, especially with short intervals. It returns synchrony CSV files that can be found [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/SynchronyCSV).
@@ -499,7 +499,7 @@ We can evaluate the evolution of the synchrony for a dyad or tryad through the e
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/SSImoth.jpg)
 
-We saw that the evolution of cannabis use of F1044 is not straightforward. It is quite high at the beginning, decreases and then increases. Consequently, we couldn't evaluate of the dynamic of the synchrony could be a predictor of the psychotherapy and the consumption of cannabis since this ast dynamic wasn't clear. 
+We saw that the evolution of cannabis use of F1044 is not straightforward. It is quite high at the beginning, decreases and then increases. Consequently, we couldn't evaluate if the dynamic of the synchrony could be a predictor of the psychotherapy and the consumption of cannabis since this last dynamic wasn't clear. 
 
 We decided to select 4 subjects with a clear decrease of cannabis consumption, we expected that this better dynamic could give clearer results.
 
@@ -508,7 +508,7 @@ We decided to select 4 subjects with a clear decrease of cannabis consumption, w
 * F1069, patiente, 4 videos
 * F1101, patient, 3 videos
 
-All of them with the same therapist Mrs Bastard. However, we had problems with the conversion of the files from VOB to AVI. The number of videos from this families were much lower, to evaluate a dynamic could even more challenging. Since, we got a better database with less technicall problems on it and a experimental setting, we decided to switch to it to further developp the concept.
+All of them with the same therapist Mrs Bastard. However, we had problems with the conversion of the files from VOB to AVI. The number of videos from this families were much lower, to evaluate a dynamic could even more challenging. Since, we got a better database with less technical problems on it and a experimental setting, we decided to switch to it to further developp the concept.
 
 ##### Advantages of this Incant database
 
@@ -539,7 +539,7 @@ We couldn't answer the questions with the INCANT study we asked in the pre-regis
 
 Since the number of videos can be very low, we couldn't neither say if the synchrnony coud be the reflect of the adherence.
 
-However, this database can precisely enlighten some points that need to be adressed to consider this evaluation.
+However, this database can precisely enlighten some points that need to be adressed to consider this evaluatio. Furthermore, it highlights the challenge of working on "almost" real life data which is more interresting but less predictable and much more technicaly challenging.
 
 ## MONRADO study
 ### Aim of the study
@@ -591,27 +591,17 @@ We can see that the length of the videos are very similar. In NUMA027 video, the
 
 The mean age of the participants was 15.4 years (SD : 2.0).
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Birth%20places.jpg)
-
-Most of the children were born in Besancon.
-
-TODO Frequency
-
-Sex of the child
+##### Sex of the child
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/sex.jpg)
 
 82 % of the teenagers involved were female.
 
-TODO FrequenCY
-
 ##### Attachment style
 
 Attachment theory is a psychological model that tries to describe the dynamics of short and long-term relationships between humans. 
 
-The Attachment Style Interview for Adolescents (ASI-AD) is a user-friendly, transparent and reliable measure. It offers the adolescents the opportunity to talk about their recent life events, their close relationships (with parents and friends), their support networks and how they feel about getting close to others. (Jacobs et al, 2012). Caring about attachment in young people in residential care: The use of the Attachment Style Interview. (‘Community Care Inform’ electronic information source. Spring 2012)
-
-Catherine Jacobs, Yael Ilan-Clarke and Professor Antonia Bifulco, Lifespan Research Group, Centre for Abuse and Trauma Studies) http://www.attachmentstyleinterview.com/
+The Attachment Style Interview for Adolescents (ASI-AD) is a user-friendly, transparent and reliable measure. It offers the adolescents the opportunity to talk about their recent life events, their close relationships (with parents and friends), their support networks and how they feel about getting close to others. (Jacobs et al, 2012). [Caring about attachment in young people in residential care: The use of the Attachment Style Interview. (‘Community Care Inform’ electronic information source. Spring 2012)](http://www.attachmentstyleinterview.com/)
 
 Attachement styles were Secure, Enmeshed, Fearful, Withdrawn and Dual when two different styles)
 
@@ -640,7 +630,7 @@ The STAIYA or State-Trait Anxiety Inventory of Spielberger is an auto-evaluation
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/STAIYB.jpeg)
 
-BDI Scores
+##### BDI Scores
 
 The Beck Depression Inventory is a depression score ranging from 0 to 63. It evaluates the severoty of a depression when it was clinically diagnosed. From 0-13, the depressive state is minimal, between 14 and 19, the depressive state is mild (Osman, 2008). This mesure support that the teenagers recruited in this study are not severe depressed people but not depressed people.										
 
@@ -649,7 +639,7 @@ The Beck Depression Inventory is a depression score ranging from 0 to 63. It eva
 #### Description of the database
 
 * We collected a database of 85.48 Gb of 40 videos, with a rate of 25 frames by second.
-* They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much better quality than the previous database.
+* They are encoded in a [MTS format](https://en.wikipedia.org/wiki/AVCHD) in a much higher quality than the previous database.
 
 We used the same procedure that for the INCANT study, we masked the non relevant part of a frame for each subject. Instead of selecting only the upper part of the bidy, we were able to select the half of the image with more information about the subjects.
 
@@ -659,15 +649,13 @@ We used the same procedure that for the INCANT study, we masked the non relevant
 
 #### Extraction of motion history
 
-TODmother
-
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29%2C%20all%20videos-1.jpg)
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29%2C%20all%20videos-2.jpg)
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/boxplotsraw.jpeg)
 
 We can see that the distribution of motion history is vey similar with the motion history extracted from the INCANT study. The small movements are very important and the big movements are very rare with a long tail.
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29-1.jpg)
+![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/Motion%20history%20histogram%20by%20frame%20%28raw%20data%29-2.jpg)
 
 When we compute the log of this data, we can notice that the distribution is much more normal that for the INCANT study. The first pick representing the null motion histories (no motion) is much smaller and not overrepresented. This confirm that the quality of the motion history signal extracted from this video is much better than the previous one extracted from INCANT study.
 
@@ -680,8 +668,6 @@ When we compare these distributions, we can see that these distribution are much
 Like in the INCANT study, we filtered the motion histories.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictMH-small.jpg)
-
-TODO : cut zone in the middle
 
 We could very easilly detect the two periods of the video. THe first one without any conflict and the second with a conflict. These periods we annotated manually. 
 
@@ -700,9 +686,7 @@ However, we can notice that the conflict wasn't always very authentic and import
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictSSI-small.jpg)
 
-TODO histogram synchrony scores 
-
-However, we can see that the synchrony score are not so much different that from the INCANT study. Although, it was expected theorically (matematically) to fluctuate between 0 and 1, the maximum of it is around 0.2-0.3 depending on the videos. When we did the log scores before computing however, that didn't change the relevance of the signal.
+However, we can see that the synchrony score are not so much different from the ones in Incant study. Although, it was expected theorically (matematically) to fluctuate between 0 and 1, the maximum of it is around 0.2-0.3 depending on the videos. When we did the log scores before computing however, that didn't change the relevance of the signal.
 
 Thanks to that, we were able to compare the mean motion history between the two conditions.
 
@@ -714,16 +698,17 @@ Thanks to that, we were able to compare the mean motion history between the two 
 
 As expected and like previous authors showed before, it seemed that the synchrony is lower in conflictual situations. However, the difference is not significative.
 
-We did a paired t-test between the mean of synchony scores during the no conflict period and the conflict period. However this difference is notsignificative
+We did a paired t-test between the mean of synchony scores during the no conflict period and the conflict period. However this difference is not significative :
 
+>
+> data:  ncSSI and cSSI
+> t = 0.16743, df = 33, p-value = 0.8681
+> alternative hypothesis: true difference in means is not equal to 0
+> 95 percent confidence interval: -0.007279512  0.008585109
+> sample estimates: mean of the differences 0.0006527983 
+>
 
-data:  ncSSI and cSSI
-t = 0.16743, df = 33, p-value = 0.8681
-alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval: -0.007279512  0.008585109
-sample estimates: mean of the differences 0.0006527983 
-
-It is possible that is analysis is not proper due to the non normal distribution of both motion history and synchrony socres. The next steps will be to evaluate the synchrony scores in different conditions (different psychometric scores, especially attachment evaluation) and make proper statisticall evaluations. We consider too, presenting the process to psychotherapy training team to get raw data of better quality. We will meet a representant of the Motivational Interviewing Network of Trainers (MINT).
+It is possible that this analysis is not proper due to the non normal distribution of both motion history and synchrony socres. The next steps will be to evaluate the synchrony scores in different conditions (different psychometric scores, especially attachment evaluation) and make proper statisticall evaluations. We consider too, presenting the process to psychotherapy training team to get raw data of better quality. We will meet a representant of the Motivational Interviewing Network of Trainers (MINT).
 
 ##### Technical problems
 
@@ -739,15 +724,25 @@ It could be relevant to annotate the level of conflict by blinded annotators sin
 
 ### Experimental discussion
 
-We saw with the INCANT study that there was a limit with contasting different conditions. In order to make this possible, it would be usefull to use much more opperationnalized psychotherapy like (Assertivenes, Motivational interviewing, exposition), but it is not restricted to CBT. We could use it in (provocation vs no provocation used in brief psychotherapy, hypnosis induction versus no hypnosis induction, dream analysis )
+We saw with the INCANT study that there was a limit with contasting different conditions. In order to make this possible, it would be usefull to use much more opperationnalized psychotherapy like (Assertivenes, Motivational interviewing, exposition), but it is not restricted to CBT. We could use it in (provocation versus no provocation used in brief psychotherapy, hypnosis induction versus no hypnosis induction, dream analysis )
 
-Analysis discussion
+### Analysis discussion
 
-We could make a shuffle of the data to check if the signal if more synchrone than expected by chance. We could try to replicate this data with a more simple algorithm : correlation.py which was specifically designed for a 2 persons synchrony study.
+We could make a shuffle of the data to check if the signal is more synchrone than expected by chance. We could try to replicate this data with a more simple algorithm : correlation.py which was specifically designed for a 2 persons synchrony study.
 
 In the future, we could integrate much more kind of social signals and the cluster of it in a more general score could be more relevant. Some techniques in modelling used at the moment in neuroscience in fMRI could de very usefull for this purpose. 
 
 # Perspectives
+
+We need to be aware of some technicals problems during the record of the videos to extract easilly the social signal:
+
+* Have the entire body of the participants
+* Oriented in frontal direction to recognize emotions and gaze direction (one video by participant if possible)
+* Avoid movements of the camera
+* Avoid switches on and off of the light
+* If not all the sessions can be recorede and a sampling is necessary. It would be better to have an homogenous and random sampling.
+* If several devices are used they need to be synchronized
+* These devises need to be very user friendly so the therapists without any technically knowledge can use them easily.
 
 We could extract other features : 
 
@@ -756,16 +751,16 @@ We could extract other features :
 
 
 * **Physiological**
-  * **Cortisol** : Cortisol levels can be the reflect of stress. Some techniques are minimally invasive like [saliva measures](http://www.sciencedirect.com/science/article/pii/0009898181903533.)(Teruhisa et al., 1981).
+  * **Cortisol** : Cortisol levels can be the reflect of stress. Some techniques are minimally invasive like saliva measures ([Teruhisa et al., 1981](http://www.sciencedirect.com/science/article/pii/0009898181903533.)).
   * **Ocytocin** : Ocyctonin could be involved in attachment and trust [(Kosfeld, Heinrichs, Zak, Fischbacher, & Fehr, 2005)](http://www.nature.com/nature/journal/v435/n7042/full/nature03701.html). This could improve the social competence of Asperger patients with some social impairments. We could imagine to evaluate the relationship and the synchrony of two subjects normal and with social impairments with and without oxytocin.
   * **Cardiac Frequency :** direct or indirect on videos with systems like [Lambda](https://lambda.qrilab.com/site/) or [webcam pulse detector](https://github.com/thearn/webcam-pulse-detector)
-  * **Electrodermal activity t**hat seems to be relevant in stress, dissonance cognitive paradigms. Its history as feedback of psychotherapy is ver old since it was used in [psychoanalysis by C. G. Jung](http://www.freezoneearth.org/allmeters/scrapbook/historymeter.htm#Die%20Wort).
+  * **Electrodermal activity** that seems to be relevant in stress, dissonance cognitive paradigms.  Its history as feedback of psychotherapy is very old since it was used in the beginning of psychoanalysis by C. G. Jung.
 
 * **Motion information**
 
-  We could be much more precise in the measure of the motion by using a Motion capture devices. There are basically two systems:
+  We could be much more precise in the measurements of the motion by using Motion capture devices.We need to be aware that these systems mustn't be very invasive. There are basically two systems:
 
-  * We could measure directly very cheaply motion by using **actimetry** devices that looks like watches on the wrist. Unfortunately, taht could help for motion of hands but that couldn't give precise information about the motion of the head.
+  * We could measure directly very cheaply motion by using **actimetry** devices that looks like watches on the wrist, minimally invasive. Unfortunately, that could help for motion of hands but that couldn't give precise information about the motion of the head.
   * One is minimally invasive with a **Kinect**, a special camera that project infra-red light and can detect it to measure depth of a scene. It has a much a higher frequency signal detect that can rebuild a 3D representation of a subject and extract its skeletton. We saw that the law frequency of the signal we got 25 Hz could be a limitation of the synchrony signals we could get.  
   * Optitrack that are some **markers on the body** of the subject that can help to create a 3D representation of the subject.
   * An other strategy is to use special **suits** like in the [Ethome](https://www.youtube.com/watch?v=IBPxokjqvZ8) project that could record precisely a lot of motions directly.
@@ -778,7 +773,7 @@ We could extract other features :
 
 * **Speech extraction**
 
-  * We could anticipate the problem of speech extraction by using mikes to compute the synchrony of this signal
+  * We could anticipate the problem of speech extraction by using microphones to compute the synchrony of this signal
 
 
 #	Bibliographie
@@ -810,6 +805,8 @@ Denis, C., Lavie, E., Fatseas, M., & Auriacombe, M. (2006).Psychotherapeutic int
 
 Dumas, G., Nadel, J., Soussignan, R., Martinerie, J., & Garnero, L.(2010). Inter-Brain Synchronization during Social Interaction. PLoS ONE, 5(8),e12166. http://doi.org/10.1371/journal.pone.0012166
 
+Faisal, A.,     Human Neuroscience in the wild, Lecture about the Ethome project, Forum des sciences cognitives 2016, https://www.youtube.com/watch?v=IBPxokjqvZ8 
+
  Festinger, L., & Carlsmith, J.M. (1959). Cognitive consequences of forced compliance. *The Journal ofAbnormal and Social Psychology*, *58*(2), 203‑210.http://doi.org/10.1037/h0041593
 
 Fond, G., Micoulaud-Franchi, J.-A., Macgregor, A., & Ducasse, D.(2014). La manipulation dans la pratique de l’entretien psychiatrique. *L’Encéphale*,*40*(3), 203‑207. http://doi.org/10.1016/j.encep.2013.04.005
@@ -820,9 +817,13 @@ Dehaene, S. Fondements cognitifs des apprentissages scolaires, séminaire aucoll
 
 Iacoboni, M. (2009). Imitation, Empathy, and Mirror Neurons. *AnnualReview of Psychology*, *60*(1), 653‑670. http://doi.org/10.1146/annurev.psych.60.110707.163604
 
+Jacobs et al, 2012). Caring about attachment in young people in residential care: The use of the Attachment Style Interview. (‘Community Care Inform’ electronic information source. Spring 2012)(http://www.attachmentstyleinterview.com/
+
 Joule, R.-V. (1987). La dissonance cognitive : un état demotivation? *L’année psychologique*, *87*(2), 273‑290.http://doi.org/10.3406/psy.1987.29204
 
 Joule, R.-V., & Beauvois, J.-L. (2010). *La soumission librementconsentie* (Édition : 6e édition revue et corrigée). Paris: PressesUniversitaires de France - PUF.
+
+Kosfeld, M., Heinrichs, M., Zak, P. J., Fischbacher, U., & Fehr, E. (2005). Oxytocin increases trust in humans. *Nature*, *435*(7042), 673‑676. http://doi.org/10.1038/nature03701
 
 Large, M., Sharma, S., Compton, M. T., Slade, T., & Nielssen, O.(2011). Cannabis use and earlier onset of psychosis: a systematicmeta-analysis. *Archives of General Psychiatry*, *68*(6), 555‑561.http://doi.org/10.1001/archgenpsychiatry.2011.5
 
@@ -842,6 +843,8 @@ Neal, D. T., & Chartrand, T. L. (2011). Embodied Emotion PerceptionAmplifying an
 
 Orsucci, F. F., Musmeci, N., Aas, B.,Schiepek, G., Reda, M. A., Canestri, L., ... & de Felice, G. (2016).Synchronization Analysis of Language and Physiology in Human Dyads. *Nonlineardynamics, psychology, and life sciences*, *20*(2), 167-191.
 
+Osman, A., Barrios, F. X., Gutierrez, P. M., Williams, J. E., & Bailey, J. (2008). Psychometric properties of the Beck Depression Inventory-II in nonclinical adolescent samples. *Journal of Clinical Psychology*, *64*(1), 83‑102. http://doi.org/10.1002/jclp.20433
+
 Ramseyer, F., & Tschacher, W. (2011). Nonverbal synchrony inpsychotherapy: Coordinated body movement reflects relationship quality andoutcome. *Journal of Consulting and Clinical Psychology*, *79*(3),284‑295. http://doi.org/10.1037/a0023419
 
 Rigter, H., Henderson, C. E., Pelc, I., Tossmann, P., Phan, O., Hendriks,V., … Rowe, C. L. (2013). Multidimensional family therapy lowers the rate ofcannabis dependence in adolescents: A randomised controlled trial in WesternEuropean outpatient settings. *Drug and Alcohol Dependence*, *130*(1–3),85‑93. http://doi.org/10.1016/j.drugalcdep.2012.10.013
@@ -850,19 +853,19 @@ Rizzolatti, G., & Craighero, L. (2004). The Mirror-Neuron System. *AnnualReview 
 
 SPIELBERGER C.D. GORSUCH R.L., LUSHENE R.E. - Manual for the State-TraitAnxiety inventory ("Self evaluation questionnaire"). ConsultingPsychologists Press, Palo Alto, CA, 1970.
 
+ Teruhisa, U., Ryoji, H., Taisuke, I., Tatsuya, S., Fumihiro, M., & Tatsuo, S. (1981). Use of saliva for monitoring unbound free cortisol levels in serum. *Clinica Chimica Acta*, *110*(2), 245‑253. http://doi.org/10.1016/0009-8981(81)90353-3
+
 Tschacher, W., Haken, H., & Kyselo, M. (2015). Alliance: a commonfactor of psychotherapy modeled by structural theory. *Psychology forClinical Settings*, *6*, 421. http://doi.org/10.3389/fpsyg.2015.00421
 
 Varni, G., Avril, M., Usta, A., & Chetouani, M. (2015). SyncPy: AUnified Open-source Analytic Library for Synchrony. In *Proceedings of the1st Workshop on Modeling INTERPERsonal SynchrONy And infLuence* (p. 41–47).New York, NY, USA: ACM. http://doi.org/10.1145/2823513.2823520
 
 Weisman, O., Delaherche, E., Rondeau, M., Chetouani, M., Cohen, D., &Feldman, R. (2013). Oxytocin shapes parental motion during father–infantinteraction. *Biology Letters*, *9*(6), 20130828.http://doi.org/10.1098/rsbl.2013.0828
 
-More bibligraphy cna be found here
+
+
+**More extensive bibligraphy can be found here**
 
 https://www.zotero.org/groups/448197/items 
 
 
-
-
-
-TODO However, we need to keep in mind that this intermediate markers are only intermediateand are not always relevant. Some anti-diabetics decrease Hb1Ac and Increase mortality whereasclassical one decrease both. 
 

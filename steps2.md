@@ -2,6 +2,8 @@
 
 ### Author: Thomas GARGOT
 
+### Project website : [bit.ly/syncpsy](http://bit.ly/syncpsy)
+
 Synchrony articles before
 
 [TOC]
@@ -10,19 +12,21 @@ Synchrony articles before
 #### Introduction and motivations
 Psychotherapy is an important part of treatment of mental disorders alone or complementary with pharmacotherapy. Some techniques are now widely evidence-based and very cost effective (Layard & Clark, 2014).
 
-Most of the studies are indirectly based on patient reported outcomes or problematic behaviors that are evaluated before and after the psychotherapy. Unfortunately, studies hardly control what is actually happening during psychotherapy, especially the interaction between the patient and the therapist that is a predictor of the psychotherapy efficacy. Consequently, it is difficult to make precise links between theory and practice, control its application and understand which of its ingredients are the most important.
+Most of the studies are indirectly based on patient reported outcomes or problematic behaviors evaluated before and after the psychotherapy. Unfortunately, studies hardly control what is actually happening during psychotherapy, especially the unspecific aspects like the interaction between the patient and the therapist that is a predictor of the psychotherapy efficacy. Consequently, it is difficult to make precise links between theory and practice, control its application and understand which of its ingredients are the most important.
 
-Here we suggest a research framework to extract automatically social signals from psychotherapy videos and tested it on two databases. We focused on the extraction of synchrony of the motor signal since it was considered as a predictor of psychotherapy outcome in a first study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. We adapted a python software in open source [SyncPy](https://github.com/syncpy) (Varni, Avril, Usta, & Chetouani, 2015) to compute this synchrony.
+Here we suggest a research framework to extract automatically social signals from psychotherapy videos and tested it on two databases. We focused on the extraction of synchrony of the motor signal since it was considered as a predictor of psychotherapy outcome in an earlier study (Ramseyer, 2011) and a relevant signal for the study of mother-child interactions. We adapted a python software in open source [SyncPy](https://github.com/syncpy) (Varni, Avril, Usta, & Chetouani, 2015) to compute this synchrony.
 
 #### International Cannabis Need of Treatment (INCANT) study Database
 
 We began with the International Cannabis Need of Treatment (INCANT) study database from France. This [INCANT](http://www.incant.eu/) study aimed to evaluate the efficacy of the [Multi Dimensional Family Therapy](http://www.mdft.org/) (MDFT) for cannabis use disorders in adolescents.
 
-For a pilot study, we focused on the analysis of the F1044 family and the therapist. Unfortunately, we couldn't answer to this question since the signal extracted from this videos was not good enough. Furthermore, it was difficult to categorize easily the patients in good and bad responders and to detect specific periods of the psychotherapy that could be of particular very good or very bad relationship quality. Finally, it was difficult to compare synchrony at different moments since the configuration of the participants could be very different.
+For a pilot study, we focused on the analysis of the interaction within a single family (F1044) and the therapist. Unfortunately, we couldn't answer to this question since the signal extracted from this videos with too many technicall difficulties. Furthermore, it was difficult to categorize easily the patients in good and bad responders and to detect specific periods of the psychotherapy with particular very high and low bad relationship quality. Finally, it was difficult to compare synchrony at different moments since the spatial organization of the participants could be very different.
+
+This database showed the challenge to work on naturallistic psychotherapy videos.
 
 #### Monrado Database
 
-Consequently, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict versus no-conflict. The main psychometric data in this database were attachment scores, i.e. a evaluation of the relationship of the subject with other people. We can begin to draw some preliminary conclusions about using synchrony in order to classify the relationship quality of these videos.
+Consequently, we switched to the Monrado database, an other video database, with a better video quality and experimental design. It evaluates the difference of behavior in a situation of conflict versus no-conflict between parents and adolescent. The main psychometric data in this database were attachment scores, i.e. a evaluation of the relationship of the subject with other people. We can begin to draw some preliminary conclusions about using synchrony in order to classify the relationship quality of these videos.
 
 #### Conclusion
 
@@ -34,9 +38,9 @@ See the full [pre-registration](https://github.com/Ouphix/synchro-psychotherapie
 ![image](https://github.com/Ouphix/synchro-psychotherapies/raw/master/Monrado/Data/images/report/ECNPPoster.jpg)
 
 ## Originality declaration
-This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after the study of [Ramseyer et Tschacher, 2011](http://psycnet.apa.org/journals/ccp/79/3/284/). It is the first to study it in families, which both different configuration and theorical frameworks (S Estimator technique). The package used for synchrony was developed by the engineers of the team and it was the first time that it was used in real world data. The input of psychiatrists and psychotherapists helped to understand the kind of signals that could be extracted and relevant from psychotherapy videos. 
+This study is the second study to evaluate the relevance of synchrony as marker of the quality of psychotherapy after the study of [Ramseyer et Tschacher, 2011](http://psycnet.apa.org/journals/ccp/79/3/284/). It is the first to study it in families, which both different configurations and theorical frameworks (S Estimator technique). The package used for synchrony was developed by the engineers of the team and it was the first time that it was used in real world data. The input of psychiatrists and psychotherapists helped to understand the kind of relevant signals that could be extracted from psychotherapy videos. 
 
-It is the first study to use an open science approach among the 3 studies ([Ramseyer et Tschacher, 2011](http://psycnet.apa.org/journals/ccp/79/3/284/); Orsucci et al, 2016) that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
+It is the first study to use an open science approach among the 3 studies ([Ramseyer et Tschacher, 2011](http://psycnet.apa.org/journals/ccp/79/3/284/); [Orsucci et al, 2016](https://www.researchgate.net/publication/299568125_Synchronization_Analysis_of_Language_and_Physiology_in_Human_Dyads)) that used synchrony as predictor of quality of relations since raw data extracted from videos, analysis reports and preregistration are published on the [website project](https://github.com/Ouphix/synchro-psychotherapies/).
 
 ## Collaborations
 
@@ -47,36 +51,34 @@ In alphabetical order :
 | Jonathan Aigrain        | Phd Student in social signal processing. He did scripts to extract frames from videos, to extract Motion History from videos frame by frame, knowledges in Python (OpenCV) |
 | Nicolas Bodeau          | Bio-statistician and informatician in ISIR and La Pitié, he supervised me for R and statistical analysis |
 | Mohammed Chetouani      | Prof in social signal processing, supervised the project, and the SyncPy library |
-| David Cohen             | Prof of Psychiatry, original idea, supervised the project |
+| David Cohen             | Prof of Psychiatry, original idea, supervised the project, revision of the final document |
 | Catherine Saint Georges | Psychiatrist, knowledge in interpreting synchrony scores in psychiatry, helped with first speech annotation with Elan |
 | David Reversat          | Computer engineer, installation of SyncPy and associated modules, debugged SyncPy |
-| Michel Spodenkiewicz    | Psychiatrist, collected the databases from other teams (videos from INCANT and Monrado studies), direct supervision |
-| Giovanna Varni          | Post doc researcher Social signal processing, Development of the SyncPy library, supervised me for Python |
+| Michel Spodenkiewicz    | Psychiatrist, collected the databases from other teams (videos from INCANT and Monrado studies), direct supervision, revision of the final document |
+| Giovanna Varni          | Post-doc researcher Social signal processing, Development of the SyncPy library, supervised me for Python, revision of the final document |
 
-The Monrado (Dr Coady Vulliez, Mrs Monika Szymanska) and Incant (Dr Phan, Mrs Bastard) teams recruited subjects and psychometric data.
+The Monrado (Dr Coady Vulliez, Mrs Monika Szymanska) and Incant (Dr Phan, Mrs Bastard) teams recruited subjects and provided psychometric data.
 
 Personnaly, I helped to define and operationalize the scientific question from the general idea, the tools and databases available. I did the bibliography based on the work of the team and Ramseyer team articles. I cleaned and prepared the databases. I adapted the Python and R script to make the extraction of the signal and performed the analysis. I did the figures and diagrams to explain the process of the method and describe the results.
 
 ## Theorical background
 
 ### Why and How evaluate psychotherapies?
-Psychotherapy evaluation is quite difficult since it must evaluate the basics of human to human relationship. A lot of theories developed in this field (hypnosis, psychoanalytical, cognitive-behaviorist, systemic ...) with very different histories, practices and level of evaluation. Contrary to other parts of medicine, psychotherapy and consequently psychiatry remains organized as schools which hardly interact each others. A lot of choices are done relative to the orientation of an hospital or a ward and not based on the best evidence based information which if often very limited in this field. Consequently, there isn't any consensual framework between psychotherapies.
+Psychotherapy evaluation is quite difficult since it must evaluate the basics of human to human relationship. A lot of theories developed in this field (hypnosis, psychoanalytical, cognitive-behaviorist, systemic...) with very different histories, practices and levels of evaluation. Contrary to other parts of medicine, psychotherapy and consequently psychiatry remains organized as schools which hardly interact each others. A lot of choices are done relative to the theoretical orientation of an hospital or a ward and not based on the best evidence based information which if often very limited in this field. Consequently, there isn't any consensual framework between psychotherapies.
 
-Due to its history of being based upon scientific bases and in a scientific process of operationalize precisely the targets, Cognitive and Behavioral Therapies (CBT) are the most evidence based psychotherapy (Canceil et al., 2004 ; Layard & Clark, 2014) which is caused in great part by a lack of experimental work in other schools of psychotherapy.
+Due to its history of being based upon scientific bases and in a scientific process of operationalize precisely the targets, Cognitive and Behavioral Therapies (CBT) are the most evidence based ([Canceil et al., 2004](http://lara.inist.fr/handle/2332/1323) ;[ Layard & Clark, 2014]((https://books.google.fr/books?hl=fr&lr=&id=tGL5AgAAQBAJ&oi=fnd&pg=PT7&dq=Layard+%26+Clark,+2014&ots=He32vXEgKA&sig=IlWpAGmhaav2rKIZJLq2EtWPL94#v=onepage&q=Layard%20%26%20Clark%2C%202014&f=false)) with a lack of experimental work in other schools of psychotherapy.
 
-Paradoxically, psychotherapies methods seems to be the most efficient treatment in medicine with a very low number needed to treat, i.e. it is necessary to treat only a few patient (around 2) to have a remission impact on a group of patient (Wampold cited by Briffault, 2009 ; Layard & Clark, 2014).
+Paradoxically, psychotherapies methods seems to be the most efficient treatment in medicine with a very low number needed to treat, i.e. it is necessary to treat only a few patient (around two) to have a remission impact on a group of patient (Wampold cited by Briffault, 2009 ; [Layard & Clark, 2014](https://books.google.fr/books?hl=fr&lr=&id=tGL5AgAAQBAJ&oi=fnd&pg=PT7&dq=Layard+%26+Clark,+2014&ots=He32vXEgKA&sig=IlWpAGmhaav2rKIZJLq2EtWPL94#v=onepage&q=Layard%20%26%20Clark%2C%202014&f=false)). This could be striking to say that we are using useful and efficient treatments without knowing how they work. It is not an exception in medicine. Contrary to the classical biological and pathophysiological point of view, with Evidence Based Medicine (EBM), one don't need to know the mechanism of action of a treatment to prove that it is efficient. We only need to use experimental method (EBM approach) to compare it with an other treatment like a classical treatment or a placebo. For instance, one of the most widely used treatment paracetamol is a widely used analgesic and the proof of its efficacy was widely done. Unfortunately, in 2016, we can't say exactly how it is working on the body ([Bonnefont, Courade, Alloui, & Eschalier, 2002](http://europepmc.org/abstract/med/14758785)).
 
-This could be striking to say that we are using useful and efficient treatments without knowing how they work. It is not an exception in medicine. Contrary to the classical biological and pathophysiological point of view, with Evidence Based Medicine (EBM), one don't need to know the mechanism of action of a treatment to prove that it is efficient. We only need to use experimental method (EBM approach) to compare it with an other treatment like a classical treatment or a placebo. For instance, one of the most widely used treatment paracetamol is a widely used analgesic and the proof of its efficacy is widely done. Unfortunately, in 2016, we can't say exactly how it is working on the body (Bonnefont, Courade, Alloui, & Eschalier, 2002).
+Unfortunately, good psychotherapy is costly because it takes times and requires well trained therapist. Contrary to pills, psychotherapy isn't reimbursed in many countries. Public services hardly offer best practice of psychotherapy because of a lack of training and time. 
 
-Unfortunately, good psychotherapy is costly because it takes times and well trained therapist. Contrary to pills, psychotherapy isn't reimbursed in many countries. Public services hardly offer best practice of psychotherapy because of a lack of training and time. 
+Furthermore, it is difficult to operationalize precisely what a psychotherapist does during a psychotherapy. Even the more operationalized psychotherapy as relaxation techniques, CBT deals with the particularity of each patient, its motivation, its context and don't have a priori a very precise roadmap. Despite these theoretical and evidence debates, there is almost a consensus that the relationship between the patient and the therapist is an important predictor of the efficacy of the psychotherapy. Establishing this therapeutic alliance is a very important part of the efficacy of psychotherapy ([Horvath & Dianne, 1991](http://psycnet.apa.org/journals/cou/38/2/139/) ; [Martin, Garske, & Katherine, 2000](http://psycnet.apa.org/journals/ccp/68/3/438/) ; Cungi & Cottraux, 2006 ; [Tschacher, Haken, & Kyselo, 2015](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4404724/)). Even it is difficult to operationalize, some psychometric tools were developed like the Working Alliance Inventory (WAI) questionnaire ([Corbière, Bisson, Lauzon, & Ricard, 2006](http://onlinelibrary.wiley.com/doi/10.1002/mpr.27/abstract)). This led to the Dodo theory. It states, like the judgment made by the Dodo bird after a race in the Alice and the Wonderland book, that all participants are equals. It means than nothing technical could differentiate a psychotherapy versus an other one, only the patient-therapist relationship would be important. This consensus is challenged by some behaviorist (CBT) that state that this determinant is only important when psychotherapist are not well trained and in poorly designed studies ([Layard & Clark, 2014](https://books.google.fr/books?hl=fr&lr=&id=tGL5AgAAQBAJ&oi=fnd&pg=PT7&dq=Layard+%26+Clark,+2014&ots=He32vXEgKA&sig=IlWpAGmhaav2rKIZJLq2EtWPL94#v=onepage&q=Layard%20%26%20Clark%2C%202014&f=false)).
 
-Particularly, it is difficult to operationalize precisely what a psychotherapist does during a psychotherapy. Even the more operationalized psychotherapy as relaxation techniques, CBT deals with the particularity of each patient, its motivation, its context and don't have a priori a very precise roadmap. Despite these theoretical and evidence debates, there is a almost a consensus that the relationship between the patient and the therapist. Establishing this therapeutic alliance is a very important part of the efficacy of psychotherapy (Horvath & Dianne, 1991 ; Martin, Garske, & Katherine, 2000 ; Cungi & Cottraux, 2006 ; Tschacher, Haken, & Kyselo, 2015). Even it is difficult to operationalize, some psychometric tools were developed like the Working Alliance Inventory (WAI) questionnaire (Corbière, Bisson, Lauzon, & Ricard, 2006). This led to the Dodo theory. It states, like the judgment made by the Dodo bird after a race in the Alice and the Wonderland book, that all participants are equals. It would mean than nothing technical could differentiate a psychotherapy versus an other one, only the patient-therapist relationship would be important. This consensus is challenged by some behaviorist (CBT) that state that this determinant is only important when psychotherapist are not well trained and in poorly designed studies (Layard & Clark, 2014).
+Therapeutic alliance is a first step before any other specific technique (Cungi & Cottraux, 2006). This process was widely studied in the first psychotherapies like hypnosis. In a good therapeutic alliance, the contact is warm, authentic, collaborative. There is a lot of empathy, ie the therapist understand the point of view and the representation of his patient, shares it (contrary to apathy) while keeping in mind that he is not in the same situation as his patient and without being struggled by too much emotions (contrary to sympathy). One of the best operationalized and Evidence based kind of psychotherapy which focus on therapeutic alliance is motivational interviewing (Miller & Rollnick, 2013) which if much used in first steps CBT or psychoeducation. It can be the essential part of a work with addict patient or patients with addictions problems. The goal of motivational interviewing is to increase change discourse by stimulating it by some techniques:
 
-Therapeutic alliance is a first step before any other specific technique (Cungi & Cottraux, 2006). This process was a lot studied by the first psychotherapies like hypnosis. In a good therapeutic alliance, the contact is warm, authentic, collaborative. There is a lot of empathy, ie the therapist understand the point of view and the representation of his patient, shares it (contrary to apathy) while keeping in mind that he is not in the same situation that his patient and without being struggled by too much emotions (contrary to sympathy). One of the best operationalized and Evidence based kind of psychotherapy is motivational interviewing (Miller & Rollnick, 2013) which if much used in first steps CBT or psychoeducation. It can be the essential part of a work with addict patient or patients with addictions problems. The goal of motivational interviewing is to increase change discourse by stimulating it by some techniques:
-
-* open question (like how are you today ?) with let the patient a wide range of possible answers contrary to close questions, specifically with Yes/no answers (like did you slept well yesterday night ?)
+* open question (like how are you today ?) in order to let the patient a wide range of possible answers contrary to close questions, specifically with Yes/no answers (like did you slept well yesterday night ?)
 * Rephrasing what the patient is saying (eg If I understand well, you told me that..., isn't it ?) especially the change discourse.
-* Summing up, the discourse of change of the patient (eg you told me that your consumption of cannabis wad a problem because your motivation was much lower)
+* Summing up, the discourse of change of the patient (eg you told me that your consumption of cannabis was a problem because your motivation was much lower)
 * Avoiding direct advices but stimulating it by questions
 * Accept the ambivalence in a change, the patient need to resolve it on his own without being pressured by the therapist
 * Avoid judgement
@@ -85,68 +87,66 @@ Therapeutic alliance is a first step before any other specific technique (Cungi 
 * Defining and raising the values of the patient and not the therapist values
 * Giving advices only when it is requested by the patient
 
-We can see that even this very operationalized psychotherapy let place for a lot of improvisation and adaptation to a precise situation and can not be standardized. Consequently, it needs a lot of practice and training beyond the theoretical knowledge. A lot of reflexes (like giving advices) need to be unlearned, that takes time. However, it is quite difficult to give precise feedback (supervision) without being involved directly in the therapy with the therapist. In complex settings like familial psychotherapies, the therapist can be directly supervised by a colleague behind a two-way mirror.
+We can see that even this very operationalized psychotherapy lets place for a lot of improvisation and adaptation to a precise situation and can not be standardized. Consequently, it needs a lot of practice and training beyond the theoretical knowledge. A lot of reflexes (like giving advices) need to be unlearned, that takes time. However, it is quite difficult to give precise feedback (supervision) without being involved directly in the therapy with the therapist. In complex settings like familial psychotherapies, the therapist can be directly supervised by a colleague behind a two-way mirror.
 
-One way to improve learning process and evaluation of psychotherapy in practice is to make annotation of them. After filming psychotherapy, it is possible to evaluate what is exactly happening during this process. Some evaluation tools were developed like the MITI (Moyers, Manuel, & Ernst, 2014) for the motivational interviewing.  Software like [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) can be very useful for that and enable to annotate several modalities at the same time. However, it can be very difficult and tedious.
+One way to improve learning process and evaluation of psychotherapy in practice is their annotation. After filming psychotherapy, it is possible to evaluate what is exactly happening during this process. Some evaluation tools were developed like the MITI ([Moyers, Manuel, & Ernst, 2014](http://www.motivationalinterviewing.org/sites/default/files/miti_4.1_december_2014.pdf)) for the motivational interviewing.  Softwares like [Elan](https://tla.mpi.nl/tools/tla-tools/elan/) can be very useful for that and enable to annotate several modalities at the same time. However, it can be very difficult and tedious.
 
-In many parts of medicine, we don't directly evaluate the desired outcome of a therapy (like the mortality) because it happens too late. Consequently, intermediate marker help the physician to choose the best treatment. For instance, we can evaluate the efficacy of an anti diabetic on blood sugar mean reflected by Hb1Ac. This avoid to wait several years to check if the treatment is efficient or not (which can be evaluated only by disability created by diabetes or mortality). Consequently, it is very convenient. If we can get a automatic signal of this therapeutic alliance, we could get an intermediate marker of the efficacy of the psychotherapy which unfortunatelly doesn't exist at the moment. ~~However, we need to keep in mind that this intermediate markers are only intermediate and are not always relevant. Some anti-diabetics decrease Hb1Ac and Increase mortality whereas classical one decrease both.~~
+In many parts of medicine, we don't directly evaluate the desired outcome of a therapy (like the mortality) because it happens too late. Consequently, intermediate markers help the physician to choose the best treatment. For instance, we can evaluate the efficacy of an anti diabetic on blood sugar mean reflected by Hb1Ac. This avoid to wait several years to check if the treatment is efficient or not (which can be evaluated only by disability created by diabetes or mortality). Consequently, it is very convenient if we can get an automatic signal of this therapeutic alliance, we could get an intermediate marker of the efficacy of the psychotherapy which unfortunatelly doesn't exist at the moment.
 
-Fortunately, it is possible to evaluate the efficacy of a psychotherapy via two direct means. The first one are the direct outcomes of psychotherapy with behavior or consumptions (like number of cannabis joint consumed or number of panic attacks). This kind of easily reported outcomes are more the exception than the norm. However, it is not possible in all mental illnesses. Some psychometric data like Beck Depression Inventory (BDI) (Beck, Steer, & Carbin, 1988) for depression, or State-trait anxiety inventory (STAI) (Spielberger, 1970) were developed to evaluate the state of different pathological characteristics. These scales can be filled by the therapist or the patient directly. However, it is quite time consuming and not much done in practice outside research or CBT training.  
+Fortunately, it is possible to evaluate the efficacy of a psychotherapy via two direct means. The first one are the direct outcomes of psychotherapy with behavior or consumptions (like number of cannabis joint consumed or number of panic attacks). This kind of easily reported outcomes are more the exception than the norm. However, it is not possible in all mental disorders. The second one is psychometric data like Beck Depression Inventory (BDI) ([Beck, Steer, & Carbin, 1988](http://www.sciencedirect.com/science/article/pii/0272735888900505)) for depression, or State-trait anxiety inventory (STAI) (Spielberger, 1970) were developed to evaluate the state of different pathological characteristics. These scales can be filled by the therapist or the patient directly. However, it is quite time consuming and not much done in practice outside research or CBT training.  
 
-To sum up, we can say that there are a lot of different kinds of psychotherapies. Some of them are largely evidence based and operationalized which can help for research. It is difficult and costly to train psychotherapist. Psychotherapies are efficient but it is hard to say exactly why.  There are ways to evaluate its efficacy but they are not used since they are time consuming. There aren't many easy and quick ways to evaluate them.
+To sum up, we can say that there are a lot of different kinds of psychotherapies. Some of them are largely evidence based and operationalized which can help for research. It is difficult and costly to train psychotherapist. Psychotherapies are efficient but it is hard to affirm exactly why.  There are ways to evaluate its efficacy but they are not used since they are time consuming. There aren't many easy and quick ways to evaluate them.
 
 ### Potential role of cognitive sciences in improvement of psychotherapies
 
 #### Learning theory
-Learning theories were developed by Skinner and Pavlov. They state that during a learning period, there are association between different stimulus. For instance, a behavior that will be positively reinforced will be repeated. A situation that is painful will be avoided. They are widely used in most recent cognitive studies in the term reinforcement learning. They are very used in cognitives sciences especially in modeling decisions process and understand brain activity. In psychotherapy, they are widely used in CBT approach to understand maintenance of a pathological process. Often a patient is being reinforced by avoiding a short term pain but this leads to avoidance of the situation and keep abnormal and painful emotions and cognitives schemas. The role of the therapist if to help the patient to became of this process during the functional analysis and to suggest him to change to healthier behavior by using new reinforcers. 
+Learning theories were developed by Skinner and Pavlov. They state that during a learning period, there are association between different stimuli. For instance, a behavior that will be positively reinforced will be repeated. A situation that is painful will be avoided. They are widely used in most recent cognitive studies in the term reinforcement learning. They are largely applied in cognitives sciences especially in modeling decisions process and understanding brain activity. In psychotherapy, they are widely applied in CBT approach to understand maintenance of a pathological process. Often a patient is being reinforced by avoiding a short term pain but this leads to avoidance of the situation and keep abnormal and painful emotions and cognitives schemas. The role of the therapist is to help the patient to became aware of this process during the functional analysis and to suggest him to change to healthier behavior by using new reinforcers. 
 
 #### Cognitive neuroscience and education
 
-With the progress of neuroscience there is a a growing evidence toward some techniques to improve curiosity, attention, motivation of students (Dehaene, 2014). A new field of research neuroeducation is developping, a lot of these work could be used in psychotherapy too.  
+With the progress of neuroscience there is a a growing evidence toward some techniques to improve curiosity, attention, motivation of students ([Dehaene, 2014](http://www.college-de-france.fr/site/stanislas-dehaene/course-2014-2015.htm)). A new field of research neuroeducation is developping, a lot of these work could be applied in psychotherapy too.  
 
 #### Cognitive dissonance and engagement theory
-Even if it wasn't described by the creators of the motivational interviewing, we can see that this process is very close to the engagement theory, and engaging communication developed by Beauvois and Joule (Joule & Beauvois, 2010) after the work on cognitive dissonance by Festinger (Festinger & Carlsmith, 1959). This theory was developed and validated in control people without any mental illnesses but could be very interesting in psychiatric patients and in Psychiatry settings (Fond et al, 2014). We can see consequently that we could use some very defined experimental settings like in cognitive and social psychology to improve our understanding of the process of psychotherapy. This is what will be used in the Monrado study to compare two situation without any conflit and with a conflict.
+Even if it wasn't described by the creators of the motivational interviewing, we can see that this process is close to the engagement theory, and engaging communication developed by Beauvois and Joule (Joule & Beauvois, 2010) after the work on cognitive dissonance by Festinger ([Festinger & Carlsmith, 1959](http://psychclassics.yorku.ca/Festinger/)). This theory was developed and validated in control people without any mental disorders but could be very interesting in psychiatric patients and in psychiatry settings (Fond et al, 2014). We can see consequently that we could use some very defined experimental settings like in cognitive and social psychology to improve our understanding of the process of psychotherapy. This is what will be used in the Monrado study to compare two situation without any conflit and with a conflict.
 
 Cognitive dissonance theory is a counter-intuitive theory but very developed and replicated that deals with how we react to cognitive conflict and how we often rationalize our behavior in several situations.
-Festinger asked participants to make a dull task. When the participant is freely making it for free, he feels a conflict between thoughts like "I am a clever guy free to make something" and its behavior "I am making something completely dull and useless". This conflict is difficult to handle. The subject is in a situation of cognitive dissonance. In this situation, he resolve his dissonance by changing his thoughts "this task is not the dull but rather interesting". However, in exactly the same situation, when the participants is paid, the effect disappear, there isn't anymore conflict. The subject still find the task completely dull as it was organized (Festinger & Carlsmith, 1959). After this classical paradigm, several explanations were developed especially by Beauvois, Joule who evaluated some other paradigms consistent with this theory (Beauvois & Joule, 1987, 1996, 2010). The Foot in the door technique (how to change a behavioral by very small steps), the "You are free" paradigm, the "labelling technique" (it seems your health is very important for you), "touch technique" were widely evaluated without much publicity inside psychotherapy field even if a lot of their approach can be consistent with Motivational Interview. Consequently, a behavior can be much more explained by a context and by the previous behaviors of the subject than on the expected outcome as expected by the reinforcement learning theory. 
+Festinger asked participants to make a dull task. When the participant is willingly making it for free, he feels a conflict between thoughts like "I am a clever person free to make something" and his behavior "I am making something completely dull and useless". This conflict is difficult to handle. The subject is in a situation of cognitive dissonance. In this situation, he resolves his dissonance by changing his thoughts "this task is not so dull but rather interesting". However, in exactly the same situation, when the participants are paid, the effect disappear, there isn't anymore conflict. The subject still find the task completely dull as it is ([Festinger & Carlsmith, 1959]((http://psychclassics.yorku.ca/Festinger)). After this classical paradigm, several explanations were developed especially by Beauvois, Joule who evaluated some other paradigms consistent with this theory (Beauvois & Joule, 1987, 1996, 2010). The Foot in the door technique (how to change a behavioral by very small steps), the "You are free" paradigm, the "labelling technique" (it seems your health is very important for you), "touch technique" were widely evaluated without much publicity inside psychotherapy field even if a lot of their approach can be consistent with Motivational Interview. Consequently, a behavior can be much more explained by a context and by the previous behaviors of the subject than on the expected outcome as expected by the reinforcement learning theory. 
 
 #### Bandura 
-Bandura challenged the reinforcement theory too by demonstrating that imitation was a major process of learning. In the Dodo doll experiment (Bandura et al, 1963), he showed that the behaviors of children could be predicated by the models of adults they saw just before. This process is widely used in psychotherapy where the therapist can play the role of model in role play or exposure for instance which the patient can imitate.
+Bandura challenged the reinforcement theory too by demonstrating that imitation was a major process of learning. In the Dodo doll experiment [(Bandura et al, 1961](http://psychclassics.yorku.ca/Bandura/bobo.htm)), he showed that the behaviors of children could be predicated by the models of adults they saw just before. This process is widely used in psychotherapy where the therapist can play the role of model in role play or exposure for instance which the patient can imitate.
 
 #### Mirror neurons, mirroring and empathy
-Mirror neurons were discovered by Rizzolatti (Rizzolatti & Craighero, 2004). When a monkey seize an object, specific neurons of this task (in this receptor field) fire. The same neurons fire when this monkey see an other one making the same action. Consequently, it seems that there is a system in which the monkey simulate the outside world. This system is still activated when he really perform the task.
-Neal and Chartrand showed that the mimicry of facial expression could be very useful in the process of empathy. They blocked expression of emotion with injection of Botox in subjects faces. In this condition, emotion perceptions of the subjects were impaired (Neal & Chartrand, 2011). Consequently, we can say the perception can't be separated with action but both of them interact a lot in a very strong loop.
-Beyond that, some researchers like Iacoboni stated that the system of minor neurons could be involved in mirroring and imitation, a system that could be involved in empathy (Iacoboni, 2009). However and This role of mirror neurons is not consensual.
+Mirror neurons were discovered by Rizzolatti ([Rizzolatti & Craighero, 2004](http://www.annualreviews.org/doi/abs/10.1146/annurev.neuro.27.070203.144230)). When a monkey seizes an object, specific neurons of this task (in this receptor field) fire. The same neurons fire when this monkey see an other one making the same action. Consequently, it seems that there is a system in which the monkey simulates the outside world. This system is still activated when he really performs the task.
+Lakin showed that there was a lot of automatic imitation in humans and this culd have a very important role in human relationships [(Lakin et al, 2003)](http://link.springer.com/article/10.1023/A:1025389814290). Neal and Chartrand showed that the mimicry of facial expression could be very useful in the process of empathy. They blocked expression of emotion with injection of Botox in subjects faces. In this condition, emotion perceptions of the subjects were impaired ([Neal & Chartrand, 2011](http://spp.sagepub.com/content/2/6/673)). Consequently, we can say the perception can't be separated with action but both of them interact a lot in a very strong loop.
+Beyond that, some researchers like Iacoboni stated that the system of minor neurons could be involved in mirroring and imitation, a system that could be involved in empathy [(Iacoboni, 2009)](http://www.annualreviews.org/doi/abs/10.1146/annurev.psych.60.110707.163604). However, this role of mirror neurons is not consensual.
 
 
 ### Theorical advantages and pitfalls of synchrony studies
-"Synchrony refers to individuals’ temporal coordination during social interactions" (Delaerche et al, 2012). However, definition of synchronies are very numerous. There is a possibility to switch from the social world to a mathematical definition but since the point of view is different, it doesn't always refer to the same thing. Interdependence of dyadic partners’ behaviors was described by many terms in the literature (mimicry, social resonance, coordination, synchrony, attunement, chameleon effect, etc.) (Delaerche et al, 2012).
+"Synchrony refers to individuals’ temporal coordination during social interactions" ([Delaerche et al, 2012](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=6322986&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D6322986)).. However, definition of synchronies are very numerous. There is a possibility to switch from the social world to a mathematical definition but since the point of view is different, it doesn't always refer to the same thing. Interdependence of dyadic partners’ behaviors was described by many terms in the literature (mimicry, social resonance, coordination, synchrony, attunement, chameleon effect, etc.) ([Delaerche et al, 2012](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=6322986&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D6322986)).
 
-TODO Behavior matching [21]; mirroring; mimicry [22], [23], [24]; congruence and the chameleon effect [25] are related to convergence
+Synchrony is related to the adaptation of one individual to the rhythms and movements of the interaction partner. For Delaherche, "synchrony is the dynamic and reciprocal adaptation of the temporal structure of behaviors between interactive partners" ([Delaerche et al, 2012](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=6322986&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D6322986)). It can be unimodal (eg. speech-speech) or multimodal (eg. speech-motor, someone answering to a sentence by a sign of the head).
 
-Synchrony is related to the adaptation of one individual to the rhythms and movements of the interaction partner. For Delaherche, "synchrony is the dynamic and reciprocal adaptation of the temporal structure of behaviors between interactive partners" (Delaerche et al, 2012). It can be unimodal (eg. speech-speech) or multimodal (eg. speech-motor, someone answering to a sentence by a sign of the head).
-
-Synchrony could an important element of therapeutic relationship. This could be measured in any kind of psychotherapy without theorical a priori. It is is social signal but brain correlates were found (Dumas, Nadel, Soussignan,Martinerie, & Garnero, 2010) and hormonals correlates too (Weisman et al., 2013).										
+Synchrony could an important element of therapeutic relationship. This could be measured in any kind of psychotherapy without theorical a priori. It is is social signal but brain correlates were found [(Dumas, Nadel, Soussignan,Martinerie, & Garnero, 2010](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0012166)) and hormonals correlates too [(Weisman et al., 2013)](http://rsbl.royalsocietypublishing.org/content/9/6/20130828).										
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/multilevel.png)
 *From Human communication dynamics presentation, D. Cohen*
 
-It was studied in psychotherapeutic settings by other teams. Ramseyer et al. investigated non-verbal synchrony between patient and therapist during psychotherapy sessions. They showed that non-verbal synchrony was associated with therapy outcome and patient’s view of the therapy process (Ramseyer & Tschacher, 2011). They found that synchrony was increased in sessions that were considered by patient as sessions with high relationship quality and in patients experiencing high self-efficacy. Furthermore, higher non-verbal synchrony predicted psychotherapies with higher symptom reduction.
+It was previously studied in psychotherapeutic settings by other teams. Ramseyer et al. investigated non-verbal synchrony between patient and therapist during psychotherapy sessions. They showed that non-verbal synchrony was associated with therapy outcome and patient’s view of the therapy process [(Ramseyer & Tschacher, 2011)](http://psycnet.apa.org/journals/ccp/79/3/284/). They found that synchrony was increased in sessions that were considered by patient as sessions with high relationship quality and in patients experiencing high self-efficacy. Furthermore, higher non-verbal synchrony predicted psychotherapies with higher symptom reduction.
 
-However, in these settings, there could be only one patient and one therapist. Furthermore, it is not possible to replicate directly this study since the technical aspects are not explicated and programs codes are not shared.
+However, in these settings, there could be only one patient and one therapist. Furthermore, it is not possible to replicate directly this study since the technical aspects are not described and programs codes are not shared.
 
-Some recordings are used in diagnostic phase where lack of coordination in non-verbal behaviors was found as a risk of recurrence of depression (Bouhuys & Sam, 2000).
+Some recordings are used in diagnostic phase where lack of coordination in non-verbal behaviors was found as a risk of recurrence of depression [(Bouhuys & Sam, 2000)](http://www.sciencedirect.com/science/article/pii/S0165032799000932).
 
 Independently of the psychotherapy theory and framework, it seems that synchrony could be used in very different settings and could reflect the therapeutic alliance. In the future, we can imagine that synchrony score could be extracted automatically in different modalities (synchrony of speech, motion history, smiles, expressed emotions). That would give a feedback about the process of the psychotherapy that will be more objective and less time consuming than filling a psychometric questionnaire. 
 
 ### Open science, Open data, Confidentiality 
-It was quite difficult at the beginning to replicate the studies that were done by other teams and to find these two databases that could be relevant for this goal because of quality of the recording and quality of psychometric data collected. After we had our own scripts and procedure for Incant database, it was very easy to replicate the analysis for Monrado database. 
+It was quite difficult at the beginning to replicate the studies that were done by other teams and to find these two databases that could be relevant for this goal because of quality of the recording and quality of psychometric data collected. Fortunatelly, after we had our own scripts and procedure for Incant database, it was very easy to replicate the analysis for Monrado database. 
 
-To avoid this lost of time, and to improve validity and replicability and improvements of our work. we tried to develop an open science approach. The synchrony computation software SyncPy developped by the team G. Varni and M. Avril was published on open source on GitHub. We decided to continue this approach to improve accessibility, transparency of this work to help future improvements. 
+To avoid this lost of time, and to improve validity, replicability and improvements of our work. we tried to develop an open science approach. The synchrony computation software SyncPy developped by the team G. Varni and M. Avril was published on [open source on GitHub](https://github.com/syncpy/SyncPy). We decided to continue this approach to improve accessibility, transparency of this work to help future improvements. We published all our scripts, reports and report on [GitHub too](https://github.com/Ouphix/synchro-psychotherapies). You can especially follow the [Rmarkdown pdf report of the Monrado study](https://github.com/Ouphix/synchro-psychotherapies/raw/master/Monrado/Reports/SyncPsychoMonrado.pdf) which is very detailed and commented with the data dictionnaries of the files.  The raw videos and precise psychometric data unfortunatelly couldn't be published because of medical confidential issues.
 
-The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship. We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added to add other modalities or to improve analysis by using for instance modeling or machine learning techniques. Therefore, we decided to share our analysis scripts. Both of them are published but the Monrado script is much more commented, organized. Data dictionnaries are more described in order to better understand the process.
+The idea of this project is to be a first step toward a better understanding of therapeutic or parent-children relationship. We focused on motion history since it was technically the easiest modality. However, a lot of improvements could be added studying other modalities or improving analysis by using for instance modeling or machine learning techniques by considering the conflict as a dynamic process with physiological adjustments and not a binary process.
 
-However, it is not possible to share the raw materials with consist of confidential psychotherapy sessions. It would be very relevant to share this material to let possibility to other team to compare this results with other softwares or modules with different goals than motion history synchrony analysis. In the research in algorithm development, some databases are shared and promoted during [challenge sessions](http://sspnet.eu/avec2011/) between  laboratories. This enable the development of the best classifier for instance.
+However, it is not possible to share the raw materials with consist of confidential psychotherapy sessions. It would be very relevant to share this material to let possibility to other team to compare this results with other softwares or modules with different goals than motion history synchrony analysis. In the research in algorithm development, some databases are shared and promoted during [challenge sessions](http://sspnet.eu/avec2011/) between laboratories. This enable the development of the best classifier for instance.
 
 ### INCANT Study
 
@@ -196,13 +196,13 @@ Psychotherapy is the better treatment accessible in 2016. There are evidences fo
 
 ##### MDFT and the INCANT study
 
-The MDFT is a "family based and developmentally oriented outpatient treatment for adolescent substance use disorders and associated or related problems". (Incant.eu) It was developped in Miami, US since 1985. It is an integrative group of interventions used in a lot of situations. In MDFT, sees the problem of cannabis consumption as a reflect of deleterious lifestyle. Consequently, the therapist targets as many life domains and problem behaviors as possible. 
+The MDFT is a "family based and developmentally oriented outpatient treatment for adolescent substance use disorders and associated or related problems" ([Incant.eu](http://www.incant.eu/)) It was developped in Miami, US since 1985. It is an integrative group of interventions used in many situations. In MDFT, sees the problem of cannabis consumption as a reflect of deleterious lifestyle. Consequently, the therapist targets as many life domains and problem behaviors as possible. 
 
 The INCANT study was a multi-site, trans-national randomized controlled trial led in five countries (Belgium, France, Germany, the Netherlands, and Switzerland) aiming to compare the efficacy of the [MDFT](http://www.mdft.org/) versus Individual therapy. Randomization was stratified as to gender, age and level of cannabis consumption. After a pilot sudy and a [pre-registration](http://www.incant.eu/index.php?id=10,0,0,1,0,0), it recruited 450 adolescents from 13 to 18 years old. It showed that MDFT was more efficient than Individual Therapy (Rigter et al., 2013). It is very rare to run such an international study with high level of scientific setting in psychotherapy.
 
 ### INCANT Study in France
 
-We didn't collect the videos of all the centers, instead, we had only access to the videos from French centers. There were 2 centers with different configurations. Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family. Technically, it was not supposed a priori that they would be used to evaluate social signal. For somes subjects, there are a lot of videos but for others, only a few were recorded.
+We didn't collect the videos of all the centers, instead, we had only access to the videos from French centers. There were 2 centers with different configurations. Videos were recorded to check if the therapist was applying the psychotherapy that was assigned to each family. Technically, it was not supposed a priori that these videos would be used to study social signal. For somes subjects, there are a lot of videos but for others, only a few were recorded.
 
 ### Material and methods
 #### Videos
@@ -249,24 +249,34 @@ We decided to focus on the primary outcomes of the psychotherapy the cannabis co
 These data were imported via the [XLSToCSVConvertor.R](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Scripts/XLSToCSVConvertor.R) R script which I wrote.
 It returns a dataINCANT.csv csv file and a [dataCannabis.csv](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) file. 
 
-Globally, as expected, the cannabis consumption is decreasing with time for the subjects.
+Globally, as expected, the cannabis consumption is decreasing with time for the "mean" subjects.
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/MeanEvolution.jpeg)
 
-We tried to cluster 2 groups to contrast the synchrony scores between good responders and bad responders. Unfortunately, when we looked at the evolution of the cannabis consumption, it wasn't very easy to define good and bad responders.
+Mean evolution of cannabis use of the subjects of the Incant database
+
+However, the mean subject doesn't exist. We tried to cluster 2 groups to contrast the synchrony scores between good responders and bad responders. Unfortunately, when we looked at the evolution of the cannabis consumption, it wasn't very easy to define good and bad responders.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB2-F1044.jpg)
 
-![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB.jpg)
+Evolution of cannabis use of F1044 subject
+
+*Evolution of cannabis use for all the subjects* (table)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/EvolutionCannabis.jpeg)
+
+*Evolution of cannabis use for all the subjects* (figure)
+
+Consequently, we couldn't categorize good and bad responders.
 
 ### Results
 
 #### Pilot study: F1044 subject, his father, mother and therapist
 
-We decided to make a pilot study on the most complete subject out of the 32 patients in order to evaluate the feasability of the concept and to developp the process especially the R scripts. We chose the F1044 subject since we have the most videos (18 videos) with him or his family.
+We decided to make a pilot study on the most complete subject out of the 32 patients in order to evaluate the feasability of the concept and to developp the process especially the [R scripts](https://github.com/Ouphix/synchro-psychotherapies/raw/master/INCANT/Reports/SyncPsychoIncant.pdf). We chose the F1044 subject since we have the most videos (18 videos) with him or his family.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/Numberparticipants.png)
+
+*Number of videos from the Incant database collected*
 
 We can ask ourselves if this subject representative:
 
@@ -274,7 +284,9 @@ We can ask ourselves if this subject representative:
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/therapist.png)
 
-* The patient is a male like in 93 % of videos. The therapist is a female like in 99 % of videos. 
+*Therapists involved in the data collected from Incant study.*
+
+* The patient is a male like in 93 % of videos. The therapist is a female in 99 % of the videos. 
 * Two centers were included. This patient come from the main center.
 * We have all our [psychometrics evaluations](https://github.com/Ouphix/synchro-psychotherapies/blob/master/INCANT/Data/CSV/psychometry/dataCannabis.csv) (cannabis consumption : initial, 3m, 6m, 9m, 12m).
 
@@ -284,50 +296,54 @@ Furthermore, when we got the cannabis consumption evolution, we saw that the eff
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/TLFB2-F1044.jpg)
 
+*Evolution of cannabis use of F1044 subject*
+
 ### Description of the database
 
 #### Different steps of the social signal extraction
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/report/Extracting%20social%20signals%20%20from%20psychotherapy%20videos.png)
 
-This figure summarize the databases we collected (dark blue), differents steps that were done (blue and light blue) and some suggestions (yellow) that could enable to extract social signal from psychotherapy videos.
+*This figure summarizes the databases we collected (dark blue), differents steps that were done (blue and light blue) and some suggestions (yellow) that could enable to extract social signal from psychotherapy videos.*
 
 ##### Verbal signal extraction to compute verbal synchrony
 
-We began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the speaking of each participants.  We used [Free Video Converter](http://www.freemake.com/free_video_converter/) to get a waveform and import the video and the waveform. This waveform helped me to identify the period of speaking versus no speaking unfortunately couldn't help to identify the source of the sound. 
+We began to extract social signal from videos with annotations made with the Elan software. The idea was to annotate the discussion of each participants.  We used [Free Video Converter](http://www.freemake.com/free_video_converter/) to get a waveform and import the video and the waveform. This waveform helped us to identify the period of discussion versus silence. Unfortunately, it couldn't help to identify the source of the sound. 
 
-Most often locutors were filmed so it helped to detect manually who spoke but it wasn't always the case. Quite often, participant speech overlap that made the process quite difficult. There was some short onomatopoeia that were sometimes quite arbitrary to annotate or not. The end of the sentence was not always obvious with long vowels with not precise end especially during the overlap of speeches. It was made from the video and the waveform extracted from the video in an audio file. 
+Most often locutors were filmed so it helped to detect manually who spoke but it wasn't always the case. Quite often, participant speech overlap that made the process sometimes quite difficult. There was some short onomatopoeia that were sometimes quite arbitrary to annotate or not. The end of the sentence was not always obvious with long vowels with not precise end especially during the overlap of speeches. It was made from the video and the waveform extracted from the video in an audio file. 
 
-Then you can annotate when someone is speaking. This process is very fastidious (1 week work for one hour video at the beginning and so was gave up). Even when speaking with more trained annotators, the productivity is not much better.
+This process was very fastidious (1 week work for one hour video at the beginning and so was gave up). Even when I spoke with more trained annotators, the productivity is not much more better.
 
-For the moment, when we focus on this strategy, it is often necessary to extract manually some features even because of the lack of automatic process or in case of development, training and evaluation of these tools.
+For the moment, when we focus on this strategy to study social signal, it is often necessary to extract manually some features even because of the lack of automatic process. Even to develop, train and evaluate these tools, this process is still compulsory.
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/elan_anot.jpg)
+
+*Screenshot of ELAN annotation software*
 
 We tried to find ways to make source separation automatic even if it couldn't be perfect. We found the [FASST software](http://bass-db.gforge.inria.fr/fasst/). It is very powerful in order to separate sounds coming from different music instruments. However, even if the source separation of several music instruments is very efficient, diferenciating automatically two voices at the moment is too difficult. We contacted the author of this software. He told us that this material is to difficult to separate at the moment since two voices are much more similar than two different music instruments. 
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/fasst.jpg)
 
-Example of source separation using FASST on a music sample.
+*Example of source separation using FASST on a music sample.*
 
 However, this separation problem can be anticipated during the recording of the videos. Several tie-mikes could be atached to each participant.
 
 Consequently, we decided to give up this approach.
 
 ##### Spatial organisation
-In the first center, psychotherapy sessions consisted of filmed familial psychotherapies with 2 to 5 peoples organized in a circle. They are in samm room with a two-way mirror. Behind it, there is the supervisor of the psychotherapist that can call the therapist to give her some advice. The family is aware of this oragnization but this supervisor is not seen or known by them.
-Two participants of the psychotherapy were filmed from the front. Another subject (often the therapist) is filmed from the other side. Its video is embedded in a window. We can notice that in this video, there isn't the patient but his two parents since he which wasn't motivated enough to come in this session, which is not so problematic from a theoretical point of view in systemic therapies. It is still possible to do a pschotherapy with this settings since we consider the communication and the attitude of each member of the family and we don't consider only the patient.
+In the first center, psychotherapy sessions consisted of filmed familial psychotherapies with 2 to 5 peoples organized in a circle. They are in the same room with a two-way mirror. Behind it, there is the supervisor of the psychotherapist that can call the therapist to give her some advice. The family is aware of this oragnization but this supervisor is not seen or known by them.
+Two participants of the psychotherapy were filmed from the front. Another subject (often the therapist) is filmed from the other side. Its video is embedded in a window. We can notice that in this video, there isn't the patient but his two parents since he wasn't motivated enough to come to this session, which is not so problematic from a theoretical point of view in systemic therapies. It is still possible to do a pschotherapy with this settings since we consider the communication and the attitude of each member of the family and we don't consider only the patient.
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/ExampleFrames/SampleSimpleFrame.png)
 
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/DifferentConfigurations.jpeg)
 
-TODO : change to True/false plot
+*Mean Motion History in each video*
 
 In this barplot of the mean motion history for each subject for each video, we can see the configurations of the participants involved for the F1044 subject for each video. These configurations can be very different. There are between 2 and 3 participants. All these configurations could change (eg patient-mother-therapist then mother-therapist) during the psychotherapy. Consequently, it was very difficult to compare the synchrony between different configurations. We can never get the information from the all 4 participants involved at the same time even if they are all involve like in D2 video since the psychotherapist wasn't filmed because of technicall reasons. In some videos, we don't have any information from the therapist because she isn't filmed. The patient is not very present in the therapy (because of compliance).
 
 When we sum up the data we get, we can see that the mother and the therapist are the most present participants.
 
-![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/AvailableData.jpeg)
+
 
 ##### Time organization
 Video length could were very different because it was necessary to reorganize them. 
@@ -337,9 +353,9 @@ However, we couldn't use the raw database. It was necessary to cut the videos wi
 ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/plots/lengthVideoF1044.png)
 
 ### Raw data
-### A. Motion extraction
+### Motion extraction
 
-#### 1. Extracting frame from the beginning of the video
+#### Extracting frame from the beginning of the video
 Extract a frame with [*Frames_extractor.py*](https://github.com/Ouphix/synchro-psychotherapies/blob/master/Scripts/Frames_extractor/Frames_extractor.py) with a [python](https://www.python.org/) script from the beginning of the video to make a mask. This script was developed by Jonathan Aigrain with FFMPEG.
 
 Here is an example of the father (eyes blurred to keep anonymity).
@@ -350,7 +366,7 @@ It was suggested to take a mean image of the video to superimpose the different 
 
 It would be much more relevant to extract the exact 3D position of the skeleton instead of the raw pixel. This can be extracted quite easily by a [kinect](http://www.xbox.com/fr-FR/xbox-one/accessories/kinect-for-xbox-one). In a complex setting like this, it could be usefull to use even several kinects for each side of the room or even better for each subject. A lot of other features could be extracted but the volume of this data can be very heavy with several megabytes by minute of video. This is much more difficult technicall difficulties to be handle by the clinicians team during the recording, especially the synchronisation of the different cameras but would be much more relevant than raw videos alone. Some algorithm can extract relevant social signal from videos were they are recorded from the front (smiles, emotions, direction of the head (Hupont, Baldassarri, & Cerezo, 2012 ; Torre et al., 2015).
 
-#### 2. Make a mask for each relevant part of each video with Paintbrush
+#### Creating a mask for each relevant part of each video with Paintbrush
 We selected a part of the video with each participant (father, mother, patient, therapist) with [*Paintbrush*](http://paintbrush.sourceforge.net/). We took only the upper part of the body of each subject to compare them since you can see only the upper part of the therapist. Consequelty, we had one mask for each participant, so beween 2 and 3 masks for each video.
 
 
@@ -387,7 +403,7 @@ Participants can move during the video (change their seats, leave the room, even
 
 In the future, it would be usefull to use [Deep learning software](http://image-net.org/challenges/LSVRC/2014/) or machine learning used for categorization/detection of people could make this process completely automatic. ![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/deeplearningsegmentation.jpg)
 
-#### 3. Motion history extracted
+#### Motion history extracted
 
 The VOB videos were converted in [AVI](https://en.wikipedia.org/wiki/Audio_Video_Interleave) format in the form *F1044C1.avi*.
 
@@ -421,7 +437,7 @@ Instead of extracting only the motion history, we could extract more relavant si
 
 Tiny changes can't be always obvious. [Some softwares](https://lambda.qrilab.com/site/) can amplify a lot very tiny changes in specific frequencies that can't be seen normally with naked eyes. This enable for instance the extraction of the heart pulsation of the subject, which could be the reflect of the stress without any invasive physical contact.![image](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/INCANT/Data/images/report/magnifyingMotion.png)
 
-#### 4. Motion history filtered with slindingInterval function
+#### Motion history filtered with slindingInterval function
 
 I filtered motion history raw data with a [R](https://www.cran.r-project.org/) function on [Rmarkdown script analysis](https://github.com/Ouphix/synchro-psychotherapies/blob/master/SyncPsycho.Rmd). It generates CSV file of the form "F1044C.VOB.slideddata.csv". See files [here](https://github.com/Ouphix/synchro-psychotherapies/tree/master/CSV/filtered). I developped two functions, one to filter motion history without changing the frequency of the data by sliding the reading frame to compute the mean.
 
@@ -445,7 +461,7 @@ Bad quality of first frames at the beginning or end of the videos with NA were d
 
 The representation of the mean motion by minute enable to detect high change of motion history that could be the reflect of movement of all persons in the scene.
 
-##### 4. Computing synchrony score with this filtered motion data
+##### Computing synchrony score with this filtered motion data
 
 To compute synchrony SyncPy used the amplitude (difference between min and max. The baseline levels (min) are not relevant to compute synchrony.
 
@@ -494,7 +510,7 @@ We decided to select 4 subjects with a clear decrease of cannabis consumption, w
 
 All of them with the same therapist Mrs Bastard. However, we had problems with the conversion of the files from VOB to AVI. The number of videos from this families were much lower, to evaluate a dynamic could even more challenging. Since, we got a better database with less technicall problems on it and a experimental setting, we decided to switch to it to further developp the concept.
 
-##### Advantages of this database
+##### Advantages of this Incant database
 
 INCANT study was done internationally with:
 
@@ -506,7 +522,7 @@ INCANT study was done internationally with:
 
 - Pragmatically, it was the first database we got, so we could begin to ask real life problems.
 
-#### Limits of this database
+##### Limits of this Incant database
 #### Experimental set-up
 It is however not very defined in the articles. Consequently, it was difficult to contrast synchrony between two well defined periods. A much more operrationnalized psychotherapy like motivational interviewing could be useful. This kind of psychotherapy can be rated with the degree of adherence of the psychotherapist to the principles of the therapy like the MITI. Consequently, we could compare two quantitative variables that will reflect the quality of the psychotherapy at a more precise moment instead of a more general outcome.
 
@@ -684,39 +700,34 @@ However, we can notice that the conflict wasn't always very authentic and import
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/NoConflict-ConflictSSI-small.jpg)
 
-TODO : cut zone in the middle
+TODO histogram synchrony scores 
 
-However, we can see that the synchrony score are not so much different that from the INCANT study. Although, it was expected to fluctuate between 0 and 1, the maximum of it is around 0.2-0.3 depending on the videos. When we did the log scores before computing however, that didn't change the relevance of the signal.
+However, we can see that the synchrony score are not so much different that from the INCANT study. Although, it was expected theorically (matematically) to fluctuate between 0 and 1, the maximum of it is around 0.2-0.3 depending on the videos. When we did the log scores before computing however, that didn't change the relevance of the signal.
 
 Thanks to that, we were able to compare the mean motion history between the two conditions.
 
-Results
+### Results
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/raw%20Global%20motion%20history%20by%20situation%20%3A%20conflict%20vs%20no%20conflict.jpg)
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/SSImeansbarplot.jpeg)
 
-As expected and like previous authors showed before, it seemed that the synchrony is lower in conflictual situations.
+As expected and like previous authors showed before, it seemed that the synchrony is lower in conflictual situations. However, the difference is not significative.
 
-Paired t-test
+We did a paired t-test between the mean of synchony scores during the no conflict period and the conflict period. However this difference is notsignificative
 
 
 data:  ncSSI and cSSI
 t = 0.16743, df = 33, p-value = 0.8681
 alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval:
- -0.007279512  0.008585109
-sample estimates:
-mean of the differences 0.0006527983 
+95 percent confidence interval: -0.007279512  0.008585109
+sample estimates: mean of the differences 0.0006527983 
 
-coorelation entre données psychometriques et SSI
-
-The next steps will be to evaluate the synchrony scores in different conditions (different psychometric scores, especially attachment evaluation) and make proper statisticall evaluations. We consider too, presenting the process to psychotherapy training team to get raw data of better quality. We will meet a representant of the Motivational Interviewing Network of Trainers (MINT).
+It is possible that is analysis is not proper due to the non normal distribution of both motion history and synchrony socres. The next steps will be to evaluate the synchrony scores in different conditions (different psychometric scores, especially attachment evaluation) and make proper statisticall evaluations. We consider too, presenting the process to psychotherapy training team to get raw data of better quality. We will meet a representant of the Motivational Interviewing Network of Trainers (MINT).
 
 ##### Technical problems
 
-None
-There was only one video which no movement of the camera. There wasn't any date emebeded in the videos. There was very few overlap of the subjects.
+There wasn't many problems with this database. There was only one video which no movement of the camera. There wasn't any date emebeded in the videos. There was very few overlap of the subjects.
 
 However, the subjects weren't always looking at the camera that would be a problem to automatically detect their emotions, their smiles for instance. 
 
@@ -771,7 +782,87 @@ We could extract other features :
 
 
 #	Bibliographie
-https://www.zotero.org/groups/448197/items
+American Psychiatric Association. (2013). *Diagnostic and StatisticalManual of Mental Disorders (DSM-5®)*. American Psychiatric Pub.
 
-> 
+Bandura, A., Ross, D., & Ross, S. A. (1963). Imitation of film-mediatedaggressive models. *The Journal of Abnormal and Social Psychology*, *66*(1),3‑11. http://doi.org/10.1037/h0048687
+
+Beauvois, J.-L., & Joule, R.-V. (1996). *A Radical Dissonance Theory*.Taylor & Francis.
+
+Beck, A. T., Steer, R. A., & Carbin, M. G. (1988). Psychometricproperties of the Beck Depression Inventory: Twenty-five years of evaluation. *ClinicalPsychology Review*, *8*(1), 77‑100.http://doi.org/10.1016/0272-7358(88)90050-5
+
+Bonnefont, Courade, Alloui, & Eschalier. (2002). [Antinociceptivemechanism of action of paracetamol]. *Drugs*, *63 Spec No 2*, 1‑4.
+
+Bouhuys, A. L., & Sam, M. M. (2000). Lack of coordination of nonverbalbehaviour between patients and interviewers as a potential risk factor todepression recurrence: vulnerability accumulation in depression. *Journal ofAffective Disorders*, *57*(1–3), 189‑200. http://doi.org/10.1016/S0165-0327(99)00093-2
+
+Briffault X., L’évaluation des psychothérapies, Méthodes, résultats, réflexions,Séminaire de Pierre-Henri Castel du 14 janvier 2009
+
+Canceil, O., Cottraux, J., Falissard, B., Flament, M., Miermont, J.,Swendsen, J., … médicale, I. national de la santé et de la recherche. (2004).Psychothérapie : trois approches évaluées [Study report]. Consulté 22septembre 2015, à l’adresse http://lara.inist.fr/handle/2332/1323
+
+Corbière, M., Bisson, J., Lauzon, S., & Ricard, N. (2006). Factorialvalidation of a French short-form of the Working Alliance Inventory. *InternationalJournal of Methods in Psychiatric Research*, *15*(1), 36‑45.http://doi.org/10.1002/mpr.27
+
+Cungi, C., & Cottraux, J. (2006). *L’alliance thérapeutique*.Paris: Retz.
+
+Danovitch, I., & Gorelick, D. A. (2012). State of the Art Treatmentsfor Cannabis Dependence. *The Psychiatric Clinics of North America*, *35*(2),309‑326. http://doi.org/10.1016/j.psc.2012.03.003
+
+Delaherche, E., Chetouani, M., Mahdhaoui, A., Saint-Georges, C., Viaux, S.,& Cohen, D. (2012). Interpersonal Synchrony: A Survey of Evaluation Methodsacross Disciplines. *IEEE Transactions on Affective Computing*, *3*(3),349‑365. http://doi.org/10.1109/T-AFFC.2012.12
+
+Denis, C., Lavie, E., Fatseas, M., & Auriacombe, M. (2006).Psychotherapeutic interventions for cannabis abuse and/or dependence inoutpatient settings. In *Cochrane Database of Systematic Reviews*. JohnWiley & Sons, Ltd. Consulté à l’adressehttp://onlinelibrary.wiley.com/doi/10.1002/14651858.CD005336.pub2/abstract
+
+Dumas, G., Nadel, J., Soussignan, R., Martinerie, J., & Garnero, L.(2010). Inter-Brain Synchronization during Social Interaction. PLoS ONE, 5(8),e12166. http://doi.org/10.1371/journal.pone.0012166
+
+ Festinger, L., & Carlsmith, J.M. (1959). Cognitive consequences of forced compliance. *The Journal ofAbnormal and Social Psychology*, *58*(2), 203‑210.http://doi.org/10.1037/h0041593
+
+Fond, G., Micoulaud-Franchi, J.-A., Macgregor, A., & Ducasse, D.(2014). La manipulation dans la pratique de l’entretien psychiatrique. *L’Encéphale*,*40*(3), 203‑207. http://doi.org/10.1016/j.encep.2013.04.005
+
+Horvath, A. O., & Dianne, B. (1991). Relation between working allianceand outcome in psychotherapy: A meta-analysis. *Journal of CounselingPsychology*, *38*(2), 139‑149.http://doi.org/10.1037/0022-0167.38.2.139
+
+Dehaene, S. Fondements cognitifs des apprentissages scolaires, séminaire aucollège de France http://www.college-de-france.fr/site/stanislas-dehaene/course-2014-2015.htm
+
+Iacoboni, M. (2009). Imitation, Empathy, and Mirror Neurons. *AnnualReview of Psychology*, *60*(1), 653‑670. http://doi.org/10.1146/annurev.psych.60.110707.163604
+
+Joule, R.-V. (1987). La dissonance cognitive : un état demotivation? *L’année psychologique*, *87*(2), 273‑290.http://doi.org/10.3406/psy.1987.29204
+
+Joule, R.-V., & Beauvois, J.-L. (2010). *La soumission librementconsentie* (Édition : 6e édition revue et corrigée). Paris: PressesUniversitaires de France - PUF.
+
+Large, M., Sharma, S., Compton, M. T., Slade, T., & Nielssen, O.(2011). Cannabis use and earlier onset of psychosis: a systematicmeta-analysis. *Archives of General Psychiatry*, *68*(6), 555‑561.http://doi.org/10.1001/archgenpsychiatry.2011.5
+
+Lakin, J. L., Jefferis, V. E., Cheng, C. M., & Chartrand, T. L. (2003).The Chameleon Effect as Social Glue: Evidence for the Evolutionary Significanceof Nonconscious Mimicry. *Journal of Nonverbal Behavior*, *27*(3),145‑162. http://doi.org/10.1023/A:1025389814290
+
+Layard, R., & Clark, D. M. (2014). *Thrive: The Power ofEvidence-Based Psychological Therapies*. Penguin UK.
+
+Liddle, H. A., Dakof, G. A., Turner, R. M., Henderson, C. E., &Greenbaum, P. E. (2008). Treating adolescent drug abuse: a randomized trialcomparing multidimensional family therapy and cognitive behavior therapy. *Addiction*,*103*(10), 1660‑1670. http://doi.org/10.1111/j.1360-0443.2008.02274.x
+
+Martin, D. J., Garske, J. P., & Katherine, M. (2000). Relation of thetherapeutic alliance with outcome and other variables: A meta-analytic review. *Journalof Consulting and Clinical Psychology*, *68*(3), 438‑450.http://doi.org/10.1037/0022-006X.68.3.438
+
+Miller, W. R., & Rollnick, S. (2013). *L’entretien motivationnel - 2eéd. - Aider la personne à engager le changement* (Édition : 2eédition). Paris: InterEditions.
+
+Moyers, Manuel, & Ernst. (s. d.). Motivational InterviewingTreatment Integrity Coding Manual 4.1 (MITI 4.1). Consulté 22 septembre 2015, àl’adresse http://research2vrpractice.org/miti-4-1-now-available/
+
+Neal, D. T., & Chartrand, T. L. (2011). Embodied Emotion PerceptionAmplifying and Dampening Facial Feedback Modulates Emotion Perception Accuracy.*Social Psychological and Personality Science*, *2*(6), 673‑678.http://doi.org/10.1177/1948550611406138
+
+Orsucci, F. F., Musmeci, N., Aas, B.,Schiepek, G., Reda, M. A., Canestri, L., ... & de Felice, G. (2016).Synchronization Analysis of Language and Physiology in Human Dyads. *Nonlineardynamics, psychology, and life sciences*, *20*(2), 167-191.
+
+Ramseyer, F., & Tschacher, W. (2011). Nonverbal synchrony inpsychotherapy: Coordinated body movement reflects relationship quality andoutcome. *Journal of Consulting and Clinical Psychology*, *79*(3),284‑295. http://doi.org/10.1037/a0023419
+
+Rigter, H., Henderson, C. E., Pelc, I., Tossmann, P., Phan, O., Hendriks,V., … Rowe, C. L. (2013). Multidimensional family therapy lowers the rate ofcannabis dependence in adolescents: A randomised controlled trial in WesternEuropean outpatient settings. *Drug and Alcohol Dependence*, *130*(1–3),85‑93. http://doi.org/10.1016/j.drugalcdep.2012.10.013
+
+Rizzolatti, G., & Craighero, L. (2004). The Mirror-Neuron System. *AnnualReview of Neuroscience*, *27*(1), 169‑192.http://doi.org/10.1146/annurev.neuro.27.070203.144230
+
+SPIELBERGER C.D. GORSUCH R.L., LUSHENE R.E. - Manual for the State-TraitAnxiety inventory ("Self evaluation questionnaire"). ConsultingPsychologists Press, Palo Alto, CA, 1970.
+
+Tschacher, W., Haken, H., & Kyselo, M. (2015). Alliance: a commonfactor of psychotherapy modeled by structural theory. *Psychology forClinical Settings*, *6*, 421. http://doi.org/10.3389/fpsyg.2015.00421
+
+Varni, G., Avril, M., Usta, A., & Chetouani, M. (2015). SyncPy: AUnified Open-source Analytic Library for Synchrony. In *Proceedings of the1st Workshop on Modeling INTERPERsonal SynchrONy And infLuence* (p. 41–47).New York, NY, USA: ACM. http://doi.org/10.1145/2823513.2823520
+
+Weisman, O., Delaherche, E., Rondeau, M., Chetouani, M., Cohen, D., &Feldman, R. (2013). Oxytocin shapes parental motion during father–infantinteraction. *Biology Letters*, *9*(6), 20130828.http://doi.org/10.1098/rsbl.2013.0828
+
+More bibligraphy cna be found here
+
+https://www.zotero.org/groups/448197/items 
+
+
+
+
+
+TODO However, we need to keep in mind that this intermediate markers are only intermediateand are not always relevant. Some anti-diabetics decrease Hb1Ac and Increase mortality whereasclassical one decrease both. 
 

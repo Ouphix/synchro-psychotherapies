@@ -16,8 +16,6 @@ setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/
 
 ```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 # Loading libraries
-## For making models
-library("lme4")
 ## For managing data frames easilly : rbinds function
 library("plyr")
 ## For editing string
@@ -205,13 +203,14 @@ for (fam in famList){
 ## Number of Available (True) and Not Available (False) data for each participant
 ```{r, echo=FALSE, fig.height=5, cache=FALSE}
 for (fam in famList){
-      tab <- cbind(table(is.na(data[which(data$family==fam),]$father)),table(is.na(data[which(data$family==fam),]$mother)),table(is.na(data[which(data$family==fam),]$patient)), table(is.na(data[which(data$family==fam),]$therapist))) 
+
+  tab <- cbind(table(is.na(data[which(data$family==fam),]$father))/(25*60),table(is.na(data[which(data$family==fam),]$mother))/(25*60),table(is.na(data[which(data$family==fam),]$patient))/(25*60), table(is.na(data[which(data$family==fam),]$therapist))/(25*60)) 
       
       par(mar=c(4,4,5,1))
       barplot(tab, cex.axis = 0.7, las=2, names=ParticipantsList, 
         main="Number of available data by participant", 
         beside=TRUE, las=1, col=terrain.colors(2),
-        ylab="Available data (non NA)", xlab="Participants")
+        ylab="Available data (non NA) in minutes of videos", xlab="Participants")
       legend("top", c("T", "F"), fill=terrain.colors(2))}
 ```
 

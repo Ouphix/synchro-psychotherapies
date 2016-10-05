@@ -1,0 +1,241 @@
+---
+title: "SynchronyScoresAnalysis.log"
+author: "Thomas Gargot"
+date: "22 septembre 2016"
+output: html_document
+---
+
+This script compare the synchrony scores for each familly in the two different conditions : No Conflict and Conflict. We found a difference in the maximum scores. The max synchrony scores are bigger in the Conflict period (which is also the longer) than in the no-conflict period. Minimum are not different. Area under the curve ratio (AUC Conflict/ AUC no conflict) are not much different from 1.
+
+# Clean environment
+```{r Clean Environment}
+rm(list = ls(all.names = TRUE))
+```
+
+# Session info
+```{r}
+sessionInfo()
+```
+
+# Preparation of the session
+```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+# To use this script, you must install packages (install.packages()) to install these packages if you don't have them.
+
+# Loading libraries
+## For managing data frames easilly : rbinds function
+library("plyr")
+## For editing string
+library("stringr")
+## For computing AUC of syncrony plots
+library("pracma")
+```
+
+## Fixed variables
+```{r Variables to fix}
+FileExtension <- ".MTS.avi_res.csv"
+
+# working directory
+# where this report is
+#setwd("./Git/Monrado/Reports/")
+
+# blue will refer to father, red will refer to mother and green to child
+colOrderList <- c("blue","red", "green")
+
+ParticipantsList <- c("father", "mother", "child")
+```
+
+# SyncPy utilisation for creating synchrony dataframe
+After extracting filtered motion motion history with mean on sliding interval (overlapping interval) of 5 frames
+And after puting this data on a CSV file [slideddata.csv](../Data/CSV/filtered/log)
+
+We import this data on python Script with panda module [Call_S_Estimator.py](../Scripts/Call_S_Estimator.py)
+This script will compute the synchrony between each dyad of the interaction and of the whole group
+It will return a csv file for each video [SSIXXXX.csv](../Data/CSV/Synchrony/log) with XXXX the name of the video (1606, BAJE059 etc) that we can import with R with
+this following function
+
+## Import and prepare SSIlog dataframe
+```{r SSIlogFilesList}
+#print("SSI Files Directory")
+SSIlogFilesList <- list.files("../Data/CSV/Synchrony/log/S_estimator", full.name=TRUE)
+#SSIlogFilesList
+```
+
+```{r SSIlog import}
+SSIlog <- data.frame(video="Name")
+for (file in SSIlogFilesList){
+    SSIalone <- read.csv(file)
+#    print(str(SSIalone))
+    SSIlog <- rbind.fill(SSIlog, SSIalone)}
+SSIlog$video <- as.factor(SSIlog$video)
+SSIlog <- SSIlog[-which(SSIlog$video=="Name"),]
+SSIlog$Interval <- NULL
+SSIlog <- rename (SSIlog, c("video" = "family"))
+SSIlog <- rename (SSIlog, c("X" = "SSI-interval"))
+SSIlog$SSI<-rowSums(SSIlog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
+```
+
+## Import and prepare cutFrames dataframe
+```{r cutFrames to translate for ME}
+# Import data
+cutFrames <- read.csv2("../Data/CSV/Cutframes.csv")
+
+# Change the vector in character and cut the string in two parts minutes and second for the 4 time labels ("CutBefore"  "CutMiddle1" "CutMiddle2" "CutFinal") 
+cutFrames$CutBefore <- as.character(cutFrames$CutBefore)
+cutFramesCB <- strsplit(cutFrames$CutBefore, split=":")
+
+# Compute the time in minutes from time in minutes and seconds for each video for Cut Before
+Cut <- c()
+for (i in 1:nrow(cutFrames)){ 
+  CutBeforeAlone <- (as.numeric(cutFramesCB[i][[1]][1]) + as.numeric(cutFramesCB[i][[1]][2])/60)
+  Cut <- c(Cut, CutBeforeAlone)
+  }
+cutFrames$CutBeforeMin <- Cut
+
+# Compute the time in minutes from time in minutes and seconds for each video for Cut CutMiddle1
+Cut <- c()
+cutFrames$CutMiddle1 <- as.character(cutFrames$CutMiddle1)
+cutMiddleSplit <- strsplit(cutFrames$CutMiddle1, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutMiddleSplit[i][[1]][1]) + as.numeric(cutMiddleSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  }
+cutFrames$CutMiddle1Min <- Cut
+
+# Compute the time in minutes from time in minutes and seconds for each video for Cut CutMiddle2
+Cut <- c()
+cutFrames$CutMiddle2 <- as.character(cutFrames$CutMiddle2)
+cutMiddleSplit <- strsplit(cutFrames$CutMiddle2, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutMiddleSplit[i][[1]][1]) + as.numeric(cutMiddleSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  }
+cutFrames$CutMiddle2Min <- Cut
+
+# Compute the time in minutes from time in minutes and seconds for each video for Cut CutFinal
+Cut <- c()
+cutFrames$CutFinal <- as.character(cutFrames$CutFinal)
+cutSplit <- strsplit(cutFrames$CutFinal, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutSplit[i][[1]][1]) + as.numeric(cutSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  }
+cutFrames$CutFinalMin <- Cut
+Cut <- c()
+```
+
+# Merge the two dataframes : Global Synchrony scores no conflict vs conflict (log data)
+```{r SSIlog}
+#str(SSIlog)
+#View(cutFrames)
+
+SSIlog <- merge(SSIlog, cutFrames, by.x="family", by.y="family")
+SSIlog$LabelVideo <- rep(NA, nrow(SSIlog)) 
+SSIlog[which(SSIlog$Time_min <= SSIlog$CutBeforeMin),]$LabelVideo <- "Cut"
+
+SSIlog[which(SSIlog$Time_min > SSIlog$CutBeforeMin & SSIlog$Time_min < SSIlog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+
+SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle1Min & SSIlog$Time_min <= SSIlog$CutMiddle2Min),]$LabelVideo <- "Cut"
+
+SSIlog[which(SSIlog$Time_min > SSIlog$CutMiddle2Min & SSIlog$Time_min < SSIlog$CutFinalMin),]$LabelVideo <- "Conflict"
+
+SSIlog[which(SSIlog$Time_min >= SSIlog$CutFinalMin),]$LabelVideo <- "Cut"
+```
+
+## Description of SSIlog data frame
+```{r SSIlog df description, cache=FALSE}
+str(SSIlog)
+#View(SSIlog)
+```
+
+### Data dictionnary of SSIlog data frame
+* **family** : code of the family
+* SSI-interval** : interval of SSI
+* **Time_min** : Time in minutes
+* **SSI_fa_ch** : SSI index of Synchrony between father and child
+* **SSI_mo_ch** : SSI index of Synchrony between mother and child
+* **SSI** : SSI index of the interaction (father-child or mother-child)
+* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
+* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
+* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, character string in the form min:sec
+* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
+* **ChildSex** : Factor variable : Male of Female
+* **ParentSex** : Factor variable : Male of Female
+* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
+* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
+* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, numeric variable in minutes
+* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
+* **LabelVideo** : label of the video if it is related to No Conflict period or Conflict Period
+
+# Synchrony scores log for each dyad
+```{r Synchrony scores log for each dyad, fig.width=8, fig.height=3.5}
+AUCratios <- c()
+Max.SSI.Conflict <- c()
+Min.SSI.Conflict <- c()
+Max.SSI.No.Conflict <- c()
+Min.SSI.No.Conflict <- c()
+par(mar=c(4,4,4,3), mfrow=c(1,1))
+for (i in unique(SSIlog$family)){
+    plot(SSIlog[which(SSIlog$family==i),]$Time_min, SSIlog[which(SSIlog$family==i),]$SSI, ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col=rainbow(2)[1], cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSIlog[which(SSIlog$family==i),]$Time_min)))
+    print(paste ("Minimum synchrony in No conflict condition is", min(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$SSI)))
+    print(paste("Maximum synchrony in No conflict condition is", max(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$SSI)))
+    
+    print(paste("Minimum synchrony in Conflict condition is", min(SSIlog[which(SSIlog$family==i& SSIlog$LabelVideo=="Conflict"),]$SSI)))
+    print(paste("Maximum synchrony in Conflict condition is", max(SSIlog[which(SSIlog$family==i& SSIlog$LabelVideo=="Conflict"),]$SSI)))
+
+    Min.SSI.No.Conflict <- c(Min.SSI.No.Conflict, min(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$SSI))
+    Max.SSI.No.Conflict <- c(Max.SSI.No.Conflict, max(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$SSI))
+    Min.SSI.Conflict <- c(Min.SSI.Conflict, min(SSIlog[which(SSIlog$family==i& SSIlog$LabelVideo=="Conflict"),]$SSI))  
+    Max.SSI.Conflict <- c(Max.SSI.Conflict, max(SSIlog[which(SSIlog$family==i& SSIlog$LabelVideo=="Conflict"),]$SSI))
+    
+#Compute AUC
+    # No conflict
+    AUCnoconflict <-trapz(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$Time_min, SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$SSI)
+    print(paste ("AUC of synchrony score in no Conflict condition is", AUCnoconflict))
+#   hist(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$SSI)
+    
+    Time.minimum <- min(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$Time_min)
+    Time.max <- max(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="No Conflict"),]$Time_min)
+        
+    AUCnoconflictByMinute <- AUCnoconflict/(Time.max-Time.minimum)
+    print(paste("AUC of synchrony score by Minute in no conflict condition is", AUCnoconflictByMinute))
+        
+    # Conflict
+    AUCconflict <-trapz(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="Conflict"),]$Time_min, SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="Conflict"),]$SSI)
+        
+    print(paste ("AUC of synchrony score in Conflict condition is", AUCconflict))
+        
+#   hist(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="Conflict"),]$SSI)
+    Time.minimum <- min(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="Conflict"),]$Time_min)
+    Time.max <- max(SSIlog[which(SSIlog$family==i & SSIlog$LabelVideo=="Conflict"),]$Time_min)
+        
+    AUCconflictByMinute <- AUCconflict/(Time.max-Time.minimum)
+        print(paste("AUC of synchrony score in Conflict by minute is", AUCconflictByMinute))
+    AUCbyMinuteRatio <- AUCconflictByMinute/AUCnoconflictByMinute
+    print(paste("AUC of synchrony score by minute Ratio (ie AUCconflictByMinute/AUCnoconflictByMinute) is", AUCbyMinuteRatio))
+    AUCratios <-c(AUCratios, AUCbyMinuteRatio)}
+
+AUCratios
+summary(AUCratios)
+hist(AUCratios)
+
+print("There is not much difference with the null hypothesis which is one.")
+
+str(Min.SSI.No.Conflict)
+summary(Min.SSI.No.Conflict)
+hist(Min.SSI.No.Conflict)
+
+str(Min.SSI.Conflict)
+summary(Min.SSI.Conflict)
+hist(Min.SSI.Conflict)
+
+str(Max.SSI.No.Conflict)
+summary(Max.SSI.No.Conflict)
+hist(Max.SSI.No.Conflict)
+
+str(Max.SSI.Conflict)
+summary(Max.SSI.Conflict)
+hist(Max.SSI.Conflict)
+print("There is no difference between the minimum synchrony scores in the two conditions. The maximum of the synchrony score is bigger in the condition conflict than in the condition no Conflict, This could be explain by a random effect since, the time period is bigger in the confict period")
+```

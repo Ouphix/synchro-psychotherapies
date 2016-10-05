@@ -1,0 +1,224 @@
+---
+title: "SynchronyScoresAnalysis"
+author: "Thomas Gargot"
+date: "22 septembre 2016"
+output: html_document
+---
+
+# Clean environment
+```{r Clean Environment}
+rm(list = ls(all.names = TRUE))
+```
+
+# Session info
+```{r}
+sessionInfo()
+```
+
+# Preparation of the session
+```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+# To use this script, you must install packages (install.packages()) to install these packages if you don't have them.
+
+# Loading libraries
+## For managing data frames easilly : rbinds function
+library("plyr")
+## For editing string
+library("stringr")
+## For computing AUC of syncrony plots
+library("AUC")
+```
+
+## Fixed variables
+```{r Variables to fix}
+FileExtension <- ".MTS.avi_res.csv"
+
+# working directory
+# where this report is
+setwd("./Git/Monrado/Reports/")
+
+# blue will refer to father
+# red will refer to mother
+# green to child
+colOrderList <- c("blue","red", "green")
+
+ParticipantsList <- c("father", "mother", "child")
+```
+
+```{r cutFrames to translate for ME}
+# Import data
+cutFrames <- read.csv2("../Data/CSV/Cutframes.csv")
+str(cutFrames)
+
+# Change the vector in character and cut the string in two parts minutes and second for the 4 time labels ("CutBefore"  "CutMiddle1" "CutMiddle2" "CutFinal") 
+cutFrames$CutBefore <- as.character(cutFrames$CutBefore)
+cutFramesCB <- strsplit(cutFrames$CutBefore, split=":")
+
+# Compute the time in minutes from time in minutes and seconds for each video for Cut Before
+Cut <- c()
+for (i in 1:nrow(cutFrames)){ 
+  CutBeforeAlone <- (as.numeric(cutFramesCB[i][[1]][1]) + as.numeric(cutFramesCB[i][[1]][2])/60)
+  Cut <- c(Cut, CutBeforeAlone)
+  }
+cutFrames$CutBeforeMin <- Cut
+
+# Compute the time in minutes from time in minutes and seconds for each video for Cut CutMiddle1
+Cut <- c()
+cutFrames$CutMiddle1 <- as.character(cutFrames$CutMiddle1)
+cutMiddleSplit <- strsplit(cutFrames$CutMiddle1, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutMiddleSplit[i][[1]][1]) + as.numeric(cutMiddleSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  }
+cutFrames$CutMiddle1Min <- Cut
+
+# Compute the time in minutes from time in minutes and seconds for each video for Cut CutMiddle2
+Cut <- c()
+cutFrames$CutMiddle2 <- as.character(cutFrames$CutMiddle2)
+cutMiddleSplit <- strsplit(cutFrames$CutMiddle2, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutMiddleSplit[i][[1]][1]) + as.numeric(cutMiddleSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  }
+cutFrames$CutMiddle2Min <- Cut
+
+# Compute the time in minutes from time in minutes and seconds for each video for Cut CutFinal
+Cut <- c()
+cutFrames$CutFinal <- as.character(cutFrames$CutFinal)
+cutSplit <- strsplit(cutFrames$CutFinal, split=":")
+for (i in 1:nrow(cutFrames)){ 
+  CutAlone <- (as.numeric(cutSplit[i][[1]][1]) + as.numeric(cutSplit[i][[1]][2])/60)
+  Cut <- c(Cut, CutAlone)
+  }
+cutFrames$CutFinalMin <- Cut
+Cut <- c()
+```
+
+### Data dictionnary of cutFrames dataframe
+* **family** : code of the family
+* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
+* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
+* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, character string in the form min:sec
+* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
+* **ChildSex** : Factor variable : Male of Female
+* **ParentSex** : Factor variable : Male of Female
+* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
+* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
+* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, numeric variable in minutes
+* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
+
+# SyncPy utilisation for creating synchrony dataframe
+After extracting filtered motion motion history with mean on sliding interval (overlapping interval) of 5 frames
+And after puting this data on a CSV file [slideddata.csv](../Data/CSV/filtered/log)
+
+We import this data on python Script with panda module [Call_S_Estimator.py](../Scripts/Call_S_Estimator.py)
+This script will compute the synchrony between each dyad of the interaction and of the whole group
+It will return a csv file for each video [SSIXXXX.csv](../Data/CSV/Synchrony/log) with XXXX the name of the video (1606, BAJE059 etc) that we can import with R with
+this following function
+
+```{r SSInoLogFilesList}
+print("SSI Files Directory")
+SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator", full.name=TRUE)
+#SSInoLogFilesList
+```
+
+```{r SSInolog import}
+SSInoLog <- data.frame(video="Name")
+for (file in SSInoLogFilesList){
+#    print(file)
+    SSIalone <- read.csv(file)
+  #  print(str(SSIalone))
+    SSInoLog<- rbind.fill(SSInoLog, SSIalone)}
+SSInoLog$video <-as.factor(SSInoLog$video)
+SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
+SSInoLog$Interval <- NULL
+SSInoLog <- rename (SSInoLog, c("video" = "family"))
+SSInoLog <- rename (SSInoLog, c("X" = "SSI-interval"))
+#SSInoLog$action <- rep(NA, nrow(SSInoLog))
+#SSInoLog[which(video == & timeMin==)]$action
+SSInoLog$SSI<-rowSums(SSInoLog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
+```
+
+# Annotating data frames noLog
+```{r SSInoLog}
+SSInoLog <- merge(SSInoLog, cutFrames, by.x="family", by.y="family")
+SSInoLog$LabelVideo <- rep(NA, nrow(SSInoLog)) 
+SSInoLog[which(SSInoLog$Time_min <= SSInoLog$CutBeforeMin),]$LabelVideo <- "Cut"
+
+SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutBeforeMin & SSInoLog$Time_min < SSInoLog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+
+SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle1Min & SSInoLog$Time_min <= SSInoLog$CutMiddle2Min),]$LabelVideo <- "Cut"
+
+SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
+
+SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutFinalMin),]$LabelVideo <- "Cut"
+```
+
+## Description of noLogSSI data frame
+```{r SSInologdf  description , cache=FALSE}
+str(SSInoLog)
+#View(SSInoLog)
+```
+
+### Data dictionnary of SSInolog data frame
+* **family** : code of the family
+* **SSI-interval** : interval of SSI
+* **Time_min** : Time in minutes
+* **SSI_fa_ch** : SSI index of Synchrony between father and child
+* **SSI_mo_ch** : SSI index of Synchrony between mother and child
+* **SSI** : SSI index of the interaction (father-child or mother-child)
+* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
+* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
+* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, character string in the form min:sec
+* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
+* **ChildSex** : Factor variable : Male of Female
+* **ParentSex** : Factor variable : Male of Female
+* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
+* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
+* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, numeric variable in minutes
+* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
+* **LabelVideo** : label of the video if it is related to No Conflict period or Conflict Period 
+
+# Synchrony scores noLog for each dyad
+```{r Synchrony scores noLog for each dyad, fig.width=8, fig.height=3.5}
+par(mar=c(4,4,4,3), mfrow=c(1,1))
+for (i in unique(SSInoLog$family)){
+      if (all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_mo_ch)==TRUE)){
+        plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSInoLog$family==i),]$SSI_mo_ch, 
+             ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col="red", cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)))}
+      
+      else if(all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch)==TRUE)){
+#    print(str(SSInoLog[which(SSInoLog$family==i),]$SSI_fa_ch))
+    plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch, ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSInoLog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)), col="blue", cex.axis=0.7)}
+      else{print("error")}}
+```
+
+
+```{r}
+ncSSI <- c()
+cSSI <- c()
+
+for (i in unique(SSInoLog$family)){
+  print (i)
+  nc <- mean(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict" & SSInoLog$family==i),]$SSI)
+  print(nc)
+  ncSSI <- c(ncSSI, nc)
+  co <-mean(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"  & SSInoLog$family==i),]$SSI)
+  print (co)
+  cSSI <- c(cSSI, co)
+}
+
+hist(ncSSI)
+hist(cSSI)
+
+
+SSImean <- data.frame(sort(ncSSI, decreasing = TRUE), sort(cSSI, decreasing = TRUE))
+par(mar=c(3,5,3,3))
+barplot(as.matrix(SSImean), col=terrain.colors(34), ylab="Synchrony scores", main="Sum of mean synchrony scores for all videos", names.arg = c("No conflict", "Conflict"))
+
+t.test(ncSSI, cSSI, alternative = c("two.sided"),
+paired=TRUE, conf.level = 0.95)
+```

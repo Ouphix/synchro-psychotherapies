@@ -2,8 +2,10 @@
 title: "Synchrony in relationship, example with MONRADO Data"
 author: "Thomas Gargot"
 date: "May, 31st 2016"
-output: 
-  pdf_document: 
+output:
+  html_document:
+    toc: yes
+  pdf_document:
     toc: yes
 ---
 # Clean environment
@@ -16,7 +18,7 @@ rm(list = ls(all.names = TRUE))
 sessionInfo()
 ```
 
-# Preparation of the data
+# Preparation of the session
 ```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 # To use this script, you must install packages (install.packages()) to install these packages if you don't have them.
 
@@ -25,6 +27,8 @@ sessionInfo()
 library("plyr")
 ## For editing string
 library("stringr")
+## For computing AUC of syncrony plots
+library("AUC")
 ```
 
 ## Fixed variables
@@ -33,7 +37,7 @@ FileExtension <- ".MTS.avi_res.csv"
 
 # working directory
 # where this report is
-setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/Monrado/Reports/")
+#setwd("./Git/Monrado/Reports/")
 
 # blue will refer to father
 # red will refer to mother
@@ -44,11 +48,11 @@ ParticipantsList <- c("father", "mother", "child")
 ```
 
 ```{r creating list, eval=TRUE, cache=FALSE, results='hide'}
-## Create a csv files list with the directories
+## Create a csv files list with the directories names
 FullNameList <- list.files("../Data/CSV/raw", full.names=TRUE)
 FullNameList
 
-## Create a csv files list without the directories
+## Create a csv files list without the directories names
 filesList <- list.files("../Data/CSV/raw", full.names=FALSE)
 filesList
 ```
@@ -59,13 +63,13 @@ Function that import data from .csv files inside a CSV folder
 
 #### Arguments:
 List FullNameList with the full name of the .csv
-```{r function to import data and exclude empty lines without motion history (NA lines)}
+```{r function to import data files, exclude empty lines without motion history (NA lines), merge the data frames}
 importdata <-function(FullnameList){
     data <- c()
     for (i in FullnameList){
         dataAlone <- read.csv(i)
+        # delete NA created by the conversion process
         mydata.nas <- apply(dataAlone[,c(2:5)], 1, function(x){all(is.na(x))})
-        # delete NA created by th conversion process
         dataAlone <- dataAlone[!mydata.nas,]
         print(i)
         data <- rbind(data, dataAlone)
@@ -112,8 +116,6 @@ Function that takes raw motion history data and computes the mean on a given int
 
 
 ![](https://raw.githubusercontent.com/Ouphix/synchro-psychotherapies/master/Monrado/Data/images/plots/slidingInterval-small.jpg)
-
-
 ```{r compute Slidinginterval, cache=TRUE}
 SlidingInterval <- function(subject, indexOfvideos=1:NumberOfvideos, interval, data)
   {x <- c()
@@ -169,12 +171,17 @@ for (i in filesList){
     name <- sub(FileExtension, "", i)
     families <- c(families, name)
 }
-families
 
+```
+The families of this database are `r families`
+
+```{r}
 NumberOfvideos <- length(families)
-NumberOfvideos
+```
+There are `r NumberOfvideos` videos
 
-# create a list with the simplified dname (whitout extension), make a data frame of it  and merge 2 data frames
+```{r}
+# create a list with the simplified name (whitout extension), make a data frame of it  and merge the 2 data frames
 a <- data.frame(family = families, unique(data$file))
 data <- merge(data, a, by.x="file", by.y="unique.data.file.")
 
@@ -190,10 +197,11 @@ data$logChild <- log(data$childShifted)
 
 data$file <- NULL
 
+# Reorganise the order of the columns
 data <- data[,c("family", "frame", "timeMin", "child", "childShifted", "logChild", "father", "fatherShifted", "logFather", "mother", "motherShifted", "logMother")]
 ```
 
-### Data dictionnary of clean data data dataframe
+### Data dictionnary of clean data dataframe
 * **family** : code of the family
 * **frame** : index of the frame, with frame rate of 25/s
 * **timeMin** : time in minute for each video ie frame/(25*60)
@@ -231,7 +239,7 @@ Figure 3 shows the 2 differents conditions in the videos separated by a cut peri
 cutFrames <- read.csv2("../Data/CSV/Cutframes.csv")
 str(cutFrames)
 
-# Change the vector in character and cut the sting in two parts minutes and second for the 4 time labels ("CutBefore"  "CutMiddle1" "CutMiddle2" "CutFinal") 
+# Change the vector in character and cut the string in two parts minutes and second for the 4 time labels ("CutBefore"  "CutMiddle1" "CutMiddle2" "CutFinal") 
 cutFrames$CutBefore <- as.character(cutFrames$CutBefore)
 cutFramesCB <- strsplit(cutFrames$CutBefore, split=":")
 
@@ -484,7 +492,7 @@ par(mar=c(3,4,2,2))
 boxplot(data$father, data$mother, data$child, 
         col=colOrderList, 
         names=ParticipantsList, 
-        main= "Motion history by fra me box plots (raw data), all videos", las=1, ylab="Motion history")
+        main= "Motion history by frame box plots (raw data), all videos", las=1, ylab="Motion history")
 par(mar=c(1,0.5,0.5,1))
 legend("topleft", ParticipantsList, fill=colOrderList, cex=0.7)
 ```
@@ -761,275 +769,3 @@ for (videoName in unique(data$family)){
       }
 ```
 
-# SyncPy utilisation for creating synchrony dataframe
-After extracting filtered motion motion history with mean on sliding interval (overlapping interval) of 5 frames
-And after puting this data on a CSV file [slideddata.csv](../Data/CSV/filtered/log)
-
-We import this data on python Script with panda module [Call_S_Estimator.py](../Scripts/Call_S_Estimator.py)
-This script will compute the synchrony between each dyad of the interaction and of the whole group
-It will return a csv file for each video [SSIXXXX.csv](../Data/CSV/Synchrony/log) with XXXX the name of the video (1606, BAJE059 etc) that we can import with R with
-this following function
-
-```{r SSIlogFilesList}
-print("SSI Files Directory")
-SSIlogFilesList <- list.files("../Data/CSV/Synchrony/log/S_estimator", full.name=TRUE)
-#SSIlogFilesList
-```
-
-```{r SSInoLogFilesList}
-print("SSI Files Directory")
-SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator", full.name=TRUE)
-#SSInoLogFilesList
-```
-
-```{r SSIlog import}
-SSIlog <- data.frame(video="Name")
-for (file in SSIlogFilesList){
-    SSIalone <- read.csv(file)
-    print(str(SSIalone))
-    SSIlog <- rbind.fill(SSIlog, SSIalone)}
-str(SSIlog)
-SSIlog$video <- as.factor(SSIlog$video)
-SSIlog <- SSIlog[-which(SSIlog$video=="Name"),]
-SSIlog$Interval <- NULL
-SSIlog <- rename (SSIlog, c("video" = "family"))
-SSIlog <- rename (SSIlog, c("X" = "SSI-interval"))
-SSIlog$SSI<-rowSums(SSIlog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
-```
-
-```{r SSInolog import}
-SSInoLog <- data.frame(video="Name")
-for (file in SSInoLogFilesList){
-#    print(file)
-    SSIalone <- read.csv(file)
-  #  print(str(SSIalone))
-    SSInoLog<- rbind.fill(SSInoLog, SSIalone)}
-SSInoLog$video <-as.factor(SSInoLog$video)
-SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
-SSInoLog$Interval <- NULL
-SSInoLog <- rename (SSInoLog, c("video" = "family"))
-SSInoLog <- rename (SSInoLog, c("X" = "SSI-interval"))
-#SSInoLog$action <- rep(NA, nrow(SSInoLog))
-#SSInoLog[which(video == & timeMin==)]$action
-SSInoLog$SSI<-rowSums(SSInoLog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
-```
-
-# Annotating data frames noLog
-```{r SSInoLog}
-SSInoLog <- merge(SSInoLog, cutFrames, by.x="family", by.y="family")
-SSInoLog$LabelVideo <- rep(NA, nrow(SSInoLog)) 
-SSInoLog[which(SSInoLog$Time_min <= SSInoLog$CutBeforeMin),]$LabelVideo <- "Cut"
-
-SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutBeforeMin & SSInoLog$Time_min < SSInoLog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
-
-SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle1Min & SSInoLog$Time_min <= SSInoLog$CutMiddle2Min),]$LabelVideo <- "Cut"
-
-SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
-
-SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutFinalMin),]$LabelVideo <- "Cut"
-```
-
-# Global Synchrony scores no conflict vs conflict (log data)
-```{r SSIlog}
-str(SSIlog)
-str(cutFrames)
-View(cutFrames)
-
-SSIlog <- merge(SSIlog, cutFrames, by.x="family", by.y="family")
-SSIlog$LabelVideo <- rep(NA, nrow(SSIlog)) 
-SSIlog[which(SSIlog$Time_min <= SSIlog$CutBeforeMin),]$LabelVideo <- "Cut"
-
-SSIlog[which(SSIlog$Time_min > SSIlog$CutBeforeMin & SSIlog$Time_min < SSIlog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
-
-SSIlog[which(SSIlog$Time_min >= SSIlog$CutMiddle1Min & SSIlog$Time_min <= SSIlog$CutMiddle2Min),]$LabelVideo <- "Cut"
-
-SSIlog[which(SSIlog$Time_min > SSIlog$CutMiddle2Min & SSIlog$Time_min < SSIlog$CutFinalMin),]$LabelVideo <- "Conflict"
-
-SSIlog[which(SSIlog$Time_min >= SSIlog$CutFinalMin),]$LabelVideo <- "Cut"
-```
-
-## Description of SSIlog data frame
-```{r SSIlog df description, cache=FALSE}
-str(SSIlog)
-#View(SSI)
-```
-### Data dictionnary of SSIlog data frame
-* **family** : code of the family
-* SSI-interval** : interval of SSI
-* **Time_min** : Time in minutes
-* **SSI_fa_ch** : SSI index of Synchrony between father and child
-* **SSI_mo_ch** : SSI index of Synchrony between mother and child
-* **SSI** : SSI index of the interaction (father-child or mother-child)
-* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
-* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
-* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
-Between is the conflictual discussion, character string in the form min:sec
-* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
-* **ChildSex** : Factor variable : Male of Female
-* **ParentSex** : Factor variable : Male of Female
-* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
-* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
-* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
-Between is the conflictual discussion, numeric variable in minutes
-* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
-* **LabelVideo** : label of the video if it is related to No Conflict period or Conflict Perido
-
-## Description of noLogSSI data frame
-```{r SSInologdf  description , cache=FALSE}
-str(SSInoLog)
-#View(SSInoLog)
-```
-
-### Data dictionnary of SSIlog data frame
-* **family** : code of the family
-* **SSI-interval** : interval of SSI
-* **Time_min** : Time in minutes
-* **SSI_fa_ch** : SSI index of Synchrony between father and child
-* **SSI_mo_ch** : SSI index of Synchrony between mother and child
-* **SSI** : SSI index of the interaction (father-child or mother-child)
-* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
-* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
-* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
-Between is the conflictual discussion, character string in the form min:sec
-* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
-* **ChildSex** : Factor variable : Male of Female
-* **ParentSex** : Factor variable : Male of Female
-* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
-* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
-* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
-Between is the conflictual discussion, numeric variable in minutes
-* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
-* **LabelVideo** : label of the video if it is related to No Conflict period or Conflict Perido
-
-# Synchrony scores log for each dyad
-```{r Synchrony scores log for each dyad, fig.width=8, fig.height=3.5}
-par(mar=c(4,4,4,3), mfrow=c(1,1))
-for (i in unique(SSIlog$family)){
-      if (all(!is.na(SSIlog[which(SSIlog$family==i),]$SSI_mo_ch)==TRUE)){
-        #print(SSIlog[which(SSIlog$family==i),]$Time_min)
-        #print(str(SSIlog[which(SSIlog$family==i),]$SSI_mo_ch))
-            plot(SSIlog[which(SSIlog$family==i),]$Time_min, SSIlog[which(SSIlog$family==i),]$SSI_mo_ch, 
-                 ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col=rainbow(2)[1], cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSIlog[which(SSIlog$family==i),]$Time_min)))}
-      
-      else if(all(!is.na(SSIlog[which(SSIlog$family==i),]$SSI_fa_ch)==TRUE)){
-    plot(SSIlog[which(SSIlog$family==i),]$Time_min, SSIlog[which(SSIlog$family==i),]$SSI_fa_ch, 
-              ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSIlog[which(SSIlog$family==i),]$Time_min)), col=rainbow(2)[2], cex.axis=0.7)}
-  else{print("error")}}
-```
-
-# Synchrony scores noLog for each dyad
-```{r Synchrony scores noLog for each dyad, fig.width=8, fig.height=3.5}
-par(mar=c(4,4,4,3), mfrow=c(1,1))
-for (i in unique(SSInoLog$family)){
-      if (all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_mo_ch)==TRUE)){
-        plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSInoLog$family==i),]$SSI_mo_ch, 
-             ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col="red", cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)))}
-      
-      else if(all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch)==TRUE)){
-#    print(str(SSInoLog[which(SSInoLog$family==i),]$SSI_fa_ch))
-    plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch, ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSInoLog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)), col="blue", cex.axis=0.7)}
-      else{print("error")}}
-```
-
-
-```{r}
-ncSSI <- c()
-cSSI <- c()
-
-for (i in unique(SSInoLog$family)){
-  print (i)
-  nc <- mean(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict" & SSInoLog$family==i),]$SSI)
-  print(nc)
-  ncSSI <- c(ncSSI, nc)
-  co <-mean(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"  & SSInoLog$family==i),]$SSI)
-  print (co)
-  cSSI <- c(cSSI, co)
-}
-
-hist(ncSSI)
-hist(cSSI)
-
-
-SSImean <- data.frame(ncSSI, cSSI)
-par(mar=c(3,5,3,3))
-barplot(as.matrix(SSImean), col=terrain.colors(34), ylab="Synchrony scores", main="Sum of mean synchrony scores for all videos", names.arg = c("No conflict", "Conflict"))
-
-t.test(ncSSI, cSSI, alternative = c("two.sided"),
-paired=TRUE, conf.level = 0.95)
-```
-
-# Demographic and Psychometric data
-## Demographic description
-### Sex
-```{r Demographic description, eval=TRUE}
-par(mar=c(3,4,4,4))
-barplot(table(cutFrames$ChildSex), col=c("red", "blue"), main ="Sex repartition, boxplot")
-prop.table(table(cutFrames$ChildSex))
-```
-
-### Age
-```{r age, fig.height=4}
-psycho$Birthday <- as.Date(psycho$Birthday, format="%d/%m/%y")
-psycho$interview_date <- as.Date(psycho$interview_date, format="%d/%m/%y")
-str(psycho$Birthday )
-str(psycho$interview_date)
-psycho$age <- (psycho$interview_date-psycho$Birthday)/365.25
-psycho$age <- as.numeric(psycho$age)
-
-par(mar=c(3,4,4,4))
-hist(psycho$age, col="green", main="Histogram of the age of the teenagers")
-str(psycho$age)
-sd(psycho$age)
-```
-
-### Birth places
-```{r Birth places, fig.height=4}
-par(mar=c(5,4,4,4))
-barplot(sort(table(psycho$Birth_place), decreasing = TRUE ), las=2, cex.names=0.5, main="Barplot of the Birth places", col="yellow")
-```
-
-## Attachement styles
-### Raw
-```{r Attachement styles raw, fig.height=4}
-par(mar=c(9,5,3,3))
-barplot(table(psycho$attachement_style), las=2, cex.names=0.6, col="blue")
-```
-
-### Clusters
-```{r Attachement styles clusters, fig.height=4}
-par(mar=c(4,3,3,3))
-barplot(table(psycho$attachement_cluster), las=2, cex.names=0.6, col="cornflowerblue", main="Bar plot of attachement style after clustering")
-prop.table(table(psycho$attachement_cluster))
-```
-
-## TAS
-```{r TAS, fig.height=4}
-par(mar=c(3,3,3,3))
-barplot(table(psycho$TAS_total), las=2, col="orange", main="Distribution of the TAS scores", cex.name=0.9)
-
-hist(psycho$TAS_total, las=1, col="orange", main="Histogram of the TAS scores")
-```
-
-## STAIYA
-```{r STAIYA, fig.height=4}
-par(mar=c(3,3,3,3))
-barplot(table(psycho$STAIYA_total), las=2, col="blue", main="Barplot of the STAIYA scores")
-
-hist(psycho$STAIYA_total, las=1, col="blue", main="Histogram of the STAIY-A scores")
-```
-
-## STAIYB
-```{r STAIYB, fig.height=4}
-par(mar=c(3,3,3,3))
-barplot(table(psycho$STAIYB_total), las=2, col="red", main="Barplot of the STAIYB scores")
-
-hist(psycho$STAIYB_total, las=1, col="red", main="Histogram of the STAIY-B scores")
-```
-
-## BDI total
-```{r BDI total, fig.height=4}
-par(mar=c(3,3,3,3))
-barplot(table(psycho$BDI_total), las=2, col="green", main="Barplot of the BDI scores")
-
-hist(psycho$BDI_total, las=1, col="green", main="Histogram of the BDI scores")
-```

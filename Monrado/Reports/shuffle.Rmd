@@ -1,0 +1,85 @@
+---
+title: "Shuffle"
+author: "Thomas Gargot"
+date: "30/9/2016"
+output: html_document
+---
+
+This script suffles the motion history data that we have before the computing of the synchrony. 
+If the signal is the same, we won't be able to say that we have a synchony scores that are explained by the interaction.
+
+# Clean environment
+```{r Clean Environment}
+rm(list = ls(all.names = TRUE))
+```
+
+# Session info
+```{r}
+sessionInfo()
+```
+
+# Preparation of the session
+```{r import libraries, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+# To use this script, you must install packages (install.packages()) to install these packages if you don't have them.
+
+# Loading libraries
+## For managing data frames easilly : rbinds function
+library("plyr")
+## For editing string
+library("stringr")
+## For computing AUC of syncrony plots
+library("pracma")
+```
+
+#Import data
+```{r}
+setwd("./Git/Monrado/Reports/")
+
+MHfilteredFilesList <- list.files("../Data/CSV/filtered/noLog", full.name=TRUE)
+MHfilteredFilesList
+
+# MHfiltered <- data.frame(video="a")
+    a <- 1
+for (file in MHfilteredFilesList){
+    MHfilteredalone <- read.csv(file)
+#    str(MHfileredalone)
+    MHfilteredalone$X <- NULL
+#    str(MHfileredalone)
+# shuffle the motion history of the patient (slidedChild) and create a new column. Repeat the process 100 times
+    for (i in 6:106){
+    MHfilteredalone[,i] <-sample(MHfilteredalone$slidedChild)
+    }
+   str(MHfilteredalone[,1:6])
+   str(MHfilteredFilesList)
+   str(MHfilteredalone)
+   getwd()
+   FileName <- strsplit(MHfilteredFilesList, ".slideddata.csv")
+   write.csv(MHfilteredalone, paste(FileName[[a]], ".shuffled.slideddata.csv", sep=""))
+#    MHfiltered <- rbind.fill(MHfiltered, MHfilteredalone)
+#    str(MHfilered[,1:6])
+   a <- a+1
+    }
+#MHfiltered <- MHfiltered[-1,]
+
+View(MHfiltered)
+
+strsplit
+
+```
+
+```{r}
+videoIndex <- 1
+# videoName is the name of current video
+for (videoName in unique(MHfilered$video)){
+# Compute slinding interval for each participant
+      
+      slidedVideo <- data.frame(
+        slidedFather, slidedMother, slidedChild, 
+        "video"=rep(families[videoIndex], length(slidedFather)), 
+        frame_index = 1:length(slidedFather))
+# write the file       
+            write.csv(slidedVideo, paste("../Data/CSV/filtered/noLog/",videoName, ".slideddata.csv", sep=""))
+      videoIndex <-(videoIndex+1)
+      }
+```
+

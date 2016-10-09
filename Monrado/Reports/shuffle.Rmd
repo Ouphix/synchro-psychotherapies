@@ -34,27 +34,34 @@ library("pracma")
 #Import data
 ```{r}
 setwd("./Git/Monrado/Reports/")
+filesList <- list.files("../Data/CSV/filtered/noLog/noshuffled", full.names=FALSE)
+filesList
+fileShort <- c()
+for (file in filesList){
+  fileShort <- c(fileShort, strsplit(file,".slideddata.csv")[[1]])
+}
+fileShort
 
-MHfilteredFilesList <- list.files("../Data/CSV/filtered/noLog", full.name=TRUE)
+MHfilteredFilesList <- list.files("../Data/CSV/filtered/noLog/noshuffled", full.name=TRUE)
 MHfilteredFilesList
+```
 
+# Shuffle the data and add a column parent with the motion history of either the mother or the father
+```{r}
 # MHfiltered <- data.frame(video="a")
     a <- 1
 for (file in MHfilteredFilesList){
     MHfilteredalone <- read.csv(file)
 #    str(MHfileredalone)
     MHfilteredalone$X <- NULL
-#    str(MHfileredalone)
+    str(MHfilteredalone)
+    MHfilteredalone$slidedParent <- rowSums(MHfilteredalone[,c("slidedFather", "slidedMother")], na.rm=TRUE)
 # shuffle the motion history of the patient (slidedChild) and create a new column. Repeat the process 100 times
-    for (i in 6:106){
+    for (i in 7:107){
     MHfilteredalone[,i] <-sample(MHfilteredalone$slidedChild)
     }
    str(MHfilteredalone[,1:6])
-   str(MHfilteredFilesList)
-   str(MHfilteredalone)
-   getwd()
-   FileName <- strsplit(MHfilteredFilesList, ".slideddata.csv")
-   write.csv(MHfilteredalone, paste(FileName[[a]], ".shuffled.slideddata.csv", sep=""))
+   write.csv(MHfilteredalone, paste("../Data/CSV/filtered/noLog/shuffled/", fileShort[a], ".shuffled.slideddata.csv", sep=""))
 #    MHfiltered <- rbind.fill(MHfiltered, MHfilteredalone)
 #    str(MHfilered[,1:6])
    a <- a+1
@@ -62,9 +69,6 @@ for (file in MHfilteredFilesList){
 #MHfiltered <- MHfiltered[-1,]
 
 View(MHfiltered)
-
-strsplit
-
 ```
 
 ```{r}

@@ -2,7 +2,7 @@
 title: "SynchronyShuffleScoresAnalysis"
 author: "Thomas Gargot"
 date: "19 oct 2016"
-output: html_document
+output: pdf_document
 ---
 
 # Clean environment
@@ -32,7 +32,7 @@ FileExtension <- ".MTS.avi_res.csv"
 
 # working directory
 # where this report is
-setwd("./Git/Monrado/Reports/")
+#setwd("./Git/Monrado/Reports/")
 
 # blue will refer to father
 # red will refer to mother
@@ -116,41 +116,42 @@ It will return a csv file for each video [SSIXXXX.csv](../Data/CSV/Synchrony/log
 this following function
 
 ## Import Data
-```{r SSInoLogFilesList}
+```{r SSIFilesList}
 print("SSI Files Directory")
-SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator/noShuffle", full.name=TRUE)
-SSInoLogFilesList
+SSIFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator/noShuffle", full.name=TRUE)
+SSIFilesList
 
-print("SSI Shuffle Files Directory")
-SSInoLogShuffledFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator/shuffle", full.name=TRUE)
-SSInoLogShuffledFilesList
+#print("SSI Shuffle Files Directory")
+#SSInoLogShuffledFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator/shuffle", full.name=TRUE)
+#SSInoLogShuffledFilesList
 ```
 
 ## Clean Data
 ```{r SSInolog import}
 SSI <- NULL
 # Merge data frames by video (shuffle and not shuffle) by column and then merge all the videos together by rows.
-# NB list from 34 to 1 because the name of the first video is a numer and not a character
-for (i in length(SSInoLogFilesList):1){
+# NB list from 34 to 1 because the name of the first video is a number and not a character
+for (i in length(SSIFilesList):1){
     print(i)
     #print (SSInoLogFilesList[i])
-    SSIalone <- read.csv(SSInoLogFilesList[i])
+    SSIalone <- read.csv(SSIFilesList[i])
     print(str(SSIalone))
     print(dim(SSIalone))
-    SSIShuffleAlone <- read.csv(SSInoLogShuffledFilesList[i])
+ #   SSIShuffleAlone <- read.csv(SSInoLogShuffledFilesList[i])
     #print(SSInoLogShuffledFilesList[i])
     #print(str(SSIShuffleAlone))
-    print (dim(SSIShuffleAlone))
-    SSITemp <- merge(SSIalone, SSIShuffleAlone, by.x="Time_min", by.y="Time_min")
-    print (dim(SSITemp))
-    SSI<- rbind.fill(SSI, SSITemp)
+ #   print (dim(SSIShuffleAlone))
+   # SSITemp <- merge(SSIalone, SSIShuffleAlone, by.x="Time_min", by.y="Time_min")
+#    print (dim(SSITemp))
+ #   SSI<- rbind.fill(SSI, SSITemp)
+     SSI<- rbind.fill(SSI, SSIalone)
+
     print (dim(SSI))
     #print (str(SSInoLog))
     }
 dim(SSI)
-str(SSI[,90:104])
-
-SSI$video <-as.factor(SSI$video.x)
+#str(SSI[,90:104])
+#SSI$video <-as.factor(SSI$video.x)
 SSI$video.x <- NULL
 SSI$video.y <- NULL
 SSI$X.x <- NULL
@@ -160,13 +161,13 @@ SSI$X.y <- NULL
 SSI$video.y <- NULL
 SSI$SSI_pa_ch <- SSI$SSI_mo_ch + SSI$SSI_fa_ch
 
-SSI <- rename (SSI, c("video.x" = "family"))
-SSInoLog <- rename (SSInoLog, c("X.x" = "SSI-interval"))
+#SSI <- rename (SSI, c("video.x" = "family"))
+#SSInoLog <- rename (SSInoLog, c("X.x" = "SSI-interval"))
 #SSInoLog$action <- rep(NA, nrow(SSInoLog))
 #SSInoLog[which(video == & timeMin==)]$action
 SSI$SSI_pa_ch<-rowSums(SSI[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
 
-plot(SSI$SSI_pa_ch, type="l", lwd=2, ylim=c(0, 0.2), main="Scores of SSI natural data (in black) and 
+plot(SSI$SSI_pa_ch, type="l", lwd=2, ylim=c(0, 0.8), main="Scores of SSI natural data (in black) and 
   shuffled data (in blue) for all videos", ylab="Synchrony score")
 
 lines(SSI$X0, type="l", col="blue")
@@ -174,55 +175,59 @@ for (i in 3:102){
   lines(SSI[,i], type="l", col="blue")
 }
 
-SSI[1:5,3]
-SSI[1:5,102]
+#SSI[1:5,3]
+#SSI[1:5,102]
 
-lines()
-plot(SSI$X0, type="l", col="blue")
+#plot(SSI$X0, type="l", col="blue")
 
-SSIShuffle <- data.frame(video="Name")
-for (file in SSInoLogShuffledFilesList){
-  print (file)
-   SSIalone <- read.csv(file)
-   print(str(SSIalone))
-   SSIShuffle<- rbind.fill(SSIShuffle, SSIalone)}
-SSIShuffle <- SSIShuffle[-which(SSIShuffle$video=="Name"),]
+#SSIShuffle <- data.frame(video="Name")
 
-SSIShuffle <- merge(SSInoLog, SSIShuffle, by.x="Time_min", by.y="Time_min")
+```
 
-plot(SSIShuffle$Time_min, SSIShuffle$SSI_fa_ch, type="l", lwd=2)
-dim(SSIShuffle)
-plot(SSIShuffle$Time_min, SSIShuffle[,8], type="l", lwd=2)
+```{r}
+#for (file in SSInoLogShuffledFilesList){
+#  print (file)
+#   SSIalone <- read.csv(file)
+#   print(str(SSIalone))
+#}
+#   SSIShuffle<- rbind.fill(SSIShuffle, SSIalone)}
+#SSIShuffle <- SSIShuffle[-which(SSIShuffle$video=="Name"),]
 
-for (i in 8:108){
-  print (i)
-  print(SSIShuffle[,i])
-  lines(SSIShuffle[,i], lty=2)
-  }
+#SSIShuffle <- merge(SSInoLog, SSIShuffle, by.x="Time_min", by.y="Time_min")
+
+#plot(SSIShuffle$Time_min, SSIShuffle$SSI_fa_ch, type="l", lwd=2)
+#dim(SSIShuffle)
+#plot(SSIShuffle$Time_min, SSIShuffle[,8], type="l", lwd=2)
+
+#for (i in 8:108){
+#  print (i)
+#  print(SSIShuffle[,i])
+#  lines(SSIShuffle[,i], lty=2)
+# }
 ```
 
 # Annotating data frames noLog
 ```{r SSInoLog}
-SSInoLog <- merge(SSInoLog, cutFrames, by.x="family", by.y="family")
-SSInoLog$LabelVideo <- rep(NA, nrow(SSInoLog)) 
-SSInoLog[which(SSInoLog$Time_min <= SSInoLog$CutBeforeMin),]$LabelVideo <- "Cut"
+SSI <- merge(SSI, cutFrames, by.x="video", by.y="family")
+SSI$LabelVideo <- rep(NA, nrow(SSI)) 
+SSI[which(SSI$Time_min <= SSI$CutBeforeMin),]$LabelVideo <- "Cut"
 
-SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutBeforeMin & SSInoLog$Time_min < SSInoLog$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+SSI[which(SSI$Time_min > SSI$CutBeforeMin & SSI$Time_min < SSI$CutMiddle1Min),]$LabelVideo <- "No Conflict"
 
-SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle1Min & SSInoLog$Time_min <= SSInoLog$CutMiddle2Min),]$LabelVideo <- "Cut"
+SSI[which(SSI$Time_min >= SSI$CutMiddle1Min & SSI$Time_min <= SSI$CutMiddle2Min),]$LabelVideo <- "Cut"
 
-SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
+SSI[which(SSI$Time_min > SSI$CutMiddle2Min & SSI$Time_min < SSI$CutFinalMin),]$LabelVideo <- "Conflict"
 
-SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutFinalMin),]$LabelVideo <- "Cut"
+SSI[which(SSI$Time_min >= SSI$CutFinalMin),]$LabelVideo <- "Cut"
 ```
 
 ## Description of noLogSSI data frame
-```{r SSInologdf  description , cache=FALSE}
-str(SSInoLog)
-#View(SSInoLog)
+```{r SSIdf  description , cache=FALSE}
+str(SSI)
+#View(SSI)
 ```
 
-### Data dictionnary of SSInolog data frame
+### Data dictionnary of SSI data frame
 * **family** : code of the family
 * **SSI-interval** : interval of SSI
 * **Time_min** : Time in minutes
@@ -246,14 +251,14 @@ Between is the conflictual discussion, numeric variable in minutes
 # Synchrony scores noLog for each dyad
 ```{r Synchrony scores noLog for each dyad, fig.width=8, fig.height=3.5}
 par(mar=c(4,4,4,3), mfrow=c(1,1))
-for (i in unique(SSInoLog$family)){
-      if (all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_mo_ch)==TRUE)){
-        plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSInoLog$family==i),]$SSI_mo_ch, 
-             ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col="red", cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)))}
+for (i in unique(SSI$family)){
+      if (all(!is.na(SSI[which(SSIlog$family==i),]$SSI_mo_ch)==TRUE)){
+        plot(SSI[which(SSIlog$family==i),]$Time_min, SSI[which(SSI$family==i),]$SSI_mo_ch, 
+             ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col="red", cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSI[which(SSIlog$family==i),]$Time_min)))}
       
-      else if(all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch)==TRUE)){
-#    print(str(SSInoLog[which(SSInoLog$family==i),]$SSI_fa_ch))
-    plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch, ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSInoLog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)), col="blue", cex.axis=0.7)}
+      else if(all(!is.na(SSI[which(SSIlog$family==i),]$SSI_fa_ch)==TRUE)){
+#    print(str(SSI[which(SSI$family==i),]$SSI_fa_ch))
+    plot(SSI[which(SSIlog$family==i),]$Time_min, SSI[which(SSIlog$family==i),]$SSI_fa_ch, ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSI[which(SSIlog$family==i),]$Time_min), length(SSI[which(SSIlog$family==i),]$Time_min)), col="blue", cex.axis=0.7)}
       else{print("error")}}
 ```
 
@@ -262,12 +267,12 @@ for (i in unique(SSInoLog$family)){
 ncSSI <- c()
 cSSI <- c()
 
-for (i in unique(SSInoLog$family)){
+for (i in unique(SSI$family)){
   print (i)
-  nc <- mean(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict" & SSInoLog$family==i),]$SSI)
+  nc <- mean(SSI[which(SSI$LabelVideo=="No Conflict" & SSI$family==i),]$SSI)
   print(nc)
   ncSSI <- c(ncSSI, nc)
-  co <-mean(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"  & SSInoLog$family==i),]$SSI)
+  co <-mean(SSI[which(SSI$LabelVideo=="Conflict"  & SSI$family==i),]$SSI)
   print (co)
   cSSI <- c(cSSI, co)
 }

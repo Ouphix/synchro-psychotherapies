@@ -2,7 +2,7 @@
 title: "SynchronyScoresAnalysis"
 author: "Thomas Gargot"
 date: "22 septembre 2016"
-output: html_document
+output: pdf_document
 ---
 
 # Clean environment
@@ -26,6 +26,8 @@ library("plyr")
 library("stringr")
 ## For computing AUC of syncrony plots
 library("AUC")
+library("reshape2")
+library("lme4")
 ```
 
 ## Fixed variables
@@ -34,7 +36,8 @@ FileExtension <- ".MTS.avi_res.csv"
 
 # working directory
 # where this report is
-setwd("./Git/Monrado/Reports/")
+#setwd("./Git/Monrado/Reports/")
+setwd("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Git/Monrado/Reports")
 
 # blue will refer to father
 # red will refer to mother
@@ -118,15 +121,17 @@ It will return a csv file for each video [SSIXXXX.csv](../Data/CSV/Synchrony/log
 this following function
 
 ```{r SSInoLogFilesList}
+# Create a list with the file names
 print("SSI Files Directory")
-SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator", full.name=TRUE)
+SSInoLogFilesList <- list.files("../Data/CSV/Synchrony/noLog/S_estimator/noShuffle", full.name=TRUE)
 #SSInoLogFilesList
 ```
 
 ```{r SSInolog import}
+# Import and merge the data
 SSInoLog <- data.frame(video="Name")
 for (file in SSInoLogFilesList){
-#    print(file)
+  #  print(file)
     SSIalone <- read.csv(file)
   #  print(str(SSIalone))
     SSInoLog<- rbind.fill(SSInoLog, SSIalone)}
@@ -135,8 +140,6 @@ SSInoLog <- SSInoLog[-which(SSInoLog$video=="Name"),]
 SSInoLog$Interval <- NULL
 SSInoLog <- rename (SSInoLog, c("video" = "family"))
 SSInoLog <- rename (SSInoLog, c("X" = "SSI-interval"))
-#SSInoLog$action <- rep(NA, nrow(SSInoLog))
-#SSInoLog[which(video == & timeMin==)]$action
 SSInoLog$SSI<-rowSums(SSInoLog[, c("SSI_fa_ch", "SSI_mo_ch")], na.rm=T)
 ```
 
@@ -153,6 +156,41 @@ SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutMiddle1Min & SSInoLog$Time_min <
 SSInoLog[which(SSInoLog$Time_min > SSInoLog$CutMiddle2Min & SSInoLog$Time_min < SSInoLog$CutFinalMin),]$LabelVideo <- "Conflict"
 
 SSInoLog[which(SSInoLog$Time_min >= SSInoLog$CutFinalMin),]$LabelVideo <- "Cut"
+```
+
+## Import motion history (MH)
+```{r}
+MH_list <- list.files("../Data/CSV/filtered/noLog/noshuffled", full.names = TRUE)
+
+MH <- data.frame(video="Name")
+
+for (file in MH_list){
+  #  print(file)
+    MHalone <- read.csv(file)
+  #  print(str(SSIalone))
+    MH<- rbind.fill(MH, MHalone)}
+MH <- MH[-which(MH$video=="Name"),]
+MH$X <- NULL
+MH <- rename (MH, c("video" = "family"))
+MH$slidedParent<-rowSums(MH[, c("slidedFather", "slidedMother")], na.rm=T)
+```
+
+## Annotating dataframe MH
+```{r}
+#View(MH)
+MH <- merge(MH, cutFrames, by.x="family", by.y="family")
+MH$LabelVideo <- rep(NA, nrow(MH)) 
+#for 25 frmaes by second and 60 seconds by min
+MH$Time_min <- MH$frame_index/(25*60)
+MH[which(MH$Time_min <= MH$CutBeforeMin),]$LabelVideo <- "Cut"
+
+MH[which(MH$Time_min > MH$CutBeforeMin & MH$Time_min < MH$CutMiddle1Min),]$LabelVideo <- "No Conflict"
+
+MH[which(MH$Time_min >= MH$CutMiddle1Min & MH$Time_min <= MH$CutMiddle2Min),]$LabelVideo <- "Cut"
+
+MH[which(MH$Time_min > MH$CutMiddle2Min & MH$Time_min < MH$CutFinalMin),]$LabelVideo <- "Conflict"
+
+MH[which(MH$Time_min >= MH$CutFinalMin),]$LabelVideo <- "Cut"
 ```
 
 ## Description of noLogSSI data frame
@@ -182,43 +220,346 @@ Between is the conflictual discussion, numeric variable in minutes
 * **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
 * **LabelVideo** : label of the video if it is related to No Conflict period or Conflict Period 
 
-# Synchrony scores noLog for each dyad
-```{r Synchrony scores noLog for each dyad, fig.width=8, fig.height=3.5}
-par(mar=c(4,4,4,3), mfrow=c(1,1))
-for (i in unique(SSInoLog$family)){
-      if (all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_mo_ch)==TRUE)){
-        plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSInoLog$family==i),]$SSI_mo_ch, 
-             ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", col="red", cex.axis=0.7, xaxp=c(0,length(SSIlog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)))}
-      
-      else if(all(!is.na(SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch)==TRUE)){
-#    print(str(SSInoLog[which(SSInoLog$family==i),]$SSI_fa_ch))
-    plot(SSInoLog[which(SSIlog$family==i),]$Time_min, SSInoLog[which(SSIlog$family==i),]$SSI_fa_ch, ylim=c(0, 0.3), main=paste("Synchrony scores in", i, "family"), xlab = "Time (minute)", ylab="Synchrony score", lwd=2, type="l", xaxp=c(0,length(SSInoLog[which(SSIlog$family==i),]$Time_min), length(SSInoLog[which(SSIlog$family==i),]$Time_min)), col="blue", cex.axis=0.7)}
-      else{print("error")}}
+## Description of MH data frame
+```{r MH  description , cache=FALSE}
+str(MH)
+#View(SSInoLog)
 ```
 
+### Data dictionnary of SSInolog data frame
+* **family** : code of the family
+* **SlidedFather** : Filtered motion History of the father
+* **Time_min** : Time in minutes
+* **SlidedMother* : Filtered Motion History of the mother
+* **SlidedChild** :  Filtered Motion History of the child
+* **SlidedParent* : Filtered Motion History of the parent (either mother or father)
+* **frame index* : index of the frame (from 1st to last frame of each video)
+* **CutBefore** : when the experimenter leave the room and the interaction begin character string in the form min:sec
+* **CutMiddle1** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, character string in the form min:sec
+* **CutMiddle2** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, character string in the form min:sec
+* **CutFinal** : when the experimenter come back to shut down the camera, character string in the form min:sec
+* **ChildSex** : Factor variable : Male of Female
+* **ParentSex** : Factor variable : Male of Female
+* **CutBeforeMin** : when the experimenter leave the room and the interaction begin numeric variable in minutes
+* **CutMiddle1Min** : when the experimenter come back to explain that the participants are asked to have a conflictual discussion, numeric variable in minutes
+* **CutMiddle2Min** : when the experimenter leave and the conflictual discussion begin
+Between is the conflictual discussion, numeric variable in minutes
+* **CutFinalMin** : when the experimenter come back to shut down the camera, numeric variable in minutes
+* **LabelVideo** : label of the video if it is related to No Conflict period or Conflict Period 
+
+# Motion history score for each dyad
+```{r}
+par(mar=c(4,4,4,3))
+for (i in unique(MH$family)){
+  
+    a <- paste(as.character(i), ".png", sep="")
+     print(a)
+     #dev.copy(file=a,device=png, bg="white",  width=640, height=352) 
+   png(filename = a, width = 800, height = 600, units = "px")
+        plot(MH[which(MH$family==i),]$Time_min, (MH[which(MH$family==i),]$slidedParent), 
+             ylim=c(0, 0.04), col="cornflowerblue",
+             main=paste("Motion History scores in", i, "family"), 
+             xlab = "Time (minute)", ylab="Motion History score", 
+                     lwd=2, type="l", cex.axis=0.7, xaxp=c(0,length(MH[which(MH$family==i),]$Time_min), length(MH[which(MH$family==i),]$Time_min)))
+        lines(MH[which(MH$family==i),]$Time_min, MH[which(MH$family==i),]$slidedChild, col="green")
+        abline(v= MH[which(MH$family==i),]$CutBeforeMin, col="green", lty=2, lwd=3)
+        abline(v= MH[which(MH$family==i),]$CutMiddle1Min, col="green", lty=2, lwd=3)
+       abline(v= MH[which(MH$family==i),]$CutMiddle2Min, col="red", lty=2, lwd=3)
+        abline(v= MH[which(MH$family==i),]$CutFinalMin, col="red", lty=2, lwd=3)
+        legend("topright", c("No conflict", "Conflict"), lty=c(2,2), lwd=c(3,3), col=c("green", "red"))
+
+     dev.off()
+   # graphics.off()
+}
+```
+
+# Synchrony scores noLog for each dyad
+```{r Synchrony scores noLog for each dyad, fig.width=8, fig.height=5}
+
+par(mar=c(4,5,4,3), mfrow=c(1,1))
+for (i in unique(SSInoLog$family)){
+        plot(SSInoLog[which(SSInoLog$family==i),]$Time_min,
+             SSInoLog[which(SSInoLog$family==i),]$SSI, 
+             ylim=c(0, 0.3), 
+             main=paste("Synchrony scores in", i, "family"), 
+             xlab = "Time (minutes)", ylab="Synchrony score", 
+             lwd=2, type="l", cex.axis=2, cex.lab=2, xaxp=c(0,length(SSInoLog[which(SSInoLog$family==i),]$Time_min), length(SSInoLog[which(SSInoLog$family==i),]$Time_min)))
+#abline(v= SSInoLog[which(SSInoLog$family==i),]$CutBeforeMin, col="green", lty=2, lwd=3)
+abline(v= SSInoLog[which(SSInoLog$family==i),]$CutMiddle1Min, col="orange", lty=2, lwd=5)
+#abline(v= SSInoLog[which(SSInoLog$family==i),]$CutMiddle2Min
+#       , col="red", lty=2, lwd=3)
+#abline(v= SSInoLog[which(SSInoLog$family==i),]$CutFinalMin, col="red", lty=2, lwd=3)
+#legend("topright", c("No conflict", "Conflict"), lty=c(2,2), lwd=c(3,3), col=c("green", "red"))
+#max(SSInoLog[which(SSInoLog$family==i),]$SSI)), col="green")
+
+  }
+    
+#SSInoLog$SSI <- as.ts(SSInoLog$SSI)
+
+#for (i in unique(SSInoLog$family)[5:35]){
+#  print(i)
+#  SSI.decompose <- #decompose(SSInoLog[(which(SSInoLog$family==i)),]$SSI, type="mult")
+#}
+```
 
 ```{r}
 ncSSI <- c()
 cSSI <- c()
 
 for (i in unique(SSInoLog$family)){
-  print (i)
+#  print (i)
   nc <- mean(SSInoLog[which(SSInoLog$LabelVideo=="No Conflict" & SSInoLog$family==i),]$SSI)
-  print(nc)
+ # print(nc)
   ncSSI <- c(ncSSI, nc)
   co <-mean(SSInoLog[which(SSInoLog$LabelVideo=="Conflict"  & SSInoLog$family==i),]$SSI)
-  print (co)
+ # print (co)
   cSSI <- c(cSSI, co)
 }
 
 hist(ncSSI)
 hist(cSSI)
 
+sd(ncSSI)/sd(cSSI)
 
 SSImean <- data.frame(sort(ncSSI, decreasing = TRUE), sort(cSSI, decreasing = TRUE))
 par(mar=c(3,5,3,3))
-barplot(as.matrix(SSImean), col=terrain.colors(34), ylab="Synchrony scores", main="Sum of mean synchrony scores for all videos", names.arg = c("No conflict", "Conflict"))
 
-t.test(ncSSI, cSSI, alternative = c("two.sided"),
-paired=TRUE, conf.level = 0.95)
+boxplot(SSImean, names= c("No conflict", "Conflict"), ylab="Synchrony score")
+
+#efectifs <30 donc pas de t-test
+#t.test(ncSSI, cSSI, alternative = c("two.sided"),
+#paired=TRUE, conf.level = 0.95)
+
+wilcox.test(ncSSI, cSSI)
 ```
+There isn't any difference between the mean SSI before and after the conflict.
+
+```{r}
+SSI <- SSInoLog[-which(SSInoLog$LabelVideo=="Cut"),]
+names(SSI)
+SSIagg <- subset(SSI, select=c(family, SSI, LabelVideo))
+#View(SSIagg)
+names(SSIagg)
+str(SSIagg)
+SSIagg$LabelVideo <- as.factor(SSIagg$LabelVideo)
+names(SSIagg)
+SSIagg <-aggregate(SSIagg, by=list(SSIagg$family, SSIagg$LabelVideo), FUN=mean)
+#View(SSIagg)
+SSIagg$family <-NULL
+SSIagg$LabelVideo <-NULL
+names(SSIagg) <-c("family","LabelVideo", "SSI")
+par(mar= c(5,5,2,2))
+plot(SSIagg[which(SSIagg$LabelVideo=="Conflict"),]$SSI,SSIagg[which(SSIagg$LabelVideo=="No Conflict"),]$SSI, xlab="Conflict SSI", ylab="No conflict SSI")
+model <- lm(SSIagg[which(SSIagg$LabelVideo=="No Conflict"),]$SSI ~ SSIagg[which(SSIagg$LabelVideo=="Conflict"),]$SSI )
+abline(model)
+cor.test(SSIagg[which(SSIagg$LabelVideo=="Conflict"),]$SSI,SSIagg[which(SSIagg$LabelVideo=="No Conflict"),]$SSI)
+
+
+#View(SSIagg)
+```
+
+There is a correlation between the synchrony before and after the conflict. 
+
+```{r}
+psycho<-read.csv2("/Users/Ofix/Documents/Fac/internat/Recherche/projets/synchro/synchroData/Monrado/Data/CSV/PsychomotData.csv")
+#View(psycho)
+psycho <- subset(psycho, select=c(Num._ident_videos, attachement_cluster, insecurite_level, TAS_total, global_score, STAIYB_total, BDI_total))
+#View(psycho)
+
+par(mar=c(4,4,2,1))
+plot(psycho$STAIYB_total, psycho$BDI_total, main="BDI en fonction de la STAIY", xlab="STAIY", ylab="BDI")
+model <- lm(psycho$BDI_total~psycho$STAIYB_total)
+abline(model, lwd=2)
+cor.test(psycho$BDI_total,psycho$STAIYB_total)
+
+table(psycho$attachement_cluster)
+barplot(sort(table(psycho$attachement_cluster), decreasing=TRUE), col="cornflower blue", main="Effectifs par style d'attachement")
+#View(SSInoLog)
+SSI <- SSInoLog[-which(SSInoLog$LabelVideo=="Cut"),]
+SSIagg <- subset(SSI, select=c(family, SSI, LabelVideo))
+#View(SSIagg)
+
+str(SSIagg)
+SSIagg$LabelVideo <- as.factor(SSIagg$LabelVideo)
+
+SSIagg <-aggregate(SSIagg, by=list(SSIagg$family), FUN=mean)
+#View(SSIagg)
+SSIagg$family <-NULL
+SSIagg$LabelVideo <-NULL
+names(SSIagg) <-c("family", "SSI")
+SSI <- merge(SSIagg, psycho, by.x= "family", by.y= "Num._ident_videos")
+
+#View(SSI)
+SSI$attachement_duo <- rep(NA)
+SSI[which(SSI$attachement_cluster=="Secure"),]$attachement_duo <- "Secure"
+SSI[which(SSI$attachement_cluster!="Secure"),]$attachement_duo <- "Unsecure"
+
+boxplot(SSI ~ attachement_cluster, data = SSI, cex.axis=0.7, ylab="Synchrony score")
+boxplot(SSI ~ attachement_duo, data = SSI, ylab="SSI")
+hist(SSI[which(SSI$attachement_duo!="Secure"),]$SSI)
+sd(SSI[which(SSI$attachement_duo!="Secure"),]$SSI)
+hist(SSI[which(SSI$attachement_duo=="Secure"),]$SSI)
+sd(SSI[which(SSI$attachement_duo=="Secure"),]$SSI)
+table(SSI$attachement_duo)
+
+barplot(table(SSI$attachement_duo), ylim=c(0,20), col="cornflowerblue")
+
+#Effectifs inf à 30 donc pas possibles
+#t.test(SSI[which(SSI$attachement_duo=="Unsecure"),]$SSI, SSI[which(SSI$attachement_duo=="Secure"),]$SSI)
+
+wilcox.test(SSI[which(SSI$attachement_duo=="Unsecure"),]$SSI, SSI[which(SSI$attachement_duo=="Secure"),]$SSI)
+
+SSIattach <- data.frame(c(sort(SSI[which(SSI$attachement_cluster=="FE"),]$SSI, decreasing = TRUE), rep(mean(SSI[which(SSI$attachement_cluster=="FE"),]$SSI), 2)), sort(SSI[which(SSI$attachement_cluster=="Secure"),]$SSI, decreasing = TRUE))
+
+#View(SSIattach)
+par(mar=c(3,5,3,3))
+
+FE <- c(sort(SSI[which(SSI$attachement_cluster=="FE"),]$SSI, decreasing = TRUE), rep(mean(SSI[which(SSI$attachement_cluster=="FE"),]$SSI), 2))
+
+boxplot(SSI[which(SSI$attachement_cluster=="Secure"),]$SSI, SSI[which(SSI$attachement_cluster=="FE"),]$SSI, names=c("Secure", "FE"), ylab="Synchrony")
+
+t.test(SSI[which(SSI$attachement_cluster=="Secure"),]$SSI, SSI[which(SSI$attachement_cluster=="FE"),]$SSI, alternative = c("two.sided"),paired=FALSE, conf.level = 0.95)
+```
+
+```{r}
+SSIM <- aggregate(SSI, by=list(SSI$family), FUN=mean)
+
+plot(SSIM$SSI, SSIM$TAS_total)
+model <- lm(SSIM$TAS_total~SSIM$SSI)
+abline(model)
+cor.test(SSIM$SSI, SSIM$TAS_total)
+
+plot(SSIM$SSI, SSIM$STAIYB_total)
+model <- lm(SSIM$STAIYB_total~SSIM$SSI)
+abline(model)
+cor.test(SSIM$SSI, SSIM$STAIYB_total)
+
+plot(SSIM$SSI, SSIM$BDI_total)
+model <- lm(SSIM$BDI_total~SSIM$SSI)
+abline(model)
+cor.test(SSIM$SSI, SSIM$BDI_total)
+```
+
+```{r}
+#View(SSInoLog)
+SSI <- SSInoLog[-which(SSInoLog$LabelVideo=="Cut"),]
+SSIagg <- subset(SSI, select=c(family, SSI, LabelVideo))
+#View(SSIagg)
+names(SSIagg)
+str(SSIagg)
+SSIagg$LabelVideo <- as.factor(SSIagg$LabelVideo)
+names(SSIagg)
+SSIagg <-aggregate(SSIagg, by=list(SSIagg$family, SSIagg$LabelVideo), FUN=mean)
+#View(SSIagg)
+SSIagg$family <-NULL
+SSIagg$LabelVideo <-NULL
+names(SSIagg) <-c("family", "LabelVideo", "SSI")
+SSI <- merge(SSIagg, psycho, by.x= "family", by.y= "Num._ident_videos")
+#View(SSI)
+SSI$diff <-rep(NA)
+for (i in unique(SSI$family)){
+SSI[which(SSI$family==i),]$diff <- 
+    a <-
+SSI[which(SSI$family==i & SSI$LabelVideo=="Conflict"),]$SSI - SSI[which(SSI$family==i & SSI$LabelVideo=="No Conflict"),]$SSI
+  print (a)
+}
+
+SSIdiff <- data.frame(sort(c(SSI[which(SSI$attachement_cluster=="FE"),]$diff, rep(mean(SSI[which(SSI$attachement_cluster=="FE"),]$diff), 4)), decreasing = TRUE), sort(SSI[which(SSI$attachement_cluster=="Secure"),]$diff, decreasing = TRUE))
+par(mar=c(3,5,3,3))
+barplot(as.matrix(SSIdiff), col=terrain.colors(34), ylab="Synchrony scores", main="Sum of mean synchrony scores for all videos", names.arg = c("FE", "Secure"))
+FE <- c(sort(SSI[which(SSI$attachement_cluster=="FE"),]$SSI, decreasing = TRUE), rep(mean(SSI[which(SSI$attachement_cluster=="FE"),]$SSI), 2))
+
+t.test(SSI[which(SSI$attachement_cluster=="Secure" & SSI$LabelVideo=="Conflict"),]$diff, SSI[which(SSI$attachement_cluster=="FE"& SSI$LabelVideo=="Conflict"),]$diff, alternative = c("two.sided"),paired=FALSE, conf.level = 0.95)
+
+boxplot(SSI[which(SSI$attachement_cluster=="Secure" & SSI$LabelVideo=="Conflict"),]$diff, SSI[which(SSI$attachement_cluster=="FE"& SSI$LabelVideo=="Conflict"),]$diff, names=c("Secure", "FE"), ylab=("Synchrony difference before and after conflict"))
+```
+
+```{r}
+#View(SSI)
+plot(SSI$diff, SSI$TAS_total)
+model <- lm(SSI$TAS_total~SSI$diff)
+abline(model)
+cor.test(SSI[which(SSI$LabelVideo=="Conflict"),]$diff, SSI[which(SSI$LabelVideo=="Conflict"),]$TAS_total)
+```
+
+```{r}
+table(SSI$insecurite_level)
+```
+
+```{r}
+#Quantite de mvt et BDI
+str(MH)
+str(psycho)
+MH1 <- merge(MH, psycho, by.x="family", by.y="Num._ident_videos")
+MH1 <- MH1[-which(MH1$LabelVideo=="Cut"),]
+str(MH1)
+MHagg <- aggregate(MH1, by=list(MH1$family, MH1$LabelVideo), FUN=mean)
+#View(MHagg)
+
+```
+
+```{r}
+plot(MHagg$slidedChild, MHagg$BDI_total)
+lm <- lm(MHagg$BDI_total~MHagg$slidedChild)
+abline(lm)
+cor.test(MHagg$slidedChild,MHagg$BDI_total)
+#View(MH1)
+plot(MHagg$slidedChild, MHagg$STAIYB_total)
+lm <- lm(MHagg$STAIYB_total~MHagg$slidedChild)
+abline(lm)
+cor.test(MHagg$slidedChild,MHagg$STAIYB_total)
+```
+
+
+```{r}
+library(reshape2)
+SSIPsycho <- merge(SSInoLog, psycho, by.x="family", by.y="Num._ident_videos")
+data_long <- melt(SSInoLog, id.vars = c('family', 'ChildSex', "ParentSex"),  measure.vars = c(1,2,3,4))
+SSIPsycho$CutBefore <-NULL
+SSIPsycho$SSI_fa_ch <-NULL
+SSIPsycho$SSI_mo_ch <-NULL
+SSIPsycho$CutMiddle1 <-NULL
+SSIPsycho$CutMiddle2 <-NULL
+SSIPsycho$CutFinal <-NULL
+SSIPsycho$CutBeforeMin <-NULL
+SSIPsycho$CutMiddle1Min <-NULL
+SSIPsycho$CutMiddle2Min <-NULL
+SSIPsycho$CutFinalMin <-NULL
+SSIPsycho$global_score <-NULL
+SSIPsycho <- SSIPsycho[-which(SSIPsycho$LabelVideo=="Cut"),]
+#View(data_long)
+write.csv(SSIPsycho, file="SSIPsycho.csv")
+
+SSIPsycho$LabelVideo <- as.factor(SSIPsycho$LabelVideo)
+
+mod1 <- glmer(LabelVideo ~ SSI + (1|family), data=SSIPsycho, family=binomial, nAGQ=20)
+summary(mod1)
+mod <- glmer(LabelVideo ~ SSI + (1|family) + ChildSex + ParentSex +  attachement_cluster, data=SSIPsycho, family=binomial, nAGQ=20)
+summary(mod)
+
+
+mod <- glmer(attachement_cluster ~ SSI + (1|family) + LabelVideo, data=SSIPsycho, family=binomial , nAGQ=20)
+summary(mod)
+
+mod <- glmer(attachement_cluster ~ SSI + (1|family) + LabelVideo, data=SSIPsycho, family=binomial , nAGQ=20)
+summary(mod)
+
+mod <- glmer(attachement_cluster ~ SSI + (1|family) + LabelVideo, data=SSIPsycho, family=binomial , nAGQ=20)
+summary(mod)
+
+SSIPsycho$attachement_duo <- rep(NA)
+SSIPsycho[which(SSIPsycho$attachement_cluster=="Secure"),]$attachement_duo <- "Secure"
+SSIPsycho[which(SSIPsycho$attachement_cluster!="Secure"),]$attachement_duo <- "Unsecure"
+SSIPsycho$attachement_duo <- as.factor(SSIPsycho$attachement_duo)
+
+mod <- glmer(attachement_duo ~ SSI + (1|family) + LabelVideo, data=SSIPsycho, family=binomial , nAGQ=20)
+summary(mod)
+
+mod1 <- glmer(LabelVideo ~ SSI + (1|family) + attachement_duo, data=SSIPsycho, family=binomial, nAGQ=20)
+summary(mod1)
+
+```
+
+
+

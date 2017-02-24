@@ -11,7 +11,7 @@ outputDirectory = projectDirectory + "/Data/CSV/Synchrony/noLog/S_estimator/SSI.
 
 
 ## Number of frames by interval used to compute SSI. Nota bene, there are 25 frames by second.
-numberOfFramesByInterval = 25*30
+numberOfFramesByInterval = 25*5
 
 """ Import common python packages """
 import sys
